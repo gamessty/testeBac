@@ -1,0 +1,12 @@
+{
+    "HomePage": {
+        "title": "Bun venit pe",
+        "about": "TesteBac se ocupă cu pregătirea elevilor pentru examenul de bacalaureat sau admitere la facultate. Această platformă este dedicată elevilor care doresc să își testeze cunoștințele și să se pregătească pentru examenele importante din viața lor. Platforma utilizează un sistem de teste grilă, care oferă feedback instantaneu și îi ajută pe elevi să își îmbunătățească cunoștințele. Testele sunt structurate pe materii și capitole, pentru a oferi o pregătire cât mai eficientă și personalizată. Pentru a începe, alegeți materia și capitolul dorit și apăsați butonul de start. Succes la învățat!"
+    },
+    "Authentication": {
+        "signIn": "Conectare",
+        "signInMail": "Conectare cu Email",
+        "signUp": "Înregistrare",
+        "signOut": "Deconectare"
+    }
+}

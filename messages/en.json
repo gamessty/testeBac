@@ -1,12 +1,78 @@
 {
     "HomePage": {
         "title": "Welcome to",
-        "about": "TesteBac prepares students for the baccalaureate or college entrance exam. This platform is dedicated to students who want to test their knowledge and prepare for the important exams of their lives. The platform uses a grid test system, which provides instant feedback and helps students improve their knowledge. The tests are structured by subjects and chapters, to provide the most efficient and personalized preparation. To get started, choose the subject and chapter you want and press the start button. Good luck with your studies!"
+        "about": "TesteBac prepares students for the baccalaureate or college entrance exam. This platform is dedicated to students who want to test their knowledge and prepare for the important exams of their lives. The platform uses a grid test system, which provides instant feedback and helps students improve their knowledge. The tests are structured by subjects and chapters, to provide the most efficient and personalized preparation. To get started, choose the subject and chapter you want and press the start button. Good luck with your studies!",
+        "redirectApp": "Go to the app"
+    },
+    "General": {
+        "loading": "Loading...",
+        "error": "Error",
+        "LocaleSwitcher": {
+            "label": "Change language",
+            "locale": "{locale, select, ro {🇷🇴 Romanian} en {🇬🇧 English} other {Unknown}}",
+            "locales": {
+                "ro": "Romanian",
+                "en": "English"
+            }
+        },
+        "ColorSchemeToggle": {
+            "label": "Toggle color scheme",
+            "colorScheme": "{colorScheme, select, light {Light} dark {Dark} auto {Auto} other {Unknown}}"
+        }
     },
     "Authentication": {
         "signIn": "Sign In",
         "signInMail": "Sign In with Email",
         "signUp": "Sign Up",
         "signOut": "Sign Out"
+    },
+    "Tests": {
+        "Categories": {
+            "entrance": "College Entrance",
+            "baccalaureate": "Baccalaureate"
+        },
+        "Subjects": {
+            "mathematics": "Mathematics",
+            "romanian": "Romanian",
+            "history": "History",
+            "geography": "Geography",
+            "biology": "Biology",
+            "physics": "Physics",
+            "chemistry": "Chemistry",
+            "informatics": "Informatics",
+            "english": "English",
+            "french": "French",
+            "german": "Germany",
+            "spanish": "Spanish"
+        },
+        "resumeTest": "Resume test",
+        "lastQuestion": "Last question"
+    },
+    "Dashboard": {
+        "Navbar": {
+            "home": "Home",
+            "subjects": "Subjects",
+            "tests": "Tests",
+            "results": "Results",
+            "stats": "Stats",
+            "profile": "Profile",
+            "settings": "Settings"
+        },
+        "Home": {
+            "welcome": "Hi!",
+            "recentTests": "Recent tests",
+            "lastTest": "Resume test"
+        },
+        "Settings": {
+            "title": "Settings",
+            "account": "Account",
+            "language": "Language",
+            "display": "Display",
+            "notifications": "Notifications",
+            "saveChanges": "Save changes"
+        },
+        "backToTop": "Scroll to top",
+        "title": "Dashboard",
+        "description": "Here you can see your progress and the tests you have taken. You can also see your results and the subjects you have studied. Keep up the good work and good luck with your studies!"
     }
 }

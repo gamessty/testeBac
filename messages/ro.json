@@ -1,12 +1,78 @@
 {
     "HomePage": {
         "title": "Bun venit pe",
-        "about": "TesteBac se ocupă cu pregătirea elevilor pentru examenul de bacalaureat sau admitere la facultate. Această platformă este dedicată elevilor care doresc să își testeze cunoștințele și să se pregătească pentru examenele importante din viața lor. Platforma utilizează un sistem de teste grilă, care oferă feedback instantaneu și îi ajută pe elevi să își îmbunătățească cunoștințele. Testele sunt structurate pe materii și capitole, pentru a oferi o pregătire cât mai eficientă și personalizată. Pentru a începe, alegeți materia și capitolul dorit și apăsați butonul de start. Succes la învățat!"
+        "about": "TesteBac se ocupă cu pregătirea elevilor pentru examenul de bacalaureat sau admitere la facultate. Această platformă este dedicată elevilor care doresc să își testeze cunoștințele și să se pregătească pentru examenele importante din viața lor. Platforma utilizează un sistem de teste grilă, care oferă feedback instantaneu și îi ajută pe elevi să își îmbunătățească cunoștințele. Testele sunt structurate pe materii și capitole, pentru a oferi o pregătire cât mai eficientă și personalizată. Pentru a începe, alegeți materia și capitolul dorit și apăsați butonul de start. Succes la învățat!",
+        "redirectApp": "Mergi la aplicație"
+    },
+    "General": {
+        "loading": "Se încarcă...",
+        "error": "Eroare",
+        "LocaleSwitcher": {
+            "label": "Schimbă limba",
+            "locale": "{locale, select, ro {🇷🇴 Română} en {🇬🇧 Engleză} other {Necunoscută}}",
+            "locales": {
+                "ro": "Română",
+                "en": "Engleză"
+            }
+        },
+        "ColorSchemeToggle": {
+            "label": "Schimbă schema de culori",
+            "colorScheme": "{colorScheme, select, light {Luminos} dark {Întunecat} auto {Automat} other {Necunoscut}}"
+        }
     },
     "Authentication": {
         "signIn": "Conectare",
         "signInMail": "Conectare cu Email",
         "signUp": "Înregistrare",
         "signOut": "Deconectare"
+    },
+    "Tests": {
+        "Categories": {
+            "entrance": "Admitere",
+            "baccalaureate": "Bac"
+        },
+        "Subjects": {
+            "mathematics": "Matematică",
+            "romanian": "Română",
+            "history": "Istorie",
+            "geography": "Geografie",
+            "biology": "Biologie",
+            "physics": "Fizică",
+            "chemistry": "Chimie",
+            "informatics": "Informatică",
+            "english": "Engleză",
+            "french": "Franceză",
+            "german": "Germană",
+            "spanish": "Spaniolă"
+        },
+        "resumeTest": "Continuă testul",
+        "lastQuestion": "Ultima întrebare"
+    },
+    "Dashboard": {
+        "Navbar": {
+            "home": "Acasă",
+            "subjects": "Materii",
+            "tests": "Teste",
+            "results": "Rezultate",
+            "stats": "Statistici",
+            "profile": "Profil",
+            "settings": "Setări"
+        },
+        "Home": {
+            "welcome": "Salut!",
+            "recentTests": "Teste recente",
+            "lastTest": "Ultimul test"
+        },
+        "Settings": {
+            "title": "Setări",
+            "account": "Cont",
+            "language": "Limbă",
+            "display": "Afișare",
+            "notifications": "Notificări",
+            "saveChanges": "Salvează modificările"
+        },
+        "backToTop": "Înapoi sus",
+        "title": "Tablou de bord",
+        "description": "Aici puteți vedea progresul dumneavoastră și testele pe care le-ați susținut. Puteți vedea, de asemenea, rezultatele dumneavoastră și materiile pe care le-ați studiat. Continuați munca bună și succes la învățat!"
     }
 }

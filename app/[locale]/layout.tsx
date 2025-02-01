@@ -18,8 +18,9 @@ export const metadata = {
   description: "Home page of the testeBac project",
 };
 
-export default async function Locale({ children, params: { locale } }: { children: React.ReactNode; params: { locale: string }}) {
+export default async function Locale({ children, params }: Readonly<{ children: React.ReactNode; params: { locale: string }}>) {
   // Ensure that the incoming `locale` is valid
+  const { locale } = await params;
   if (!routing.locales.includes(locale as any)) {
     notFound();
   }
@@ -29,7 +30,7 @@ export default async function Locale({ children, params: { locale } }: { childre
   const messages = await getMessages();
 
   return (
-    <html lang={locale} {...mantineHtmlProps}>
+    <html lang={locale} {...mantineHtmlProps} suppressHydrationWarning>
       <head>
         <ColorSchemeScript />
         <link rel="shortcut icon" href="/favicon.svg" />

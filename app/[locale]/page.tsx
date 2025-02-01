@@ -1,6 +1,7 @@
 import { Center, Container, Stack } from "@mantine/core";
 import { Welcome } from "../../components/Welcome/Welcome";
 import NavbarHomepage from "../../components/NavbarHomepage/NavbarHomepage";
+import AppRedirect from "../../components/AppRedirect/AppRedirect";
 
 export default function HomePage() {
     return (
@@ -11,9 +12,10 @@ export default function HomePage() {
                     align="stretch"
                     justify="center"
                     gap="md"
-                    mt={200}
+                    mt={{ base: "20vh", mt: "25vh" }}
                 >
                     <Welcome />
+                    <AppRedirect />
                 </Stack>
             </Center>
         </Container>

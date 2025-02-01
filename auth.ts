@@ -13,7 +13,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     Google,
     Mailgun({
       name: "email",
-      apiKey: process.env.AUTH_MAILGUN_KEY,
       from: process.env.MAILGUN_FROM,
       sendVerificationRequest: sendVerificationRequest
     })

@@ -65,10 +65,10 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                         justify="space-around"
                         gap="md"
                     >
-                        <Button onClick={() => handleTabChange({ tab: 'home' })} variant={settings.tab == 'home' ? 'light' : 'outline'} justify="left" h={35} leftSection={<IconHome size={17} />}>{t('Navbar.home')}</Button>
-                        <Button onClick={() => handleTabChange({ tab: 'tests' })} variant={settings.tab == 'tests' ? 'light' : 'outline'} justify="left" h={35} leftSection={<IconFile size={17} />}>{t('Navbar.tests')}</Button>
-                        <Button onClick={() => handleTabChange({ tab: 'stats' })} variant={settings.tab == 'stats' ? 'light' : 'outline'} justify="left" h={35} leftSection={<IconChartInfographic size={17} />}>{t('Navbar.stats')}</Button>
-                        <Button onClick={() => handleTabChange({ tab: 'settings' })} variant={settings.tab == 'settings' ? 'light' : 'outline'} justify="left" h={35} leftSection={<IconSettingsCog size={17} />}>{t('Navbar.settings')}</Button>
+                        <Button color="orange" onClick={() => handleTabChange({ tab: 'home' })} variant={settings.tab == 'home' ? 'light' : 'outline'} justify="left" h={35} leftSection={<IconHome size={17} />}>{t('Navbar.home')}</Button>
+                        <Button color="grape" onClick={() => handleTabChange({ tab: 'tests' })} variant={settings.tab == 'tests' ? 'light' : 'outline'} justify="left" h={35} leftSection={<IconFile size={17} />}>{t('Navbar.tests')}</Button>
+                        <Button color="green" onClick={() => handleTabChange({ tab: 'stats' })} variant={settings.tab == 'stats' ? 'light' : 'outline'} justify="left" h={35} leftSection={<IconChartInfographic size={17} />}>{t('Navbar.stats')}</Button>
+                        <Button color="pink" onClick={() => handleTabChange({ tab: 'settings' })} variant={settings.tab == 'settings' ? 'light' : 'outline'} justify="left" h={35} leftSection={<IconSettingsCog size={17} />}>{t('Navbar.settings')}</Button>
                     </Stack>
                 </AppShell.Section>
                 <AppShell.Section>

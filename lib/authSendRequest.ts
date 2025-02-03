@@ -12,11 +12,13 @@ export async function sendVerificationRequest(params: any) {
     form.append("subject", `Sign in to ${host}`)
     form.append("html", html({ host, url, theme }))
     form.append("text", text({ host, url }))
+
+    const apiKey = `api:${provider.apiKey}`
    
     const res = await fetch(`https://api.eu.mailgun.net/v3/${domain}/messages`, {
       method: "POST",
       headers: {
-        Authorization: `Basic ${btoa(`api:${provider.apiKey}`)}`,
+        Authorization: `Basic ${btoa(apiKey)}`,
       },
       body: form,
     })

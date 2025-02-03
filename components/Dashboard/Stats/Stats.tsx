@@ -1,3 +1,4 @@
+'use client';
 import { MantineStyleProp, Text } from "@mantine/core";
 
 interface StatsProps {

@@ -6,7 +6,7 @@ const withNextIntl = createNextIntlPlugin();
 const nextConfig = {
   reactStrictMode: true,
   experimental: {
-    optimizePackageImports: ["@mantine/core", "@mantine/hooks", "@mantine/modals"],
+    optimizePackageImports: ["@mantine/core", "@mantine/hooks", "@mantine/modals", "@mantine/charts", "recharts@2", "@mantine/notifications"],
   },
 };
 

@@ -1,11 +1,35 @@
-import { Center, Container, Stack } from "@mantine/core";
+import { Alert, Button, Center, Container, Stack, Text } from "@mantine/core";
 import { Welcome } from "../../components/Welcome/Welcome";
 import NavbarHomepage from "../../components/NavbarHomepage/NavbarHomepage";
 import AppRedirect from "../../components/AppRedirect/AppRedirect";
+import NotificationUnathorized from "../../components/NotificationUnauthorized/Notification";
+import { auth } from "../../auth";
+import { getTranslations } from "next-intl/server";
+import Modal from "../../components/Modal/Modal";
+import { IconAlertTriangleFilled } from "@tabler/icons-react";
+import { signOut } from "next-auth/react";
+import SignOutButtonClient from "../../components/SignOutButton/SignOutButton.client";
 
-export default function HomePage() {
+export default async function HomePage({ searchParams, }: Readonly<{ searchParams: Promise<{ [key: string]: string | string[] | undefined }> }>) {
+    const session = await auth();
+    const params = await searchParams;
+    const t = await getTranslations('Authentication');
+    let show = false;
+
+    // Check if there is a query parameter in the URL called email_authorized and if it is false, display a message to the user with mantine notification system
+    const { email_authorized, notification } = await params;
+    if (!session?.user?.userAuthorized || email_authorized?.toString().toLowerCase() === 'false' || (typeof email_authorized === 'string' && !isNaN(Number(email_authorized)) && !!email_authorized)) {
+        // Display a notification to the user with mantine notification system
+        show = true;
+    }
+
+    function getBooleanValue( value: string | string[] | number | undefined): boolean {
+        if (value?.toString().toLowerCase() === 'true' || value === 1 || value === '1') return true;
+        return false;
+    }
+
     return (
-        <Container mx={{ xs: "3%", sm: "5%", md: "10%", lg: "15%", xl: "25%"}} mt={30} fluid>
+        <Container mx={{ xs: "3%", sm: "5%", md: "10%", lg: "15%", xl: "25%" }} mt={30} fluid>
             <NavbarHomepage />
             <Center>
                 <Stack
@@ -17,6 +41,21 @@ export default function HomePage() {
                     <Welcome />
                     <AppRedirect />
                 </Stack>
+                <NotificationUnathorized show={show && getBooleanValue(notification)} data={{
+                    withBorder: true,
+                    title: t('userNotAuthorized.title'),
+                    message: t('userNotAuthorized.message', { email: "dev@gamessty.eu"}),
+                    color: 'red',
+                    autoClose: false,
+                    position: 'top-center',
+                }} />
+                <Modal show={show && !getBooleanValue(notification)} data = {{
+                    title: t('userNotAuthorized.title'),
+                    children: (<><Alert variant="filled" color="red" icon={< IconAlertTriangleFilled />}>{t('userNotAuthorized.message', { email: "dev@gamessty.eu"})}</Alert><SignOutButtonClient session={session} fullWidth /></>),
+                    withCloseButton: false,
+                    closeOnEscape: false,
+                    closeOnClickOutside: false,
+                }}/>
             </Center>
         </Container>
     );

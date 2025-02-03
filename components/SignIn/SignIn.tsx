@@ -2,14 +2,8 @@ import { Button, Group, TextInput } from "@mantine/core"
 import { signIn, auth } from "../../auth"
 import { getTranslations } from "next-intl/server";
 
-interface IProps {
-    buttonProps?: {
-        fullWidth: boolean
-    }
-}
-
-export default async function SignIn( { buttonProps }: IProps ) {
-    const { fullWidth } = buttonProps ?? { fullWidth: false };
+export default async function SignIn() {
+    const { fullWidth } = { fullWidth: false };
     const t = await getTranslations('Authentication');
 
     const session = await auth()

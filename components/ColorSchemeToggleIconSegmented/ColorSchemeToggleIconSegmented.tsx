@@ -1,4 +1,4 @@
-import { Flex, Group, SegmentedControl, Stack, Text, useMantineColorScheme, VisuallyHidden } from "@mantine/core";
+import { Center, Flex, Group, SegmentedControl, Stack, Text, useMantineColorScheme, VisuallyHidden } from "@mantine/core";
 import { IconMoon, IconSun, IconSunMoon } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 
@@ -21,10 +21,10 @@ export default function ColorSchemeToggleIconSegmented() {
 
     function labelGenerator(colorSchemeP: ColorScheme) {
         return (
-            <Flex align="center">
-                {iconGenerator(colorSchemeP)}{t('colorScheme', { colorScheme: colorSchemeP })}
+            <Center>
+                {iconGenerator(colorSchemeP)}<span>{t('colorScheme', { colorScheme: colorSchemeP })}</span>
                 <VisuallyHidden>{t('colorScheme', { colorScheme: colorSchemeP })}</VisuallyHidden>
-            </Flex>
+            </Center>
         )
     }
 
@@ -33,7 +33,7 @@ export default function ColorSchemeToggleIconSegmented() {
             <Text size="sm" fw={500} mt={3}>
                 {t('label')}
             </Text>
-            <SegmentedControl onChange={(value) => setColorScheme(value as ColorScheme)} value={colorScheme} defaultValue={colorScheme} data={
+            <SegmentedControl transitionTimingFunction="linear" transitionDuration={500} onChange={(value) => setColorScheme(value as ColorScheme)} value={colorScheme} defaultValue={colorScheme} data={
                 [
                     {
                         label: labelGenerator('light'),

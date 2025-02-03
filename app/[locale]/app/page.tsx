@@ -8,6 +8,7 @@ export default async function AppDashboard() {
     const locale = await getLocale();
     const session = await auth();
     if(!session?.user) return redirect({ href: '/', locale});
+    if(!session?.user.userAuthorized) return redirect({ href: '/?email_authorized=false', locale});
     return (
         <AppShellDashboard session={session} />
     );

@@ -12,14 +12,16 @@ export default function LocaleSwitch() {
     const t = useTranslations('General.LocaleSwitcher');
 
     function handleChange(value: string) {
-        router.push(pathname + "?" + params.toString(), { locale: value });
+        setTimeout(() => {
+            router.push(pathname + "?" + params.toString(), { locale: value });
+        }, 480);
     }
     return (
         <Stack gap="5">
             <Text size="sm" fw={500} mt={3}>
                 {t('label')}
             </Text>
-            <SegmentedControl onChange={handleChange} defaultValue={locale} data={
+            <SegmentedControl transitionTimingFunction="linear" transitionDuration={500} onChange={handleChange} defaultValue={locale} data={
                 routing.locales.map((lang) => ({
                     label: t('locale', { locale: lang }),
                     value: lang

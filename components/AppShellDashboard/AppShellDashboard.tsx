@@ -1,5 +1,5 @@
 'use client';
-import { AppShell, Group, ScrollArea, Button, ActionIcon, Text, Avatar, Divider, Stack, Grid, UnstyledButton, Affix, Transition } from "@mantine/core";
+import { AppShell, Group, ScrollArea, Button, ActionIcon, Text, Avatar, Divider, Stack, Grid, UnstyledButton, Affix, Transition, Badge, SimpleGrid, Flex, Tooltip } from "@mantine/core";
 import { useDidUpdate, useDocumentTitle, useSetState, useWindowScroll } from "@mantine/hooks";
 import { IconHome, IconFile, IconSettingsCog, IconChecklist, IconChartInfographic, IconArrowUp } from "@tabler/icons-react";
 import { Session } from "next-auth";
@@ -11,6 +11,7 @@ import { useSearchParams } from "next/navigation";
 import Settings from "../Dashboard/Settings/Settings";
 import Stats from "../Dashboard/Stats/Stats";
 import Tests from "../Dashboard/Tests/Tests";
+import { getInitialsColor } from "../../utils";
 
 interface AppShellDashboardProps {
     session: Session | null | undefined;
@@ -75,7 +76,31 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                     <Button justify="left" fullWidth my={10} h={35} onClick={() => signOut()} variant="gradient" gradient={{ from: 'purple', to: 'pink' }}>{ta('signOut')}</Button>
                 </AppShell.Section>
                 <Divider />
-                <AppShell.Section my={10}><Group justify="flex-start"><Avatar onError={({ currentTarget }) => { currentTarget.onerror = null; setSettings({ avatarError: true }); }} key={session?.user?.email} src={settings.avatarError ? undefined : session?.user?.image ?? undefined} name={session?.user?.email ?? undefined} color='initials' /> <Text fw={500} ta="center">{session?.user?.email}</Text></Group></AppShell.Section>
+                <AppShell.Section my={10}>
+                    <Flex gap="md" align="center">
+                        <Avatar
+                            onError={({ currentTarget }) => { currentTarget.onerror = null; setSettings({ avatarError: true }); }}
+                            key={session?.user?.email}
+                            src={settings.avatarError ? undefined : session?.user?.image ?? undefined}
+                            name={session?.user?.email ?? undefined}
+                            color='initials'
+                        />
+                        <Stack gap={2} justify="center" w="100%">
+                            <Text fw={500} ta="left">{session?.user?.email}</Text>
+                            <Grid gutter={3} w="100%">
+                                {
+                                    session?.user?.roles?.map((name) => (
+                                        <Grid.Col pt={0} mt={-6} span="content" key={name}>
+                                            <Tooltip tt="capitalize" label={name} color={getInitialsColor(name)} withArrow>
+                                                <Badge size="sm" variant="dot" color={getInitialsColor(name)} radius="xs" tt="capitalize">{name}</Badge>
+                                            </Tooltip>
+                                        </Grid.Col>
+                                    ))
+                                }
+                            </Grid>
+                        </Stack>
+                    </Flex>
+                </AppShell.Section>
                 <Divider />
                 <AppShell.Section>
                     <Group justify="space-between" mt={10}>
@@ -85,28 +110,28 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                 </AppShell.Section>
             </AppShell.Navbar>
             <AppShell.Main>
-                <Transition transition="fade-right" timingFunction="ease" duration={500} mounted={settings.tab == 'home'}>
+                <Transition transition="fade-right" timingFunction="ease" duration={600} mounted={settings.tab == 'home'}>
                     {(transitionStyles) => (
                         <>
                             {settings.tab == 'home' && <Home style={transitionStyles} />}
                         </>
                     )}
                 </Transition>
-                <Transition transition="fade-right" timingFunction="ease" duration={500} mounted={settings.tab == 'tests'}>
+                <Transition transition="fade-right" timingFunction="ease" duration={600} mounted={settings.tab == 'tests'}>
                     {(transitionStyles) => (
                         <>
                             {settings.tab == 'tests' && <Tests style={transitionStyles} />}
                         </>
                     )}
                 </Transition>
-                <Transition transition="fade-right" timingFunction="ease" duration={500} mounted={settings.tab == 'stats'}>
+                <Transition transition="fade-right" timingFunction="ease" duration={600} mounted={settings.tab == 'stats'}>
                     {(transitionStyles) => (
                         <>
                             {settings.tab == 'stats' && <Stats style={transitionStyles} />}
                         </>
                     )}
                 </Transition>
-                <Transition transition="fade-right" timingFunction="ease" duration={500} mounted={settings.tab == 'settings'}>
+                <Transition transition="fade-right" timingFunction="ease" duration={600} mounted={settings.tab == 'settings'}>
                     {(transitionStyles) => (
                         <>
                             {settings.tab == 'settings' && <Settings style={transitionStyles} session={session} />}

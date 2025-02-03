@@ -11,7 +11,8 @@ export default async function SignOutButton() {
     return (
         <Group justify="center">
             <form
-                action={async () => {
+                action={
+                    async () => {
                     "use server"
                     await signOut()
                 }}

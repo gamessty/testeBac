@@ -2,7 +2,12 @@
     "HomePage": {
         "title": "Welcome to",
         "about": "TesteBac prepares students for the baccalaureate or college entrance exam. This platform is dedicated to students who want to test their knowledge and prepare for the important exams of their lives. The platform uses a grid test system, which provides instant feedback and helps students improve their knowledge. The tests are structured by subjects and chapters, to provide the most efficient and personalized preparation. To get started, choose the subject and chapter you want and press the start button. Good luck with your studies!",
-        "redirectApp": "Go to the app"
+        "redirectApp": "Go to the app",
+        "userNotAuthorized": {
+            "title": "Registration not accepted yet",
+            "message": "Please wait for your registration to be validated by a moderator. This may take up to 24 hours. \n\nIf you have any questions, please contact us at {email}.",
+            "short": "You need to be authorized to access the app."
+        }
     },
     "General": {
         "loading": "Loading...",
@@ -24,7 +29,11 @@
         "signIn": "Sign In",
         "signInMail": "Sign In with Email",
         "signUp": "Sign Up",
-        "signOut": "Sign Out"
+        "signOut": "Sign Out",
+        "userNotAuthorized": {
+            "title": "Registration not accepted yet",
+            "message": "Please wait for your registration to be validated by a moderator. This may take up to 24 hours. \n\nIf you have any questions, please contact us at {email}."
+        }
     },
     "Tests": {
         "Categories": {
@@ -61,7 +70,8 @@
         "Home": {
             "welcome": "Hi!",
             "recentTests": "Recent tests",
-            "lastTest": "Resume test"
+            "lastTest": "Resume test",
+            "quickStats": "Quick stats"
         },
         "Settings": {
             "title": "Settings",

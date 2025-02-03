@@ -1,7 +1,10 @@
 import "@mantine/core/styles.css";
+import '@mantine/charts/styles.css';
+import '@mantine/notifications/styles.css';
 import React from "react";
 import { NextIntlClientProvider } from 'next-intl';
 import { ModalsProvider } from '@mantine/modals';
+import { Notifications } from '@mantine/notifications';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '../../i18n/routing';
@@ -42,6 +45,7 @@ export default async function Locale({ children, params }: Readonly<{ children: 
       <body>
           <NextIntlClientProvider messages={messages}>
             <MantineProvider theme={theme}>
+              <Notifications />
               <ModalsProvider>{children}</ModalsProvider>
             </MantineProvider>
           </NextIntlClientProvider>

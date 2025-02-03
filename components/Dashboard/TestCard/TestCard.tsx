@@ -11,7 +11,7 @@ interface TestCardProps {
     href?: string;
 }
 
-export default function ({ category, subject, coverImage, lastQuestion, href }: TestCardProps) {
+export default function TestCard ({ category, subject, coverImage, lastQuestion, href }: Readonly<TestCardProps>) {
     const t = useTranslations('Tests');
 
     function getAvatarIcon(subject: string) {

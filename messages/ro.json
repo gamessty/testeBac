@@ -9,6 +9,25 @@
             "short": "Trebuie să fiți autorizat pentru a accesa aplicația."
         }
     },
+    "Email": {
+        "MagicLink": {
+            "Old": {
+                "subject": "Conectează-te la TesteBac",
+                "title": "Conectează-te la TesteBac <strong>({host})</strong>",
+                "message": "Vă mulțumim pentru înregistrarea pe TesteBac. Înregistrarea dumneavoastră este în așteptarea aprobării de către un moderator. Acest proces poate dura până la 24 de ore. \n\nDacă aveți întrebări, vă rugăm să ne contactați la {email}.",
+                "disclaimer": "Dacă nu ați solicitat acest email, puteți să îl ignorați în siguranță. Puteți încerca să vă conectați, dar veți primi o eroare acum. Veți putea să vă conectați după ce înregistrarea dumneavoastră este aprobată de un moderator.",
+                "signIn": "Conectează-te",
+                "text_alt": "Dacă întâmpinați dificultăți la apăsarea butonului „{signIn}”, copiați și lipiți URL-ul de mai jos în browser-ul dumneavoastră web: {signInLink}",
+                "text": "Conectează-te la:"
+            },
+            "subject": "Conectează-te la TesteBac",
+            "title": "Conectează-te la TesteBac <strong>({host})</strong>",
+            "message": "",
+            "disclaimer": "Dacă nu ați solicitat acest email, puteți să îl ignorați în siguranță. Contactați suportul dacă aveți întrebări la {email}.",
+            "signIn": "Conectează-te",
+            "text": "Conectează-te la:"
+        }
+    },
     "General": {
         "loading": "Se încarcă...",
         "error": "Eroare",
@@ -79,7 +98,21 @@
             "language": "Limbă",
             "display": "Afișare",
             "notifications": "Notificări",
-            "saveChanges": "Salvează modificările"
+            "saveChanges": "Salvează modificările",
+            "Account": {
+                "title": "Cont",
+                "email": "Email",
+                "deleteAccount": "Șterge contul",
+                "personalInfo": "Informații personale",
+                "username": {
+                    "label": "Nume de utilizator",
+                    "placeholder": "Numele de utilizator"
+                },
+                "deleteConfirmation": "Ești sigur că vrei să ștergi contul? Această acțiune este ireversibilă.",
+                "deleteSuccess": "Contul a fost șters cu succes.",
+                "deleteError": "A apărut o eroare la ștergerea contului. Vă rugăm să încercați din nou.",
+                "deleteCancel": "Anulează"
+            }
         },
         "backToTop": "Înapoi sus",
         "title": "Tablou de bord",

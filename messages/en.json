@@ -9,6 +9,25 @@
             "short": "You need to be authorized to access the app."
         }
     },
+    "Email": {
+        "MagicLink": {
+            "Old": {
+                "subject": "Sign in to TesteBac",
+                "title": "Sign in to TesteBac <strong>({host})</strong>",
+                "message": "Thank you for registering on TesteBac. Your registration is pending approval by a moderator. This process may take up to 24 hours. \n\nIf you have any questions, please contact us at {email}.",
+                "disclaimer": "If you did not request this email you can safely ignore it. You can try to login but you will receive an error now. You will be able to login after your registration is approved by a moderator.",
+                "signIn": "Sign in",
+                "text_alt": "If you have trouble clicking the \"{signIn}\" button, copy and paste the URL below into your web browser: {signInLink}",
+                "text": "Sign in to:"
+            },
+            "subject": "Sign in to TesteBac",
+            "title": "Sign in to TesteBac <strong>({host})</strong>",
+            "message": "",
+            "disclaimer": "If you did not request this email you can safely ignore it. Contact support if you have any questions at {email}.",
+            "signIn": "Sign in",
+            "text": "Sign in to:"
+        }
+    },
     "General": {
         "loading": "Loading...",
         "error": "Error",
@@ -79,7 +98,21 @@
             "language": "Language",
             "display": "Display",
             "notifications": "Notifications",
-            "saveChanges": "Save changes"
+            "saveChanges": "Save changes",
+            "Account": {
+                "title": "Account",
+                "email": "Email",
+                "deleteAccount": "Delete account",
+                "personalInfo": "Personal information",
+                "username": {
+                    "label": "Username",
+                    "placeholder": "Enter your username"
+                },
+                "deleteConfirmation": "Are you sure you want to delete your account? This action cannot be undone.",
+                "deleteSuccess": "Your account has been deleted successfully.",
+                "deleteError": "An error occurred while deleting your account. Please try again later.",
+                "deleteCancel": "Cancel"
+            }
         },
         "backToTop": "Scroll to top",
         "title": "Dashboard",

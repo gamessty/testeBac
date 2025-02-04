@@ -15,6 +15,7 @@ model User {
   image          String?
   roles          String[]        @default(["user"])
   userAuthorized Boolean         @default(false)
+  username       String?         @unique
   accounts       Account[]
   sessions       Session[]
   // Optional for WebAuthn support

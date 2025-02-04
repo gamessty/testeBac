@@ -86,7 +86,12 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                             color='initials'
                         />
                         <Stack gap={2} justify="center" w="100%">
-                            <Text fw={500} ta="left">{session?.user?.email}</Text>
+                            <Text fw={500} ta="left">
+                                {session?.user?.username ?? session?.user?.email}
+                            </Text>
+                            <Text c="dimmed" size='sm' mt={-5} display={{ base: session?.user?.username ? "inherit" : "none" }}>
+                                {session?.user?.email}
+                            </Text>
                             <Grid gutter={3} w="100%">
                                 {
                                     session?.user?.roles?.map((name) => (

@@ -9,19 +9,15 @@ export async function sendVerificationRequest(params: any) {
 
   if (!domain) throw new Error("malformed Mailgun domain")
 
-  console.log()
-
-
-
   let locale = isSupportedLocale(getPathsFromURL(unescape(getQueryParamsFromURL(url).get('callbackUrl') ?? ''))[1]) ? getPathsFromURL(unescape(getQueryParamsFromURL(url).get('callbackUrl') ?? ''))[1] : 'en'
-  console.log(locale)
+
   const t = await getTranslations({ locale, namespace: 'Email.MagicLink' })
 
   const form = new FormData()
   //form.append("from", `${provider.name} <${provider.from}>`)
   form.append("from", `testeBac Login <${provider.from}>`)
   form.append("to", to)
-  form.append("reply-to", process.env.MAILGUN_REPLY_TO ?? provider.from)
+  form.append("h:Reply-To", process.env.MAILGUN_REPLY_TO ?? provider.from)
   form.append("subject", t('subject'))
   form.append("html", html({ host, url, theme, t}))
   form.append("text", text({ host, url, text: t('text') }))

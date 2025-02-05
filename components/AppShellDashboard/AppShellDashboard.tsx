@@ -1,5 +1,5 @@
 'use client';
-import { AppShell, Group, ScrollArea, Button, ActionIcon, Text, Avatar, Divider, Stack, Grid, UnstyledButton, Affix, Transition, Badge, SimpleGrid, Flex, Tooltip } from "@mantine/core";
+import { AppShell, Group, Button, ActionIcon, Text, Avatar, Divider, Stack, Grid, UnstyledButton, Affix, Transition, Badge, Flex, Tooltip, useMatches } from "@mantine/core";
 import { useDidUpdate, useDocumentTitle, useSetState, useWindowScroll } from "@mantine/hooks";
 import { IconHome, IconFile, IconSettingsCog, IconChecklist, IconChartInfographic, IconArrowUp } from "@tabler/icons-react";
 import { Session } from "next-auth";
@@ -12,6 +12,8 @@ import Settings from "../Dashboard/Settings/Settings";
 import Stats from "../Dashboard/Stats/Stats";
 import Tests from "../Dashboard/Tests/Tests";
 import { getInitialsColor } from "../../utils";
+import { useEffect } from "react";
+import UserManager from "../Dashboard/Admin/UserManager/UserManager";
 
 interface AppShellDashboardProps {
     session: Session | null | undefined;
@@ -26,7 +28,10 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
     const [settings, setSettings] = useSetState({
         tab: searchParams.get('tab') ?? 'home',
         title: 'testeBac | ' + t('Navbar.' + (searchParams.get('tab') ?? 'home')),
-        avatarError: false
+        avatarError: false,
+        hour: (new Date()).getHours(),
+        minute: (new Date()).getMinutes(),
+        year: (new Date()).getUTCFullYear()
     });
     useDocumentTitle(settings.title);
 
@@ -36,12 +41,23 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
         setSettings({ title: 'testeBac | ' + t('Navbar.' + (searchParams.get('tab') ?? 'home')), tab: searchParams.get('tab') ?? 'home' });
     }, [searchParams.get('tab')]);
 
+    useEffect(() => {
+        setInterval(() => {
+            setSettings({ hour: (new Date()).getHours(), minute: (new Date()).getMinutes() });
+        }, 60000);
+    });
+
     function handleTabChange({ tab }: { tab: string }) {
         setSettings({ tab, title: 'testeBac | ' + t('Navbar.' + tab) });
         const params = new URLSearchParams(searchParams.toString());
         params.set('tab', tab);
         window.history.pushState(null, '', `?${params.toString()}`);
     }
+
+    const affixPosition = useMatches({
+        base: { bottom: 95, right: 20 },
+        sm: { bottom: 20, right: 20 }
+    })
 
     return (
         <AppShell
@@ -55,12 +71,12 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                         testeBac
                     </Text>
                     <Text fw={700} size="xl">
-                        {(new Date()).getHours()}:{(new Date()).getMinutes()}
+                        {settings.hour < 10 ? '0' + settings.hour : settings.hour}:{settings.minute < 10 ? '0' + settings.minute : settings.minute}
                     </Text>
                 </Group>
             </AppShell.Header>
             <AppShell.Navbar p="md">
-                <AppShell.Section grow my="md" component={ScrollArea}>
+                <AppShell.Section grow my="md">
                     <Stack
                         align="stretch"
                         justify="space-around"
@@ -70,6 +86,8 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                         <Button color="grape" onClick={() => handleTabChange({ tab: 'tests' })} variant={settings.tab == 'tests' ? 'light' : 'outline'} justify="left" h={35} leftSection={<IconFile size={17} />}>{t('Navbar.tests')}</Button>
                         <Button color="green" onClick={() => handleTabChange({ tab: 'stats' })} variant={settings.tab == 'stats' ? 'light' : 'outline'} justify="left" h={35} leftSection={<IconChartInfographic size={17} />}>{t('Navbar.stats')}</Button>
                         <Button color="pink" onClick={() => handleTabChange({ tab: 'settings' })} variant={settings.tab == 'settings' ? 'light' : 'outline'} justify="left" h={35} leftSection={<IconSettingsCog size={17} />}>{t('Navbar.settings')}</Button>
+                        {session?.user.roles.includes("admin") && <><Divider />{t('Navbar.admin.title')}</>}
+                        {session?.user.roles.includes("admin") && <Button color="red" onClick={() => handleTabChange({ tab: 'admin.users' })} variant={settings.tab == 'admin.users' ? 'light' : 'outline'} justify="left" h={35} leftSection={<IconSettingsCog size={17} />}>{t('Navbar.admin.users')}</Button>}
                     </Stack>
                 </AppShell.Section>
                 <AppShell.Section>
@@ -82,7 +100,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                             onError={({ currentTarget }) => { currentTarget.onerror = null; setSettings({ avatarError: true }); }}
                             key={session?.user?.email}
                             src={settings.avatarError ? undefined : session?.user?.image ?? undefined}
-                            name={session?.user?.email ?? undefined}
+                            name={session?.user?.username ?? session?.user?.email ?? undefined}
                             color='initials'
                         />
                         <Stack gap={2} justify="center" w="100%">
@@ -109,7 +127,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                 <Divider />
                 <AppShell.Section>
                     <Group justify="space-between" mt={10}>
-                        <Text ta="center">Ⓒ {(new Date()).getUTCFullYear()}</Text>
+                        <Text ta="center">Ⓒ {settings.year}</Text>
                         <ColorSchemeToggleIcon />
                     </Group>
                 </AppShell.Section>
@@ -143,12 +161,19 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                         </>
                     )}
                 </Transition>
+                <Transition transition="fade-right" timingFunction="ease" duration={600} mounted={settings.tab == 'admin.users'}>
+                    {(transitionStyles) => (
+                        <>
+                            {settings.tab == 'admin.users' && <UserManager session={session} style={transitionStyles} />}
+                        </>
+                    )}
+                </Transition>
             </AppShell.Main>
             <AppShell.Footer p={15} display={{ sm: "none" }}>
                 <Grid grow>
                     <Grid.Col span={1}>
                         <UnstyledButton disabled>
-                            <Avatar onError={({ currentTarget }) => { currentTarget.onerror = null; setSettings({ avatarError: true }); }} key={session?.user?.email} src={settings.avatarError ? undefined : session?.user?.image ?? undefined} name={session?.user?.email ?? undefined} color='initials' />
+                            <Avatar onError={({ currentTarget }) => { currentTarget.onerror = null; setSettings({ avatarError: true }); }} key={session?.user?.email} src={settings.avatarError ? undefined : session?.user?.image ?? undefined} name={session?.user?.username ?? session?.user?.email ?? undefined} color='initials' />
                         </UnstyledButton>
                     </Grid.Col>
                     <Grid.Col span={10}>
@@ -185,7 +210,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                 </Grid>
 
             </AppShell.Footer>
-            <Affix position={{ bottom: 20, right: 20 }}>
+            <Affix position={affixPosition}>
                 <Transition transition="slide-up" mounted={scroll.y > 0}>
                     {(transitionStyles) => (
                         <Button
@@ -201,3 +226,4 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
         </AppShell>
     );
 }
+

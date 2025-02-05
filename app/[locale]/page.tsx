@@ -43,17 +43,17 @@ export default async function HomePage({ searchParams }: Readonly<{ searchParams
                 <NotificationUnathorized show={show && getBooleanValue(notification)} data={{
                     withBorder: true,
                     title: t('userNotAuthorized.title'),
-                    message: t('userNotAuthorized.message', { email: "dev@gamessty.eu"}),
+                    message: t('userNotAuthorized.message', { email: "support@gamessty.eu"}),
                     color: 'red',
                     autoClose: false,
                     position: 'top-center',
                 }} />
                 <Modal show={show && !getBooleanValue(notification)} data = {{
                     title: t('userNotAuthorized.title'),
-                    children: (<><Alert variant="filled" color="red" icon={< IconAlertTriangleFilled />}>{t('userNotAuthorized.message', { email: "dev@gamessty.eu"})}</Alert><SignOutButtonClient session={session} fullWidth /></>),
-                    withCloseButton: false,
-                    closeOnEscape: false,
-                    closeOnClickOutside: false,
+                    children: (<><Alert variant="filled" color="red" icon={< IconAlertTriangleFilled />}>{t('userNotAuthorized.message', { email: "support@gamessty.eu"})}</Alert><SignOutButtonClient session={session} fullWidth /></>),
+                    withCloseButton: session?.user?.userAuthorized ?? false,
+                    closeOnEscape: session?.user?.userAuthorized ?? false,
+                    closeOnClickOutside: session?.user?.userAuthorized ?? false,
                 }}/>
             </Center>
         </Container>

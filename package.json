@@ -1,5 +1,5 @@
 {
-  "name": "mantine-minimal-next-template",
+  "name": "teste_bac_app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
@@ -16,6 +16,7 @@
     "@mantine/hooks": "7.16.2",
     "@mantine/modals": "^7.16.2",
     "@mantine/notifications": "^7.16.2",
+    "@next/bundle-analyzer": "^15.1.6",
     "@prisma/client": "^6.3.0",
     "@simplewebauthn/browser": "^9.0.1",
     "@simplewebauthn/server": "^9.0.3",
@@ -39,6 +40,5 @@
     "postcss-simple-vars": "^7.0.1",
     "prisma": "^6.3.0",
     "typescript": "5.7.3"
-  },
-  "packageManager": "yarn@4.6.0"
+  }
 }

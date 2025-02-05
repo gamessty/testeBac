@@ -13,7 +13,6 @@ export default async function SignIn() {
         <form
             action={async (formData) => {
                 "use server"
-                console.log("formData", formData)
                 await signIn("mailgun", formData)
             }}
         >

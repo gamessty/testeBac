@@ -1,6 +1,4 @@
-import { DonutChart } from "@mantine/charts";
 import { Card, Center, Text } from "@mantine/core";
-import { useTranslations } from "next-intl";
 import { data } from "./data.example";
 
 interface StatsCardProps {
@@ -17,7 +15,6 @@ export default function StatsCard ({ href }: Readonly<StatsCardProps>) {
 
             <Card.Section>
                 <Center>
-                    <DonutChart data={data} startAngle={180} endAngle={0} />
                 </Center>
             </Card.Section>
         </Card>

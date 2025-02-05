@@ -2,7 +2,6 @@ import { Title, Text, Grid, MantineStyleProp } from "@mantine/core";
 import classes from "./Home.module.css";
 import { useTranslations } from "next-intl";
 import TestCard from "../TestCard/TestCard";
-import StatsCard from "../StatsCard/StatsCard";
 
 interface HomeProps {
     style?: MantineStyleProp;
@@ -29,7 +28,6 @@ export default function Home({ style }: Readonly<HomeProps>) {
                 <Title order={2} mb={10} ta="left">
                     {t('Home.quickStats')}
                 </Title>
-                <StatsCard href="#" />
             </Grid.Col>
         </Grid>
     );

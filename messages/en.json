@@ -84,7 +84,11 @@
             "results": "Results",
             "stats": "Stats",
             "profile": "Profile",
-            "settings": "Settings"
+            "settings": "Settings",
+            "admin": {
+                "title": "Admin Panel",
+                "users": "Users"
+            }
         },
         "Home": {
             "welcome": "Hi!",
@@ -97,6 +101,7 @@
             "account": "Account",
             "language": "Language",
             "display": "Display",
+            "debug": "Debug",
             "notifications": "Notifications",
             "saveChanges": "Save changes",
             "Account": {
@@ -112,6 +117,44 @@
                 "deleteSuccess": "Your account has been deleted successfully.",
                 "deleteError": "An error occurred while deleting your account. Please try again later.",
                 "deleteCancel": "Cancel"
+            }
+        },
+        "UserManager": {
+            "title": "User Manager",
+            "viewProfile": "View profile",
+            "authorized": "Authorized",
+            "unauthorized": "Unauthorized",
+            "users": "{count, plural, =1 {# user} other {# users}}",
+            "drawer": {
+                "save": "Save",
+                "delete": "Delete account",
+                "username": {
+                    "label": "Username",
+                    "placeholder": "Enter the username",
+                    "error": "The username is required and must be at least 3 characters long.",
+                    "description": "The username must be unique."
+                },
+                "email": {
+                    "label": "Email",
+                    "placeholder": "Enter the email",
+                    "error": "The email is required and must be a valid email address.",
+                    "description": "The email must be unique."
+                },
+                "roles": {
+                    "label": "Roles",
+                    "placeholder": "Select roles",
+                    "error": "Roles are required."
+                },
+                "authorized": {
+                    "label": "Authorization",
+                    "description": "The user's authorized to use the app."
+                }
+            },
+            "errors": {
+                "fetch": {
+                    "title": "{error, select, Unauthorized {Unauthorized} other {General error}}",
+                    "message": "{error, select, Unauthorized {You are not authorized to access this administration page. If you believe this is an error, refresh the page and try again later.} other {Unknown general error. Please try again later.}}"
+                }
             }
         },
         "backToTop": "Scroll to top",

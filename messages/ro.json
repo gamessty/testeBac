@@ -84,7 +84,11 @@
             "results": "Rezultate",
             "stats": "Statistici",
             "profile": "Profil",
-            "settings": "Setări"
+            "settings": "Setări",
+            "admin": {
+                "title": "Panou de administrare",
+                "users": "Utilizatori"
+            }
         },
         "Home": {
             "welcome": "Salut!",
@@ -97,6 +101,7 @@
             "account": "Cont",
             "language": "Limbă",
             "display": "Afișare",
+            "debug": "Debug",
             "notifications": "Notificări",
             "saveChanges": "Salvează modificările",
             "Account": {
@@ -112,6 +117,44 @@
                 "deleteSuccess": "Contul a fost șters cu succes.",
                 "deleteError": "A apărut o eroare la ștergerea contului. Vă rugăm să încercați din nou.",
                 "deleteCancel": "Anulează"
+            }
+        },
+        "UserManager": {
+            "title": "Utilizatori",
+            "viewProfile": "Vezi profilul",
+            "authorized": "Autorizat",
+            "unauthorized": "Neautorizat",
+            "users": "{count, plural, =1 {utilizator} other {# utilizatori}}",
+            "drawer": {
+                "save": "Salvează",
+                "delete": "Șterge contul",
+                "username": {
+                    "label": "Nume de utilizator",
+                    "placeholder": "Introduceți numele de utilizator",
+                    "error": "Numele de utilizator să aibă cel puțin 3 caractere.",
+                    "description": "Numele de utilizator este unic."
+                },
+                "email": {
+                    "label": "Email",
+                    "placeholder": "Introduceți email-ul",
+                    "error": "Email-ul este necesar.",
+                    "description": "Email-ul trebuie să fie valid."
+                },
+                "roles": {
+                    "label": "Roluri",
+                    "placeholder": "Selectați rolurile",
+                    "error": "Cel puțin un rol este necesar."
+                },
+                "authorized": {
+                    "label": "Utilizator autorizat",
+                    "description": "Utilizatorul este autorizat să folosească aplicația."
+                }
+            },
+            "errors": {
+                "fetch": {
+                    "title": "{error, select, Unauthorized {Eroare de autorizare} other {Eroare generală}}",
+                    "message": "{error, select, Unauthorized {Nu sunteți autorizat să accesați această pagină de administrare. Dacă considerați că este o eroare efectuați un refresh la pagină și încercați din nou mai târziu.} other {Eroare generală necunoscută. Vă rugăm să încercați din nou mai târziu.}}"
+                }
             }
         },
         "backToTop": "Înapoi sus",

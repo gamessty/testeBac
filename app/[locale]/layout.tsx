@@ -1,5 +1,4 @@
 import "@mantine/core/styles.css";
-import '@mantine/charts/styles.css';
 import '@mantine/notifications/styles.css';
 import React from "react";
 import { NextIntlClientProvider } from 'next-intl';
@@ -21,7 +20,7 @@ export const metadata = {
   description: "Home page of the testeBac project",
 };
 
-export default async function Locale({ children, params }: Readonly<{ children: React.ReactNode; params: { locale: string }}>) {
+export default async function Locale({ children, params }: Readonly<{ children: React.ReactNode; params: Promise<{ locale: string }>}>) {
   // Ensure that the incoming `locale` is valid
   const { locale } = await params;
   if (!routing.locales.includes(locale as any)) {
@@ -44,7 +43,7 @@ export default async function Locale({ children, params }: Readonly<{ children: 
       </head>
       <body>
           <NextIntlClientProvider messages={messages}>
-            <MantineProvider theme={theme}>
+            <MantineProvider defaultColorScheme="auto" theme={theme}>
               <Notifications />
               <ModalsProvider>{children}</ModalsProvider>
             </MantineProvider>

@@ -87,6 +87,7 @@
             "settings": "Setări",
             "admin": {
                 "title": "Panou de administrare",
+                "shortTitle": "Administrare",
                 "users": "Utilizatori"
             }
         },

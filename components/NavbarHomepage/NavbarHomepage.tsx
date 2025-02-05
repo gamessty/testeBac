@@ -2,6 +2,7 @@ import { Flex, SimpleGrid, Text } from "@mantine/core";
 import ProfileEmail from "../ProfileEmail/ProfileEmail";
 import SignOutButton from "../SignOutButton/SignOutButton";
 import SignInButton from "../SignInButton/SignInButton";
+import ColorSchemeToggleIcon from "../ColorSchemeToggleIcon/ColorSchemeToggleIcon";
 
 export default function NavbarHomepage() {
     return (
@@ -15,6 +16,7 @@ export default function NavbarHomepage() {
                 <SignInButton />
                 <ProfileEmail />
                 <SignOutButton />
+                <ColorSchemeToggleIcon />
             </Flex>
         </SimpleGrid>
     );

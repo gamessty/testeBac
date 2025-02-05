@@ -51,6 +51,10 @@ export default function UserManager({ session, style }: Readonly<UserManagerProp
         fetchUsers();
     }, []);
 
+    useEffect(() => {
+        setSearchResults(users);
+    }, [users]);
+
     function updateUsersAfterChange(userUp: User = user, clearUserChanges: boolean = false, deleteUser: boolean = false) {
         if (clearUserChanges) setUserChanges({});
         if (deleteUser) return setUsers(users.filter((u) => u.id !== userUp.id));
@@ -59,7 +63,7 @@ export default function UserManager({ session, style }: Readonly<UserManagerProp
 
     const handleSearch = useDebouncedCallback(async (query: string) => {
         setLoading(true);
-        setSearchResults(users.filter((user) => user.username?.toLowerCase().includes(query.toLowerCase()) || user.email?.toLowerCase().includes(query.toLowerCase()) || user.id?.toString().includes(query) || user.name?.toLowerCase().includes(query.toLowerCase())));
+        setSearchResults(users.filter((user) => user.username?.toLowerCase().includes(query.toLowerCase()) || user.email?.toLowerCase().includes(query.toLowerCase()) || user.id?.toString().includes(query) || user.name?.toLowerCase().includes(query.toLowerCase()) || user.roles?.toString().toLowerCase().includes(query.toLowerCase())));
         setLoading(false);
     }, 500);
 
@@ -142,7 +146,7 @@ export default function UserManager({ session, style }: Readonly<UserManagerProp
             <Group mt={20} justify="flex-end">
                 {
                     //implement a confirmation dialog
-                    session.user.roles.includes("owner") && session.user?.id != user.id && <Button color="red" onClick={() => { deleteUser({ id: user?.id }); updateUsersAfterChange({ ...user, ...userChanges }, true, true); }}>
+                    session.user.roles.includes("owner") && session.user?.id != user.id && <Button color="red" onClick={() => { deleteUser({ id: user?.id }); updateUsersAfterChange({ ...user, ...userChanges }, true, true); close(); }}>
                         {t('drawer.delete')}
                     </Button>
                 }

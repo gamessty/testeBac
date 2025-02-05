@@ -1,7 +1,7 @@
 'use client';
-import { AppShell, Group, Button, ActionIcon, Text, Avatar, Divider, Stack, Grid, UnstyledButton, Affix, Transition, Badge, Flex, Tooltip, useMatches } from "@mantine/core";
+import { AppShell, Group, Button, ActionIcon, Text, Avatar, Divider, Stack, Grid, UnstyledButton, Affix, Transition, Badge, Flex, Tooltip, useMatches, Menu } from "@mantine/core";
 import { useDidUpdate, useDocumentTitle, useSetState, useWindowScroll } from "@mantine/hooks";
-import { IconHome, IconFile, IconSettingsCog, IconChecklist, IconChartInfographic, IconArrowUp } from "@tabler/icons-react";
+import { IconHome, IconFile, IconSettingsCog, IconChecklist, IconChartInfographic, IconArrowUp, IconMessageCircle, IconPhoto, IconSearch, IconUsers } from "@tabler/icons-react";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import ColorSchemeToggleIcon from "../ColorSchemeToggleIcon/ColorSchemeToggleIcon";
@@ -18,6 +18,14 @@ import UserManager from "../Dashboard/Admin/UserManager/UserManager";
 interface AppShellDashboardProps {
     session: Session | null | undefined;
 }
+interface SettingsSetState {
+    tab: string;
+    title: string;
+    avatarError: boolean;
+    hour: number;
+    minute: number;
+    year: number;
+}
 
 export default function AppShellDashboard({ session }: Readonly<AppShellDashboardProps>) {
     const searchParams = useSearchParams();
@@ -25,7 +33,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
     const t = useTranslations('Dashboard');
     const ta = useTranslations('Authentication');
 
-    const [settings, setSettings] = useSetState({
+    const [settings, setSettings] = useSetState<SettingsSetState>({
         tab: searchParams.get('tab') ?? 'home',
         title: 'testeBac | ' + t('Navbar.' + (searchParams.get('tab') ?? 'home')),
         avatarError: false,
@@ -51,7 +59,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
         setSettings({ tab, title: 'testeBac | ' + t('Navbar.' + tab) });
         const params = new URLSearchParams(searchParams.toString());
         params.set('tab', tab);
-        window.history.pushState(null, '', `?${params.toString()}`);
+        if (typeof window !== 'undefined') window.history.pushState(null, '', `?${params.toString()}`);
     }
 
     const affixPosition = useMatches({
@@ -172,9 +180,30 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
             <AppShell.Footer p={15} display={{ sm: "none" }}>
                 <Grid grow>
                     <Grid.Col span={1}>
-                        <UnstyledButton disabled>
-                            <Avatar onError={({ currentTarget }) => { currentTarget.onerror = null; setSettings({ avatarError: true }); }} key={session?.user?.email} src={settings.avatarError ? undefined : session?.user?.image ?? undefined} name={session?.user?.username ?? session?.user?.email ?? undefined} color='initials' />
-                        </UnstyledButton>
+                        <Menu shadow="md" position="top-start" offset={20} transitionProps={{ transition: 'pop-bottom-left', duration: 200 }}>
+                            <Menu.Target>
+                                <UnstyledButton>
+                                    <Avatar onError={({ currentTarget }) => { currentTarget.onerror = null; setSettings({ avatarError: true }); }} key={session?.user?.email} src={settings.avatarError ? undefined : session?.user?.image ?? undefined} name={session?.user?.username ?? session?.user?.email ?? undefined} color='initials' />
+                                </UnstyledButton>
+                            </Menu.Target>
+
+                            <Menu.Dropdown w={160}>
+                                {(session?.user.roles.includes("admin") || session?.user.roles.includes("owner")) &&
+                                    <>
+                                        <Menu.Label>{t('Navbar.admin.shortTitle')}</Menu.Label>
+                                        <Menu.Item onClick={() => handleTabChange({ tab: 'admin.users' })} leftSection={<IconUsers size={14} />}>
+                                            {t('Navbar.admin.users')}
+                                        </Menu.Item>
+                                        <Menu.Divider />
+                                    </>
+                                }
+
+                                <Menu.Item onClick={() => handleTabChange({ tab: 'stats' })} leftSection={<IconChartInfographic size={14} />}>
+                                    {t('Navbar.stats')}
+                                </Menu.Item>
+
+                            </Menu.Dropdown>
+                        </Menu>
                     </Grid.Col>
                     <Grid.Col span={10}>
                         <Group justify="space-between" grow>

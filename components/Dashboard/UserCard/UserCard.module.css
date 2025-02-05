@@ -7,3 +7,17 @@
 .user-card {
     position: relative;
 }
+
+.user-card:has(.user-card_button_section) {
+    padding-bottom: var(--mantine-spacing-xl);
+}
+
+.user-card:has(.user-card_button_section):nth-last-child(2) {
+    margin-bottom: var(--mantine-spacing-xl);
+}
+
+.user-card_button_section {
+    position: absolute;
+    bottom: var(--mantine-spacing-lg);
+    width: 100%;
+}

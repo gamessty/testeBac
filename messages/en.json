@@ -87,6 +87,7 @@
             "settings": "Settings",
             "admin": {
                 "title": "Admin Panel",
+                "shortTitle": "Admin",
                 "users": "Users"
             }
         },

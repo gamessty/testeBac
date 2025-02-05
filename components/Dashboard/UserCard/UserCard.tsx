@@ -40,21 +40,25 @@ export default function UserCard({ user, style, onClick, skeleton = false}: Read
                 </Stack>
             </Group>
 
-            <Grid gutter={3} w="100%">
-                {
-                    user?.roles?.map((name: string) => (
-                        <Grid.Col pt={0} mt={-4} span="content" key={name}>
-                            <Tooltip tt="capitalize" label={name} color={getInitialsColor(name)} withArrow>
-                                <Badge size="md" variant="dot" color={getInitialsColor(name)} radius="xs" tt="capitalize">{name}</Badge>
-                            </Tooltip>
-                        </Grid.Col>
-                    ))
-                }
-            </Grid>
+            <Card.Section inheritPadding pb="md">
+                <Grid gutter={3} w="100%" pb="md">
+                    {
+                        user?.roles?.map((name: string) => (
+                            <Grid.Col pt={0} mt={-4} span="content" key={name}>
+                                <Tooltip tt="capitalize" label={name} color={getInitialsColor(name)} withArrow>
+                                    <Badge size="md" variant="dot" color={getInitialsColor(name)} radius="xs" tt="capitalize">{name}</Badge>
+                                </Tooltip>
+                            </Grid.Col>
+                        ))
+                    }
+                </Grid>
+            </Card.Section>
 
-            <Button color="blue" fullWidth mt="md" onClick={onClick} radius="md" style={{ position: 'relative' }}>
-                {t('viewProfile')}
-            </Button>
+            <Card.Section className={classes["user-card_button_section"]} inheritPadding pb="md">
+                <Button color="blue" fullWidth onClick={onClick} radius="md" style={{ position: 'relative' }}>
+                    {t('viewProfile')}
+                </Button>
+            </Card.Section>
         </Card>
     </Skeleton>;
 }

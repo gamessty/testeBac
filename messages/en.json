@@ -141,6 +141,10 @@
                     "error": "The email is required and must be a valid email address.",
                     "description": "The email must be unique."
                 },
+                "avatar": {
+                    "label": "Avatar",
+                    "placeholder": "Insert a url to an image"
+                },
                 "roles": {
                     "label": "Roles",
                     "placeholder": "Select roles",

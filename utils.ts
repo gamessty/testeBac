@@ -1,5 +1,8 @@
 import { MantineColor } from '@mantine/core';
 import { locales } from './i18n/routing';
+import { type User } from 'next-auth';
+import { type Role } from '@prisma/client';
+import { Permissions } from './data';
 
 export const alwaysRandomUsernames = (process.env.ALWAYS_RANDOM_USERNAMES ?? 'true') === 'true';
 
@@ -13,7 +16,7 @@ function hashCode(input: string) {
   return hash;
 }
 
-const defaultColors: MantineColor[] = [
+export const defaultColors: MantineColor[] = [
   'blue',
   'cyan',
   'grape',
@@ -26,6 +29,13 @@ const defaultColors: MantineColor[] = [
   'teal',
   'violet',
 ];
+
+export function enumToString(value: Permissions | Permissions[]): string | string[] {
+  if (Array.isArray(value)) {
+    return value.map(v => Permissions[v as unknown as keyof typeof Permissions].toString());
+  }
+  return Permissions[value as unknown as keyof typeof Permissions].toString();
+}
 
 export function getInitialsColor(name: string, colors: MantineColor[] = defaultColors) {
   const hash = hashCode(name);
@@ -57,4 +67,51 @@ export function getQueryParamsFromURL(url: string) {
 
 export function isSupportedLocale(locale: string) {
   return locales.includes(locale);
+}
+
+export const capitalize = <T extends string>(s: T) => (s[0].toUpperCase() + s.slice(1)) as Capitalize<typeof s>;
+
+/**
+ * @param {keyof typeof Permissions | (keyof typeof Permissions)[]} permission The permission to check for or an array of permissions to check for. The format for a permission is "resource:action".
+ * @param {User} [user] The user to check the permission for.
+ * @param {boolean} [allowWildcards=true] Whether to allow wildcards in the permission or not. Wildcards are represented by the "*" character and can only be present in the action parameter.
+ * @returns {boolean} Whether the user has the permission or not.
+*/
+export function checkPermission(permission: string | string[], user?: User, allowWildcards: boolean = true): boolean {
+  if(!user) return false;
+  if(Array.isArray(permission)) return permission.some((perm) => checkPermission(perm, user, allowWildcards));
+  const [resource, action] = permission.split(':')
+  let allowed = user.roles?.some((role) => role.permissions.includes(permission) || role.permissions.includes(`${resource}:all`) || role.permissions.includes("all:*") || (allowWildcards && action == "*" && role.permissions.toString().includes(`${resource}:`))) ?? false;
+  return allowed;
+}
+
+/**
+ * @param {keyof typeof Permissions | (keyof typeof Permissions)[]} permission The permission to check for or an array of permissions to check for. The format for a permission is "resource:action".
+ * @param {User} [user] The user to check the permission for.
+ * @param {boolean} [allowWildcards=true] Whether to allow wildcards in the permission or not. Wildcards are represented by the "*" character and can only be present in the action parameter.
+ * @returns {boolean} Whether the user has the permission or not.
+*/
+export const chkP: ((permission: string | string[], user?: User, allowWildcards?: boolean) => boolean) = checkPermission;
+
+/**
+ * @param {Role[]} roles The roles to get the data from.
+ * @returns {Array<{ group: string, items: { value: string, label: string }[] }>} The data for the roles.
+ */
+export function getRolesData(roles: Role[]): { group: string, items: { value: string, label: string }[] }[] {
+  let data: { group: string, items: { value: string, label: string }[] }[] = [];
+  roles.forEach((role) => {
+    if(!data.some((r) => r.group == role.category)) data.push({ group: role.category, items: [] });
+    data.find((r) => r.group == role.category)?.items.push({ value: role.name, label: capitalize(role.name) });
+  });
+  return data;
+}
+
+/**
+ * 
+ * @param roles The roles to get the data from.
+ * @param allRoles All the roles to get the data from.
+ * @returns The Array of role objects.
+ */
+export function getRolesFromValues(roles: string[], allRoles: Role[]): Role[] {
+  return allRoles.filter((role) => roles.includes(role.name));
 }

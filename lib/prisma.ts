@@ -18,19 +18,67 @@ export const prisma = globalForPrisma.prisma || new PrismaClient().$extends({
                 }
                 args.data.username = username;
 
-                if(args.data.email?.endsWith("@gamessty.eu")) {
+                if (args.data.email?.endsWith("@gamessty.eu")) {
                     args.data.userAuthorized = true;
-                    args.data.roles = ["user", "admin"];
+                    args.data.roles = {
+                        connectOrCreate: [
+                            {
+                                where: {
+                                    name: "admin"
+                                },
+                                create: {
+                                    name: "admin",
+                                    category: "ADMIN",
+                                    permissions: ["admin:panel", "user:readAll", "developer:debug", "user:manage"],
+                                }
+                            },
+                            {
+                                where: {
+                                    name: "user"
+                                },
+                                create: {
+                                    name: "user",
+                                }
+                            }
+                        ],
+                    };
+                } else {
+                    args.data.roles = {
+                        connectOrCreate: {
+                            where: {
+                                name: "user"
+                            },
+                            create: {
+                                name: "user",
+                            }
+                        },
+                    };
                 }
 
-                if(process.env.ALWAYS_USE_AVATARS === "true" && !args.data.image || args.data.image === "") {
+                if (process.env.ALWAYS_USE_AVATARS === "true" && !args.data.image || args.data.image === "") {
                     args.data.image = getRandomUserImageURL(username);
                 }
 
                 return query(args);
             }
         }
-    }
+    },
+    /*result: {
+        user: {
+            roles: {
+                needs: { id: true },
+                compute: async ({ id }) => {
+                    return await prisma.role.findMany({
+                        where: {
+                            userIDs: {
+                                hasSome: [id]
+                            }
+                        }
+                    });
+                }
+            }
+        }
+    }*/
 });
 
 if (process.env.NODE_ENV !== "production") globalForPrisma.prisma = prisma;

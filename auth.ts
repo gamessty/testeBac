@@ -4,6 +4,7 @@ import Google from "next-auth/providers/google"
 import { sendVerificationRequest } from "./lib/authSendRequest"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "./lib/prisma"
+import { Role } from "@prisma/client"
 
 export const { handlers, auth, signIn, signOut, unstable_update } = NextAuth({
   adapter: PrismaAdapter(prisma),
@@ -16,15 +17,21 @@ export const { handlers, auth, signIn, signOut, unstable_update } = NextAuth({
     Google
   ],
   callbacks: {
-    session({ session, user }) {
+    async session({ session, user }) {
       // `session.user.roles` is now a valid property, and will be type-checked
       // in places like `useSession().data.user` or `auth().user`
-
+      const roles = await prisma.role.findMany({
+        where: {
+          userIDs: {
+            hasSome: [user.id]
+          }
+        }
+      });
       return {
         ...session,
         user: {
           ...session.user,
-          roles: user.roles,
+          roles,
           username: user.username,
           userAuthorized: user.userAuthorized
         },
@@ -40,7 +47,7 @@ declare module "next-auth" {
   interface Session {
     user: {
       /** The user's roles. */
-      roles: string[]
+      roles: Role[]
       userAuthorized: boolean
       username?: string | null
       /**
@@ -52,7 +59,7 @@ declare module "next-auth" {
     } & DefaultSession["user"]
   }
   interface User {
-    roles?: string[]
+    roles?: Role[]
     userAuthorized?: boolean
     username?: string | null
   } 

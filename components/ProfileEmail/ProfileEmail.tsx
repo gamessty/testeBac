@@ -1,11 +1,12 @@
 import { auth } from '../../auth'
-import { Avatar, Group, Stack, Text } from '@mantine/core';
+import { Group, Stack, Text } from '@mantine/core';
+import AvatarFallback from '../AvatarFallback/AvatarFallback';
 
 export default async function ProfileEmail() {
     const session = await auth();
     if (!session?.user) return null;
     return <Group justify="center">
-        <Avatar key={session.user.email} src={session.user.image ?? undefined} name={session.user.email ?? undefined} color='initials' />
+        <AvatarFallback key={session.user.email} src={session.user.image ?? undefined} name={session.user.email ?? undefined} color='initials' />
         <Stack
             gap={0}
             align="flex-start"

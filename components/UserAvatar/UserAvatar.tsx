@@ -1,5 +1,5 @@
-import { Avatar } from "@mantine/core"
 import { auth } from "../../auth"
+import AvatarFallback from "../AvatarFallback/AvatarFallback"
  
 export default async function UserAvatar() {
   const session = await auth()
@@ -7,6 +7,6 @@ export default async function UserAvatar() {
   if (!session?.user) return null
  
   return (
-    <Avatar key={session.user.email} src={session.user.image ?? undefined} name={session.user.email ?? undefined} color='initials'/>
+    <AvatarFallback key={session.user.email} src={session.user.image ?? undefined} name={session.user.email ?? undefined} color='initials'/>
   )
 }

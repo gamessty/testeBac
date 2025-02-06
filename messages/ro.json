@@ -125,7 +125,7 @@
             "viewProfile": "Vezi profilul",
             "authorized": "Autorizat",
             "unauthorized": "Neautorizat",
-            "users": "{count, plural, =1 {utilizator} other {# utilizatori}}",
+            "users": "{count, plural, =1 {# utilizator} other {# utilizatori}}",
             "drawer": {
                 "save": "Salvează",
                 "delete": "Șterge contul",
@@ -140,6 +140,10 @@
                     "placeholder": "Introduceți email-ul",
                     "error": "Email-ul este necesar.",
                     "description": "Email-ul trebuie să fie valid."
+                },
+                "avatar": {
+                    "label": "Avatar",
+                    "placeholder": "Introduce-ți URL-ul avatarului"
                 },
                 "roles": {
                     "label": "Roluri",

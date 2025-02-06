@@ -7,6 +7,8 @@ import LocaleSwitch from "../../LocaleSwitch/LocaleSwitch";
 import ColorSchemeToggleIconSegmented from "../../ColorSchemeToggleIconSegmented/ColorSchemeToggleIconSegmented";
 import { Session, User } from "next-auth";
 import putUser from "../../PrismaFunctions/putUser";
+import { chkP } from "../../../utils";
+import AvatarFallback from "../../AvatarFallback/AvatarFallback";
 
 interface SettingsProps {
     session: Session | null | undefined;
@@ -126,7 +128,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                 </Title>
                 {session &&
                     <Group mt={10} justify="flex-start">
-                        <Avatar key={session?.user?.email} src={session?.user?.image ?? undefined} name={session?.user?.username ?? session?.user?.email ?? undefined} color='initials' />
+                        <AvatarFallback key={session?.user?.email} src={session.user?.image ?? undefined} name={session?.user?.username ?? session?.user?.email ?? undefined} color='initials'/>
                         <Stack
                             gap={0}
                             align="flex-start"
@@ -155,7 +157,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                     <ColorSchemeToggleIconSegmented />
                 </Stack>
             </Grid.Col>
-            {session?.user.roles.includes("admin") &&
+            {chkP("developer:debug", session?.user) &&
                 <Grid.Col span={12}>
                     <Title order={2} ta="left">
                         {t('debug')}

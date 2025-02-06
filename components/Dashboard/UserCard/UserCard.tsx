@@ -3,7 +3,8 @@ import { User } from 'next-auth';
 import classes from './UserCard.module.css';
 import { getInitialsColor } from '../../../utils';
 import { useTranslations } from 'next-intl';
-import { type MouseEventHandler } from 'react';
+import { useState, type MouseEventHandler } from 'react';
+import AvatarFallback from '../../AvatarFallback/AvatarFallback';
 
 interface DefaultUserCardProps {
     skeleton?: boolean;
@@ -29,7 +30,7 @@ export default function UserCard({ user, style, onClick, skeleton = false}: Read
         <Card h="100%" shadow="sm" className={classes["user-card"]} padding="lg" radius="md" withBorder style={style}>
             {user?.userAuthorized ? <Badge className={classes["card-badge"]} color="teal">{t('authorized')}</Badge> : <Badge className={classes["card-badge"]} color="red">{t('unauthorized')}</Badge>}
             <Group justify="flex-start" mt="md" mb="xs">
-                <Avatar name={user?.username ?? user?.email ?? undefined} src={user?.image ?? undefined} color="initials" />
+                <AvatarFallback name={user?.username ?? user?.email ?? undefined} src={user?.image ?? undefined} color="initials"/>
                 <Stack
                     gap={0}
                     align="flex-start"
@@ -43,10 +44,10 @@ export default function UserCard({ user, style, onClick, skeleton = false}: Read
             <Card.Section inheritPadding pb="md">
                 <Grid gutter={3} w="100%" pb="md">
                     {
-                        user?.roles?.map((name: string) => (
-                            <Grid.Col pt={0} mt={-4} span="content" key={name}>
-                                <Tooltip tt="capitalize" label={name} color={getInitialsColor(name)} withArrow>
-                                    <Badge size="md" variant="dot" color={getInitialsColor(name)} radius="xs" tt="capitalize">{name}</Badge>
+                        user?.roles?.map((role) => (
+                            <Grid.Col pt={0} mt={-4} span="content" key={role.id}>
+                                <Tooltip tt="capitalize" label={role.name} color={getInitialsColor(role.name)} withArrow>
+                                    <Badge size="sm" variant="dot" color={getInitialsColor(role.name)} radius="xs" tt="capitalize">{role.name}</Badge>
                                 </Tooltip>
                             </Grid.Col>
                         ))

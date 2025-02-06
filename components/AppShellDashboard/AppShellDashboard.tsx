@@ -11,9 +11,11 @@ import { useSearchParams } from "next/navigation";
 import Settings from "../Dashboard/Settings/Settings";
 import Stats from "../Dashboard/Stats/Stats";
 import Tests from "../Dashboard/Tests/Tests";
-import { getInitialsColor } from "../../utils";
-import { useEffect } from "react";
+import { chkP, enumToString, getInitialsColor } from "../../utils";
+import React, { useEffect } from "react";
 import UserManager from "../Dashboard/Admin/UserManager/UserManager";
+import { ITabData, Permissions } from "../../data";
+import AvatarFallback from "../AvatarFallback/AvatarFallback";
 
 interface AppShellDashboardProps {
     session: Session | null | undefined;
@@ -21,7 +23,6 @@ interface AppShellDashboardProps {
 interface SettingsSetState {
     tab: string;
     title: string;
-    avatarError: boolean;
     hour: number;
     minute: number;
     year: number;
@@ -36,7 +37,6 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
     const [settings, setSettings] = useSetState<SettingsSetState>({
         tab: searchParams.get('tab') ?? 'home',
         title: 'testeBac | ' + t('Navbar.' + (searchParams.get('tab') ?? 'home')),
-        avatarError: false,
         hour: (new Date()).getHours(),
         minute: (new Date()).getMinutes(),
         year: (new Date()).getUTCFullYear()
@@ -90,12 +90,26 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                         justify="space-around"
                         gap="md"
                     >
-                        <Button color="orange" onClick={() => handleTabChange({ tab: 'home' })} variant={settings.tab == 'home' ? 'light' : 'outline'} justify="left" h={35} leftSection={<IconHome size={17} />}>{t('Navbar.home')}</Button>
-                        <Button color="grape" onClick={() => handleTabChange({ tab: 'tests' })} variant={settings.tab == 'tests' ? 'light' : 'outline'} justify="left" h={35} leftSection={<IconFile size={17} />}>{t('Navbar.tests')}</Button>
-                        <Button color="green" onClick={() => handleTabChange({ tab: 'stats' })} variant={settings.tab == 'stats' ? 'light' : 'outline'} justify="left" h={35} leftSection={<IconChartInfographic size={17} />}>{t('Navbar.stats')}</Button>
-                        <Button color="pink" onClick={() => handleTabChange({ tab: 'settings' })} variant={settings.tab == 'settings' ? 'light' : 'outline'} justify="left" h={35} leftSection={<IconSettingsCog size={17} />}>{t('Navbar.settings')}</Button>
-                        {session?.user.roles.includes("admin") && <><Divider />{t('Navbar.admin.title')}</>}
-                        {session?.user.roles.includes("admin") && <Button color="red" onClick={() => handleTabChange({ tab: 'admin.users' })} variant={settings.tab == 'admin.users' ? 'light' : 'outline'} justify="left" h={35} leftSection={<IconSettingsCog size={17} />}>{t('Navbar.admin.users')}</Button>}
+                        {
+                            // sort the tabsData by category order and by category and add a divider and the title of the category before the first tab of the category if the category has the showLabel property set to true
+                            tabsData.toSorted((a, b) => a.category.order - b.category.order).map((tab, index, array) => {
+                                if ((tab.category.showLabel && index == 0) || (tab.category.showLabel && index > 0 && array[index - 1].category.name != tab.category.name)) {
+                                    return (
+                                        <React.Fragment key={tab.category.name + index}>
+                                            {tab.category.permissionNeeded && chkP(enumToString(tab.category.permissionNeeded), session?.user) &&
+                                                <>
+                                                    {index !== 0 && <Divider />}
+                                                    <Text c="dimmed" ta="left">{t(`Navbar.${tab.category.name}.title`)}</Text>
+                                                </>
+                                            }
+                                            {chkP(enumToString(tab.permissionNeeded), session?.user) && <Button key={tab.tab} color={tab.color ?? getInitialsColor(tab.tab)} onClick={() => handleTabChange({ tab: tab.tab })} variant={settings.tab == tab.tab ? 'light' : 'outline'} justify="left" h={35} leftSection={tab.icon}>{t(`Navbar.${tab.tab}`)}</Button>}
+                                        </React.Fragment>
+                                    )
+                                } else {
+                                    return (chkP(enumToString(tab.permissionNeeded), session?.user) && <Button key={tab.tab} color={tab.color ?? getInitialsColor(tab.tab)} onClick={() => handleTabChange({ tab: tab.tab })} variant={settings.tab == tab.tab ? 'light' : 'outline'} justify="left" h={35} leftSection={tab.icon}>{t(`Navbar.${tab.tab}`)}</Button>)
+                                }
+                            })
+                        }
                     </Stack>
                 </AppShell.Section>
                 <AppShell.Section>
@@ -104,10 +118,9 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                 <Divider />
                 <AppShell.Section my={10}>
                     <Flex gap="md" align="center">
-                        <Avatar
-                            onError={({ currentTarget }) => { currentTarget.onerror = null; setSettings({ avatarError: true }); }}
+                        <AvatarFallback
                             key={session?.user?.email}
-                            src={settings.avatarError ? undefined : session?.user?.image ?? undefined}
+                            src={session?.user?.image ?? undefined}
                             name={session?.user?.username ?? session?.user?.email ?? undefined}
                             color='initials'
                         />
@@ -120,10 +133,10 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                             </Text>
                             <Grid gutter={3} w="100%">
                                 {
-                                    session?.user?.roles?.map((name) => (
-                                        <Grid.Col pt={0} mt={-6} span="content" key={name}>
-                                            <Tooltip tt="capitalize" label={name} color={getInitialsColor(name)} withArrow>
-                                                <Badge size="sm" variant="dot" color={getInitialsColor(name)} radius="xs" tt="capitalize">{name}</Badge>
+                                    session?.user?.roles?.map((role) => (
+                                        <Grid.Col pt={0} mt={-6} span="content" key={role.id}>
+                                            <Tooltip tt="capitalize" label={role.name} color={getInitialsColor(role.name)} withArrow>
+                                                <Badge size="sm" variant="dot" color={getInitialsColor(role.name)} radius="xs" tt="capitalize">{role.name}</Badge>
                                             </Tooltip>
                                         </Grid.Col>
                                     ))
@@ -141,41 +154,20 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                 </AppShell.Section>
             </AppShell.Navbar>
             <AppShell.Main>
-                <Transition transition="fade-right" timingFunction="ease" duration={600} mounted={settings.tab == 'home'}>
-                    {(transitionStyles) => (
-                        <>
-                            {settings.tab == 'home' && <Home style={transitionStyles} />}
-                        </>
-                    )}
-                </Transition>
-                <Transition transition="fade-right" timingFunction="ease" duration={600} mounted={settings.tab == 'tests'}>
-                    {(transitionStyles) => (
-                        <>
-                            {settings.tab == 'tests' && <Tests style={transitionStyles} />}
-                        </>
-                    )}
-                </Transition>
-                <Transition transition="fade-right" timingFunction="ease" duration={600} mounted={settings.tab == 'stats'}>
-                    {(transitionStyles) => (
-                        <>
-                            {settings.tab == 'stats' && <Stats style={transitionStyles} />}
-                        </>
-                    )}
-                </Transition>
-                <Transition transition="fade-right" timingFunction="ease" duration={600} mounted={settings.tab == 'settings'}>
-                    {(transitionStyles) => (
-                        <>
-                            {settings.tab == 'settings' && <Settings style={transitionStyles} session={session} />}
-                        </>
-                    )}
-                </Transition>
-                <Transition transition="fade-right" timingFunction="ease" duration={600} mounted={settings.tab == 'admin.users'}>
-                    {(transitionStyles) => (
-                        <>
-                            {settings.tab == 'admin.users' && <UserManager session={session} style={transitionStyles} />}
-                        </>
-                    )}
-                </Transition>
+                {
+                    // NEED TO AUTOMATE THIS MAIN SECTION USING THE NEW tabData ARRAY, how.... I do not know yet
+                }
+                {
+                    tabsData.map((tab) => (
+                        <Transition key={tab.tab + "_tabComponent"} transition="fade-right" timingFunction="ease" duration={500} mounted={settings.tab == tab.tab}>
+                            {(transitionStyles) => (
+                                <>
+                                    {settings.tab == tab.tab && tab.component && <tab.component session={session} style={transitionStyles} />}
+                                </>
+                            )}
+                        </Transition>
+                    ))
+                }
             </AppShell.Main>
             <AppShell.Footer p={15} display={{ sm: "none" }}>
                 <Grid grow>
@@ -183,12 +175,12 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                         <Menu shadow="md" position="top-start" offset={20} transitionProps={{ transition: 'pop-bottom-left', duration: 200 }}>
                             <Menu.Target>
                                 <UnstyledButton>
-                                    <Avatar onError={({ currentTarget }) => { currentTarget.onerror = null; setSettings({ avatarError: true }); }} key={session?.user?.email} src={settings.avatarError ? undefined : session?.user?.image ?? undefined} name={session?.user?.username ?? session?.user?.email ?? undefined} color='initials' />
+                                    <AvatarFallback key={session?.user?.email} src={session?.user?.image ?? undefined} name={session?.user?.username ?? session?.user?.email ?? undefined} color='initials' />
                                 </UnstyledButton>
                             </Menu.Target>
 
                             <Menu.Dropdown w={160}>
-                                {(session?.user.roles.includes("admin") || session?.user.roles.includes("owner")) &&
+                                {(chkP('user:manage', session?.user)) &&
                                     <>
                                         <Menu.Label>{t('Navbar.admin.shortTitle')}</Menu.Label>
                                         <Menu.Item onClick={() => handleTabChange({ tab: 'admin.users' })} leftSection={<IconUsers size={14} />}>
@@ -256,3 +248,66 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
     );
 }
 
+export const tabsData: ITabData[] = [
+    {
+        "tab": "home",
+        "icon": (<IconHome size={17} />),
+        "component": Home,
+        "category": {
+            "name": "general",
+            "order": 0,
+            "namespaced": false,
+            "showLabel": false
+        },
+        "permissionNeeded": Permissions["general:*"]
+    },
+    {
+        "tab": "tests",
+        "icon": (<IconFile size={17} />),
+        "component": Tests,
+        "category": {
+            "name": "general",
+            "order": 0,
+            "namespaced": false,
+            "showLabel": false
+        },
+        "permissionNeeded": Permissions["general:*"]
+    },
+    {
+        "tab": "stats",
+        "icon": (<IconChartInfographic size={17} />),
+        "component": Stats,
+        "category": {
+            "name": "general",
+            "order": 0,
+            "namespaced": false,
+            "showLabel": false
+        },
+        "permissionNeeded": Permissions["general:*"]
+    },
+    {
+        "tab": "settings",
+        "icon": (<IconSettingsCog size={17} />),
+        "component": Settings,
+        "category": {
+            "name": "general",
+            "order": 0,
+            "namespaced": false,
+            "showLabel": false
+        },
+        "permissionNeeded": Permissions["general:*"]
+    },
+    {
+        "tab": "admin.users",
+        "icon": (<IconUsers size={17} />),
+        "component": UserManager,
+        "category": {
+            "name": "admin",
+            "order": 1,
+            "namespaced": true,
+            "showLabel": true,
+            "permissionNeeded": Permissions["user:*"]
+        },
+        "permissionNeeded": Permissions["user:manage"]
+    }
+]

@@ -2,6 +2,7 @@ import { Card, Group, Badge, Button, Image, Text, Avatar } from "@mantine/core";
 import { useTranslations } from "next-intl";
 import clasess from './TestCard.module.css';
 import { IconCodeAsterisk, IconFlask2, IconMicroscope, IconSchool } from "@tabler/icons-react";
+import AvatarFallback from "../../AvatarFallback/AvatarFallback";
 
 interface TestCardProps {
     category?: string;
@@ -38,7 +39,7 @@ export default function TestCard ({ category, subject, coverImage, lastQuestion,
             </Card.Section>}
 
             {subject && <Group justify="left" mb="xs">
-                {!coverImage && <Avatar name={subject} color="initials">{getAvatarIcon(subject)}</Avatar>}
+                {!coverImage && <AvatarFallback name={subject} color="initials">{getAvatarIcon(subject)}</AvatarFallback>}
                 <Text fw={500}>{t(`Subjects.${subject}`)}</Text>
                 {category && !coverImage && <Badge className={clasess["card-badge"]} color="pink">{t(`Categories.${category}`)}</Badge>}
             </Group>}

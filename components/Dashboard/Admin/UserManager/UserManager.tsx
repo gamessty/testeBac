@@ -1,6 +1,6 @@
 "use client";
 
-import { Container, MantineStyleProp, SimpleGrid, Text, Title, Drawer, Avatar, Group, Stack, Input, Checkbox, TagsInput, MultiSelect, Button, Transition, JsonInput, Blockquote, TextInput, Loader, CloseButton } from "@mantine/core";
+import { Container, MantineStyleProp, SimpleGrid, Text, Title, Drawer, Group, Stack, Input, Checkbox, MultiSelect, Button, Transition, JsonInput, Blockquote, TextInput, Loader, CloseButton } from "@mantine/core";
 import { type Session, type User } from "next-auth";
 import { useTranslations } from "next-intl";
 import UserCard from "../../UserCard/UserCard";
@@ -10,6 +10,10 @@ import { useDebouncedCallback, useDisclosure } from "@mantine/hooks";
 import putUser from "../../../PrismaFunctions/putUser";
 import { IconAlertTriangleFilled } from "@tabler/icons-react";
 import deleteUser from "../../../PrismaFunctions/deleteUser";
+import { chkP, getRolesData, getRolesFromValues } from "../../../../utils";
+import getRoles from "../../../PrismaFunctions/getRoles";
+import { Role } from "@prisma/client";
+import AvatarFallback from "../../../AvatarFallback/AvatarFallback";
 
 interface UserManagerProps {
     session: Session | null | undefined;
@@ -21,6 +25,7 @@ export default function UserManager({ session, style }: Readonly<UserManagerProp
     const [search, setSearch] = useState("");
     const [searchResults, setSearchResults] = useState([] as User[]);
     const [users, setUsers] = useState([] as User[]);
+    const [roles, setRoles] = useState([] as Role[]);
     const [user, setUser] = useState({} as User);
     const [userChanges, setUserChanges] = useState({} as User);
     const [opened, { open, close }] = useDisclosure(false);
@@ -38,17 +43,23 @@ export default function UserManager({ session, style }: Readonly<UserManagerProp
     }
 
     useEffect(() => {
-        async function fetchUsers() {
+        async function fetchData() {
             let fetchedUsers = await getUsers();
+            let fetchedRoles = await getRoles();
             if (!Array.isArray(fetchedUsers) && fetchedUsers?.message) {
-                setError(fetchedUsers.message);
+                return setError(fetchedUsers.message);
             }
-            else if (Array.isArray(fetchedUsers)) {
+            else if (!Array.isArray(fetchedRoles) && fetchedRoles?.message) {
+                return setError(fetchedRoles.message);
+            }
+            else if (Array.isArray(fetchedUsers) && Array.isArray(fetchedRoles)) {
                 setUsers(fetchedUsers);
+                setRoles(fetchedRoles);
                 setSearchResults(fetchedUsers);
             }
+
         }
-        fetchUsers();
+        fetchData();
     }, []);
 
     useEffect(() => {
@@ -72,7 +83,7 @@ export default function UserManager({ session, style }: Readonly<UserManagerProp
         handleSearch(event.currentTarget.value);
     }
 
-    if (!session?.user.roles.includes("admin")) return <Text>Unauthorized</Text>;
+    if (!chkP("user:manage", session?.user)) return <Text>Unauthorized</Text>;
 
     return <Container fluid p={{ base: 25, sm: 35 }} pt={{ base: 5, sm: 10 }} pb={95} style={style}>
         <Title order={1} w="100%" ta="left" mb={20}>
@@ -87,6 +98,7 @@ export default function UserManager({ session, style }: Readonly<UserManagerProp
             </Blockquote>
         }
         <TextInput
+            display={chkP('user:manage', session?.user) ? "inherit" : "none"}
             value={search}
             onChange={handleChange}
             placeholder="Search..."
@@ -95,14 +107,17 @@ export default function UserManager({ session, style }: Readonly<UserManagerProp
             rightSection={search.length > 0 && <CloseButton onClick={() => { setSearch(""); setSearchResults(users); }} variant="link" color="red" />}
         />
         <SimpleGrid cols={{ xs: 2, md: 3, lg: 4, xl: 5, xxl: 6 }} >
-            {searchResults.map((user) => <UserCard onClick={() => { setUser(user); open() }} key={user.id} user={user} />)}
+            {searchResults.map((user) => <UserCard onClick={() => { 
+                setUser(user); 
+                open(); 
+            }} key={user.id} user={user} />)}
             {
                 ((users.length == 0 && !error) || loading) && Array.from({ length: 18 }).map((_, index) => <UserCard key={"skeleton_users_" + index} skeleton />)
             }
         </SimpleGrid>
         <Drawer position="right" opened={opened} onClose={close} title={
             <Group justify="flex-start" mb="xs">
-                <Avatar name={user?.username ?? user?.email ?? undefined} src={user?.image ?? undefined} color="initials" />
+                <AvatarFallback name={user?.username ?? user?.email ?? undefined} src={user?.image ?? undefined} color="initials" />
                 <Stack
                     gap={0}
                     align="flex-start"
@@ -121,6 +136,12 @@ export default function UserManager({ session, style }: Readonly<UserManagerProp
                     <Input value={user?.email ?? undefined} placeholder={t('drawer.email.placeholder')} disabled />
                 </Input.Wrapper>
             </Group>
+            <Group mt={20}>
+                <AvatarFallback name={user?.username ?? user?.email ?? undefined} src={user?.image ?? undefined} color="initials"/>
+                <Input.Wrapper label={t('drawer.avatar.label')} withAsterisk style={{ flexGrow: 1 }}>
+                    <Input onChange={(Event) => { if (user.image != Event.currentTarget.value) { setUserChanges({ image: Event.currentTarget.value }) } else { setUserChanges((current) => { const newUser = { ...current }; delete newUser["image"]; return newUser; }) } }} defaultValue={user?.image ?? undefined} placeholder={t('drawer.avatar.placeholder')} />
+                </Input.Wrapper>
+            </Group>
             <Group w="100%" justify="space-between" mt={20}>
                 <Checkbox
                     defaultChecked={user?.userAuthorized}
@@ -135,18 +156,15 @@ export default function UserManager({ session, style }: Readonly<UserManagerProp
                 tt="capitalize"
                 w='100%'
                 mt={20}
-                defaultValue={user?.roles}
-                onChange={(value) => { putUser({ id: user?.id, data: { roles: value } }); setUser({ ...user, roles: value }); updateUsersAfterChange({ ...user, roles: value }); }}
-                data={[
-                    { group: 'Admin', items: [{ value: 'admin', label: 'Admin' }, { value: 'owner', label: 'Owner' }] },
-                    { group: 'General', items: [{ value: 'user', label: 'User', disabled: true }] }
-                ]}
-                disabled={!session?.user.roles.includes("owner")}
+                defaultValue={user?.roles?.map((role) => role.name)}
+                onChange={(value) => { putUser({ id: user?.id, data: { roles: value } }); setUser({ ...user, roles: getRolesFromValues(value, roles) }); updateUsersAfterChange({ ...user, roles: getRolesFromValues(value, roles) }); }}
+                data={getRolesData(roles)}
+                disabled={!chkP("user:manageRoles", session?.user)}
             />
             <Group mt={20} justify="flex-end">
                 {
                     //implement a confirmation dialog
-                    session.user.roles.includes("owner") && session.user?.id != user.id && <Button color="red" onClick={() => { deleteUser({ id: user?.id }); updateUsersAfterChange({ ...user, ...userChanges }, true, true); close(); }}>
+                    chkP('user:delete', session?.user) && session?.user?.id != user.id && <Button color="red" onClick={() => { deleteUser({ id: user?.id }); updateUsersAfterChange({ ...user, ...userChanges }, true, true); close(); }}>
                         {t('drawer.delete')}
                     </Button>
                 }

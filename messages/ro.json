@@ -34,6 +34,7 @@
         "LocaleSwitcher": {
             "label": "Schimbă limba",
             "locale": "{locale, select, ro {🇷🇴 Română} en {🇬🇧 Engleză} other {Necunoscută}}",
+            "shortLocale": "{locale, select, ro {RO} en {EN} other {?}}",
             "locales": {
                 "ro": "Română",
                 "en": "Engleză"

@@ -3,6 +3,7 @@ import ProfileEmail from "../ProfileEmail/ProfileEmail";
 import SignOutButton from "../SignOutButton/SignOutButton";
 import SignInButton from "../SignInButton/SignInButton";
 import ColorSchemeToggleIcon from "../ColorSchemeToggleIcon/ColorSchemeToggleIcon";
+import LocalSelect from "../LocaleSelect/LocaleSelect";
 
 export default function NavbarHomepage() {
     return (
@@ -17,6 +18,7 @@ export default function NavbarHomepage() {
                 <ProfileEmail />
                 <SignOutButton />
                 <ColorSchemeToggleIcon />
+                <LocalSelect />
             </Flex>
         </SimpleGrid>
     );

@@ -34,6 +34,7 @@
         "LocaleSwitcher": {
             "label": "Change language",
             "locale": "{locale, select, ro {🇷🇴 Romanian} en {🇬🇧 English} other {Unknown}}",
+            "shortLocale": "{locale, select, ro {RO} en {EN} other {?}}",
             "locales": {
                 "ro": "Romanian",
                 "en": "English"

@@ -22,7 +22,7 @@
             },
             "subject": "Conectează-te la TesteBac",
             "title": "Conectează-te la TesteBac <strong>({host})</strong>",
-            "message": "",
+            "message": "Acest link va fi valabil doar pentru următoarele 24 de ore.",
             "disclaimer": "Dacă nu ați solicitat acest email, puteți să îl ignorați în siguranță. Contactați suportul dacă aveți întrebări la {email}.",
             "signIn": "Conectează-te",
             "text": "Conectează-te la:"

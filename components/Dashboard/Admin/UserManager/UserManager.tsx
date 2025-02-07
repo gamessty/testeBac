@@ -1,16 +1,16 @@
 "use client";
 
-import { Container, MantineStyleProp, SimpleGrid, Text, Title, Drawer, Group, Stack, Input, Checkbox, MultiSelect, Button, Transition, JsonInput, Blockquote, TextInput, Loader, CloseButton } from "@mantine/core";
+import { Container, MantineStyleProp, SimpleGrid, Text, Title, Drawer, Group, Stack, Input, Checkbox, MultiSelect, Button, Transition, JsonInput, Blockquote, TextInput, Loader, CloseButton, ScrollArea } from "@mantine/core";
 import { type Session, type User } from "next-auth";
 import { useTranslations } from "next-intl";
 import UserCard from "../../UserCard/UserCard";
 import getUsers from "../../../PrismaFunctions/getUsers";
 import { useEffect, useState } from "react";
-import { useDebouncedCallback, useDisclosure } from "@mantine/hooks";
+import { useDebouncedCallback, useDebouncedValue, useDisclosure } from "@mantine/hooks";
 import putUser from "../../../PrismaFunctions/putUser";
 import { IconAlertTriangleFilled } from "@tabler/icons-react";
 import deleteUser from "../../../PrismaFunctions/deleteUser";
-import { chkP, getRolesData, getRolesFromValues } from "../../../../utils";
+import { chkP, getPrismaUpdateData, getRolesData, getRolesFromArray, getRolesFromValues } from "../../../../utils";
 import getRoles from "../../../PrismaFunctions/getRoles";
 import { Role } from "@prisma/client";
 import AvatarFallback from "../../../AvatarFallback/AvatarFallback";
@@ -28,6 +28,7 @@ export default function UserManager({ session, style }: Readonly<UserManagerProp
     const [roles, setRoles] = useState([] as Role[]);
     const [user, setUser] = useState({} as User);
     const [userChanges, setUserChanges] = useState({} as User);
+    const [debouncedUserChanges] = useDebouncedValue(userChanges, 1000);
     const [opened, { open, close }] = useDisclosure(false);
     const [error, setError] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
@@ -83,7 +84,9 @@ export default function UserManager({ session, style }: Readonly<UserManagerProp
         handleSearch(event.currentTarget.value);
     }
 
-    if (!chkP("user:manage", session?.user)) return <Text>Unauthorized</Text>;
+    if (!chkP("user:manage", session?.user)) return (<Blockquote w="100%" color="red" cite={"– " + t('errors.fetch.title', { error: 'Unauthorized' })} icon={<IconAlertTriangleFilled />} mt="xl">
+        {t('errors.fetch.message', { error: 'Unauthorized' })}
+    </Blockquote>);
 
     return <Container fluid p={{ base: 25, sm: 35 }} pt={{ base: 5, sm: 10 }} pb={95} style={style}>
         <Title order={1} w="100%" ta="left" mb={20}>
@@ -107,27 +110,29 @@ export default function UserManager({ session, style }: Readonly<UserManagerProp
             rightSection={search.length > 0 && <CloseButton onClick={() => { setSearch(""); setSearchResults(users); }} variant="link" color="red" />}
         />
         <SimpleGrid cols={{ xs: 2, md: 3, lg: 4, xl: 5, xxl: 6 }} >
-            {searchResults.map((user) => <UserCard onClick={() => { 
-                setUser(user); 
-                open(); 
+            {searchResults.map((user) => <UserCard onClick={() => {
+                setUser(user);
+                open();
             }} key={user.id} user={user} />)}
             {
                 ((users.length == 0 && !error) || loading) && Array.from({ length: 18 }).map((_, index) => <UserCard key={"skeleton_users_" + index} skeleton />)
             }
         </SimpleGrid>
-        <Drawer position="right" opened={opened} onClose={close} title={
-            <Group justify="flex-start" mb="xs">
-                <AvatarFallback name={user?.username ?? user?.email ?? undefined} src={user?.image ?? undefined} color="initials" />
-                <Stack
-                    gap={0}
-                    align="flex-start"
-                    justify="center"
-                >
-                    <Text fw={500} mb={-5} ta="center">{user?.username ?? user?.email}</Text>
-                    <Text c="dimmed" size='sm' ta="center" display={{ base: user?.username ? "inherit" : "none" }}>{user?.email}</Text>
-                </Stack>
-            </Group>
-        }>
+        <Drawer position="right" opened={opened} onClose={close}
+            onExitTransitionEnd={() => { setUser({} as User); setUserChanges({} as User); }}
+            title={
+                <Group justify="flex-start" mb="xs">
+                    <AvatarFallback name={user?.username ?? user?.email ?? undefined} src={user?.image ?? undefined} color="initials" />
+                    <Stack
+                        gap={0}
+                        align="flex-start"
+                        justify="center"
+                    >
+                        <Text fw={500} mb={-5} ta="center">{user?.username ?? user?.email}</Text>
+                        <Text c="dimmed" size='sm' ta="center" display={{ base: user?.username ? "inherit" : "none" }}>{user?.email}</Text>
+                    </Stack>
+                </Group>
+            }>
             <Group justify="space-between">
                 <Input.Wrapper label={t('drawer.username.label')} withAsterisk>
                     <Input onChange={(Event) => { if (user.username != Event.currentTarget.value) { setUserChanges({ username: Event.currentTarget.value }) } else { setUserChanges((current) => { const newUser = { ...current }; delete newUser["username"]; return newUser; }) } }} defaultValue={user?.username ?? undefined} placeholder={t('drawer.username.placeholder')} />
@@ -137,7 +142,7 @@ export default function UserManager({ session, style }: Readonly<UserManagerProp
                 </Input.Wrapper>
             </Group>
             <Group mt={20}>
-                <AvatarFallback name={user?.username ?? user?.email ?? undefined} src={user?.image ?? undefined} color="initials"/>
+                <AvatarFallback name={user?.username ?? user?.email ?? undefined} src={debouncedUserChanges.image ?? user?.image ?? undefined} color="initials" />
                 <Input.Wrapper label={t('drawer.avatar.label')} withAsterisk style={{ flexGrow: 1 }}>
                     <Input onChange={(Event) => { if (user.image != Event.currentTarget.value) { setUserChanges({ image: Event.currentTarget.value }) } else { setUserChanges((current) => { const newUser = { ...current }; delete newUser["image"]; return newUser; }) } }} defaultValue={user?.image ?? undefined} placeholder={t('drawer.avatar.placeholder')} />
                 </Input.Wrapper>
@@ -157,7 +162,7 @@ export default function UserManager({ session, style }: Readonly<UserManagerProp
                 w='100%'
                 mt={20}
                 defaultValue={user?.roles?.map((role) => role.name)}
-                onChange={(value) => { putUser({ id: user?.id, data: { roles: value } }); setUser({ ...user, roles: getRolesFromValues(value, roles) }); updateUsersAfterChange({ ...user, roles: getRolesFromValues(value, roles) }); }}
+                onChange={(value) => { putUser({ id: user?.id, data: getPrismaUpdateData(getRolesFromArray(value), 'roles') }); setUser({ ...user, roles: getRolesFromValues(value, roles) }); updateUsersAfterChange({ ...user, roles: getRolesFromValues(value, roles) }); }}
                 data={getRolesData(roles)}
                 disabled={!chkP("user:manageRoles", session?.user)}
             />

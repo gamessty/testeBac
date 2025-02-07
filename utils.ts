@@ -81,7 +81,7 @@ export function checkPermission(permission: string | string[], user?: User, allo
   if(!user) return false;
   if(Array.isArray(permission)) return permission.some((perm) => checkPermission(perm, user, allowWildcards));
   const [resource, action] = permission.split(':')
-  let allowed = user.roles?.some((role) => role.permissions.includes(permission) || role.permissions.includes(`${resource}:all`) || role.permissions.includes("all:*") || (allowWildcards && action == "*" && role.permissions.toString().includes(`${resource}:`))) ?? false;
+  let allowed = user.roles?.some((role) => role.permissions.includes(permission) || role.permissions.includes(`${resource}:all`) || role.permissions.includes("all:all") || (allowWildcards && action == "*" && role.permissions.toString().includes(`${resource}:`))) ?? false;
   return allowed;
 }
 
@@ -114,4 +114,30 @@ export function getRolesData(roles: Role[]): { group: string, items: { value: st
  */
 export function getRolesFromValues(roles: string[], allRoles: Role[]): Role[] {
   return allRoles.filter((role) => roles.includes(role.name));
+}
+
+
+/**
+ * 
+ * This function gets the data for the roles from the role names. Used for the select component with prisma.
+ * @param {string | string[]} roles The array of role names to get the data from or the string with the role name.
+ * @param {Role[]} [allRoles] All the roles to get the data from.
+ * @returns {Partial<Role>} The Array of partial role objects.
+ */
+export function getRolesFromArray(roles: string | string[], allRoles?: Role[]): Partial<Role>[] {
+  if(!Array.isArray(roles)) return allRoles?.filter((role) => role.name == roles) ?? [{ "name": roles }];
+  if(!allRoles) return roles.map((role) => ({ "name": role }));
+  return allRoles.filter((role) => roles.includes(role.name));
+}
+
+/**
+ * This function gets the data for the roles from the role names. Used for the select component with prisma.
+ * @param {any[]} data The data to generate the prisma update data from.
+ * @param {string} [key] The key to use for the update data.
+ * @returns 
+ */
+export function getPrismaUpdateData(data: any[], key?: string) {
+  let updateData = { connectOrCreate: data.map((d) => ({ where: d, create: d })) };
+  if(!key) return updateData;
+  return { [key]: updateData };
 }

@@ -1,9 +1,11 @@
 import { getTranslations } from "next-intl/server"
 import { getPathsFromURL, getQueryParamsFromURL, isSupportedLocale } from "../utils"
 import { unescape } from "querystring"
+import { render } from '@react-email/components';
+import { MagicLinkEmail } from '../emails/magic-link';
 
 export async function sendVerificationRequest(params: any) {
-  const { identifier: to, provider, url, theme } = params
+  const { identifier: to, provider, url } = params
   const { host } = new URL(url)
   const domain = provider.from.split("@").at(1)
 
@@ -12,14 +14,16 @@ export async function sendVerificationRequest(params: any) {
   let locale = isSupportedLocale(getPathsFromURL(unescape(getQueryParamsFromURL(url).get('callbackUrl') ?? ''))[1]) ? getPathsFromURL(unescape(getQueryParamsFromURL(url).get('callbackUrl') ?? ''))[1] : 'en'
 
   const t = await getTranslations({ locale, namespace: 'Email.MagicLink' })
+  const emailHtml = await render(<MagicLinkEmail host={host} t={t} url={url} />);
+
 
   const form = new FormData()
   //form.append("from", `${provider.name} <${provider.from}>`)
   form.append("from", `testeBac Login <${provider.from}>`)
   form.append("to", to)
-  form.append("h:Reply-To", process.env.MAILGUN_REPLY_TO ?? provider.from)
+  form.append("h:Reply-To", process.env.EMAIL_SUPPORT ?? provider.from)
   form.append("subject", t('subject'))
-  form.append("html", html({ host, url, theme, t}))
+  form.append("html", emailHtml)
   form.append("text", text({ host, url, text: t('text') }))
 
   const apiKey = `api:${provider.apiKey}`
@@ -35,7 +39,7 @@ export async function sendVerificationRequest(params: any) {
   if (!res.ok) throw new Error("Mailgun error: " + (await res.text()))
 }
 
-function html(params: { url: string; host: string; theme: Theme, t: any }) {
+function html(params: { url: string; host: string; theme: any, t: any }) {
   const { url, host, theme, t } = params
 
   const escapedHost = host.replace(/\./g, "&#8203;.")
@@ -63,7 +67,6 @@ function html(params: { url: string; host: string; theme: Theme, t: any }) {
       <tr>
         <td align="center"
           style="padding: 0px 0px; font-size: 16px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
-          ${t('message', { email: 'support@gamessty.eu' })}
         </td>
       </tr>
       <tr>

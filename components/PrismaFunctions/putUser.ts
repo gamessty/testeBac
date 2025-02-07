@@ -4,11 +4,12 @@ import { prisma } from "../../lib/prisma";
 import { auth, unstable_update } from "../../auth";
 import { revalidatePath } from "next/cache";
 import { chkP } from "../../utils";
+import { type User } from "@prisma/client";
 
-export default async function putUser({ id, data }: { id: any, data: any }) {
+export default async function putUser({ id, data }: { id: any, data: any }): Promise<User | { message: string }> {
     const session = await auth();
     if (!session?.user) {
-        return { message: "Not authenticated" };
+        return { message: "Not authenticated" };  
     }
     if (!chkP("user:readAll", session.user) && session?.user?.id != id && data.roles) {
         return { message: "Unauthorized" };

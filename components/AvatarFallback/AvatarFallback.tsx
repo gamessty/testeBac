@@ -1,6 +1,5 @@
 "use client";
 import { Avatar } from "@mantine/core";
-import NextImage from "next/image";
 import React from "react";
 
 function useLoaded({ crossOrigin, referrerPolicy, src, srcSet }: { crossOrigin?: string; referrerPolicy: string; src?: string; srcSet?: string }) {
@@ -43,8 +42,8 @@ function useLoaded({ crossOrigin, referrerPolicy, src, srcSet }: { crossOrigin?:
 }
 
 export default function AvatarFallback({ src, srcSet, name, color, crossOrigin, referrerPolicy = '', children, ...others }: Readonly<{ src?: string; srcSet?: string; name?: string; color?: string; crossOrigin?: string; referrerPolicy?: string, children?: React.ReactNode }>) {
-    const loaded = useLoaded({ crossOrigin, referrerPolicy, src, srcSet });
     const hasImg = src ?? srcSet;
+    const loaded = useLoaded({ crossOrigin, referrerPolicy, src, srcSet });
     const hasImgNotFailing = hasImg && loaded !== 'error';
 
     if (hasImgNotFailing) {

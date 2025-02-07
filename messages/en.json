@@ -22,7 +22,7 @@
             },
             "subject": "Sign in to TesteBac",
             "title": "Sign in to TesteBac <strong>({host})</strong>",
-            "message": "",
+            "message": "This link will only be valid for the next 24 hours.",
             "disclaimer": "If you did not request this email you can safely ignore it. Contact support if you have any questions at {email}.",
             "signIn": "Sign in",
             "text": "Sign in to:"

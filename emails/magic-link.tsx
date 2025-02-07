@@ -38,6 +38,7 @@ export const MagicLinkEmail = function ({
                     <Img 
                         alt="testeBac"
                         style={logo}
+                        height={42}
                         src={srcLogo(host)}
                     />
                     <Heading style={heading}>{t('subject')}</Heading>

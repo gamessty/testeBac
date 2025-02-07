@@ -9,7 +9,7 @@ export default function LocalSelect() {
     const locale = useLocale();
     const router = useRouter();
     const pathname = usePathname();
-    const isMobile = useMediaQuery(`(max-width: ${em(650)})`, true);
+    const isMobile = useMediaQuery(`(max-width: ${em(991)})`, true);
 
     const params = useSearchParams();
     const t = useTranslations('General.LocaleSwitcher');
@@ -20,7 +20,7 @@ export default function LocalSelect() {
         }, 480);
     }
     return (
-            <NativeSelect fw={500} w={{ xs: 200, md: 'initial' }} onChange={(event) => handleChange(event.currentTarget.value)} rightSectionWidth={20} defaultValue={locale} data={
+            <NativeSelect fw={500} w={{ xs: 60, md: 'initial' }} onChange={(event) => handleChange(event.currentTarget.value)} rightSectionWidth={20} defaultValue={locale} data={
                 routing.locales.map((lang) => ({
                     label: isMobile ?  lang.toUpperCase() : t('locale', { locale: lang }),
                     value: lang

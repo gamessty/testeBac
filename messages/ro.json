@@ -50,6 +50,7 @@
         "signInMail": "Conectare cu Email",
         "signUp": "Înregistrare",
         "signOut": "Deconectare",
+        "refresh": "Reîncearcă",
         "userNotAuthorized": {
             "title": "Înregistrarea nu a fost încă acceptată",
             "message": "Vă rugăm să așteptați ca înregistrarea dumneavoastră să fie validată de un moderator. Acest proces poate dura până la 24 de ore. \n\nDacă aveți întrebări, vă rugăm să ne contactați la {email}."
@@ -164,6 +165,7 @@
             }
         },
         "backToTop": "Înapoi sus",
+        "privacyPolicy": "Politica de confidențialitate",
         "title": "Tablou de bord",
         "description": "Aici puteți vedea progresul dumneavoastră și testele pe care le-ați susținut. Puteți vedea, de asemenea, rezultatele dumneavoastră și materiile pe care le-ați studiat. Continuați munca bună și succes la învățat!"
     }

@@ -50,6 +50,7 @@
         "signInMail": "Sign In with Email",
         "signUp": "Sign Up",
         "signOut": "Sign Out",
+        "refresh": "Try again",
         "userNotAuthorized": {
             "title": "Registration not accepted yet",
             "message": "Please wait for your registration to be validated by a moderator. This may take up to 24 hours. \n\nIf you have any questions, please contact us at {email}."
@@ -164,6 +165,7 @@
             }
         },
         "backToTop": "Scroll to top",
+        "privacyPolicy": "Privacy Policy",
         "title": "Dashboard",
         "description": "Here you can see your progress and the tests you have taken. You can also see your results and the subjects you have studied. Keep up the good work and good luck with your studies!"
     }

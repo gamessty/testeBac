@@ -1,7 +1,7 @@
 'use client';
-import { AppShell, Group, Button, ActionIcon, Text, Avatar, Divider, Stack, Grid, UnstyledButton, Affix, Transition, Badge, Flex, Tooltip, useMatches, Menu } from "@mantine/core";
+import { AppShell, Group, Button, ActionIcon, Text, Divider, Stack, Grid, UnstyledButton, Affix, Transition, Badge, Flex, Tooltip, useMatches, Menu } from "@mantine/core";
 import { useDidUpdate, useDocumentTitle, useSetState, useWindowScroll } from "@mantine/hooks";
-import { IconHome, IconFile, IconSettingsCog, IconChecklist, IconChartInfographic, IconArrowUp, IconMessageCircle, IconPhoto, IconSearch, IconUsers } from "@tabler/icons-react";
+import { IconHome, IconFile, IconSettingsCog, IconChecklist, IconChartInfographic, IconArrowUp, IconUsers } from "@tabler/icons-react";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import ColorSchemeToggleIcon from "../ColorSchemeToggleIcon/ColorSchemeToggleIcon";
@@ -113,7 +113,14 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                     </Stack>
                 </AppShell.Section>
                 <AppShell.Section>
-                    <Button justify="left" fullWidth my={10} h={35} onClick={() => signOut()} variant="gradient" gradient={{ from: 'purple', to: 'pink' }}>{ta('signOut')}</Button>
+                    <Grid>
+                        <Grid.Col span="content">
+                            <ColorSchemeToggleIcon my={10} />
+                        </Grid.Col>
+                        <Grid.Col span="auto">
+                            <Button justify="left" fullWidth my={10} h={35} onClick={() => signOut()} variant="gradient" gradient={{ from: 'purple', to: 'pink' }}>{ta('signOut')}</Button>
+                        </Grid.Col>
+                    </Grid>
                 </AppShell.Section>
                 <Divider />
                 <AppShell.Section my={10}>
@@ -148,8 +155,9 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                 <Divider />
                 <AppShell.Section>
                     <Group justify="space-between" mt={10}>
-                        <Text ta="center">Ⓒ {settings.year}</Text>
-                        <ColorSchemeToggleIcon />
+                        <Text ta="center" size="sm">Ⓒ {settings.year}</Text>
+                        <Text ta="center" size="sm" component="a" href="/privacy-policy">{t('privacyPolicy')}</Text>
+
                     </Group>
                 </AppShell.Section>
             </AppShell.Navbar>

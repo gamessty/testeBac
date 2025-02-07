@@ -1,21 +1,20 @@
 "use client";
-import { Button, Group } from "@mantine/core"
+import { Button, DefaultMantineColor } from "@mantine/core"
 import { signOut } from "next-auth/react";
 import { useTranslations } from "next-intl";
 
 interface SignOutButtonClientProps {
     session?: any,
     fullWidth?: boolean
+    color?: DefaultMantineColor
 }
 
-export default function SignOutButtonClient({ session, fullWidth }: Readonly<SignOutButtonClientProps>) {
+export default function SignOutButtonClient({ session, fullWidth, color }: Readonly<SignOutButtonClientProps>) {
     const t =  useTranslations('Authentication');
 
  
     if (!session?.user) return null
     return (
-        <Group justify="center" mt={10}>
-            <Button fullWidth={fullWidth} onClick={() => signOut()}>{t('signOut')}</Button>
-        </Group>
+            <Button color={color} fullWidth={fullWidth} onClick={() => signOut()}>{t('signOut')}</Button>
     )
 }

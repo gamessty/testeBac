@@ -31,13 +31,15 @@
     "General": {
         "loading": "Se încarcă...",
         "error": "Eroare",
+        "refresh": "Încearcă din nou",
         "LocaleSwitcher": {
             "label": "Schimbă limba",
-            "locale": "{locale, select, ro {🇷🇴 Română} en {🇬🇧 Engleză} other {Necunoscută}}",
-            "shortLocale": "{locale, select, ro {RO} en {EN} other {?}}",
+            "locale": "{locale, select, ro {🇷🇴 Română} en {🇬🇧 Engleză} fr {🇫🇷 Franceză} other {Necunoscută}}",
+            "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} other {?}}",
             "locales": {
                 "ro": "Română",
-                "en": "Engleză"
+                "en": "Engleză",
+                "fr": "Franceză"
             }
         },
         "ColorSchemeToggle": {

@@ -1,4 +1,4 @@
-import { Alert, Center, Container, Stack } from "@mantine/core";
+import { Alert, Center, Container, Group, Stack } from "@mantine/core";
 import { Welcome } from "../../components/Welcome/Welcome";
 import NavbarHomepage from "../../components/NavbarHomepage/NavbarHomepage";
 import AppRedirect from "../../components/AppRedirect/AppRedirect";
@@ -6,8 +6,9 @@ import NotificationUnathorized from "../../components/NotificationUnauthorized/N
 import { auth } from "../../auth";
 import { getTranslations } from "next-intl/server";
 import Modal from "../../components/Modal/Modal";
-import { IconAlertTriangleFilled } from "@tabler/icons-react";
+import { IconAlertTriangleFilled, IconLogout } from "@tabler/icons-react";
 import SignOutButtonClient from "../../components/SignOutButton/SignOutButton.client";
+import RefreshButton from "../../components/RefreshButton/RefreshButton";
 
 export default async function HomePage({ searchParams }: Readonly<{ searchParams: Promise<{ [key: string]: string | string[] | undefined }> }>) {
     const session = await auth();
@@ -53,7 +54,7 @@ export default async function HomePage({ searchParams }: Readonly<{ searchParams
                 }} />
                 <Modal show={show && !getBooleanValue(notification)} data = {{
                     title: t('userNotAuthorized.title'),
-                    children: (<><Alert variant="filled" color="red" icon={< IconAlertTriangleFilled />}>{t('userNotAuthorized.message', { email: "support@gamessty.eu"})}</Alert><SignOutButtonClient session={session} fullWidth /></>),
+                    children: (<><Alert variant="filled" color="red" icon={< IconAlertTriangleFilled />}>{t('userNotAuthorized.message', { email: "support@gamessty.eu"})}</Alert><Group align="center" mt={10} grow><RefreshButton /><SignOutButtonClient variant="gradient" gradient={{ from: "red", to: "purple" }} rightSection={<IconLogout />} session={session} /></Group></>),
                     withCloseButton: session?.user?.userAuthorized ?? false,
                     closeOnEscape: session?.user?.userAuthorized ?? false,
                     closeOnClickOutside: session?.user?.userAuthorized ?? false,

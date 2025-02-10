@@ -1,15 +1,10 @@
-//TRANSLATION NEEDED
-
 import { signIn, providerMap } from "../../../auth"
 import {
     Text,
     Center,
     Divider,
     Group,
-    Paper,
-    PaperProps,
-    Stack,
-    TextInput,
+    Paper
 } from '@mantine/core';
 import { IconBrandGoogleFilled } from "@tabler/icons-react";
 import { Link } from "../../../i18n/routing";
@@ -42,8 +37,8 @@ import { getTranslations } from "next-intl/server";
 }
 */
 
-export default async function SignInPage(props: Readonly<{ searchParams: Promise<{ callbackUrl: string | undefined }> } & PaperProps>) {
-    const { searchParams: searchParamsPromise, ...rest } = props
+export default async function SignInPage(props: Readonly<{ searchParams: Promise<{ callbackUrl: string | undefined }> }>) {
+    const { searchParams: searchParamsPromise } = props
     const t = await getTranslations("Authentication.customPages.signIn");
     const searchParams = await searchParamsPromise
     const csrfToken = (await cookies()).get("authjs.csrf-token")?.value ?? "";
@@ -53,7 +48,7 @@ export default async function SignInPage(props: Readonly<{ searchParams: Promise
     const csrfToken = await getCsrfTokenServerSide(proto+"://"+host+"/api/auth");*/
     return (
         <Center ml="auto" mr="auto" maw={450} h="100vh" p="lg">
-            <Paper shadow="xl" radius="md" p="xl" withBorder {...rest}>
+            <Paper shadow="xl" radius="md" p="xl" withBorder>
                 <Text size="lg" fw={500}>
                     {t("welcome")} <Text span variant="gradient" fw={700} gradient={{ from: 'pink', to: 'yellow' }}>
                         <Link href="/">

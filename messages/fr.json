@@ -1,0 +1,134 @@
+{
+    "_comment": "NOT COMPLETED YET, MORE TRANSLATIONS NEEDED",
+    "HomePage": {
+        "title": "Bienvenue sur",
+        "about": "TesteBac prépare les élèves au baccalauréat ou aux examens d'entrée à l'université. Cette plateforme est dédiée aux étudiants qui souhaitent tester leurs connaissances et se préparer aux examens importants de leur vie. La plateforme utilise un système de tests à choix multiples, offrant un retour instantané et aidant les élèves à améliorer leurs connaissances. Les tests sont structurés par matières et chapitres, afin de proposer une préparation efficace et personnalisée. Pour commencer, choisissez la matière et le chapitre souhaités, puis appuyez sur le bouton de démarrage. Bonne chance dans vos études !",
+        "redirectApp": "Aller à l'application",
+        "userNotAuthorized": {
+            "title": "Inscription non encore acceptée",
+            "message": "Veuillez attendre la validation de votre inscription par un modérateur. Cela peut prendre jusqu'à 24 heures.\n\nSi vous avez des questions, veuillez nous contacter à {email}.",
+            "short": "Vous devez être autorisé pour accéder à l'application."
+        }
+    },
+    "Email": {
+        "MagicLink": {
+            "Old": {
+                "subject": "Connexion à TesteBac",
+                "title": "Connexion à TesteBac <strong>({host})</strong>",
+                "message": "Merci de vous être inscrit sur TesteBac. Votre inscription est en attente de validation par un modérateur. Ce processus peut prendre jusqu'à 24 heures.\n\nSi vous avez des questions, veuillez nous contacter à {email}.",
+                "disclaimer": "Si vous n'avez pas demandé cet e-mail, vous pouvez l'ignorer en toute sécurité. Vous pouvez essayer de vous connecter, mais vous recevrez une erreur pour l'instant. Vous pourrez vous connecter une fois votre inscription approuvée par un modérateur.",
+                "signIn": "Se connecter",
+                "text_alt": "Si vous avez des difficultés à cliquer sur le bouton \"{signIn}\", copiez et collez l'URL ci-dessous dans votre navigateur : {signInLink}",
+                "text": "Connexion à :"
+            },
+            "subject": "Connexion à TesteBac",
+            "title": "Connexion à TesteBac <strong>({host})</strong>",
+            "message": "Ce lien sera valide uniquement pour les 24 prochaines heures.",
+            "disclaimer": "Si vous n'avez pas demandé cet e-mail, vous pouvez l'ignorer en toute sécurité. Contactez le support si vous avez des questions à {email}.",
+            "signIn": "Se connecter",
+            "text": "Connexion à :"
+        }
+    },
+    "General": {
+        "loading": "Chargement...",
+        "error": "Erreur",
+        "refresh": "Réessayer",
+        "LocaleSwitcher": {
+            "label": "Changer de langue",
+            "locale": "{locale, select, ro {🇷🇴 Roumain} en {🇬🇧 Anglais} fr {🇫🇷 Français} other {Inconnu}}",
+            "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} other {?}}",
+            "locales": {
+                "ro": "Roumain",
+                "en": "Anglais",
+                "fr": "Français"
+            }
+        },
+        "ColorSchemeToggle": {
+            "label": "Changer le thème",
+            "colorScheme": "{colorScheme, select, light {Clair} dark {Sombre} auto {Auto} other {Inconnu}}"
+        }
+    },
+    "Authentication": {
+        "signIn": "Se connecter",
+        "signInMail": "Se connecter avec un e-mail",
+        "signUp": "S'inscrire",
+        "signOut": "Se déconnecter",
+        "refresh": "Réessayer",
+        "userNotAuthorized": {
+            "title": "Inscription non encore acceptée",
+            "message": "Veuillez attendre la validation de votre inscription par un modérateur. Cela peut prendre jusqu'à 24 heures.\n\nSi vous avez des questions, veuillez nous contacter à {email}."
+        },
+        "customPages": {
+            "signIn": {
+                "welcome": "Bienvenue sur",
+                "signIn": "se connecter avec",
+                "or": "Ou continuer avec un e-mail",
+                "disclaimer": "En vous connectant, vous acceptez notre",
+                "privacyPolicy": "politique de confidentialité",
+                "invalidEmail": "L'e-mail est invalide."
+            },
+            "verifyRequest": {
+                "title": "Vérifiez votre adresse e-mail",
+                "message": "Nous vous avons envoyé un e-mail contenant un lien pour vérifier votre adresse e-mail. Veuillez consulter votre boîte de réception et cliquer sur le lien dans l'e-mail pour accéder à l'application.",
+                "backToHome": "Retourner à l'accueil"
+            }
+        }
+    },
+    "Tests": {
+        "Categories": {
+            "entrance": "Examen d'entrée",
+            "baccalaureate": "Baccalauréat"
+        },
+        "Subjects": {
+            "mathematics": "Mathématiques",
+            "romanian": "Roumain",
+            "history": "Histoire",
+            "geography": "Géographie",
+            "biology": "Biologie",
+            "physics": "Physique",
+            "chemistry": "Chimie",
+            "informatics": "Informatique",
+            "english": "Anglais",
+            "french": "Français",
+            "german": "Allemand",
+            "spanish": "Espagnol"
+        },
+        "resumeTest": "Reprendre le test",
+        "lastQuestion": "Dernière question"
+    },
+    "Dashboard": {
+        "Navbar": {
+            "home": "Accueil",
+            "subjects": "Matières",
+            "tests": "Tests",
+            "results": "Résultats",
+            "stats": "Statistiques",
+            "profile": "Profil",
+            "settings": "Paramètres",
+            "admin": {
+                "title": "Panneau d'administration",
+                "shortTitle": "Admin",
+                "users": "Utilisateurs"
+            }
+        },
+        "Home": {
+            "welcome": "Salut !",
+            "recentTests": "Tests récents",
+            "lastTest": "Reprendre le test",
+            "quickStats": "Statistiques rapides"
+        },
+        "Settings": {
+            "title": "Paramètres",
+            "account": "Compte",
+            "language": "Langue",
+            "display": "Affichage",
+            "debug": "Débogage",
+            "notifications": "Notifications",
+            "saveChanges": "Enregistrer les modifications"
+        },
+        "backToTop": "Revenir en haut",
+        "privacyPolicy": "Politique de confidentialité",
+        "title": "Tableau de bord",
+        "description": "Ici, vous pouvez voir vos progrès et les tests que vous avez passés. Vous pouvez également consulter vos résultats et les matières que vous avez étudiées. Continuez votre bon travail et bonne chance dans vos études !"
+    }
+}

@@ -1,4 +1,3 @@
-//TRANSLATION NEEDED
 'use client';
 import { Group, Menu, Stack, Text } from '@mantine/core';
 import AvatarFallback from '../AvatarFallback/AvatarFallback';
@@ -7,15 +6,17 @@ import AvatarMenu from '../AvatarMenu/AvatarMenu';
 import { Session } from 'next-auth';
 import { IconLogout } from '@tabler/icons-react';
 import { signOut } from 'next-auth/react';
+import { useTranslations } from 'next-intl';
 
 export default function ProfileEmail({ session }: Readonly<{ session: Session }>) {
+    const t = useTranslations("Authentication");
     if (!session?.user) return null;
     return <Group justify="center" className="profileEmail" gap={0}>
         <AvatarFallback display={{ base: "none", md: 'initial' }} src={session.user.image ?? undefined} name={session.user.email ?? undefined} color='initials' />
         <AvatarMenu withArrow shadow="md" position="bottom" offset={20} transitionProps={{ transition: 'pop-top-right', duration: 200 }} AvatarProps={{ display: { base: undefined, md: "none" }, src: session?.user?.image ?? undefined, name: session?.user?.username ?? session?.user?.email ?? undefined, color: 'initials' }}>
 
             <Menu.Item color="red" onClick={() => signOut()} leftSection={<IconLogout size={14} />}>
-                Log out
+                {t('signOut')}
             </Menu.Item>
 
         </AvatarMenu>

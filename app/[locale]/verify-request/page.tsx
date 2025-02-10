@@ -1,13 +1,13 @@
 "use client";
-import { Center, Paper, PaperProps, rem, Text, Button } from "@mantine/core"
+import { Center, Paper, rem, Text, Button } from "@mantine/core"
 import { useTranslations } from "next-intl";
 import Link from "next/link"
 
-export default function VerifyRequestPage({ searchParams, ...props}: Readonly<PaperProps & { searchParams: Promise<{ callbackUrl: string | undefined }> }>) {
+export default function VerifyRequestPage() {
     const t = useTranslations("Authentication.customPages.verifyRequest");
     return (
         <Center ml="auto" mr="auto" maw={450} h="100vh" p="lg">
-            <Paper radius="md" shadow="xl" p="xl" withBorder {...props}>
+            <Paper radius="md" shadow="xl" p="xl" withBorder>
                 <Text variant="gradient" fw={700} mb={15} size={rem(30)} gradient={{ from: 'pink', to: 'yellow' }}>
                     <Link href="/">
                         testeBac

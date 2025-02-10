@@ -31,13 +31,15 @@
     "General": {
         "loading": "Loading...",
         "error": "Error",
+        "refresh": "Try again",
         "LocaleSwitcher": {
             "label": "Change language",
-            "locale": "{locale, select, ro {🇷🇴 Romanian} en {🇬🇧 English} other {Unknown}}",
-            "shortLocale": "{locale, select, ro {RO} en {EN} other {?}}",
+            "locale": "{locale, select, ro {🇷🇴 Romanian} en {🇬🇧 English} fr {🇫🇷 French} other {Unknown}}",
+            "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} other {?}}",
             "locales": {
                 "ro": "Romanian",
-                "en": "English"
+                "en": "English",
+                "fr": "French"
             }
         },
         "ColorSchemeToggle": {

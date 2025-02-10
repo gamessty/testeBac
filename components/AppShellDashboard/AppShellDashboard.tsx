@@ -245,8 +245,10 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                     {(transitionStyles) => (
                         <Button
                             leftSection={<IconArrowUp size={16} />}
-                            style={transitionStyles}
+                            style={{ boxShadow: "var(--mantine-shadow-xl)", ...transitionStyles}}
                             onClick={() => scrollTo({ y: 0 })}
+                            variant="gradient"
+                            gradient={{ from: 'purple', to: 'pink' }}
                         >
                             {t('backToTop')}
                         </Button>

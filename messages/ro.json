@@ -54,6 +54,21 @@
         "userNotAuthorized": {
             "title": "Înregistrarea nu a fost încă acceptată",
             "message": "Vă rugăm să așteptați ca înregistrarea dumneavoastră să fie validată de un moderator. Acest proces poate dura până la 24 de ore. \n\nDacă aveți întrebări, vă rugăm să ne contactați la {email}."
+        },
+        "customPages": {
+            "signIn": {
+                "welcome": "Bine ați venit la",
+                "signIn": "conectați-vă cu",
+                "or": "Sau continuați cu email",
+                "disclaimer": "Prin conectare, sunteți de acord cu",
+                "privacyPolicy": "politica noastră de confidențialitate",
+                "invalidEmail": "Email-ul este invalid."
+            },
+            "verifyRequest": {
+                "title": "Verificați-vă adresa de email",
+                "message": "Ți-am trimis un email cu un link pentru verificarea adresei tale de email. Te rugăm să verifici inboxul și să dai clic pe linkul din email pentru a vă conecta la aplicație.",
+                "backToHome": "Înapoi"
+            }
         }
     },
     "Tests": {

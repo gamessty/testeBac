@@ -1,7 +1,7 @@
 'use client';
 import { AppShell, Group, Button, ActionIcon, Text, Divider, Stack, Grid, UnstyledButton, Affix, Transition, Badge, Flex, Tooltip, useMatches, Menu } from "@mantine/core";
 import { useDidUpdate, useDocumentTitle, useSetState, useWindowScroll } from "@mantine/hooks";
-import { IconHome, IconFile, IconSettingsCog, IconChecklist, IconChartInfographic, IconArrowUp, IconUsers } from "@tabler/icons-react";
+import { IconHome, IconFile, IconSettingsCog, IconChecklist, IconChartInfographic, IconArrowUp, IconUsers, IconLogout } from "@tabler/icons-react";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import ColorSchemeToggleIcon from "../ColorSchemeToggleIcon/ColorSchemeToggleIcon";
@@ -16,6 +16,8 @@ import React, { useEffect } from "react";
 import UserManager from "../Dashboard/Admin/UserManager/UserManager";
 import { ITabData, Permissions } from "../../data";
 import AvatarFallback from "../AvatarFallback/AvatarFallback";
+import AvatarMenu from "../AvatarMenu/AvatarMenu";
+import { Link } from "../../i18n/routing";
 
 interface AppShellDashboardProps {
     session: Session | null | undefined;
@@ -75,8 +77,10 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
         >
             <AppShell.Header>
                 <Group h="100%" px="md" justify="space-between">
-                    <Text variant="gradient" fw={700} size="xl" component="a" href="./" gradient={{ from: 'pink', to: 'yellow' }}>
-                        testeBac
+                    <Text variant="gradient" fw={700} size="xl" gradient={{ from: 'pink', to: 'yellow' }}>
+                        <Link href="/">
+                            testeBac
+                        </Link>
                     </Text>
                     <Text fw={700} size="xl">
                         {settings.hour < 10 ? '0' + settings.hour : settings.hour}:{settings.minute < 10 ? '0' + settings.minute : settings.minute}
@@ -180,30 +184,27 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
             <AppShell.Footer p={15} display={{ sm: "none" }}>
                 <Grid grow>
                     <Grid.Col span={1}>
-                        <Menu shadow="md" position="top-start" offset={20} transitionProps={{ transition: 'pop-bottom-left', duration: 200 }}>
-                            <Menu.Target>
-                                <UnstyledButton>
-                                    <AvatarFallback key={session?.user?.email} src={session?.user?.image ?? undefined} name={session?.user?.username ?? session?.user?.email ?? undefined} color='initials' />
-                                </UnstyledButton>
-                            </Menu.Target>
+                        <AvatarMenu shadow="md" position="top-start" offset={20} transitionProps={{ transition: 'pop-bottom-left', duration: 200 }} AvatarProps={{ src: session?.user?.image ?? undefined, name: session?.user?.username ?? session?.user?.email ?? undefined, color: 'initials' }}>
+                            {(chkP('user:manage', session?.user)) &&
+                                <>
+                                    <Menu.Label>{t('Navbar.admin.shortTitle')}</Menu.Label>
+                                    <Menu.Item onClick={() => handleTabChange({ tab: 'admin.users' })} leftSection={<IconUsers size={14} />}>
+                                        {t('Navbar.admin.users')}
+                                    </Menu.Item>
+                                    <Menu.Divider />
+                                </>
+                            }
 
-                            <Menu.Dropdown w={160}>
-                                {(chkP('user:manage', session?.user)) &&
-                                    <>
-                                        <Menu.Label>{t('Navbar.admin.shortTitle')}</Menu.Label>
-                                        <Menu.Item onClick={() => handleTabChange({ tab: 'admin.users' })} leftSection={<IconUsers size={14} />}>
-                                            {t('Navbar.admin.users')}
-                                        </Menu.Item>
-                                        <Menu.Divider />
-                                    </>
-                                }
+                            <Menu.Item onClick={() => handleTabChange({ tab: 'stats' })} leftSection={<IconChartInfographic size={14} />}>
+                                {t('Navbar.stats')}
+                            </Menu.Item>
 
-                                <Menu.Item onClick={() => handleTabChange({ tab: 'stats' })} leftSection={<IconChartInfographic size={14} />}>
-                                    {t('Navbar.stats')}
-                                </Menu.Item>
+                            <Menu.Divider />
 
-                            </Menu.Dropdown>
-                        </Menu>
+                            <Menu.Item color="red" onClick={() => signOut()} leftSection={<IconLogout size={14} />}>
+                                {ta('signOut')}
+                            </Menu.Item>
+                        </AvatarMenu>
                     </Grid.Col>
                     <Grid.Col span={10}>
                         <Group justify="space-between" grow>

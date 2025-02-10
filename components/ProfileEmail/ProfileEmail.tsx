@@ -1,13 +1,24 @@
-import { auth } from '../../auth'
-import { Group, Stack, Text } from '@mantine/core';
+//TRANSLATION NEEDED
+'use client';
+import { Group, Menu, Stack, Text } from '@mantine/core';
 import AvatarFallback from '../AvatarFallback/AvatarFallback';
 import './ProfileEmail.module.css';
+import AvatarMenu from '../AvatarMenu/AvatarMenu';
+import { Session } from 'next-auth';
+import { IconLogout } from '@tabler/icons-react';
+import { signOut } from 'next-auth/react';
 
-export default async function ProfileEmail() {
-    const session = await auth();
+export default function ProfileEmail({ session }: Readonly<{ session: Session }>) {
     if (!session?.user) return null;
     return <Group justify="center" className="profileEmail" gap={0}>
-        <AvatarFallback key={session.user.email} src={session.user.image ?? undefined} name={session.user.email ?? undefined} color='initials' />
+        <AvatarFallback display={{ base: "none", md: 'initial' }} src={session.user.image ?? undefined} name={session.user.email ?? undefined} color='initials' />
+        <AvatarMenu withArrow shadow="md" position="bottom" offset={20} transitionProps={{ transition: 'pop-top-right', duration: 200 }} AvatarProps={{ display: { base: undefined, md: "none" }, src: session?.user?.image ?? undefined, name: session?.user?.username ?? session?.user?.email ?? undefined, color: 'initials' }}>
+
+            <Menu.Item color="red" onClick={() => signOut()} leftSection={<IconLogout size={14} />}>
+                Log out
+            </Menu.Item>
+
+        </AvatarMenu>
         <Stack
             gap={0}
             align="flex-start"

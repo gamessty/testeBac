@@ -1,11 +1,11 @@
 "use client";
 import { useLocale, useTranslations } from "next-intl";
 import { routing, usePathname, useRouter } from "../../i18n/routing";
-import { NativeSelect, em } from "@mantine/core";
+import { NativeSelect, NativeSelectProps, em } from "@mantine/core";
 import { useSearchParams } from "next/navigation";
 import { useMediaQuery } from "@mantine/hooks";
 
-export default function LocalSelect() {
+export default function LocalSelect(props: Readonly<Omit<NativeSelectProps, 'data' | 'fw' | 'w' | 'rightSectionWidth' | 'defaultValue' | 'onChange'>>) {
     const locale = useLocale();
     const router = useRouter();
     const pathname = usePathname();
@@ -25,6 +25,6 @@ export default function LocalSelect() {
                     label: isMobile ?  lang.toUpperCase() : t('locale', { locale: lang }),
                     value: lang
                 }))
-            } />
+            } {...props}/>
     );
 }

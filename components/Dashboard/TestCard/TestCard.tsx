@@ -1,8 +1,10 @@
+"use client";
 import { Card, Group, Badge, Button, Image, Text, Avatar } from "@mantine/core";
 import { useTranslations } from "next-intl";
 import clasess from './TestCard.module.css';
 import { IconCodeAsterisk, IconFlask2, IconMicroscope, IconSchool } from "@tabler/icons-react";
 import AvatarFallback from "../../AvatarFallback/AvatarFallback";
+import { Link } from "../../../i18n/routing";
 
 interface TestCardProps {
     category?: string;
@@ -28,7 +30,7 @@ export default function TestCard ({ category, subject, coverImage, lastQuestion,
         }
     }
     return (
-        <Card component="a" href={href} style={{ position: 'relative' }} w={"100%"} display="inline-block" shadow="sm" padding="lg" pt={35} mr="30" radius="md" withBorder>
+        <Card component={Link} href={href ?? ''} style={{ position: 'relative' }} w={"100%"} display="inline-block" shadow="sm" padding="lg" pt={35} mr="30" radius="md" withBorder>
             { coverImage && <Card.Section mb="md">
                 <Image
                     src={coverImage}

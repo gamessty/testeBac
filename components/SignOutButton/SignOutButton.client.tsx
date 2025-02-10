@@ -11,7 +11,6 @@ interface SignOutButtonClientProps {
 
 export default function SignOutButtonClient({ session, fullWidth, color }: Readonly<SignOutButtonClientProps>) {
     const t =  useTranslations('Authentication');
-
  
     if (!session?.user) return null
     return (

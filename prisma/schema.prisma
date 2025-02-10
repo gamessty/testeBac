@@ -105,5 +105,7 @@ model Role {
 
 enum RoleCategory {
   ADMIN
+  DEVELOPER
+  TESTER
   GENERAL
 }

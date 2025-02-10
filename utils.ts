@@ -97,11 +97,11 @@ export const chkP: ((permission: string | string[], user?: User, allowWildcards?
  * @param {Role[]} roles The roles to get the data from.
  * @returns {Array<{ group: string, items: { value: string, label: string }[] }>} The data for the roles.
  */
-export function getRolesData(roles: Role[]): { group: string, items: { value: string, label: string }[] }[] {
-  let data: { group: string, items: { value: string, label: string }[] }[] = [];
+export function getRolesData(roles: Role[]): { group: string, items: { value: string, label: string, disabled?: boolean }[] }[] {
+  let data: { group: string, items: { value: string, label: string, disabled?: boolean }[] }[] = [];
   roles.forEach((role) => {
     if(!data.some((r) => r.group == role.category)) data.push({ group: role.category, items: [] });
-    data.find((r) => r.group == role.category)?.items.push({ value: role.name, label: capitalize(role.name) });
+    data.find((r) => r.group == role.category)?.items.push({ value: role.name, label: capitalize(role.name), disabled: role.name == "user" });
   });
   return data;
 }

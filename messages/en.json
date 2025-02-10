@@ -54,6 +54,21 @@
         "userNotAuthorized": {
             "title": "Registration not accepted yet",
             "message": "Please wait for your registration to be validated by a moderator. This may take up to 24 hours. \n\nIf you have any questions, please contact us at {email}."
+        },
+        "customPages": {
+            "signIn": {
+                "welcome": "Welcome to",
+                "signIn": "sign in with",
+                "or": "Or continue with email",
+                "disclaimer": "By signing in, you agree to our",
+                "privacyPolicy": "privacy policy",
+                "invalidEmail": "The email is invalid."
+            },
+            "verifyRequest": {
+                "title": "Verify your email address",
+                "message": "We have sent you an email with a link to verify your email address. Please check your inbox and click on the link in the email to access the app.",
+                "backToHome": "Go back"
+            }
         }
     },
     "Tests": {

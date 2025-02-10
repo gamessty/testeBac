@@ -1,44 +1,64 @@
-import NextAuth, { DefaultSession } from "next-auth"
+import NextAuth, { DefaultSession, type NextAuthConfig } from "next-auth"
 import Mailgun from "next-auth/providers/mailgun"
 import Google from "next-auth/providers/google"
 import { sendVerificationRequest } from "./lib/authSendRequest"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "./lib/prisma"
 import { Role } from "@prisma/client"
+import type { Provider } from "next-auth/providers"
 
-export const { handlers, auth, signIn, signOut, unstable_update } = NextAuth({
-  adapter: PrismaAdapter(prisma),
-  providers: [
-    Mailgun({
-      name: "email",
-      from: process.env.MAILGUN_FROM,
-      sendVerificationRequest: sendVerificationRequest
-    }),
-    Google
-  ],
-  callbacks: {
-    async session({ session, user }) {
-      // `session.user.roles` is now a valid property, and will be type-checked
-      // in places like `useSession().data.user` or `auth().user`
-      const roles = await prisma.role.findMany({
-        where: {
-          userIDs: {
-            hasSome: [user.id]
-          }
-        }
-      });
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          roles,
-          username: user.username,
-          userAuthorized: user.userAuthorized
-        },
-      }
+const providers: Provider[] = [
+  Mailgun({
+    name: "email",
+    from: process.env.MAILGUN_FROM,
+    sendVerificationRequest: sendVerificationRequest
+  }),
+  Google
+]
+
+export const providerMap = providers
+  .map((provider) => {
+    if (typeof provider === "function") {
+      const providerData = provider()
+      return { id: providerData.id, name: providerData.name, type: providerData.type }
+    } else {
+      return { id: provider.id, name: provider.name, type: provider.type }
+    }
+  })
+  .filter((provider) => provider.id !== "credentials")
+
+  export const authOptions: NextAuthConfig = {
+    adapter: PrismaAdapter(prisma),
+    providers,
+    pages: {
+      signIn: "/signin",
+      verifyRequest: "/verify-request",
     },
-  },
-})
+    callbacks: {
+      async session({ session, user }) {
+        // `session.user.roles` is now a valid property, and will be type-checked
+        // in places like `useSession().data.user` or `auth().user`
+        const roles = await prisma.role.findMany({
+          where: {
+            userIDs: {
+              hasSome: [user.id]
+            }
+          }
+        });
+        return {
+          ...session,
+          user: {
+            ...session.user,
+            roles,
+            username: user.username,
+            userAuthorized: user.userAuthorized
+          },
+        }
+      },
+    },
+  }
+
+export const { handlers, auth, signIn, signOut, unstable_update } = NextAuth(authOptions)
 
 declare module "next-auth" {
   /**
@@ -62,5 +82,5 @@ declare module "next-auth" {
     roles?: Role[]
     userAuthorized?: boolean
     username?: string | null
-  } 
+  }
 }

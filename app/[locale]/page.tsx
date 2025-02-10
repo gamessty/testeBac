@@ -28,14 +28,17 @@ export default async function HomePage({ searchParams }: Readonly<{ searchParams
     }
 
     return (
-        <Container mx={{ xs: "3%", sm: "5%", md: "10%", lg: "15%", xl: "25%" }} mt={30} fluid>
-            <NavbarHomepage />
-            <Center>
+        <Container display="flex" mih="100vh" style={{ flexDirection: "column" }}  pt={30} fluid>
+            <NavbarHomepage mx={{ xs: "3%", sm: "5%", md: "10%", lg: "15%", xl: "25%" }} />
+            <Center style={{ flexGrow: 1 }}>
                 <Stack
                     align="stretch"
                     justify="center"
                     gap="md"
-                    mt={{ base: "20vh", mt: "25vh" }}
+                    //mt={{ base: "20vh", mt: "25vh" }}
+                    mt="10"
+                    mx="20"
+                    mb="5vh"
                 >
                     <Welcome />
                     <AppRedirect />

@@ -1,8 +1,8 @@
 "use client";
-import { Avatar } from "@mantine/core";
+import { Avatar, AvatarProps } from "@mantine/core";
 import React from "react";
 
-function useLoaded({ crossOrigin, referrerPolicy, src, srcSet }: { crossOrigin?: string; referrerPolicy: string; src?: string; srcSet?: string }) {
+function useLoaded({ crossOrigin, referrerPolicy, src, srcSet }: { crossOrigin?: string; referrerPolicy: string; src?: string | null; srcSet?: string }) {
     const [loaded, setLoaded] = React.useState<boolean | 'loaded' | 'error'>(false);
 
     React.useEffect(() => {
@@ -41,7 +41,7 @@ function useLoaded({ crossOrigin, referrerPolicy, src, srcSet }: { crossOrigin?:
     return loaded;
 }
 
-export default function AvatarFallback({ src, srcSet, name, color, crossOrigin, referrerPolicy = '', children, ...others }: Readonly<{ src?: string; srcSet?: string; name?: string; color?: string; crossOrigin?: string; referrerPolicy?: string, children?: React.ReactNode }>) {
+export default function AvatarFallback({ src, srcSet, name, color, crossOrigin, referrerPolicy = '', children, ...others }: Readonly<{ src?: string | null; srcSet?: string; name?: string; color?: string; crossOrigin?: string; referrerPolicy?: string, children?: React.ReactNode } & Omit<AvatarProps, 'src' | 'srcSet' | 'name' | 'color' | 'crossOrigin' | 'referrerPolicy' | 'children'>>) {
     const hasImg = src ?? srcSet;
     const loaded = useLoaded({ crossOrigin, referrerPolicy, src, srcSet });
     const hasImgNotFailing = hasImg && loaded !== 'error';

@@ -70,6 +70,48 @@
                 "title": "Verify your email address",
                 "message": "We have sent you an email with a link to verify your email address. Please check your inbox and click on the link in the email to access the app.",
                 "backToHome": "Go back"
+            },
+            "error": {
+                "OAuthSignin": {
+                    "title": "Authorization Failed",
+                    "description": "We couldn't create the authorization URL. Please try again later."
+                },
+                "OAuthCallback": {
+                    "title": "Login Error",
+                    "description": "There was a problem processing the response from the login provider. Please try again."
+                },
+                "OAuthCreateAccount": {
+                    "title": "Account Creation Failed",
+                    "description": "We couldn't create your account using this login provider. Please try again or use a different method."
+                },
+                "EmailCreateAccount": {
+                    "title": "Email Registration Failed",
+                    "description": "We couldn't create your account with this email. Please try again later."
+                },
+                "Callback": {
+                    "title": "Login Callback Error",
+                    "description": "Something went wrong while processing your login request. Please try again."
+                },
+                "OAuthAccountNotLinked": {
+                    "title": "Account Not Linked",
+                    "description": "This email is linked to another login method. Please use the original method to sign in."
+                },
+                "EmailSignin": {
+                    "title": "Email Sign-In Failed",
+                    "description": "We couldn't send the verification email. Please check your email address and try again."
+                },
+                "CredentialsSignin": {
+                    "title": "Login Failed",
+                    "description": "Your login details are incorrect. Please check them and try again."
+                },
+                "SessionRequired": {
+                    "title": "Sign-In Required",
+                    "description": "You need to be signed in to access this page. Please log in to continue."
+                },
+                "Default": {
+                    "title": "Unexpected Error",
+                    "description": "An unknown error occurred. Please refresh the page or try again later."
+                }
             }
         }
     },

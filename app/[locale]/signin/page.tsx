@@ -4,7 +4,7 @@ import {
     Center,
     Divider,
     Group,
-    Paper
+    Paper,
 } from '@mantine/core';
 import { IconBrandGoogleFilled } from "@tabler/icons-react";
 import { Link } from "../../../i18n/routing";
@@ -12,49 +12,22 @@ import SubmitButton from "../../../components/SubmitButton/SubmitButton";
 import { cookies } from "next/headers";
 import EmailForm from "../../../components/EmailForm/EmailForm";
 import { getTranslations } from "next-intl/server";
+import ErrorAlert from "../../../components/ErrorAlert/ErrorAlert";
 
-/*const getCsrfTokenServerSide = async (NextAuthBaseUrl: string) => {
-    //const NextAuthBaseUrl t= "";// process.env.NEXTAUTH_URL;
-    const allCookies = await cookies();
-
-    const cookieHeader = allCookies.getAll()
-        .map(({ name, value }) => `${name}=${value}`)
-        .join('; ');
-
-    const csrfResponse = await fetch(`${NextAuthBaseUrl}/csrf`, {
-        headers: {
-            Cookie: cookieHeader,
-        },
-    });
-
-    if (!csrfResponse.ok) {
-        return;
-    }
-
-    const csrfToken: string = await csrfResponse.json().then(resp => resp.csrfToken);
-
-    return csrfToken;
-}
-*/
-
-export default async function SignInPage(props: Readonly<{ searchParams: Promise<{ callbackUrl: string | undefined }> }>) {
+export default async function SignInPage(props: Readonly<{ searchParams: Promise<{ callbackUrl: string | undefined, error?: string }> }>) {
     const { searchParams: searchParamsPromise } = props
-    const t = await getTranslations("Authentication.customPages.signIn");
+    const t = await getTranslations("Authentication.customPages");
     const searchParams = await searchParamsPromise
-    const csrfToken = (await cookies()).get("authjs.csrf-token")?.value ?? "";
-    /*const headersList = await headers();
-    const host = headersList.get('X-Forwarded-Host');
-    const proto = headersList.get('X-Forwarded-Proto');
-    const csrfToken = await getCsrfTokenServerSide(proto+"://"+host+"/api/auth");*/
+    const csrfToken = (await cookies()).get("signIn.authjs.csrf-token")?.value ?? "";
     return (
         <Center ml="auto" mr="auto" maw={450} h="100vh" p="lg">
             <Paper shadow="xl" radius="md" p="xl" withBorder>
                 <Text size="lg" fw={500}>
-                    {t("welcome")} <Text span variant="gradient" fw={700} gradient={{ from: 'pink', to: 'yellow' }}>
+                    {t("signIn.welcome")} <Text span variant="gradient" fw={700} gradient={{ from: 'pink', to: 'yellow' }}>
                         <Link href="/">
                             testeBac
                         </Link>
-                    </Text>, {t("signIn")}
+                    </Text>, {t("signIn.signIn")}
                 </Text>
                 <Group grow mb="md" mt="md">
                     {
@@ -73,11 +46,17 @@ export default async function SignInPage(props: Readonly<{ searchParams: Promise
                         ))
                     }
                 </Group>
-                <Divider label={t("or")} labelPosition="center" my="lg" />
+                <Divider label={t("signIn.or")} labelPosition="center" my="lg" />
                 {
                     Object.values(providerMap.filter(provider => ["email"].includes(provider.type))).map((provider) => (
                         <EmailForm key={provider.id} provider={provider} csrfToken={csrfToken} searchParams={searchParams} />
                     ))
+                }
+                {
+                    searchParams?.error && (
+                        <ErrorAlert title={t("error."+ searchParams.error + ".title")}>
+                            {t("error."+ searchParams.error + ".description")}
+                        </ErrorAlert>)
                 }
             </Paper>
         </Center>

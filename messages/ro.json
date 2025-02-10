@@ -70,6 +70,48 @@
                 "title": "Verificați-vă adresa de email",
                 "message": "Ți-am trimis un email cu un link pentru verificarea adresei tale de email. Te rugăm să verifici inboxul și să dai clic pe linkul din email pentru a vă conecta la aplicație.",
                 "backToHome": "Înapoi"
+            },
+            "error": {
+                "OAuthSignin": {
+                    "title": "Autorizare Eșuată",
+                    "description": "Nu am putut crea URL-ul de autorizare. Vă rugăm să încercați din nou mai târziu."
+                },
+                "OAuthCallback": {
+                    "title": "Eroare la Autentificare",
+                    "description": "A apărut o problemă la procesarea răspunsului de la furnizorul de autentificare. Încercați din nou."
+                },
+                "OAuthCreateAccount": {
+                    "title": "Crearea Contului a Eșuat",
+                    "description": "Nu am putut crea contul folosind acest furnizor de autentificare. Încercați din nou sau utilizați o altă metodă."
+                },
+                "EmailCreateAccount": {
+                    "title": "Eșec la Înregistrare prin Email",
+                    "description": "Nu am putut crea contul folosind acest email. Încercați din nou mai târziu."
+                },
+                "Callback": {
+                    "title": "Eroare la Callback-ul Autentificării",
+                    "description": "Ceva nu a funcționat corect în timpul procesării cererii de autentificare. Încercați din nou."
+                },
+                "OAuthAccountNotLinked": {
+                    "title": "Cont Neconectat",
+                    "description": "Acest email este deja asociat cu o altă metodă de autentificare. Vă rugăm să folosiți metoda originală pentru a vă autentifica."
+                },
+                "EmailSignin": {
+                    "title": "Eșec la Autentificarea prin Email",
+                    "description": "Nu am putut trimite emailul de verificare. Verificați adresa de email și încercați din nou."
+                },
+                "CredentialsSignin": {
+                    "title": "Autentificare Eșuată",
+                    "description": "Datele de autentificare sunt incorecte. Vă rugăm să le verificați și să încercați din nou."
+                },
+                "SessionRequired": {
+                    "title": "Autentificare Necesară",
+                    "description": "Trebuie să fiți autentificat pentru a accesa această pagină. Vă rugăm să vă conectați."
+                },
+                "Default": {
+                    "title": "Eroare Necunoscută",
+                    "description": "A apărut o eroare neașteptată. Reîncărcați pagina sau încercați din nou mai târziu."
+                }
             }
         }
     },

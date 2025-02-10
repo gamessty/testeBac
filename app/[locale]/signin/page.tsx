@@ -42,9 +42,7 @@ import { getTranslations } from "next-intl/server";
 }
 */
 
-export default async function SignInPage(props: Readonly<{
-    searchParams: Promise<{ callbackUrl: string | undefined }>
-} & PaperProps>) {
+export default async function SignInPage(props: Readonly<{ searchParams: Promise<{ callbackUrl: string | undefined }> } & PaperProps>) {
     const { searchParams: searchParamsPromise, ...rest } = props
     const t = await getTranslations("Authentication.customPages.signIn");
     const searchParams = await searchParamsPromise

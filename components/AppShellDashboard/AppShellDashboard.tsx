@@ -1,7 +1,7 @@
 'use client';
-import { AppShell, Group, Button, ActionIcon, Text, Divider, Stack, Grid, UnstyledButton, Affix, Transition, Badge, Flex, Tooltip, useMatches, Menu } from "@mantine/core";
+import { AppShell, Group, Button, ActionIcon, Text, Divider, Stack, Grid, Affix, Transition, Badge, Flex, Tooltip, useMatches, Menu, ScrollArea } from "@mantine/core";
 import { useDidUpdate, useDocumentTitle, useSetState, useWindowScroll } from "@mantine/hooks";
-import { IconHome, IconFile, IconSettingsCog, IconChecklist, IconChartInfographic, IconArrowUp, IconUsers, IconLogout } from "@tabler/icons-react";
+import { IconHome, IconSettingsCog, IconChecklist, IconChartInfographic, IconArrowUp, IconUsers, IconLogout, IconUserPlus } from "@tabler/icons-react";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import ColorSchemeToggleIcon from "../ColorSchemeToggleIcon/ColorSchemeToggleIcon";
@@ -18,6 +18,7 @@ import { ITabData, Permissions } from "../../data";
 import AvatarFallback from "../AvatarFallback/AvatarFallback";
 import AvatarMenu from "../AvatarMenu/AvatarMenu";
 import { Link } from "../../i18n/routing";
+import RoleManager from "../Dashboard/Admin/RoleManager/RoleManager";
 
 interface AppShellDashboardProps {
     session: Session | null | undefined;
@@ -88,11 +89,12 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                 </Group>
             </AppShell.Header>
             <AppShell.Navbar p="md">
-                <AppShell.Section grow my="md">
+                <AppShell.Section grow mt="md" component={ScrollArea}>
                     <Stack
                         align="stretch"
                         justify="space-around"
                         gap="md"
+                        pb={25}
                     >
                         {
                             // sort the tabsData by category order and by category and add a divider and the title of the category before the first tab of the category if the category has the showLabel property set to true
@@ -106,17 +108,17 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                                                     <Text c="dimmed" ta="left">{t(`Navbar.${tab.category.name}.title`)}</Text>
                                                 </>
                                             }
-                                            {chkP(enumToString(tab.permissionNeeded), session?.user) && <Button key={tab.tab} color={tab.color ?? getInitialsColor(tab.tab)} onClick={() => handleTabChange({ tab: tab.tab })} variant={settings.tab == tab.tab ? 'light' : 'outline'} justify="left" h={35} leftSection={tab.icon}>{t(`Navbar.${tab.tab}`)}</Button>}
+                                            {chkP(enumToString(tab.permissionNeeded), session?.user) && <Button key={tab.tab} color={tab.color ?? getInitialsColor(tab.tab)} onClick={() => handleTabChange({ tab: tab.tab })} variant={settings.tab == tab.tab ? 'light' : 'outline'} justify="left" h={35} leftSection={<tab.icon size={17} />}>{t(`Navbar.${tab.tab}`)}</Button>}
                                         </React.Fragment>
                                     )
                                 } else {
-                                    return (chkP(enumToString(tab.permissionNeeded), session?.user) && <Button key={tab.tab} color={tab.color ?? getInitialsColor(tab.tab)} onClick={() => handleTabChange({ tab: tab.tab })} variant={settings.tab == tab.tab ? 'light' : 'outline'} justify="left" h={35} leftSection={tab.icon}>{t(`Navbar.${tab.tab}`)}</Button>)
+                                    return (chkP(enumToString(tab.permissionNeeded), session?.user) && <Button key={tab.tab} color={tab.color ?? getInitialsColor(tab.tab)} onClick={() => handleTabChange({ tab: tab.tab })} variant={settings.tab == tab.tab ? 'light' : 'outline'} justify="left" h={35} leftSection={<tab.icon size={17} />}>{t(`Navbar.${tab.tab}`)}</Button>)
                                 }
                             })
                         }
                     </Stack>
                 </AppShell.Section>
-                <AppShell.Section>
+                <AppShell.Section style={{ boxShadow: "0px -40px 44px -4px rgba(0, 0, 0, 0.25)" }}>
                     <Grid>
                         <Grid.Col span="content">
                             <ColorSchemeToggleIcon my={10} />
@@ -167,9 +169,6 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
             </AppShell.Navbar>
             <AppShell.Main>
                 {
-                    // NEED TO AUTOMATE THIS MAIN SECTION USING THE NEW tabData ARRAY, how.... I do not know yet
-                }
-                {
                     tabsData.map((tab) => (
                         <Transition key={tab.tab + "_tabComponent"} transition="fade-right" timingFunction="ease" duration={500} mounted={settings.tab == tab.tab}>
                             {(transitionStyles) => (
@@ -185,19 +184,19 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                 <Grid grow>
                     <Grid.Col span={1}>
                         <AvatarMenu shadow="md" position="top-start" offset={20} transitionProps={{ transition: 'pop-bottom-left', duration: 200 }} AvatarProps={{ src: session?.user?.image ?? undefined, name: session?.user?.username ?? session?.user?.email ?? undefined, color: 'initials' }}>
-                            {(chkP('user:manage', session?.user)) &&
-                                <>
-                                    <Menu.Label>{t('Navbar.admin.shortTitle')}</Menu.Label>
-                                    <Menu.Item onClick={() => handleTabChange({ tab: 'admin.users' })} leftSection={<IconUsers size={14} />}>
-                                        {t('Navbar.admin.users')}
+                            {tabsData.filter(t => !t.mobile && chkP(enumToString(t.permissionNeeded), session?.user)).toSorted((a, b) => b.category.order - a.category.order).map((tab, index, array) => (
+                                <React.Fragment key={tab.tab + "_menu"}>
+                                    {((index > 0 && array[index - 1].category.name != tab.category.name) || index == 0) && (!tab.category.permissionNeeded || chkP(enumToString(tab.category.permissionNeeded), session?.user)) &&
+                                        <>
+                                            {tab.category.showLabel && <Menu.Label tt="capitalize">{t(`Navbar.${tab.category.name}.title`)}</Menu.Label>}
+                                            {index > 0 && <Menu.Divider />}
+                                        </>
+                                    }
+                                    <Menu.Item onClick={() => handleTabChange({ tab: tab.tab })} leftSection={<tab.icon size={14} />}>
+                                        {t(`Navbar.${tab.tab}`)}
                                     </Menu.Item>
-                                    <Menu.Divider />
-                                </>
-                            }
-
-                            <Menu.Item onClick={() => handleTabChange({ tab: 'stats' })} leftSection={<IconChartInfographic size={14} />}>
-                                {t('Navbar.stats')}
-                            </Menu.Item>
+                                </React.Fragment>
+                            ))}
 
                             <Menu.Divider />
 
@@ -208,33 +207,18 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                     </Grid.Col>
                     <Grid.Col span={10}>
                         <Group justify="space-between" grow>
-                            <ActionIcon
-                                variant='transparent'
-                                aria-label='HomePage'
-                                size="lg"
-                                onClick={() => handleTabChange({ tab: 'home' })}
-                                color={settings.tab == 'home' ? undefined : 'gray'}
-                            >
-                                <IconHome />
-                            </ActionIcon>
-                            <ActionIcon
-                                variant='transparent'
-                                aria-label='Tests'
-                                size="lg"
-                                onClick={() => handleTabChange({ tab: 'tests' })}
-                                color={settings.tab == 'tests' ? undefined : 'gray'}
-                            >
-                                <IconChecklist />
-                            </ActionIcon>
-                            <ActionIcon
-                                variant='transparent'
-                                aria-label='Settings'
-                                size="lg"
-                                onClick={() => handleTabChange({ tab: 'settings' })}
-                                color={settings.tab == 'settings' ? undefined : 'gray'}
-                            >
-                                <IconSettingsCog />
-                            </ActionIcon>
+                            {tabsData.filter(t => t.mobile && chkP(enumToString(t.permissionNeeded), session?.user)).map((tab) => (
+                                <ActionIcon
+                                    key={tab.tab}
+                                    variant='transparent'
+                                    aria-label={tab.tab}
+                                    size="lg"
+                                    onClick={() => handleTabChange({ tab: tab.tab })}
+                                    color={settings.tab == tab.tab ? undefined : 'gray'}
+                                >
+                                    <tab.icon />
+                                </ActionIcon>
+                            ))}
                         </Group>
                     </Grid.Col>
                 </Grid>
@@ -245,7 +229,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                     {(transitionStyles) => (
                         <Button
                             leftSection={<IconArrowUp size={16} />}
-                            style={{ boxShadow: "var(--mantine-shadow-xl)", ...transitionStyles}}
+                            style={{ boxShadow: "var(--mantine-shadow-xl)", ...transitionStyles }}
                             onClick={() => scrollTo({ y: 0 })}
                             variant="gradient"
                             gradient={{ from: 'purple', to: 'pink' }}
@@ -262,7 +246,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
 export const tabsData: ITabData[] = [
     {
         "tab": "home",
-        "icon": (<IconHome size={17} />),
+        "icon": IconHome,
         "component": Home,
         "category": {
             "name": "general",
@@ -270,11 +254,12 @@ export const tabsData: ITabData[] = [
             "namespaced": false,
             "showLabel": false
         },
+        "mobile": true,
         "permissionNeeded": Permissions["general:*"]
     },
     {
         "tab": "tests",
-        "icon": (<IconFile size={17} />),
+        "icon": IconChecklist,
         "component": Tests,
         "category": {
             "name": "general",
@@ -282,11 +267,12 @@ export const tabsData: ITabData[] = [
             "namespaced": false,
             "showLabel": false
         },
+        "mobile": true,
         "permissionNeeded": Permissions["general:*"]
     },
     {
         "tab": "stats",
-        "icon": (<IconChartInfographic size={17} />),
+        "icon": IconChartInfographic,
         "component": Stats,
         "category": {
             "name": "general",
@@ -298,7 +284,7 @@ export const tabsData: ITabData[] = [
     },
     {
         "tab": "settings",
-        "icon": (<IconSettingsCog size={17} />),
+        "icon": IconSettingsCog,
         "component": Settings,
         "category": {
             "name": "general",
@@ -306,19 +292,33 @@ export const tabsData: ITabData[] = [
             "namespaced": false,
             "showLabel": false
         },
+        "mobile": true,
         "permissionNeeded": Permissions["general:*"]
     },
     {
         "tab": "admin.users",
-        "icon": (<IconUsers size={17} />),
+        "icon": IconUsers,
         "component": UserManager,
         "category": {
             "name": "admin",
             "order": 1,
             "namespaced": true,
             "showLabel": true,
-            "permissionNeeded": Permissions["user:*"]
+            "permissionNeeded": [Permissions["user:*"], Permissions["role:*"]]
         },
         "permissionNeeded": Permissions["user:manage"]
+    },
+    {
+        "tab": "admin.roles",
+        "icon": IconUserPlus,
+        "component": RoleManager,
+        "category": {
+            "name": "admin",
+            "order": 1,
+            "namespaced": true,
+            "showLabel": true,
+            "permissionNeeded": [Permissions["user:*"], Permissions["role:*"]]
+        },
+        "permissionNeeded": Permissions["role:manage"]
     }
 ]

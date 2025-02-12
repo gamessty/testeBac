@@ -7,6 +7,7 @@ export default function manifest(): MetadataRoute.Manifest {
     description: 'A simple test platform',
     start_url: '/app',
     display: 'standalone',
+    orientation: 'natural',
     background_color: '#242424',
     theme_color: '#000000',
     icons: [

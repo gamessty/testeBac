@@ -147,9 +147,9 @@
             "profile": "Profile",
             "settings": "Settings",
             "admin": {
-                "title": "Admin Panel",
-                "shortTitle": "Admin",
-                "users": "Users"
+                "title": "Admin",
+                "users": "Users",
+                "roles": "Roles"
             }
         },
         "Home": {
@@ -220,6 +220,81 @@
                 "fetch": {
                     "title": "{error, select, Unauthorized {Unauthorized} other {General error}}",
                     "message": "{error, select, Unauthorized {You are not authorized to access this administration page. If you believe this is an error, refresh the page and try again later.} other {Unknown general error. Please try again later.}}"
+                }
+            }
+        },
+        "RoleManager": {
+            "title": "Role Manager",
+            "viewRole": "View role",
+            "roles": "{count, plural, =1 {# role} other {# roles}}",
+            "newRole": "New role",
+            "create": "Create",
+            "close": "Close",
+            "nothingFound": "No roles found.",
+            "roleCard": {
+                "createdAt": "Created at",
+                "updatedAt": "Updated at"
+            },
+            "success": {
+                "create": {
+                    "title": "Role created",
+                    "message": "The role {name} has been created successfully."
+                },
+                "update": {
+                    "title": "Role updated",
+                    "message": "The role {name} has been updated successfully."
+                },
+                "delete": {
+                    "title": "Role deleted",
+                    "message": "The role {name} has been deleted successfully."
+                }
+            },
+            "confirm": {
+                "delete": {
+                    "title": "Delete role",
+                    "message": "Are you sure you want to delete the role {name}? This action cannot be undone."
+                },
+                "create": {
+                    "title": "Create role",
+                    "message": "Are you sure you want to create the role {name}?"
+                }
+            },
+            "drawer": {
+                "save": "Save",
+                "delete": "Delete role",
+                "name": {
+                    "label": "Name",
+                    "placeholder": "Enter the role name",
+                    "error": "The role name is required and must be at least 3 characters long.",
+                    "description": "The role name must be unique."
+                },
+                "category": {
+                    "label": "Category",
+                    "placeholder": "Select the role category",
+                    "error": "The role category is required."
+                },
+                "description": {
+                    "label": "Description",
+                    "placeholder": "Enter the role description"
+                },
+                "priority": {
+                    "label": "Priority",
+                    "placeholder": "Enter the role priority",
+                    "error": "The role priority is required."
+                },
+                "permissions": {
+                    "label": "Permissions",
+                    "placeholder": "Select permissions",
+                    "error": "Permissions are required."
+                }
+            },
+            "errors": {
+                "fetch": {
+                    "title": "{error, select, Unauthorized {Unauthorized} other {General error}}",
+                    "message": "{error, select, Unauthorized {You are not authorized to access this administration page. If you believe this is an error, refresh the page and try again later.} other {Unknown general error. Please try again later.}}"
+                },
+                "role": {
+                    "message": "An error arrised while processing role {name}. Please try again later."
                 }
             }
         },

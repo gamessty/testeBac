@@ -37,8 +37,8 @@ export function enumToString(value: Permissions | Permissions[]): string | strin
   return Permissions[value as unknown as keyof typeof Permissions].toString();
 }
 
-export function getInitialsColor(name: string, colors: MantineColor[] = defaultColors) {
-  const hash = hashCode(name);
+export function getInitialsColor(name?: string, colors: MantineColor[] = defaultColors) {
+  const hash = hashCode(name ?? '');
   const index = Math.abs(hash) % colors.length;
   return colors[index];
 }
@@ -99,7 +99,7 @@ export const chkP: ((permission: string | string[], user?: User, allowWildcards?
  */
 export function getRolesData(roles: Role[]): { group: string, items: { value: string, label: string, disabled?: boolean }[] }[] {
   let data: { group: string, items: { value: string, label: string, disabled?: boolean }[] }[] = [];
-  roles.forEach((role) => {
+  roles.toSorted((a, b) => b.priority - a.priority).forEach((role) => {
     if(!data.some((r) => r.group == role.category)) data.push({ group: role.category, items: [] });
     data.find((r) => r.group == role.category)?.items.push({ value: role.name, label: capitalize(role.name), disabled: role.name == "user" });
   });
@@ -136,8 +136,30 @@ export function getRolesFromArray(roles: string | string[], allRoles?: Role[]): 
  * @param {string} [key] The key to use for the update data.
  * @returns 
  */
-export function getPrismaUpdateData(data: any[], key?: string) {
-  let updateData = { connectOrCreate: data.map((d) => ({ where: d, create: d })) };
+export function getPrismaUpdateData(data: any[], {key, connectOrCreate = true}: { key?: string, connectOrCreate?: boolean }): any {
+  let updateData = connectOrCreate ? { connectOrCreate: data.map((d) => ({ where: d, create: d })) } : { deleteMany: {}, connect: data };
+  console.log(updateData);
   if(!key) return updateData;
   return { [key]: updateData };
+}
+
+
+export function getPrismaRolesUpdateData(newRoles: string[] | undefined, oldRoles: string[] | undefined)
+{
+  if(!newRoles) return { };
+  if(!oldRoles) return {  roles: { connect: newRoles.map((role) => ({ name: role })) } };
+  let rolesToDelete = oldRoles.filter((role) => !newRoles.includes(role));
+  let rolesToConnect = newRoles.filter((role) => !oldRoles.includes(role));
+  console.log(JSON.stringify({
+    roles: {
+      disconnect: rolesToDelete.map((role) => ({ name: role })),
+      connect: rolesToConnect.map((role) => ({ name: role })),
+    }
+  }))
+  return {
+    roles: {
+      disconnect: rolesToDelete.map((role) => ({ name: role })),
+      connect: rolesToConnect.map((role) => ({ name: role })),
+    }
+  }
 }

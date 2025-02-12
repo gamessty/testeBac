@@ -93,19 +93,14 @@ model Authenticator {
 model Role {
   id          String   @id @default(auto()) @map("_id") @db.ObjectId
   name        String   @unique
-  category    RoleCategory @default(GENERAL)
+  category    String   @default("GENERAL")
   userIDs     String[] @db.ObjectId
   users       User[]   @relation(fields: [userIDs], references: [id])
-  permissions String[] @default(["general:*"])
+  permissions String[] @default(["general:all"])
+  priority    Int      @default(0)
+  description String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
   @@map("roles")
-}
-
-enum RoleCategory {
-  ADMIN
-  DEVELOPER
-  TESTER
-  GENERAL
 }

@@ -13,7 +13,9 @@ const providers: Provider[] = [
     from: process.env.MAILGUN_FROM,
     sendVerificationRequest: sendVerificationRequest
   }),
-  Google
+  Google({
+    allowDangerousEmailAccountLinking: true,
+  })
 ]
 
 export const providerMap = providers

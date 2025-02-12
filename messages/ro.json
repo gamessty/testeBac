@@ -147,9 +147,9 @@
             "profile": "Profil",
             "settings": "Setări",
             "admin": {
-                "title": "Panou de administrare",
-                "shortTitle": "Administrare",
-                "users": "Utilizatori"
+                "title": "Administrare",
+                "users": "Utilizatori",
+                "roles": "Roluri"
             }
         },
         "Home": {
@@ -220,6 +220,79 @@
                 "fetch": {
                     "title": "{error, select, Unauthorized {Eroare de autorizare} other {Eroare generală}}",
                     "message": "{error, select, Unauthorized {Nu sunteți autorizat să accesați această pagină de administrare. Dacă considerați că este o eroare efectuați un refresh la pagină și încercați din nou mai târziu.} other {Eroare generală necunoscută. Vă rugăm să încercați din nou mai târziu.}}"
+                }
+            }
+        },
+        "RoleManager": {
+            "title": "Roluri",
+            "roles": "{count, plural, =1 {# rol} other {# roluri}}",
+            "newRole": "Rol nou",
+            "create": "Crează",
+            "close": "Închide",
+            "nothingFound": "Nu s-a găsit niciun rol.",
+            "roleCard": {
+                "createdAt": "Creat la",
+                "updatedAt": "Actualizat la"
+            },
+            "success": {
+                "create": {
+                    "title": "Actualizat",
+                    "message": "Rolul {name} a fost creat cu succes."
+                },
+                "update": {
+                    "title": "Actualizat",
+                    "message": "Rolul {name} a fost actualizat cu succes."
+                },
+                "delete": {
+                    "title": "Actualizat",
+                    "message": "Rolul {name} a fost șters cu succes."
+                }
+            },
+            "confirmation": {
+                "delete": {
+                    "title": "Șterge rolul",
+                    "message": "Ești sigur că vrei să ștergi rolul {name}? Această acțiune este ireversibilă."
+                },
+                "create": {
+                    "title": "Crează rol",
+                    "message": "Ești sigur că vrei să creezi un rolul: {name}?"
+                }
+            },
+            "drawer": {
+                "save": "Salvează",
+                "delete": "Șterge rolul",
+                "name": {
+                    "label": "Nume",
+                    "placeholder": "Introduceți numele rolului",
+                    "error": "Numele rolului este necesar."
+                },
+                "category": {
+                    "label": "Categorie",
+                    "placeholder": "Selectați categoria rolului",
+                    "error": "Categoria rolului este necesară."
+                },
+                "description": {
+                    "label": "Descriere",
+                    "placeholder": "Introduceți descrierea rolului"
+                },
+                "priority": {
+                    "label": "Prioritate",
+                    "placeholder": "Introduceți prioritatea rolului",
+                    "error": "Prioritatea rolului este necesară."
+                },
+                "permissions": {
+                    "label": "Permisiuni",
+                    "placeholder": "Selectați permisiunile",
+                    "error": "Cel puțin o permisiune este necesară."
+                }
+            },
+            "errors": {
+                "fetch": {
+                    "title": "{error, select, Unauthorized {Eroare de autorizare} other {Eroare generală}}",
+                    "message": "{error, select, Unauthorized {Nu sunteți autorizat să accesați această pagină de administrare. Dacă considerați că este o eroare efectuați un refresh la pagină și încercați din nou mai târziu.} other {Eroare generală necunoscută. Vă rugăm să încercați din nou mai târziu.}}"
+                },
+                "role": {
+                    "message": "A apărut o eroare la procesarea rolului {name}. Vă rugăm să încercați din nou."
                 }
             }
         },

@@ -1,5 +1,5 @@
 "use client";
-import { Affix, Avatar, Button, Grid, Group, Stack, Title, Transition, useMatches, Text, MantineStyleProp, Fieldset, TextInput, JsonInput, Loader } from "@mantine/core";
+import { Affix, Avatar, Button, Grid, Group, Stack, Title, Transition, useMatches, Text, MantineStyleProp, Fieldset, TextInput, JsonInput, Loader, Tooltip, Badge } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
@@ -7,7 +7,7 @@ import LocaleSwitch from "../../LocaleSwitch/LocaleSwitch";
 import ColorSchemeToggleIconSegmented from "../../ColorSchemeToggleIconSegmented/ColorSchemeToggleIconSegmented";
 import { Session, User } from "next-auth";
 import putUser from "../../PrismaFunctions/putUser";
-import { chkP } from "../../../utils";
+import { chkP, getInitialsColor } from "../../../utils";
 import AvatarFallback from "../../AvatarFallback/AvatarFallback";
 
 interface SettingsProps {
@@ -128,14 +128,25 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                 </Title>
                 {session &&
                     <Group mt={10} justify="flex-start">
-                        <AvatarFallback key={session?.user?.email} src={session.user?.image ?? undefined} name={session?.user?.username ?? session?.user?.email ?? undefined} color='initials'/>
+                        <AvatarFallback key={session?.user?.email} src={session.user?.image ?? undefined} name={session?.user?.username ?? session?.user?.email ?? undefined} color='initials' />
                         <Stack
-                            gap={0}
+                            gap={2}
                             align="flex-start"
                             justify="center"
                         >
                             <Text fw={500} mb={-5} ta="center">{session?.user?.username ?? session?.user?.email}</Text>
                             <Text c="dimmed" size='sm' ta="center" display={{ base: session?.user?.username ? "inherit" : "none" }}>{session?.user?.email}</Text>
+                            <Grid gutter={3} w="100%">
+                                {
+                                    session?.user?.roles?.map((role) => (
+                                        <Grid.Col pt={0} mt={-6} span="content" key={role.id}>
+                                            <Tooltip tt="capitalize" label={role.name} color={getInitialsColor(role.name)} withArrow>
+                                                <Badge size="sm" variant="dot" color={getInitialsColor(role.name)} radius="xs" tt="capitalize">{role.name}</Badge>
+                                            </Tooltip>
+                                        </Grid.Col>
+                                    ))
+                                }
+                            </Grid>
                         </Stack>
                     </Group>
                 }

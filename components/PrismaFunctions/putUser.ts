@@ -16,6 +16,7 @@ export default async function putUser({ id, data }: { id: any, data: any }): Pro
     }
     if (!chkP("user:manageRoles", session.user)) data.roles = undefined;// Only owners can change roles of other users
     //ADD MORE BETTER ROLES EVALUATION AND CHECKS (FOR EXAMPLE NOW AN ADMIN CAN REMOVE ROLES FROM ANYONE)
+    console.log(JSON.stringify(data));
     const user = await prisma.user.update({
         where: { id },
         data

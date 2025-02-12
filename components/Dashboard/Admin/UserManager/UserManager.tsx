@@ -1,6 +1,6 @@
 "use client";
 
-import { Container, MantineStyleProp, SimpleGrid, Text, Title, Drawer, Group, Stack, Input, Checkbox, MultiSelect, Button, Transition, JsonInput, Blockquote, TextInput, Loader, CloseButton, ScrollArea } from "@mantine/core";
+import { Container, MantineStyleProp, SimpleGrid, Text, Title, Drawer, Group, Stack, Input, Checkbox, MultiSelect, Button, Transition, JsonInput, Blockquote, TextInput, Loader, CloseButton, ScrollArea, ContainerProps } from "@mantine/core";
 import { type Session, type User } from "next-auth";
 import { useTranslations } from "next-intl";
 import UserCard from "../../UserCard/UserCard";
@@ -10,17 +10,12 @@ import { useDebouncedCallback, useDebouncedValue, useDisclosure } from "@mantine
 import putUser from "../../../PrismaFunctions/putUser";
 import { IconAlertTriangleFilled } from "@tabler/icons-react";
 import deleteUser from "../../../PrismaFunctions/deleteUser";
-import { chkP, getPrismaUpdateData, getRolesData, getRolesFromArray, getRolesFromValues } from "../../../../utils";
+import { chkP, getPrismaRolesUpdateData, getPrismaUpdateData, getRolesData, getRolesFromArray, getRolesFromValues } from "../../../../utils";
 import getRoles from "../../../PrismaFunctions/getRoles";
 import { Role } from "@prisma/client";
 import AvatarFallback from "../../../AvatarFallback/AvatarFallback";
 
-interface UserManagerProps {
-    session: Session | null | undefined;
-    style?: MantineStyleProp;
-}
-
-export default function UserManager({ session, style }: Readonly<UserManagerProps>) {
+export default function UserManager({ session, style }: Readonly<{ session: Session | null | undefined } & ContainerProps>) {
     const t = useTranslations('Dashboard.UserManager');
     const [search, setSearch] = useState("");
     const [searchResults, setSearchResults] = useState([] as User[]);
@@ -162,7 +157,7 @@ export default function UserManager({ session, style }: Readonly<UserManagerProp
                 w='100%'
                 mt={20}
                 defaultValue={user?.roles?.map((role) => role.name)}
-                onChange={(value) => { putUser({ id: user?.id, data: getPrismaUpdateData(getRolesFromArray(value), 'roles') }); setUser({ ...user, roles: getRolesFromValues(value, roles) }); updateUsersAfterChange({ ...user, roles: getRolesFromValues(value, roles) }); }}
+                onChange={(value) => { putUser({ id: user?.id, data: getPrismaRolesUpdateData(value, user.roles?.map(r => r.name))}); setUser({ ...user, roles: getRolesFromValues(value, roles) }); updateUsersAfterChange({ ...user, roles: getRolesFromValues(value, roles) }); }}
                 data={getRolesData(roles)}
                 disabled={!chkP("user:manageRoles", session?.user)}
             />

@@ -252,7 +252,7 @@
                     "message": "Rolul {name} a fost șters cu succes."
                 }
             },
-            "confirmation": {
+            "confirm": {
                 "delete": {
                     "title": "Șterge rolul",
                     "message": "Ești sigur că vrei să ștergi rolul {name}? Această acțiune este ireversibilă."

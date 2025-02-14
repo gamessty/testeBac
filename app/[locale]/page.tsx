@@ -23,6 +23,7 @@ export default async function HomePage({ searchParams }: Readonly<{ searchParams
         // Display a notification to the user with mantine notification system
         show = !!session?.user;
     }
+    
     if (signedOut?.toString().toLowerCase() === 'true' && !session?.user) {
         showSignOut = true;
     }

@@ -89,7 +89,6 @@ export default function RoleManager({ session, ...props }: Readonly<{ session: S
                     disabled={!chkP("role:create", session?.user)}
                     onClick={async () => {
                         open();
-                        console.log("NEW USER");
                     }}
                 >
                     {t('newRole')}

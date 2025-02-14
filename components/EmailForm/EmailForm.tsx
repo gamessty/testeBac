@@ -1,5 +1,4 @@
 "use client";
-
 import { Stack, TextInput, Group, Text } from "@mantine/core";
 import { type providerMap } from "../../auth";
 import validator from "validator";
@@ -25,9 +24,8 @@ export default function EmailForm({ provider, csrfToken, searchParams }: Readonl
     })
     return (
         <form
-            onSubmit={form.onSubmit(async (formData) => {
-                await signInAction(provider.id, formData)
-                console.log(formData)
+            onSubmit={form.onSubmit((formData) => {
+                signInAction(provider.id, formData)
             })}
         >
             <input type="hidden" name="csrfToken" value={csrfToken} key={form.key('csrfToken')} />

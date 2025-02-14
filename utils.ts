@@ -53,7 +53,7 @@ export function getRandomUserName() {
 
 export function getRandomUserImageURL(seed?: string) {
   seed = seed ?? Math.random().toString(36).substring(7);
-  
+
   return `https://api.dicebear.com/9.x/glass/svg?seed=${seed}`;
 }
 
@@ -78,8 +78,8 @@ export const capitalize = <T extends string>(s: T) => (s[0].toUpperCase() + s.sl
  * @returns {boolean} Whether the user has the permission or not.
 */
 export function checkPermission(permission: string | string[], user?: User, allowWildcards: boolean = true): boolean {
-  if(!user) return false;
-  if(Array.isArray(permission)) return permission.some((perm) => checkPermission(perm, user, allowWildcards));
+  if (!user) return false;
+  if (Array.isArray(permission)) return permission.some((perm) => checkPermission(perm, user, allowWildcards));
   const [resource, action] = permission.split(':')
   let allowed = user.roles?.some((role) => role.permissions.includes(permission) || role.permissions.includes(`${resource}:all`) || role.permissions.includes("all:all") || (allowWildcards && action == "*" && role.permissions.toString().includes(`${resource}:`))) ?? false;
   return allowed;
@@ -100,7 +100,7 @@ export const chkP: ((permission: string | string[], user?: User, allowWildcards?
 export function getRolesData(roles: Role[]): { group: string, items: { value: string, label: string, disabled?: boolean }[] }[] {
   let data: { group: string, items: { value: string, label: string, disabled?: boolean }[] }[] = [];
   roles.toSorted((a, b) => b.priority - a.priority).forEach((role) => {
-    if(!data.some((r) => r.group == role.category)) data.push({ group: role.category, items: [] });
+    if (!data.some((r) => r.group == role.category)) data.push({ group: role.category, items: [] });
     data.find((r) => r.group == role.category)?.items.push({ value: role.name, label: capitalize(role.name), disabled: role.name == "user" });
   });
   return data;
@@ -125,8 +125,8 @@ export function getRolesFromValues(roles: string[], allRoles: Role[]): Role[] {
  * @returns {Partial<Role>} The Array of partial role objects.
  */
 export function getRolesFromArray(roles: string | string[], allRoles?: Role[]): Partial<Role>[] {
-  if(!Array.isArray(roles)) return allRoles?.filter((role) => role.name == roles) ?? [{ "name": roles }];
-  if(!allRoles) return roles.map((role) => ({ "name": role }));
+  if (!Array.isArray(roles)) return allRoles?.filter((role) => role.name == roles) ?? [{ "name": roles }];
+  if (!allRoles) return roles.map((role) => ({ "name": role }));
   return allRoles.filter((role) => roles.includes(role.name));
 }
 
@@ -136,18 +136,16 @@ export function getRolesFromArray(roles: string | string[], allRoles?: Role[]): 
  * @param {string} [key] The key to use for the update data.
  * @returns 
  */
-export function getPrismaUpdateData(data: any[], {key, connectOrCreate = true}: { key?: string, connectOrCreate?: boolean }): any {
+export function getPrismaUpdateData(data: any[], { key, connectOrCreate = true }: { key?: string, connectOrCreate?: boolean }): any {
   let updateData = connectOrCreate ? { connectOrCreate: data.map((d) => ({ where: d, create: d })) } : { deleteMany: {}, connect: data };
-  console.log(updateData);
-  if(!key) return updateData;
+  if (!key) return updateData;
   return { [key]: updateData };
 }
 
 
-export function getPrismaRolesUpdateData(newRoles: string[] | undefined, oldRoles: string[] | undefined)
-{
-  if(!newRoles) return { };
-  if(!oldRoles) return {  roles: { connect: newRoles.map((role) => ({ name: role })) } };
+export function getPrismaRolesUpdateData(newRoles: string[] | undefined, oldRoles: string[] | undefined) {
+  if (!newRoles) return {};
+  if (!oldRoles) return { roles: { connect: newRoles.map((role) => ({ name: role })) } };
   let rolesToDelete = oldRoles.filter((role) => !newRoles.includes(role));
   let rolesToConnect = newRoles.filter((role) => !oldRoles.includes(role));
   return {
@@ -158,12 +156,40 @@ export function getPrismaRolesUpdateData(newRoles: string[] | undefined, oldRole
   }
 }
 
-export function getDifferences(newObj: any, oldObj: any) {
-  const diffs = {} as any;
-  for (const key in newObj) {
-    if (newObj[key] !== oldObj[key]) {
-      diffs[key] = newObj[key];
+/**
+ * Compares two objects and returns the differences.
+ * 
+ * This function recursively checks for differences between properties in `newObj` and `oldObj`.
+ * It handles nested objects, arrays, and primitive values.
+ * 
+ * @param {any} newObj - The new object to compare.
+ * @param {any} oldObj - The old object to compare against.
+ * @param {string[]} [ignoredKeys=[]] - An array of keys to ignore when checking for differences.
+ * @returns {any} - An object containing the differences, or undefined if there are none.
+ */
+export function getDifferences(newObj: any, oldObj: any, ignoredKeys: string[] = []): any {
+  if (typeof newObj !== 'object' || typeof oldObj !== 'object' || newObj === null || oldObj === null) {
+    return newObj !== oldObj ? newObj : undefined;
+  }
+
+  if (Array.isArray(newObj) && Array.isArray(oldObj)) {
+    return newObj.length !== oldObj.length || newObj.some((val, i) => getDifferences(val, oldObj[i], ignoredKeys) !== undefined)
+      ? newObj
+      : undefined;
+  }
+
+  const diffs: any = {};
+  const keys = new Set([...Object.keys(newObj), ...Object.keys(oldObj)]);
+
+  for (const key of keys) {
+    if (ignoredKeys.includes(key)) {
+      continue;
+    }
+    const difference = getDifferences(newObj[key], oldObj[key], ignoredKeys);
+    if (difference !== undefined) {
+      diffs[key] = difference;
     }
   }
-  return diffs;
+
+  return Object.keys(diffs).length > 0 ? diffs : undefined;
 }

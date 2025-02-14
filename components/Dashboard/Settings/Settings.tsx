@@ -196,7 +196,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                             <JsonInput
                                 formatOnBlur
                                 autosize
-                                value={JSON.stringify(getDifferences(userChanges, session?.user), null, 2)}
+                                value={JSON.stringify(getDifferences(userChanges, session?.user, ['updatedAt', 'createdAt']) ?? {}, null, 2)}
                                 minRows={4}
                             />
                         </Grid.Col>
@@ -211,7 +211,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                             style={transitionStyles}
                             onClick={async () => {
                                 setUserChanges({ loading: true });
-                                await putUser({ id: session?.user?.id, data: getDifferences(userChanges, session?.user) });
+                                await putUser({ id: session?.user?.id, data: getDifferences(userChanges, session?.user, ['updatedAt', 'createdAt']) });
                                 setUserChanges({ loading: undefined });
                             }}
                             disabled={userChanges.loading}

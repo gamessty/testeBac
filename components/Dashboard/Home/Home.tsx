@@ -18,7 +18,7 @@ export default function Home({ style }: Readonly<HomeProps>) {
                     </Text>
                 </Title>
             </Grid.Col>
-            <Grid.Col span={{base: 12, lg: 5, xl: 4, xxl: 3, xxxl: 2}} >
+            <Grid.Col span={{base: 12, md: 6, lg: 5, xl: 4, xxl: 3, xxxl: 2}} >
                 <Title order={2} mb={10} ta="left">
                     {t('Home.lastTest')}
                 </Title>

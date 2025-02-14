@@ -53,6 +53,10 @@
         "signUp": "Înregistrare",
         "signOut": "Deconectare",
         "refresh": "Reîncearcă",
+        "userSignedOut": {
+            "title": "Deconectare reușită",
+            "message": "V-ați deconectat cu succes de la TesteBac! Vă așteptăm înapoi cât mai curând!"
+        },
         "userNotAuthorized": {
             "title": "Înregistrarea nu a fost încă acceptată",
             "message": "Vă rugăm să așteptați ca înregistrarea dumneavoastră să fie validată de un moderator. Acest proces poate dura până la 24 de ore. \n\nDacă aveți întrebări, vă rugăm să ne contactați la {email}."

@@ -19,6 +19,8 @@ import AvatarFallback from "../AvatarFallback/AvatarFallback";
 import AvatarMenu from "../AvatarMenu/AvatarMenu";
 import { Link } from "../../i18n/routing";
 import RoleManager from "../Dashboard/Admin/RoleManager/RoleManager";
+import SignOutButton from "../SignOutButton/SignOutButton";
+import SignOutButtonClient from "../SignOutButton/SignOutButton.client";
 
 interface AppShellDashboardProps {
     session: Session | null | undefined;
@@ -108,23 +110,23 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                                                     <Text c="dimmed" ta="left">{t(`Navbar.${tab.category.name}.title`)}</Text>
                                                 </>
                                             }
-                                            {chkP(enumToString(tab.permissionNeeded), session?.user) && <Button key={tab.tab} color={tab.color ?? getInitialsColor(tab.tab)} onClick={() => handleTabChange({ tab: tab.tab })} variant={settings.tab == tab.tab ? 'light' : 'outline'} justify="left" h={35} leftSection={<tab.icon size={17} />}>{t(`Navbar.${tab.tab}`)}</Button>}
+                                            {chkP(enumToString(tab.permissionNeeded), session?.user) && <Button style={{ boxShadow: "var(--mantine-shadow-xl)" }} key={tab.tab} color={tab.color ?? getInitialsColor(tab.tab)} onClick={() => handleTabChange({ tab: tab.tab })} variant={settings.tab == tab.tab ? 'light' : 'outline'} justify="left" h={35} leftSection={<tab.icon size={17} />}>{t(`Navbar.${tab.tab}`)}</Button>}
                                         </React.Fragment>
                                     )
                                 } else {
-                                    return (chkP(enumToString(tab.permissionNeeded), session?.user) && <Button key={tab.tab} color={tab.color ?? getInitialsColor(tab.tab)} onClick={() => handleTabChange({ tab: tab.tab })} variant={settings.tab == tab.tab ? 'light' : 'outline'} justify="left" h={35} leftSection={<tab.icon size={17} />}>{t(`Navbar.${tab.tab}`)}</Button>)
+                                    return (chkP(enumToString(tab.permissionNeeded), session?.user) && <Button style={{ boxShadow: "var(--mantine-shadow-xl)" }} key={tab.tab} color={tab.color ?? getInitialsColor(tab.tab)} onClick={() => handleTabChange({ tab: tab.tab })} variant={settings.tab == tab.tab ? 'light' : 'outline'} justify="left" h={35} leftSection={<tab.icon size={17} />}>{t(`Navbar.${tab.tab}`)}</Button>)
                                 }
                             })
                         }
                     </Stack>
                 </AppShell.Section>
-                <AppShell.Section style={{ boxShadow: "0px -40px 44px -4px rgba(0, 0, 0, 0.25)" }}>
+                <AppShell.Section>
                     <Grid>
                         <Grid.Col span="content">
                             <ColorSchemeToggleIcon my={10} />
                         </Grid.Col>
                         <Grid.Col span="auto">
-                            <Button justify="left" fullWidth my={10} h={35} onClick={() => signOut()} variant="gradient" gradient={{ from: 'purple', to: 'pink' }}>{ta('signOut')}</Button>
+                            <SignOutButtonClient session={session} justify="left" fullWidth my={10} h={35} variant="gradient" gradient={{ from: 'purple', to: 'pink' }}/>
                         </Grid.Col>
                     </Grid>
                 </AppShell.Section>

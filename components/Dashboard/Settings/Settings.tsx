@@ -7,7 +7,7 @@ import LocaleSwitch from "../../LocaleSwitch/LocaleSwitch";
 import ColorSchemeToggleIconSegmented from "../../ColorSchemeToggleIconSegmented/ColorSchemeToggleIconSegmented";
 import { Session, User } from "next-auth";
 import putUser from "../../PrismaFunctions/putUser";
-import { chkP, getInitialsColor } from "../../../utils";
+import { chkP, getDifferences, getInitialsColor } from "../../../utils";
 import AvatarFallback from "../../AvatarFallback/AvatarFallback";
 
 interface SettingsProps {
@@ -116,7 +116,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
     })
 
     return (
-        <Grid p={{ base: 30, sm: 50 }} pb={95} style={style}>
+        <Grid p={{base: 15, sm: 35}} pt={{ base: 5, sm: 10 }} pb={95} style={style}>
             <Grid.Col span={12}>
                 <Title order={1} ta="left">
                     {t('title')}
@@ -175,7 +175,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                     </Title>
                     <Text mt={10} c="dimmed" size="sm">BASIC STRING COMPARE: {(JSON.stringify(userChanges) !== JSON.stringify(session?.user)).toString()}</Text>
                     <Text mt={10} c="dimmed" size="sm">FUNCTION COMPARE: {isDifferent(userChanges, session?.user, true).toString()}</Text>
-                    <Grid columns={12} mt={10} w="100%">
+                    <Grid columns={12} mt={10} w="100%" grow>
                         <Grid.Col span={6}>
                             <JsonInput
                                 formatOnBlur
@@ -192,6 +192,14 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                                 minRows={4}
                             />
                         </Grid.Col>
+                        <Grid.Col span={6}>
+                            <JsonInput
+                                formatOnBlur
+                                autosize
+                                value={JSON.stringify(getDifferences(userChanges, session?.user), null, 2)}
+                                minRows={4}
+                            />
+                        </Grid.Col>
                     </Grid>
                 </Grid.Col>
             }
@@ -203,7 +211,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                             style={transitionStyles}
                             onClick={async () => {
                                 setUserChanges({ loading: true });
-                                await putUser({ id: session?.user?.id, data: getNew(userChanges, session?.user) });
+                                await putUser({ id: session?.user?.id, data: getDifferences(userChanges, session?.user) });
                                 setUserChanges({ loading: undefined });
                             }}
                             disabled={userChanges.loading}

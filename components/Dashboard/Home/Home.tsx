@@ -10,7 +10,7 @@ interface HomeProps {
 export default function Home({ style }: Readonly<HomeProps>) {
     const t = useTranslations('Dashboard');
     return (
-        <Grid p={{base: 25, sm: 35}} pt={{ base: 5, sm: 10 }} style={style}>
+        <Grid p={{base: 15, sm: 35}} pt={{ base: 1, sm: 10 }} style={style}>
             <Grid.Col span={12} >
                 <Title order={1} className={classes.title} ta="left">
                     <Text inherit variant="gradient" gradient={{ from: 'green', to: 'yellow', deg: 180 }}>

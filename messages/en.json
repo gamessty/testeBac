@@ -53,6 +53,10 @@
         "signUp": "Sign Up",
         "signOut": "Sign Out",
         "refresh": "Try again",
+        "userSignedOut": {
+            "title": "Signed out",
+            "message": "You have successfully signed out of TesteBac! We hope to see you soon!"
+        },
         "userNotAuthorized": {
             "title": "Registration not accepted yet",
             "message": "Please wait for your registration to be validated by a moderator. This may take up to 24 hours. \n\nIf you have any questions, please contact us at {email}."

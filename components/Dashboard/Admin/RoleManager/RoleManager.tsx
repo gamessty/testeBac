@@ -2,7 +2,7 @@
 import { Session } from "next-auth";
 import { ContainerProps, Container, Blockquote, Title, Text, SimpleGrid, Accordion, useMatches, Affix, Button, Badge } from "@mantine/core";
 import { IconAlertTriangleFilled, IconUserPlus } from "@tabler/icons-react";
-import { chkP, getInitialsColor, getRolesFromValues } from "../../../../utils";
+import { chkP, getInitialsColor } from "../../../../utils";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Role } from "@prisma/client";
@@ -44,7 +44,7 @@ export default function RoleManager({ session, ...props }: Readonly<{ session: S
 
 
     return (
-        <Container fluid p={{ base: 10, sm: 25 }} pt={{ base: 5, sm: 10 }} pb={95} {...props}>
+        <Container fluid p={{ base: 5, sm: 25 }} pt={{ base: 5, sm: 10 }} pb={95} {...props}>
             <Title order={1} w="100%" ta="left" mb={20}>
                 {t('title')}
                 <Text c="dimmed" ml={5} ta="left">

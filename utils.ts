@@ -150,16 +150,20 @@ export function getPrismaRolesUpdateData(newRoles: string[] | undefined, oldRole
   if(!oldRoles) return {  roles: { connect: newRoles.map((role) => ({ name: role })) } };
   let rolesToDelete = oldRoles.filter((role) => !newRoles.includes(role));
   let rolesToConnect = newRoles.filter((role) => !oldRoles.includes(role));
-  console.log(JSON.stringify({
-    roles: {
-      disconnect: rolesToDelete.map((role) => ({ name: role })),
-      connect: rolesToConnect.map((role) => ({ name: role })),
-    }
-  }))
   return {
     roles: {
       disconnect: rolesToDelete.map((role) => ({ name: role })),
       connect: rolesToConnect.map((role) => ({ name: role })),
     }
   }
+}
+
+export function getDifferences(newObj: any, oldObj: any) {
+  const diffs = {} as any;
+  for (const key in newObj) {
+    if (newObj[key] !== oldObj[key]) {
+      diffs[key] = newObj[key];
+    }
+  }
+  return diffs;
 }

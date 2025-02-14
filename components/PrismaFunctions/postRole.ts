@@ -4,6 +4,7 @@ import { auth } from "../../auth";
 import { prisma } from "../../lib/prisma";
 import { Role } from "@prisma/client";
 import { chkP } from "../../utils";
+import { revalidatePath } from "next/cache";
 
 
 export default async function postRole({ roleData }: { roleData: Omit<Role, "id" | "userIDs" | "createdAt" | "updatedAt"> }): Promise<Role | { message: string }> {
@@ -17,5 +18,6 @@ export default async function postRole({ roleData }: { roleData: Omit<Role, "id"
     let role = await prisma.role.create({
         data: roleData
     });
+    revalidatePath('/[slug]/app', "page");
     return role;
 }

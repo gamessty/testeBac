@@ -4,6 +4,7 @@ import { auth } from "../../auth";
 import { prisma } from "../../lib/prisma";
 import { Role } from "@prisma/client";
 import { chkP } from "../../utils";
+import { revalidatePath } from "next/cache";
 
 
 export default async function deleteRole({ id }: { id: string }): Promise<Role | { message: string }> {
@@ -19,5 +20,6 @@ export default async function deleteRole({ id }: { id: string }): Promise<Role |
             id: id
         }
     });
+    revalidatePath('/[slug]/app', "page");
     return role;
 }

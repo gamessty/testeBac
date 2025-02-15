@@ -1,7 +1,7 @@
 "use client";
 import { Card, Group, Badge, Button, Image, Text, Avatar, CardProps } from "@mantine/core";
 import { useTranslations } from "next-intl";
-import clasess from './TestCard.module.css';
+import classes from './TestCard.module.css';
 import { IconCodeAsterisk, IconFlask2, IconMicroscope, IconSchool } from "@tabler/icons-react";
 import AvatarFallback from "../../AvatarFallback/AvatarFallback";
 import { Link } from "../../../i18n/routing";
@@ -30,33 +30,33 @@ export default function TestCard ({ category, subject, coverImage, lastQuestion,
         }
     }
     return (
-        <Card {...rest} component={Link} href={href ?? ''} style={{ position: 'relative' }} w={"100%"} display="inline-block" shadow="sm" padding="lg" pt={35} mr="30" radius="md" withBorder>
-            { coverImage && <Card.Section mb="md">
+        <Card {...rest} component={Link} href={href ?? ''} className={classes['test-card']} style={{ position: 'relative' }} w={"100%"} display="inline-block" shadow="sm" padding="lg" pt={35} mr="30" radius="md" withBorder>
+            { coverImage && <Card.Section inheritPadding pb="md">
                 <Image
                     src={coverImage}
                     height={160}
                     alt="Cover image"
                 />
-                {category && <Badge className={clasess["card-badge"]} color="pink">{t("category", { category })}</Badge>}
+                {category && <Badge className={classes["card-badge"]} color="pink">{t("category", { category })}</Badge>}
             </Card.Section>}
 
+            <Card.Section inheritPadding py="md">
             {subject && <Group justify="left" mb="xs">
                 {!coverImage && <AvatarFallback name={subject} color="initials">{getAvatarIcon(subject)}</AvatarFallback>}
                 <Text fw={500}>{t(`Subjects.${subject}`)}</Text>
-                {category && !coverImage && <Badge className={clasess["card-badge"]} color="pink">{t("category", { category })}</Badge>}
+                {category && !coverImage && <Badge className={classes["card-badge"]} color="pink">{t("category", { category })}</Badge>}
             </Group>}
 
             {lastQuestion && <Text size="sm" fw="500" aria-label="Last Question" c="dimmed">
                 {t('lastQuestion')}
             </Text>}
+            </Card.Section>
 
-            {lastQuestion && <Text size="sm" aria-label="Last Question" c="dimmed">
-                {lastQuestion}
-            </Text>}
-
-            <Button color="blue" fullWidth mt="md" radius="md">
-                {t('resumeTest')}
-            </Button>
+            <Card.Section className={classes["test-card_button_section"]} inheritPadding pb="md">
+                <Button color="blue" fullWidth radius="md" style={{ position: 'relative' }}>
+                    {t('resumeTest')}
+                </Button>
+            </Card.Section>
         </Card>
     )
 }

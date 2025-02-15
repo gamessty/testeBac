@@ -1,5 +1,5 @@
 "use client";
-import { Affix, Avatar, Button, Grid, Group, Stack, Title, Transition, useMatches, Text, MantineStyleProp, Fieldset, TextInput, JsonInput, Loader, Tooltip, Badge } from "@mantine/core";
+import { Affix, Button, Grid, Group, Stack, Title, Transition, useMatches, Text, MantineStyleProp, Fieldset, TextInput, JsonInput, Loader, Tooltip, Badge } from "@mantine/core";
 import { useSetState } from "@mantine/hooks";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";

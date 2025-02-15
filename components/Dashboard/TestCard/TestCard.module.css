@@ -9,3 +9,22 @@
     top: 20px;
     right: 16px;
 }
+
+
+.test-card {
+    position: relative;
+}
+
+.test-card:has(.test-card_button_section) {
+    padding-bottom: var(--mantine-spacing-xl);
+}
+
+.test-card:has(.test-card_button_section):nth-last-child(2) {
+    margin-bottom: calc("25px" + var(--mantine-spacing-xl));
+}
+
+.test-card_button_section {
+    position: absolute;
+    bottom: var(--mantine-spacing-lg);
+    width: 100%;
+}

@@ -6,7 +6,7 @@ import { chkP, getInitialsColor } from "../../../../utils";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Role } from "@prisma/client";
-import getRoles from "../../../PrismaFunctions/getRoles";
+import getManyRole from "../../../../actions/PrismaFunctions/getManyRole";
 import RoleCard from "../../RoleCard/RoleCard";
 import NewRoleModal from "../../../NewRoleModal/NewRoleModal";
 import { useDisclosure } from "@mantine/hooks";
@@ -20,7 +20,7 @@ export default function RoleManager({ session, ...props }: Readonly<{ session: S
 
     useEffect(() => {
         async function fetchData() {
-            let fetchedRoles = await getRoles();
+            let fetchedRoles = await getManyRole();
             if (!Array.isArray(fetchedRoles) && fetchedRoles?.message) {
                 return setError(fetchedRoles.message);
             }

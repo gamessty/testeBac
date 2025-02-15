@@ -23,3 +23,5 @@ export default async function deleteRole({ id }: { id: string }): Promise<Role |
     revalidatePath('/[slug]/app', "page");
     return role;
 }
+
+export { deleteRole };

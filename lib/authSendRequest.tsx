@@ -14,8 +14,7 @@ export async function sendVerificationRequest(params: any) {
   let locale = isSupportedLocale(getPathsFromURL(unescape(getQueryParamsFromURL(url).get('callbackUrl') ?? ''))[1]) ? getPathsFromURL(unescape(getQueryParamsFromURL(url).get('callbackUrl') ?? ''))[1] : 'en'
 
   const t = await getTranslations({ locale, namespace: 'Email.MagicLink' })
-  const emailHtml = await render(<MagicLinkEmail host={host} t={t} url={url} />);
-
+  const emailHtml = await render(<MagicLinkEmail locale={locale} host={host} t={t} url={url} />);
 
   const form = new FormData()
   //form.append("from", `${provider.name} <${provider.from}>`)

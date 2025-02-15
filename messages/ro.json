@@ -120,10 +120,7 @@
         }
     },
     "Tests": {
-        "Categories": {
-            "entrance": "Admitere",
-            "baccalaureate": "Bac"
-        },
+        "category": "{category, select, entrance {Admitere} bac {Bac} other {Categorie necunoscută}}",
         "Subjects": {
             "mathematics": "Matematică",
             "romanian": "Română",
@@ -157,7 +154,8 @@
             }
         },
         "Home": {
-            "welcome": "Salut!",
+            "welcome": "Salut<name></name>!",
+            "nameFormatting": ", {name}",
             "recentTests": "Teste recente",
             "lastTest": "Ultimul test",
             "quickStats": "Statistici"
@@ -178,6 +176,10 @@
                 "username": {
                     "label": "Nume de utilizator",
                     "placeholder": "Numele de utilizator"
+                },
+                "name": {
+                    "label": "Nume",
+                    "placeholder": "Nume Prenume"
                 },
                 "deleteConfirmation": "Ești sigur că vrei să ștergi contul? Această acțiune este ireversibilă.",
                 "deleteSuccess": "Contul a fost șters cu succes.",

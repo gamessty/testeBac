@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import LocaleSwitch from "../../LocaleSwitch/LocaleSwitch";
 import ColorSchemeToggleIconSegmented from "../../ColorSchemeToggleIconSegmented/ColorSchemeToggleIconSegmented";
 import { Session, User } from "next-auth";
-import putUser from "../../PrismaFunctions/putUser";
+import putUser from "../../../actions/PrismaFunctions/putUser";
 import { chkP, getDifferences, getInitialsColor } from "../../../utils";
 import AvatarFallback from "../../AvatarFallback/AvatarFallback";
 
@@ -116,7 +116,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
     })
 
     return (
-        <Grid p={{base: 15, sm: 35}} pt={{ base: 5, sm: 10 }} pb={95} style={style}>
+        <Grid p={{ base: 15, sm: 35 }} pt={{ base: 5, sm: 10 }} pb={95} style={style}>
             <Grid.Col span={12}>
                 <Title order={1} ta="left">
                     {t('title')}
@@ -151,6 +151,12 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                     </Group>
                 }
                 <Fieldset w={{ base: "90%", md: "75%", xl: "50%", "xxl": "30%" }} legend={t('Account.personalInfo')} mt={10}>
+                    <TextInput
+                        onChange={(Event) => setUserChanges({ name: Event.currentTarget.value })}
+                        label={t('Account.name.label')}
+                        value={userChanges.name ?? ''}
+                        placeholder={t('Account.name.placeholder')}
+                    />
                     <TextInput
                         onChange={(Event) => setUserChanges({ username: Event.currentTarget.value })}
                         label={t('Account.username.label')}

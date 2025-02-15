@@ -18,6 +18,7 @@ interface MagicLinkEmailProps {
     t: any;
     url: string;
     host: string;
+    locale: string;
 }
 
 const baseURL = (host?: string) => process.env.BASE_URL ?? (host?.includes('localhost') ? 'http://' + host : 'https://' + host) ?? '';
@@ -28,33 +29,61 @@ export const MagicLinkEmail = function ({
     t,
     url,
     host,
+    locale
 }: MagicLinkEmailProps) {
     return (
-        <Html>
-            <Head />
+        <Html lang={locale}>
+            <Head>
+                <style>{`
+                    @media (prefers-color-scheme: dark) {
+                        body {
+                            background-color: #000000;
+                            color: #ffffff;
+                        }
+                        .container {
+                            background-color: #1a1a1a;
+                        }
+                        .heading {
+                            color: #ffffff;
+                        }
+                        .paragraph {
+                            color: #d3d3d3;
+                        }
+                        .button {
+                            background-color: #4a5bdc;
+                        }
+                        .reportLink {
+                            color: #8a8a8a;
+                        }
+                        .hr {
+                            border-color: #333333;
+                        }
+                    }
+                `}</style>
+            </Head>
             <Preview>{t('subject')}</Preview>
             <Body style={main}>
-                <Container style={container}>
+                <Container style={container} className="container">
                     <Img 
                         alt="testeBac"
                         style={logo}
                         height={42}
                         src={srcLogo(host)}
                     />
-                    <Heading style={heading}>{t('subject')}</Heading>
+                    <Heading style={heading} className="heading">{t('subject')}</Heading>
                     <Section style={buttonContainer}>
-                        <Button style={button} href={url}>
+                        <Button style={button} className="button" href={url}>
                             {t('signIn')}
                         </Button>
                     </Section>
-                    <Text style={paragraph}>
+                    <Text style={paragraph} className="paragraph">
                         {t('message')}
                     </Text>
-                    <Hr style={hr} />
-                    <Link href={baseURL(host)} style={reportLink}>
+                    <Hr style={hr} className="hr" />
+                    <Link href={baseURL(host)} style={reportLink} className="reportLink">
                         testeBac
                     </Link>
-                    <Text style={{ ...reportLink, marginTop: '0px' }}>
+                    <Text style={{ ...reportLink, marginTop: '0px' }} className="reportLink">
                         {t('disclaimer', { email: process.env.EMAIL_SUPPORT ?? 'support@gamessty.eu' })}
                     </Text>
                 </Container>
@@ -114,6 +143,7 @@ const button = {
 
 const reportLink = {
     fontSize: '14px',
+    textDecoration: 'italic',
     color: '#b4becc',
 };
 

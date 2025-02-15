@@ -4,7 +4,7 @@ import { getInitialsColor } from "../../../utils";
 import { IconTrash } from "@tabler/icons-react";
 import { modals } from "@mantine/modals";
 import { notifications } from "@mantine/notifications";
-import deleteRole from "../../PrismaFunctions/deleteRole";
+import deleteRole from "../../../actions/PrismaFunctions/deleteRole";
 import { useTranslations } from "next-intl";
 
 export default function RoleCard({ role, skeleton = false, ...props }: Readonly<{ role?: Role, skeleton?: boolean } & CardProps>) {

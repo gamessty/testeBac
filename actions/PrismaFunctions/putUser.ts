@@ -29,4 +29,4 @@ export default async function putUser({ id, data }: { id: any, data: any }): Pro
     return user;
 }
 
-/// OPTIMIZATION NEEDED, THE APP HAS HIGH BUILD TIMES OF 2.3s. UP FROM A couple of ms a few days ago
+export { putUser };

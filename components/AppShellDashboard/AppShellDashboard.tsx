@@ -76,7 +76,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
         <AppShell
             header={{ height: 60 }}
             navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: true } }}
-            padding="md"
+            padding={0}
         >
             <AppShell.Header>
                 <Group h="100%" px="md" justify="space-between">

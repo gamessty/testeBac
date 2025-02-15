@@ -6,6 +6,7 @@ import ColorSchemeToggleIcon from "../ColorSchemeToggleIcon/ColorSchemeToggleIco
 import LocalSelect from "../LocaleSelect/LocaleSelect";
 import { auth } from "../../auth";
 import { Link } from "../../i18n/routing";
+import SignOutButtonClient from "../SignOutButton/SignOutButton.client";
 
 export default async function NavbarHomepage(props: Readonly<GridProps>) {
     const session = await auth();
@@ -24,7 +25,7 @@ export default async function NavbarHomepage(props: Readonly<GridProps>) {
                 <Flex direction="row" align="center" gap="md" justify="flex-end">
                     {!session?.user && <SignInButton />}
                     {session?.user && <ProfileEmail session={session} />}
-                    <SignOutButton display={{ base: "none", md: 'initial' }} />
+                    <SignOutButtonClient session={session} display={{ base: "none", md: 'initial' }} />
                     <ColorSchemeToggleIcon />
                     <LocalSelect />
                 </Flex>

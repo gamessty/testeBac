@@ -122,8 +122,10 @@
     "Tests": {
         "Categories": {
             "entrance": "College Entrance",
-            "baccalaureate": "Baccalaureate"
+            "baccalaureate": "Baccalaureate",
+            "bac": "Baccalaureate"
         },
+        "category": "{category, select, entrance {College Entrance} bac {Baccalaureate} other {Unknown}}",
         "Subjects": {
             "mathematics": "Mathematics",
             "romanian": "Romanian",
@@ -157,7 +159,8 @@
             }
         },
         "Home": {
-            "welcome": "Hi!",
+            "welcome": "Hi<name></name>!",
+            "nameFormatting": "{name, select, undefined {} other {, {name}}}",
             "recentTests": "Recent tests",
             "lastTest": "Resume test",
             "quickStats": "Quick stats"
@@ -178,6 +181,10 @@
                 "username": {
                     "label": "Username",
                     "placeholder": "Enter your username"
+                },
+                "name": {
+                    "label": "Name",
+                    "placeholder": "Enter your name"
                 },
                 "deleteConfirmation": "Are you sure you want to delete your account? This action cannot be undone.",
                 "deleteSuccess": "Your account has been deleted successfully.",

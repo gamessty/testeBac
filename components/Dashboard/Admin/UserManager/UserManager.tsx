@@ -4,14 +4,14 @@ import { Container, MantineStyleProp, SimpleGrid, Text, Title, Drawer, Group, St
 import { type Session, type User } from "next-auth";
 import { useTranslations } from "next-intl";
 import UserCard from "../../UserCard/UserCard";
-import getUsers from "../../../PrismaFunctions/getUsers";
+import getManyUser from "../../../../actions/PrismaFunctions/getManyUser";
 import { useEffect, useState } from "react";
 import { useDebouncedCallback, useDebouncedValue, useDisclosure } from "@mantine/hooks";
-import putUser from "../../../PrismaFunctions/putUser";
+import putUser from "../../../../actions/PrismaFunctions/putUser";
 import { IconAlertTriangleFilled } from "@tabler/icons-react";
-import deleteUser from "../../../PrismaFunctions/deleteUser";
-import { chkP, getPrismaRolesUpdateData, getPrismaUpdateData, getRolesData, getRolesFromArray, getRolesFromValues } from "../../../../utils";
-import getRoles from "../../../PrismaFunctions/getRoles";
+import deleteUser from "../../../../actions/PrismaFunctions/deleteUser";
+import { chkP, getPrismaRolesUpdateData, getPrismaUpdateData, getManyRoleData, getManyRoleFromArray, getManyRoleFromValues } from "../../../../utils";
+import getManyRole from "../../../../actions/PrismaFunctions/getManyRole";
 import { Role } from "@prisma/client";
 import AvatarFallback from "../../../AvatarFallback/AvatarFallback";
 
@@ -40,8 +40,8 @@ export default function UserManager({ session, style }: Readonly<{ session: Sess
 
     useEffect(() => {
         async function fetchData() {
-            let fetchedUsers = await getUsers();
-            let fetchedRoles = await getRoles();
+            let fetchedUsers = await getManyUser();
+            let fetchedRoles = await getManyRole();
             if (!Array.isArray(fetchedUsers) && fetchedUsers?.message) {
                 return setError(fetchedUsers.message);
             }
@@ -157,8 +157,8 @@ export default function UserManager({ session, style }: Readonly<{ session: Sess
                 w='100%'
                 mt={20}
                 defaultValue={user?.roles?.map((role) => role.name)}
-                onChange={(value) => { putUser({ id: user?.id, data: getPrismaRolesUpdateData(value, user.roles?.map(r => r.name))}); setUser({ ...user, roles: getRolesFromValues(value, roles) }); updateUsersAfterChange({ ...user, roles: getRolesFromValues(value, roles) }); }}
-                data={getRolesData(roles)}
+                onChange={(value) => { putUser({ id: user?.id, data: getPrismaRolesUpdateData(value, user.roles?.map(r => r.name))}); setUser({ ...user, roles: getManyRoleFromValues(value, roles) }); updateUsersAfterChange({ ...user, roles: getManyRoleFromValues(value, roles) }); }}
+                data={getManyRoleData(roles)}
                 disabled={!chkP("user:manageRoles", session?.user)}
             />
             <Group mt={20} justify="flex-end">

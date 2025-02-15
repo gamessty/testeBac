@@ -1,3 +1,4 @@
+"use server";
 import { Button, Group, TextInput } from "@mantine/core"
 import { signIn, auth } from "../../auth"
 import { getTranslations } from "next-intl/server";

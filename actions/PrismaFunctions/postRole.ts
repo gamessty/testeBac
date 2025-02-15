@@ -21,3 +21,5 @@ export default async function postRole({ roleData }: { roleData: Omit<Role, "id"
     revalidatePath('/[slug]/app', "page");
     return role;
 }
+
+export { postRole };

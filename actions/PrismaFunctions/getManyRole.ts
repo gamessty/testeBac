@@ -6,7 +6,7 @@ import { Role } from "@prisma/client";
 import { chkP } from "../../utils";
 
 
-export default async function getRoles(): Promise<Role[] | { message: string }> {
+export default async function getManyRole(): Promise<Role[] | { message: string }> {
     const session = await auth();
     if (!session?.user) {
         return { message: "Not authenticated" };
@@ -17,3 +17,5 @@ export default async function getRoles(): Promise<Role[] | { message: string }> 
     let roles = await prisma.role.findMany();
     return roles;
 }
+
+export { getManyRole };

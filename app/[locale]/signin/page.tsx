@@ -1,4 +1,5 @@
-import { signIn, providerMap } from "../../../auth"
+"use server";
+import { providerMap } from "../../../auth"
 import {
     Text,
     Center,
@@ -13,6 +14,7 @@ import { cookies } from "next/headers";
 import EmailForm from "../../../components/EmailForm/EmailForm";
 import { getTranslations } from "next-intl/server";
 import ErrorAlert from "../../../components/ErrorAlert/ErrorAlert";
+import { handleOAuthSignIn } from "../../../actions/Forms";
 
 export default async function SignInPage(props: Readonly<{ searchParams: Promise<{ callbackUrl: string | undefined, error?: string }> }>) {
     const { searchParams: searchParamsPromise } = props
@@ -34,11 +36,11 @@ export default async function SignInPage(props: Readonly<{ searchParams: Promise
                         Object.values(providerMap.filter(provider => ["oauth", "oidc", "webauthn"].includes(provider.type))).map((provider) => (
                             <form
                                 key={provider.id}
-                                action={async () => {
-                                    "use server"
-                                    await signIn(provider.id, { redirectTo: searchParams?.callbackUrl ?? "", csrfToken })
-                                }}
+                                action={handleOAuthSignIn}
                             >
+                                <input type="hidden" name="providerId" value={provider.id} />
+                                <input type="hidden" name="csrfToken" value={csrfToken} />
+                                <input type="hidden" name="redirectTo" value={searchParams?.callbackUrl ?? ""} />
                                 <SubmitButton fullWidth variant="default" radius="xl" key={provider.id} leftSection={provider.id === "google" ? <IconBrandGoogleFilled /> : undefined}>
                                     {provider.name}
                                 </SubmitButton>

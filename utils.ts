@@ -97,7 +97,7 @@ export const chkP: ((permission: string | string[], user?: User, allowWildcards?
  * @param {Role[]} roles The roles to get the data from.
  * @returns {Array<{ group: string, items: { value: string, label: string }[] }>} The data for the roles.
  */
-export function getRolesData(roles: Role[]): { group: string, items: { value: string, label: string, disabled?: boolean }[] }[] {
+export function getManyRoleData(roles: Role[]): { group: string, items: { value: string, label: string, disabled?: boolean }[] }[] {
   let data: { group: string, items: { value: string, label: string, disabled?: boolean }[] }[] = [];
   roles.toSorted((a, b) => b.priority - a.priority).forEach((role) => {
     if (!data.some((r) => r.group == role.category)) data.push({ group: role.category, items: [] });
@@ -112,7 +112,7 @@ export function getRolesData(roles: Role[]): { group: string, items: { value: st
  * @param allRoles All the roles to get the data from.
  * @returns The Array of role objects.
  */
-export function getRolesFromValues(roles: string[], allRoles: Role[]): Role[] {
+export function getManyRoleFromValues(roles: string[], allRoles: Role[]): Role[] {
   return allRoles.filter((role) => roles.includes(role.name));
 }
 
@@ -124,7 +124,7 @@ export function getRolesFromValues(roles: string[], allRoles: Role[]): Role[] {
  * @param {Role[]} [allRoles] All the roles to get the data from.
  * @returns {Partial<Role>} The Array of partial role objects.
  */
-export function getRolesFromArray(roles: string | string[], allRoles?: Role[]): Partial<Role>[] {
+export function getManyRoleFromArray(roles: string | string[], allRoles?: Role[]): Partial<Role>[] {
   if (!Array.isArray(roles)) return allRoles?.filter((role) => role.name == roles) ?? [{ "name": roles }];
   if (!allRoles) return roles.map((role) => ({ "name": role }));
   return allRoles.filter((role) => roles.includes(role.name));

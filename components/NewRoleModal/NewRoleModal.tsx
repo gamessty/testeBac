@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { Role } from "@prisma/client";
 import { useEffect, useState } from "react";
 import { randomId } from "@mantine/hooks";
-import postRole from "../PrismaFunctions/postRole";
+import postRole from "../../actions/PrismaFunctions/postRole";
 import { modals } from "@mantine/modals";
 import { notifications } from "@mantine/notifications";
 

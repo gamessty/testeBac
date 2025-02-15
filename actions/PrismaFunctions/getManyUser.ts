@@ -9,7 +9,7 @@ interface UserRoles extends User {
     roles: Role[]
 }
 
-export default async function getUsers(where?: Prisma.UserWhereInput): Promise<UserRoles[] | { message: string }> {
+export default async function getManyUser(where?: Prisma.UserWhereInput): Promise<UserRoles[] | { message: string }> {
     let session = await auth();
     if (!session?.user) {
         return { message: "Not authenticated" };
@@ -28,3 +28,5 @@ export default async function getUsers(where?: Prisma.UserWhereInput): Promise<U
     });
     return usersRoles;
 }
+
+export { getManyUser };

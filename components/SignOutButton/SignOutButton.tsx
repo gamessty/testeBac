@@ -1,4 +1,3 @@
-'use server';
 import { signOut, auth } from "../../auth"
 import { Group, GroupProps } from "@mantine/core"
 import { getTranslations } from "next-intl/server";

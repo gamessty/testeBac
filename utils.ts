@@ -6,7 +6,7 @@ import { Permissions } from './data';
 
 export const alwaysRandomUsernames = (process.env.ALWAYS_RANDOM_USERNAMES ?? 'true') === 'true';
 
-function hashCode(input: string) {
+export function hashCode(input: string) {
   let hash = 0;
   for (let i = 0; i < input.length; i += 1) {
     const char = input.charCodeAt(i);

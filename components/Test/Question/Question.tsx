@@ -1,8 +1,14 @@
 "use client";
 import { Card, CardProps, CardSection, Group, Radio, Title, Text, Stack, Divider, Image, Flex, Checkbox } from "@mantine/core";
+import { Montserrat } from "next/font/google";
 import classes from './Question.module.css';
 import { CodeHighlight } from "@mantine/code-highlight";
 import { useEffect, useState } from "react";
+import { HotkeyItem, useHotkeys } from "@mantine/hooks";
+import { notifications } from "@mantine/notifications";
+import { hashCode } from "../../../utils";
+
+const montserrat = Montserrat({ subsets: ['latin'] });
 
 interface QuestionCardProps {
     question: string,
@@ -17,11 +23,37 @@ interface QuestionCardProps {
         }
     },
     questionNumber: number,
-
+    controlled?: {
+        choice: string | string[] | undefined,
+        setChoice: (value: string | string[] | undefined) => void
+    }
 }
 
-export default function QuestionCard({ question, options, additionalData, type, questionNumber, ...props }: Readonly<QuestionCardProps & CardProps>) {
-    const [choice, setChoice] = useState<string | string[] | undefined>(undefined);
+export default function QuestionCard({ question, options, additionalData, type, questionNumber, controlled, ...props }: Readonly<QuestionCardProps & CardProps>) {
+
+    const hotkeys: HotkeyItem[] = options.map((option, index) => [
+        String.fromCharCode(65 + index), // 'A', 'B', 'C', 'D', 'E', etc.
+        () => {
+            if (type === 'singleChoice') {
+                setChoice(choice === option ? undefined : option);
+            } else {
+                setChoice((prevChoice) => {
+                    if (Array.isArray(prevChoice)) {
+                        return prevChoice.includes(option)
+                            ? prevChoice.filter((item) => item !== option)
+                            : [...prevChoice, option];
+                    }
+                    return [option];
+                });
+            }
+        },
+        { usePhysicalKeys: true }
+    ]);
+
+    useHotkeys(hotkeys);
+
+    const [choice, setChoice] = controlled ? [controlled.choice, controlled.setChoice] : useState<string | string[] | undefined>(undefined);
+
     if (!additionalData) {
         additionalData = {
             center: "Unknown",
@@ -38,7 +70,7 @@ export default function QuestionCard({ question, options, additionalData, type, 
         switch (type) {
             case 'singleChoice':
                 return (
-                    <Radio.Card className={classes.root} radius="xs" value={option} key={option + index}>
+                    <Radio.Card className={`${classes.root} ${montserrat.className}`} radius="xs" value={option} key={hashCode(option + index + Math.random())}>
                         <Group wrap="nowrap" align="flex-start">
                             <Radio.Indicator />
                             <div>
@@ -51,7 +83,7 @@ export default function QuestionCard({ question, options, additionalData, type, 
             case 'multipleChoice':
             default:
                 return (
-                    <Checkbox.Card className={classes.root} radius="md" value={option} key={option + index}>
+                    <Checkbox.Card className={`${classes.root} ${montserrat.className}`} radius="xs" value={option} key={hashCode(option + index + Math.random())}>
                         <Group wrap="nowrap" align="flex-start">
                             <Checkbox.Indicator />
                             <div>
@@ -65,7 +97,7 @@ export default function QuestionCard({ question, options, additionalData, type, 
     });
 
     return (
-        <Card shadow="xs" padding="lg" withBorder {...props}>
+        <Card shadow="xs" padding="lg" withBorder {...props} autoFocus>
             <Title order={3} style={{ marginBottom: 10 }}>
                 {questionNumber ? questionNumber + ". " : ''}{question}
             </Title>

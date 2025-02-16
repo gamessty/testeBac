@@ -1,5 +1,7 @@
 import "@mantine/core/styles.css";
 import '@mantine/notifications/styles.css';
+import '@mantine/code-highlight/styles.css';
+
 import React from "react";
 import { NextIntlClientProvider } from 'next-intl';
 import { ModalsProvider } from '@mantine/modals';
@@ -13,7 +15,8 @@ import {
   ColorSchemeScript,
   mantineHtmlProps,
 } from "@mantine/core";
-import { theme } from "../../theme";
+
+import { theme, resolver } from "../../theme";
 
 export const metadata = {
   title: "testeBac | Home",
@@ -43,7 +46,7 @@ export default async function Locale({ children, params }: Readonly<{ children: 
       </head>
       <body>
           <NextIntlClientProvider messages={messages}>
-            <MantineProvider defaultColorScheme="auto" theme={theme}>
+            <MantineProvider defaultColorScheme="auto" theme={theme} cssVariablesResolver={resolver}>
               <Notifications />
               <ModalsProvider>{children}</ModalsProvider>
             </MantineProvider>

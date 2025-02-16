@@ -1,6 +1,6 @@
 "use client";
-import { Affix, Button, Grid, Group, Stack, Title, Transition, useMatches, Text, MantineStyleProp, Fieldset, TextInput, JsonInput, Loader, Tooltip, Badge } from "@mantine/core";
-import { useSetState } from "@mantine/hooks";
+import { Affix, Button, Grid, Group, Stack, Title, Transition, useMatches, Text, MantineStyleProp, Fieldset, TextInput, JsonInput, Loader, Tooltip, Badge, Slider, Input, InputLabel } from "@mantine/core";
+import { useIsFirstRender, useSetState } from "@mantine/hooks";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import LocaleSwitch from "../../LocaleSwitch/LocaleSwitch";
@@ -9,6 +9,7 @@ import { Session, User } from "next-auth";
 import putUser from "../../../actions/PrismaFunctions/putUser";
 import { chkP, getDifferences, getInitialsColor } from "../../../utils";
 import AvatarFallback from "../../AvatarFallback/AvatarFallback";
+import { useState } from "react";
 
 interface SettingsProps {
     session: Session | null | undefined;
@@ -23,6 +24,8 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
     // TO-DO: Implement the settings logic and add the necessary modification to the saveChanges button Affix
     const [userChanges, setUserChanges] = useSetState((session?.user ?? {}) as SettingsUser);
     const t = useTranslations('Dashboard.Settings');
+
+    const isMounted = useIsFirstRender();
 
     function isEmpty(obj: any) {
         for (const prop in obj) {
@@ -42,29 +45,6 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
             if (diff?.loading) delete diff.loading;
         }
         return !isEmpty(diff);
-    }
-
-    const getNew = (newObj: any, oldObj: any, loadingStateExcluded: boolean = true) => {
-        if (Object.keys(oldObj).length == 0
-            && Object.keys(newObj).length > 0)
-            return newObj;
-
-        let diff = {} as any;
-        for (const key in oldObj) {
-            if (newObj[key] && oldObj[key] != newObj[key]) {
-                diff[key] = newObj[key];
-            }
-        }
-
-        if (loadingStateExcluded) {
-            if (diff?.loading) delete diff.loading;
-        }
-
-        if (Object.keys(diff).length > 0)
-            return diff;
-
-
-        return oldObj;
     }
 
     function getObjectDiff(current: { [s: string]: unknown; } | ArrayLike<unknown>, original: { [x: string]: any; }) {
@@ -116,7 +96,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
     })
 
     return (
-        <Grid p={{ base: 15, sm: 35 }} pt={{ base: 5, sm: 10 }} pb={95} style={style}>
+        <Grid p={{ base: 25, sm: 35 }} pt={{ base: 10, sm: 25 }} pb={95} style={style}>
             <Grid.Col span={12}>
                 <Title order={1} ta="left">
                     {t('title')}
@@ -152,16 +132,34 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                 }
                 <Fieldset w={{ base: "90%", md: "75%", xl: "50%", "xxl": "30%" }} legend={t('Account.personalInfo')} mt={10}>
                     <TextInput
+                        mb={10}
                         onChange={(Event) => setUserChanges({ name: Event.currentTarget.value })}
                         label={t('Account.name.label')}
                         value={userChanges.name ?? ''}
                         placeholder={t('Account.name.placeholder')}
                     />
                     <TextInput
+                        mb={10}
                         onChange={(Event) => setUserChanges({ username: Event.currentTarget.value })}
                         label={t('Account.username.label')}
                         value={userChanges.username ?? ''}
                         placeholder={t('Account.username.placeholder')}
+                    />
+                    <InputLabel>{t('fontSize.label')}</InputLabel>
+                    <Slider
+                        defaultValue={isMounted ? Number(document?.documentElement.style.fontSize.replace("%", '') ?? 100) : 100}
+                        min={70}
+                        max={130}
+                        mb={10}
+                        marks={[
+                            { value: 70, label: '70%' },
+                            { value: 100, label: '100%' },
+                            { value: 130, label: '130%' },
+                        ]}
+                        step={10}
+                        onChange={(value) => {
+                            document.documentElement.style.fontSize = `${value}%`;
+                        }}
                     />
                 </Fieldset>
             </Grid.Col>

@@ -83,7 +83,7 @@ export default function UserManager({ session, style }: Readonly<{ session: Sess
         {t('errors.fetch.message', { error: 'Unauthorized' })}
     </Blockquote>);
 
-    return <Container fluid p={{ base: 25, sm: 35 }} pt={{ base: 5, sm: 10 }} pb={95} style={style}>
+    return <Container fluid p={{ base: 25, sm: 35 }} pt={{ base: 10, sm: 25 }} style={style}>
         <Title order={1} w="100%" ta="left" mb={20}>
             {t('title')}
             <Text c="dimmed" ml={5} ta="left">

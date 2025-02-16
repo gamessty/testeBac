@@ -19,8 +19,8 @@ import AvatarFallback from "../AvatarFallback/AvatarFallback";
 import AvatarMenu from "../AvatarMenu/AvatarMenu";
 import { Link } from "../../i18n/routing";
 import RoleManager from "../Dashboard/Admin/RoleManager/RoleManager";
-import SignOutButton from "../SignOutButton/SignOutButton";
 import SignOutButtonClient from "../SignOutButton/SignOutButton.client";
+import classes from './AppShellDashboard.module.css';
 
 interface AppShellDashboardProps {
     session: Session | null | undefined;
@@ -71,6 +71,9 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
         base: { bottom: 95, right: 20 },
         sm: { bottom: 20, right: 20 }
     })
+    
+    const size = "calc(100vh - var(--app-shell-header-height, 0px))";
+    const sizeMobile = "calc(100vh - var(--app-shell-header-height, 0px) - var(--app-shell-footer-height, 0px))";
 
     return (
         <AppShell
@@ -126,7 +129,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                             <ColorSchemeToggleIcon my={10} />
                         </Grid.Col>
                         <Grid.Col span="auto">
-                            <SignOutButtonClient session={session} justify="left" fullWidth my={10} h={35} variant="gradient" gradient={{ from: 'purple', to: 'pink' }}/>
+                            <SignOutButtonClient session={session} justify="left" fullWidth my={10} h={35} variant="gradient" gradient={{ from: 'purple', to: 'pink' }} />
                         </Grid.Col>
                     </Grid>
                 </AppShell.Section>
@@ -165,22 +168,25 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                     <Group justify="space-between" mt={10}>
                         <Text ta="center" size="sm">Ⓒ {settings.year}</Text>
                         <Text ta="center" size="sm" component="a" href="/privacy-policy">{t('privacyPolicy')}</Text>
-
                     </Group>
                 </AppShell.Section>
             </AppShell.Navbar>
             <AppShell.Main>
-                {
-                    tabsData.map((tab) => (
-                        <Transition key={tab.tab + "_tabComponent"} transition="fade-right" timingFunction="ease" duration={500} mounted={settings.tab == tab.tab}>
-                            {(transitionStyles) => (
-                                <>
-                                    {settings.tab == tab.tab && tab.component && <tab.component session={session} style={transitionStyles} />}
-                                </>
-                            )}
-                        </Transition>
-                    ))
-                }
+                <ScrollArea h={{ base: sizeMobile, sm: size }} classNames={{
+                    viewport: classes.appShellScrollArea
+                }}>
+                    {
+                        tabsData.map((tab) => (
+                            <Transition key={tab.tab + "_tabComponent"} transition="fade-right" timingFunction="ease" duration={500} mounted={settings.tab == tab.tab} >
+                                {(transitionStyles) => (
+                                    <>
+                                        {settings.tab == tab.tab && tab.component && <tab.component session={session} style={transitionStyles} />}
+                                    </>
+                                )}
+                            </Transition>
+                        ))
+                    }
+                </ScrollArea>
             </AppShell.Main>
             <AppShell.Footer p={15} display={{ sm: "none" }}>
                 <Grid grow>

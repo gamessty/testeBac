@@ -1,13 +1,16 @@
-import { MantineStyleProp, Text } from "@mantine/core";
+import { Container, ContainerProps, MantineStyleProp, Text, Title } from "@mantine/core";
+import { useTranslations } from "next-intl";
 
-interface TestsProps {
-    style?: MantineStyleProp;
-}
-
-export default function Tests({ style }: Readonly<TestsProps>) {
+export default function Tests(props: Readonly<ContainerProps>) {
+    const t = useTranslations('Dashboard.Tests');
     return (
-        <Text p={{base: 30, sm: 50}}  style={style}>
-            Tests
-        </Text>
+        <Container fluid p={{ base: 25, sm: 35 }} pt={{ base: 10, sm: 25 }} {...props}>
+            <Title order={1} w="100%" ta="left" mb={20}>
+                {t('title')}
+                <Text c="dimmed" ml={5} ta="left">
+                    {t('tests', { count: 0 })}
+                </Text>
+            </Title>
+        </Container>
     );
-    }
+}

@@ -154,7 +154,7 @@
             }
         },
         "Home": {
-            "welcome": "Salut<name></name>!",
+            "welcome": "Salut<renderName></renderName>!",
             "nameFormatting": ", {name}",
             "recentTests": "Teste recente",
             "lastTest": "Ultimul test",
@@ -168,6 +168,9 @@
             "debug": "Debug",
             "notifications": "Notificări",
             "saveChanges": "Salvează modificările",
+            "fontSize": {
+                "label": "Dimensiune text"
+            },
             "Account": {
                 "title": "Cont",
                 "email": "Email",
@@ -302,9 +305,13 @@
                 }
             }
         },
+        "Tests": {
+            "title": "Teste",
+            "description": "Aici puteți vedea progresul dumneavoastră și testele pe care le-ați susținut. Puteți vedea, de asemenea, rezultatele dumneavoastră și materiile pe care le-ați studiat. Continuați munca bună și succes la învățat!",
+            "tests": "{count, plural, =0 {Niciun test} =1 {# test} other {# teste}}"
+        },
         "backToTop": "Înapoi sus",
         "privacyPolicy": "Politica de confidențialitate",
-        "title": "Tablou de bord",
-        "description": "Aici puteți vedea progresul dumneavoastră și testele pe care le-ați susținut. Puteți vedea, de asemenea, rezultatele dumneavoastră și materiile pe care le-ați studiat. Continuați munca bună și succes la învățat!"
+        "title": "Tablou de bord"
     }
 }

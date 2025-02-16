@@ -1,4 +1,4 @@
-import { Avatar, Badge, Button, Card, Grid, Group, MantineStyleProp, Stack, Text, Tooltip, Skeleton } from '@mantine/core';
+import { Avatar, Badge, Button, Card, Grid, Group, MantineStyleProp, Stack, Text, Tooltip, Skeleton, Box } from '@mantine/core';
 import { User } from 'next-auth';
 import classes from './UserCard.module.css';
 import { getInitialsColor } from '../../../utils';
@@ -24,22 +24,29 @@ interface SkeletonUserCardProps extends DefaultUserCardProps {
     onClick?: MouseEventHandler<HTMLButtonElement>;
 }
 
-export default function UserCard({ user, style, onClick, skeleton = false}: Readonly<UserCardProps | SkeletonUserCardProps>) {
+export default function UserCard({ user, style, onClick, skeleton = false }: Readonly<UserCardProps | SkeletonUserCardProps>) {
     const t = useTranslations('Dashboard.UserManager');
     return <Skeleton visible={skeleton}>
         <Card h="100%" shadow="sm" className={classes["user-card"]} padding="lg" radius="md" withBorder style={style}>
             {user?.userAuthorized ? <Badge className={classes["card-badge"]} color="teal">{t('authorized')}</Badge> : <Badge className={classes["card-badge"]} color="red">{t('unauthorized')}</Badge>}
-            <Group justify="flex-start" mt="md" mb="xs">
-                <AvatarFallback name={user?.username ?? user?.email ?? undefined} src={user?.image ?? undefined} color="initials"/>
-                <Stack
-                    gap={0}
-                    align="flex-start"
-                    justify="center"
-                >
-                    <Text fw={500} mb={-5} ta="center">{user?.username ?? user?.email}</Text>
-                    <Text c="dimmed" size='sm' ta="center" display={{ base: user?.username ? "inherit" : "none" }}>{user?.email}</Text>
-                </Stack>
-            </Group>
+            <Card.Section inheritPadding pb="md">
+                <Group justify="flex-start" mt="md" mb="xs">
+                    <AvatarFallback name={user?.username ?? user?.email ?? undefined} src={user?.image ?? undefined} color="initials" />
+                    <Stack
+                        gap={0}
+                        align="flex-start"
+                        justify="center"
+                        w="100%"
+                    >
+                        <Box w="100%">
+                            <Text fw={500} mb={-5}>{user?.username ?? user?.email}</Text>
+                        </Box>
+                        <Box w="100%">
+                            <Text truncate="end" c="dimmed" size='sm' display={{ base: user?.username ? "inherit" : "none" }}>{user?.email}</Text>
+                        </Box>
+                    </Stack>
+                </Group>
+            </Card.Section>
 
             <Card.Section inheritPadding pb="md">
                 <Grid gutter={3} w="100%" pb="md">

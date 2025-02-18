@@ -188,6 +188,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                     <Title order={2} ta="left">
                         {t('debug')}
                     </Title>
+                    <Button component="a" href="./demo/">DEMOS</Button>
                     <Text mt={10} c="dimmed" size="sm">BASIC STRING COMPARE: {(JSON.stringify(userChanges) !== JSON.stringify(session?.user)).toString()}</Text>
                     <Text mt={10} c="dimmed" size="sm">FUNCTION COMPARE: {isDifferent(userChanges, session?.user, true).toString()}</Text>
                     <Grid columns={12} mt={10} w="100%" grow>

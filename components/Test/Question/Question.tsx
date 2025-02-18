@@ -1,14 +1,15 @@
 "use client";
-import { Card, CardProps, CardSection, Group, Radio, Title, Text, Stack, Divider, Image, Flex, Checkbox } from "@mantine/core";
+import { Card, CardProps, Group, Radio, Title, Text, Stack, Image, Flex, Checkbox } from "@mantine/core";
 import { Montserrat } from "next/font/google";
 import classes from './Question.module.css';
 import { CodeHighlight } from "@mantine/code-highlight";
-import { useEffect, useState } from "react";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { HotkeyItem, useHotkeys } from "@mantine/hooks";
-import { notifications } from "@mantine/notifications";
 import { hashCode } from "../../../utils";
 
 const montserrat = Montserrat({ subsets: ['latin'] });
+
+type ChoiceType = string | string[] | undefined;
 
 interface QuestionCardProps {
     question: string,
@@ -24,8 +25,8 @@ interface QuestionCardProps {
     },
     questionNumber: number,
     controlled?: {
-        choice: string | string[] | undefined,
-        setChoice: (value: string | string[] | undefined) => void
+        choice: ChoiceType,
+        setChoice: Dispatch<SetStateAction<ChoiceType>>
     }
 }
 
@@ -37,7 +38,7 @@ export default function QuestionCard({ question, options, additionalData, type, 
             if (type === 'singleChoice') {
                 setChoice(choice === option ? undefined : option);
             } else {
-                setChoice((prevChoice) => {
+                setChoice((prevChoice): string[] => {
                     if (Array.isArray(prevChoice)) {
                         return prevChoice.includes(option)
                             ? prevChoice.filter((item) => item !== option)
@@ -52,7 +53,9 @@ export default function QuestionCard({ question, options, additionalData, type, 
 
     useHotkeys(hotkeys);
 
-    const [choice, setChoice] = controlled ? [controlled.choice, controlled.setChoice] : useState<string | string[] | undefined>(undefined);
+    const [uncontrolledChoice, setUncontrolledChoice] = useState<string | string[] | undefined>(undefined);
+
+    const [choice, setChoice] = controlled ? [controlled.choice, controlled.setChoice] : [uncontrolledChoice, setUncontrolledChoice];
 
     if (!additionalData) {
         additionalData = {
@@ -65,7 +68,9 @@ export default function QuestionCard({ question, options, additionalData, type, 
     useEffect(() => {
         setChoice(undefined);
     }, [question]);
+
     const { center, image, code } = additionalData;
+
     const optionCards = options.map((option, index) => {
         switch (type) {
             case 'singleChoice':

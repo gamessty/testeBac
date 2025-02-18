@@ -1,6 +1,8 @@
 module.exports = {
   plugins: {
-    "postcss-preset-mantine": {},
+    "postcss-preset-mantine": {
+      autoRem: true,
+    },
     "postcss-simple-vars": {
       variables: {
         "-app-shell-footer-height": "75px",

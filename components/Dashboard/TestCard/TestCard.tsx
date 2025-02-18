@@ -1,10 +1,11 @@
 "use client";
-import { Card, Group, Badge, Button, Image, Text, Avatar, CardProps } from "@mantine/core";
+import { Card, Group, Badge, Button, Image, Text, Avatar, CardProps, Box, Stack, Flex } from "@mantine/core";
 import { useTranslations } from "next-intl";
 import classes from './TestCard.module.css';
 import { IconCodeAsterisk, IconFlask2, IconMicroscope, IconSchool } from "@tabler/icons-react";
 import AvatarFallback from "../../AvatarFallback/AvatarFallback";
 import { Link } from "../../../i18n/routing";
+import { getInitialsColor } from "../../../utils";
 
 interface TestCardProps {
     category?: string;
@@ -14,7 +15,7 @@ interface TestCardProps {
     href?: string;
 }
 
-export default function TestCard ({ category, subject, coverImage, lastQuestion, href, ...rest }: Readonly<TestCardProps & CardProps>) {
+export default function TestCard({ category, subject, coverImage, lastQuestion, href, ...rest }: Readonly<TestCardProps & CardProps>) {
     const t = useTranslations('Tests');
 
     function getAvatarIcon(subject: string) {
@@ -30,33 +31,44 @@ export default function TestCard ({ category, subject, coverImage, lastQuestion,
         }
     }
     return (
-        <Card {...rest} component={Link} href={href ?? ''} className={classes['test-card']} style={{ position: 'relative' }} w={"100%"} display="inline-block" shadow="sm" padding="lg" pt={35} mr="30" radius="md" withBorder>
-            { coverImage && <Card.Section inheritPadding pb="md">
-                <Image
-                    src={coverImage}
-                    height={160}
-                    alt="Cover image"
-                />
-                {category && <Badge className={classes["card-badge"]} color="pink">{t("category", { category })}</Badge>}
-            </Card.Section>}
+        <Card {...rest} component={Link} href={href ?? ''} w={"100%"} shadow="sm" mr="30" radius="md" withBorder>
+            <Stack justify="space-between" h="100%" w="100%">
+                <Box w="100%">
+                    {coverImage && <Card.Section>
+                        <Image
+                            src={coverImage}
+                            height={70}
+                            alt={"Cover image test " + subject}
+                        />
+                        {category && <Badge radius="sm" className={classes["card-badge"]} color={getInitialsColor(category)}>{t("category", { category })}</Badge>}
+                    </Card.Section>}
 
-            <Card.Section inheritPadding py="md">
-            {subject && <Group justify="left" mb="xs">
-                {!coverImage && <AvatarFallback name={subject} color="initials">{getAvatarIcon(subject)}</AvatarFallback>}
-                <Text fw={500}>{t(`Subjects.${subject}`)}</Text>
-                {category && !coverImage && <Badge className={classes["card-badge"]} color="pink">{t("category", { category })}</Badge>}
-            </Group>}
+                    <Card.Section inheritPadding py="md" w="100%">
+                        {subject && <Flex justify="left" align="center" mb="xs" gap={10} w="100%">
+                            {!coverImage && <AvatarFallback name={subject} color="initials">{getAvatarIcon(subject)}</AvatarFallback>}
+                            <Stack gap={1} w="100%">
+                                <Box w="100%">
+                                    <Text truncate="end" w="100%" fw={500}>{t(`Subjects.${subject}`)}</Text>
+                                </Box>
+                                {!coverImage && category && <Badge radius="xs" size="sm" variant="light" mr={5} color="cyan">{t("category", { category })}</Badge>}
+                            </Stack>
+                        </Flex>}
 
-            {lastQuestion && <Text size="sm" fw="500" aria-label="Last Question" c="dimmed">
-                {t('lastQuestion')}
-            </Text>}
-            </Card.Section>
 
-            <Card.Section className={classes["test-card_button_section"]} inheritPadding pb="md">
-                <Button color="blue" fullWidth radius="md" style={{ position: 'relative' }}>
-                    {t('resumeTest')}
-                </Button>
-            </Card.Section>
+                        {lastQuestion && <Text size="sm" fw="500" aria-label="Last Question" c="dimmed">
+                            {t('lastQuestion')}
+                        </Text>}
+                    </Card.Section>
+                </Box>
+
+                <Card.Section inheritPadding pb="sm">
+                    <Button color="blue" fullWidth radius="md">
+                        <Text truncate inherit>
+                            {t('resumeTest')}
+                        </Text>
+                    </Button>
+                </Card.Section>
+            </Stack>
         </Card>
     )
 }

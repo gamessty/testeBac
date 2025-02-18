@@ -315,5 +315,25 @@
         "backToTop": "Scroll to top",
         "privacyPolicy": "Privacy Policy",
         "title": "Dashboard"
+    },
+    "Demo": {
+        "TestGenerator": {
+            "steps": {
+                "next": "Next",
+                "back": "Back",
+                "1": {
+                    "label": "Category",
+                    "description": "What type of test?"
+                },
+                "2": {
+                    "label": "Folder",
+                    "description": "What folder and subject?"
+                },
+                "3": {
+                    "label": "Chapters",
+                    "description": "Which chapters?"
+                }
+            }
+        }
     }
 }

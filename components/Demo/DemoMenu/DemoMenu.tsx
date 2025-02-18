@@ -5,6 +5,7 @@ import {
     IconCoin,
     IconCreditCard,
     IconFile,
+    IconFilePlus,
     IconReceipt,
     IconReceiptRefund,
     IconReceiptTax,
@@ -33,6 +34,7 @@ interface MockDataItem {
 
 const mockdata: MockDataItem[] = [
     { title: 'QuestionCard', icon: IconFile, href: './demo/question' },
+    { title: 'TestGenerator', icon: IconFilePlus, href: './demo/generator' }
 ];
 
 export default function DemoMenu({ ...props }: Readonly<CardProps>) {

@@ -1,6 +1,6 @@
 //NOT YET DONE WIP
 import { Session } from "next-auth";
-import { ContainerProps, Container, Blockquote, Title, Text, SimpleGrid, Accordion, useMatches, Affix, Button, Badge } from "@mantine/core";
+import { ContainerProps, Container, Blockquote, Title, Text, SimpleGrid, Accordion, useMatches, Affix, Button, Badge, Group } from "@mantine/core";
 import { IconAlertTriangleFilled, IconUserPlus } from "@tabler/icons-react";
 import { chkP, getInitialsColor } from "../../../../utils";
 import { useTranslations } from "next-intl";
@@ -44,7 +44,7 @@ export default function RoleManager({ session, ...props }: Readonly<{ session: S
 
 
     return (
-        <Container fluid p={{ base: 25, sm: 35 }} pt={{ base: 10, sm: 25 }} {...props}>
+        <Container fluid p={{ base: 30, sm: 35 }} pt={{ base: 20, sm: 25 }} {...props}>
             <Title order={1} w="100%" ta="left" mb={20}>
                 {t('title')}
                 <Text c="dimmed" ml={5} ta="left">
@@ -56,22 +56,24 @@ export default function RoleManager({ session, ...props }: Readonly<{ session: S
                     {t('errors.fetch.message', { error })}
                 </Blockquote>
             }
-            {categories.length > 0 && <Accordion multiple defaultValue={categories}>
+            {categories.length > 0 && <Accordion multiple>
                 {
                     categories.map((category) => (
                         <Accordion.Item tt="capitalize" key={category} w="100%" mb={20} value={category}>
                             <Accordion.Control >
-                                <Badge variant="gradient" gradient={{ from: getInitialsColor(category), to: getInitialsColor(category + "_role_" + roles.filter(r => r.category == category).toString()) }} radius="sm" size="lg" style={{ cursor: "pointer" }}>
-                                    {category}
-                                </Badge>
-                                <Text c="dimmed" ml={10} ta="left" span size="sm">
-                                    {t('roles', { count: roles.filter((role) => role.category == category).length })}
-                                </Text>
+                                <Group justify="space-between" align="center">
+                                    <Badge variant="gradient" gradient={{ from: getInitialsColor(category), to: getInitialsColor(category + "_role_" + roles.filter(r => r.category == category).toString()) }} radius="sm" size="lg" style={{ cursor: "pointer" }}>
+                                        {category}
+                                    </Badge>
+                                    <Text c="dimmed" mx={10} ta="left" span size="sm">
+                                        {t('roles', { count: roles.filter((role) => role.category == category).length })}
+                                    </Text>
+                                </Group>
                             </Accordion.Control>
                             <Accordion.Panel>
                                 <SimpleGrid cols={{ xs: 2, md: 3, lg: 4, xl: 5, xxl: 6 }}>
                                     {roles.filter((role) => role.category == category).toSorted((a, b) => b.priority - a.priority).map((role) => (
-                                        <RoleCard key={role.id} role={role} />
+                                        <RoleCard key={role.id} role={role} h="100%" />
                                     ))}
                                 </SimpleGrid>
                             </Accordion.Panel>

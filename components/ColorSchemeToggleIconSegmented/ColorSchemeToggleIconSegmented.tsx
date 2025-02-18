@@ -33,7 +33,7 @@ export default function ColorSchemeToggleIconSegmented() {
             <Text size="sm" fw={500} mt={3}>
                 {t('label')}
             </Text>
-            <SegmentedControl transitionTimingFunction="linear" transitionDuration={500} onChange={(value) => setColorScheme(value as ColorScheme)} value={colorScheme} defaultValue={colorScheme} data={
+            <SegmentedControl transitionTimingFunction="linear" transitionDuration={250} onChange={(value) => setColorScheme(value as ColorScheme)} value={colorScheme} defaultValue={colorScheme} data={
                 [
                     {
                         label: labelGenerator('light'),

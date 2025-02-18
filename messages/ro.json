@@ -313,5 +313,25 @@
         "backToTop": "Înapoi sus",
         "privacyPolicy": "Politica de confidențialitate",
         "title": "Tablou de bord"
+    },
+    "Demo": {
+        "TestGenerator": {
+            "steps": {
+                "next": "Următorul",
+                "back": "Înapoi",
+                "1": {
+                    "label": "Tipul",
+                    "description": "Ce tip de test?"
+                },
+                "2": {
+                    "label": "Folder",
+                    "description": "Ce centru/folder și sau materia?"
+                },
+                "3": {
+                    "label": "Capitol",
+                    "description": "Ce capitole?"
+                }
+            }
+        }
     }
 }

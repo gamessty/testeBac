@@ -1,6 +1,6 @@
 'use client';
 import { AppShell, Group, Button, ActionIcon, Text, Divider, Stack, Grid, Affix, Transition, Badge, Flex, Tooltip, useMatches, Menu, ScrollArea } from "@mantine/core";
-import { useDidUpdate, useDocumentTitle, useSetState, useWindowScroll } from "@mantine/hooks";
+import { useDidUpdate, useDocumentTitle, useLocalStorage, useSetState, useWindowScroll } from "@mantine/hooks";
 import { IconHome, IconSettingsCog, IconChecklist, IconChartInfographic, IconArrowUp, IconUsers, IconLogout, IconUserPlus } from "@tabler/icons-react";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
@@ -46,9 +46,19 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
         minute: (new Date()).getMinutes(),
         year: (new Date()).getUTCFullYear()
     });
+
     useDocumentTitle(settings.title);
 
     const [scroll, scrollTo] = useWindowScroll();
+
+    const [fontSize] = useLocalStorage({
+        key: 'fontSize',
+        defaultValue: 100,
+    });
+
+    useDidUpdate(() => {
+        document.documentElement.style.fontSize = `${fontSize}%`
+    }, [fontSize]);
 
     useDidUpdate(() => {
         setSettings({ title: 'testeBac | ' + t('Navbar.' + (searchParams.get('tab') ?? 'home')), tab: searchParams.get('tab') ?? 'home' });
@@ -71,7 +81,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
         base: { bottom: 95, right: 20 },
         sm: { bottom: 20, right: 20 }
     })
-    
+
     const size = "calc(100vh - var(--app-shell-header-height, 0px))";
     const sizeMobile = "calc(100vh - var(--app-shell-header-height, 0px) - var(--app-shell-footer-height, 0px))";
 

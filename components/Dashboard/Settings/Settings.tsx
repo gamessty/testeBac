@@ -1,6 +1,6 @@
 "use client";
 import { Affix, Button, Grid, Group, Stack, Title, Transition, useMatches, Text, MantineStyleProp, Fieldset, TextInput, JsonInput, Loader, Tooltip, Badge, Slider, Input, InputLabel } from "@mantine/core";
-import { useIsFirstRender, useSetState } from "@mantine/hooks";
+import { useDebouncedValue, useDidUpdate, useIsFirstRender, useLocalStorage, useSet, useSetState } from "@mantine/hooks";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import LocaleSwitch from "../../LocaleSwitch/LocaleSwitch";
@@ -23,9 +23,22 @@ interface SettingsUser extends User {
 export default function Settings({ session, style }: Readonly<SettingsProps>) {
     // TO-DO: Implement the settings logic and add the necessary modification to the saveChanges button Affix
     const [userChanges, setUserChanges] = useSetState((session?.user ?? {}) as SettingsUser);
-    const t = useTranslations('Dashboard.Settings');
+    const [fontSize, setFontSize] = useState(100);
+    const [debounced] = useDebouncedValue(fontSize, 200);
+    const [fontSizeLS ,setFontSizeLS] = useLocalStorage<number>({
+        key: 'fontSize',
+        defaultValue: 100,    
+    });
 
-    const isMounted = useIsFirstRender();
+    useDidUpdate(() => {
+        setFontSizeLS(debounced);
+    }, [debounced]);
+
+    useDidUpdate(() => {
+        setFontSize(fontSizeLS);
+    }, [fontSizeLS]);
+
+    const t = useTranslations('Dashboard.Settings');
 
     function isEmpty(obj: any) {
         for (const prop in obj) {
@@ -96,7 +109,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
     })
 
     return (
-        <Grid p={{ base: 25, sm: 35 }} pt={{ base: 10, sm: 25 }} pb={95} style={style}>
+        <Grid p={{ base: 30, sm: 35 }} pt={{ base: 20, sm: 25 }} pb={95} style={style}>
             <Grid.Col span={12}>
                 <Title order={1} ta="left">
                     {t('title')}
@@ -147,7 +160,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                     />
                     <InputLabel>{t('fontSize.label')}</InputLabel>
                     <Slider
-                        defaultValue={isMounted ? Number(document?.documentElement.style.fontSize.replace("%", '') ?? 100) : 100}
+                        value={fontSize}
                         min={70}
                         max={130}
                         mb={10}
@@ -157,9 +170,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                             { value: 130, label: '130%' },
                         ]}
                         step={10}
-                        onChange={(value) => {
-                            document.documentElement.style.fontSize = `${value}%`;
-                        }}
+                        onChange={setFontSize}
                     />
                 </Fieldset>
             </Grid.Col>

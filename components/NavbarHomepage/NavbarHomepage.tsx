@@ -7,14 +7,15 @@ import LocalSelect from "../LocaleSelect/LocaleSelect";
 import { auth } from "../../auth";
 import { Link } from "../../i18n/routing";
 import SignOutButtonClient from "../SignOutButton/SignOutButton.client";
+import styles from './NavbarHomepage.module.scss';
 
 export default async function NavbarHomepage(props: Readonly<GridProps>) {
     const session = await auth();
     return (
         <Grid {...props}>
             <GridCol span="content">
-                <Flex direction="row" align="center" justify="flex-start">
-                    <Text variant="gradient" fw={700} size="xl" gradient={{ from: 'pink', to: 'yellow' }}>
+                <Flex className={`${styles.flex} ${styles['flex-justify-start']}`}>
+                    <Text className={styles.text}>
                         <Link href="/">
                             testeBac
                         </Link>
@@ -22,10 +23,10 @@ export default async function NavbarHomepage(props: Readonly<GridProps>) {
                 </Flex>
             </GridCol>
             <GridCol span="auto">
-                <Flex direction="row" align="center" gap="md" justify="flex-end">
+                <Flex className={`${styles.flex} ${styles['flex-gap-md']} ${styles['flex-justify-end']}`}>
                     {!session?.user && <SignInButton />}
                     {session?.user && <ProfileEmail session={session} />}
-                    <SignOutButtonClient session={session} display={{ base: "none", md: 'initial' }} />
+                    <SignOutButtonClient session={session} visibleFrom="md"/>
                     <ColorSchemeToggleIcon />
                     <LocalSelect />
                 </Flex>

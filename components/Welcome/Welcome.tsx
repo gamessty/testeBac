@@ -1,5 +1,5 @@
 import { Text, Title } from '@mantine/core';
-import classes from './Welcome.module.css';
+import classes from './Welcome.module.scss';
 import { useTranslations } from 'next-intl';
 
 export function Welcome() {

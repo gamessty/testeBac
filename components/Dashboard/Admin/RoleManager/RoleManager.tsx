@@ -1,6 +1,5 @@
-//NOT YET DONE WIP
 import { Session } from "next-auth";
-import { ContainerProps, Container, Blockquote, Title, Text, SimpleGrid, Accordion, useMatches, Affix, Button, Badge, Group } from "@mantine/core";
+import { ContainerProps, Container, Blockquote, Title, Text, SimpleGrid, Accordion, Affix, Button, Badge, Group } from "@mantine/core";
 import { IconAlertTriangleFilled, IconUserPlus } from "@tabler/icons-react";
 import { chkP, getInitialsColor } from "../../../../utils";
 import { useTranslations } from "next-intl";
@@ -10,6 +9,7 @@ import getManyRole from "../../../../actions/PrismaFunctions/getManyRole";
 import RoleCard from "../../RoleCard/RoleCard";
 import NewRoleModal from "../../../NewRoleModal/NewRoleModal";
 import { useDisclosure } from "@mantine/hooks";
+import styles from './RoleManager.module.scss';
 
 export default function RoleManager({ session, ...props }: Readonly<{ session: Session } & ContainerProps>) {
     const t = useTranslations('Dashboard.RoleManager');
@@ -33,59 +33,63 @@ export default function RoleManager({ session, ...props }: Readonly<{ session: S
         fetchData();
     }, []);
 
-    const affixPosition = useMatches({
-        base: { bottom: 140, right: 20 },
-        sm: { bottom: 65, right: 20 }
-    })
-
-    if (!chkP("role:manage", session?.user)) return (<Blockquote w="100%" color="red" cite={"– " + t('errors.fetch.title', { error: 'Unauthorized' })} icon={<IconAlertTriangleFilled />} mt="xl">
-        {t('errors.fetch.message', { error: 'Unauthorized' })}
-    </Blockquote>);
-
+    if (!chkP("role:manage", session?.user)) return (
+        <Blockquote className={styles.blockquote} cite={"– " + t('errors.fetch.title', { error: 'Unauthorized' })} icon={<IconAlertTriangleFilled />}>
+            {t('errors.fetch.message', { error: 'Unauthorized' })}
+        </Blockquote>
+    );
 
     return (
         <Container fluid p={{ base: 30, sm: 35 }} pt={{ base: 20, sm: 25 }} {...props}>
-            <Title order={1} w="100%" ta="left" mb={20}>
+            <Title order={1} className={styles.title}>
                 {t('title')}
-                <Text c="dimmed" ml={5} ta="left">
+                <Text className={styles.text}>
                     {t('roles', { count: roles.length })}
                 </Text>
             </Title>
             {
-                error && <Blockquote w="100%" color="red" cite={"– " + t('errors.fetch.title', { error })} icon={<IconAlertTriangleFilled />} mt="xl">
-                    {t('errors.fetch.message', { error })}
-                </Blockquote>
+                error && (
+                    <Blockquote className={styles.blockquote} cite={"– " + t('errors.fetch.title', { error })} icon={<IconAlertTriangleFilled />}>
+                        {t('errors.fetch.message', { error })}
+                    </Blockquote>
+                )
             }
-            {categories.length > 0 && <Accordion multiple>
-                {
-                    categories.map((category) => (
-                        <Accordion.Item tt="capitalize" key={category} w="100%" mb={20} value={category}>
-                            <Accordion.Control >
-                                <Group justify="space-between" align="center">
-                                    <Badge variant="gradient" gradient={{ from: getInitialsColor(category), to: getInitialsColor(category + "_role_" + roles.filter(r => r.category == category).toString()) }} radius="sm" size="lg" style={{ cursor: "pointer" }}>
-                                        {category}
-                                    </Badge>
-                                    <Text c="dimmed" mx={10} ta="left" span size="sm">
-                                        {t('roles', { count: roles.filter((role) => role.category == category).length })}
-                                    </Text>
-                                </Group>
-                            </Accordion.Control>
-                            <Accordion.Panel>
-                                <SimpleGrid cols={{ xs: 2, md: 3, lg: 4, xl: 5, xxl: 6 }}>
-                                    {roles.filter((role) => role.category == category).toSorted((a, b) => b.priority - a.priority).map((role) => (
-                                        <RoleCard key={role.id} role={role} h="100%" />
-                                    ))}
-                                </SimpleGrid>
-                            </Accordion.Panel>
-                        </Accordion.Item>
-                    ))
-                }
-            </Accordion>}
+            {categories.length > 0 && (
+                <Accordion multiple>
+                    {
+                        categories.map((category) => (
+                            <Accordion.Item className={styles.accordionItem} key={category} value={category}>
+                                <Accordion.Control className={styles.accordionControl}>
+                                    <Group>
+                                        <Badge className={styles.badge} variant="gradient" gradient={{ from: getInitialsColor(category), to: getInitialsColor(category + "_role_" + roles.filter(r => r.category == category).toString()) }} radius="sm" size="lg">
+                                            {category}
+                                        </Badge>
+                                        <Text className={styles.text} span size="sm">
+                                            {t('roles', { count: roles.filter((role) => role.category == category).length })}
+                                        </Text>
+                                    </Group>
+                                </Accordion.Control>
+                                <Accordion.Panel className={styles.accordionPanel}>
+                                    <SimpleGrid cols={{ xs: 2, md: 3, lg: 4, xl: 5, xxl: 6 }}>
+                                        {roles.filter((role) => role.category == category).toSorted((a, b) => b.priority - a.priority).map((role) => (
+                                            <RoleCard key={role.id} role={role} h="100%" />
+                                        ))}
+                                    </SimpleGrid>
+                                </Accordion.Panel>
+                            </Accordion.Item>
+                        ))
+                    }
+                </Accordion>
+            )}
             {
-                (roles.length == 0 && !error) && <SimpleGrid cols={{ xs: 2, md: 3, lg: 4, xl: 5, xxl: 6 }}> {Array.from({ length: 18 }).map((_, index) => <RoleCard key={"skeleton_users_" + index} skeleton />)}</SimpleGrid>
+                (roles.length == 0 && !error) && (
+                    <SimpleGrid className={styles.simpleGrid} cols={{ xs: 2, md: 3, lg: 4, xl: 5, xxl: 6 }}>
+                        {Array.from({ length: 18 }).map((_, index) => <RoleCard key={"skeleton_users_" + index} skeleton />)}
+                    </SimpleGrid>
+                )
             }
             <NewRoleModal session={session} roles={roles} opened={opened} onClose={close} />
-            <Affix position={affixPosition}>
+            <Affix className={styles.affix}>
                 <Button
                     leftSection={<IconUserPlus />}
                     disabled={!chkP("role:create", session?.user)}

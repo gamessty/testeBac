@@ -1,0 +1,25 @@
+.text {
+  font-weight: 700;
+  font-size: var(--mantine-font-size-xl);
+  background: linear-gradient(to right, pink, yellow);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.flex {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.flex-gap-md {
+  gap: var(--mantine-spacing-md);
+}
+
+.flex-justify-start {
+  justify-content: flex-start;
+}
+
+.flex-justify-end {
+  justify-content: flex-end;
+}

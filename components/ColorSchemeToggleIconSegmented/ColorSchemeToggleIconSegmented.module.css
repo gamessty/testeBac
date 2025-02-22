@@ -1,0 +1,10 @@
+.icon {
+  margin-right: 10px;
+}
+
+.text {
+  font-weight: 500;
+  margin-top: var(--mantine-spacing-xs);
+  --text-fz: var(--mantine-font-size-sm);
+  --text-lh: var(--mantine-line-height-sm);
+}

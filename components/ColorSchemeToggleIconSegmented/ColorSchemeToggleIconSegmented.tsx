@@ -1,6 +1,7 @@
 import { Center, Flex, Group, SegmentedControl, Stack, Text, useMantineColorScheme, VisuallyHidden } from "@mantine/core";
 import { IconMoon, IconSun, IconSunMoon } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
+import styles from './ColorSchemeToggleIconSegmented.module.css';
 
 type ColorScheme = 'light' | 'dark' | 'auto';
 
@@ -11,11 +12,11 @@ export default function ColorSchemeToggleIconSegmented() {
     function iconGenerator(colorSchemeP: ColorScheme) {
         switch (colorSchemeP) {
             case 'light':
-                return <IconSun size={18} style={{ marginRight: '10px' }}/>;
+                return <IconSun size={18} className={styles.icon} />;
             case 'dark':
-                return <IconMoon size={18} style={{ marginRight: '10px' }}/>;
+                return <IconMoon size={18} className={styles.icon} />;
             case 'auto':
-                return <IconSunMoon size={18} style={{ marginRight: '10px' }}/>;
+                return <IconSunMoon size={18} className={styles.icon} />;
         }
     }
 
@@ -30,7 +31,7 @@ export default function ColorSchemeToggleIconSegmented() {
 
     return (
         <Stack gap="5">
-            <Text size="sm" fw={500} mt={3}>
+            <Text className={styles.text}>
                 {t('label')}
             </Text>
             <SegmentedControl transitionTimingFunction="linear" transitionDuration={250} onChange={(value) => setColorScheme(value as ColorScheme)} value={colorScheme} defaultValue={colorScheme} data={

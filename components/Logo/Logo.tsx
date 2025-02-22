@@ -1,5 +1,5 @@
 import { Center, Text, Title } from '@mantine/core';
-import classes from './Logo.module.css';
+import classes from './Logo.module.scss';
 
 export default function Logo() {
     return (

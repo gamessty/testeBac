@@ -67,7 +67,7 @@ export default function QuestionCard({ question, options, additionalData, type, 
 
     useEffect(() => {
         setChoice(undefined);
-    }, [question]);
+    }, [question, setChoice]);
 
     const { center, image, code } = additionalData;
 

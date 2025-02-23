@@ -1,0 +1,4 @@
+.group {
+  justify-content: center;
+  margin-top: var(--mantine-spacing-xl);
+}

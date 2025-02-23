@@ -1,0 +1,10 @@
+.title {
+  color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
+  font-size: m.rem(100px);
+  font-weight: 900;
+  letter-spacing: m.rem(-2px);
+
+  @include m.smaller-than(m.$mantine-breakpoint-md) {
+    font-size: m.rem(50px);
+  }
+}

@@ -15,11 +15,14 @@ const nextConfig = {
     buildActivityPosition: 'top-right'
   },
   experimental: {
+    serverActions: {
+      allowedForwardedHosts: ['studious-rotary-phone-grrpw56w99g3p4jg-3000.app.github.dev']
+    },
     optimizePackageImports: ["@mantine/core", "@mantine/hooks", "@mantine/modals", "@mantine/notifications", "@tabler/icons-react"],
   },
   sassOptions: {
     implementation: 'sass-embedded',
-    additionalData: `@use "${path.join(process.cwd(), '_mantine').replace(/\\/g, '/')}" as mantine;`,
+    additionalData: `@use "${path.join(process.cwd(), '_mantine').replace(/\\/g, '/')}" as m;`,
   },
 };
 

@@ -2,13 +2,13 @@
 
 // Define variables for your breakpoints,
 // values must be the same as in your theme
-mantine.$mantine-breakpoint-xs: '36em';
-mantine.$mantine-breakpoint-sm: '48em';
-mantine.$mantine-breakpoint-md: '62em';
-mantine.$mantine-breakpoint-lg: '75em';
-mantine.$mantine-breakpoint-xl: '88em';
-mantine.$mantine-breakpoint-xxl: '100em';
-mantine.$mantine-breakpoint-xxxl: '120em';
+$mantine-breakpoint-xs: '36em';
+$mantine-breakpoint-sm: '48em';
+$mantine-breakpoint-md: '62em';
+$mantine-breakpoint-lg: '75em';
+$mantine-breakpoint-xl: '88em';
+$mantine-breakpoint-xxl: '100em';
+$mantine-breakpoint-xxxl: '120em';
 
 @function rem($value) {
   @return #{math.div(math.div($value, $value * 0 + 1), 16)}rem;

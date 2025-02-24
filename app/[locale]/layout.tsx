@@ -17,6 +17,7 @@ import {
 } from "@mantine/core";
 
 import { theme, resolver } from "../../theme";
+import FontSizeUpdater from "../../components/FontSizeUpdater/FontSizeUpdater";
 
 export const metadata = {
   title: "testeBac | Home",
@@ -47,6 +48,7 @@ export default async function Locale({ children, params }: Readonly<{ children: 
       <body>
         <NextIntlClientProvider messages={messages}>
           <MantineProvider defaultColorScheme="auto" theme={theme} cssVariablesResolver={resolver}>
+            <FontSizeUpdater />
             <Notifications />
             <ModalsProvider>{children}</ModalsProvider>
           </MantineProvider>

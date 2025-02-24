@@ -51,15 +51,6 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
 
     const [scroll, scrollTo] = useWindowScroll();
 
-    const [fontSize] = useLocalStorage({
-        key: 'fontSize',
-        defaultValue: 100,
-    });
-
-    useDidUpdate(() => {
-        document.documentElement.style.fontSize = `${fontSize}%`
-    }, [fontSize]);
-
     useDidUpdate(() => {
         setSettings({ title: 'testeBac | ' + t('Navbar.' + (searchParams.get('tab') ?? 'home')), tab: searchParams.get('tab') ?? 'home' });
     }, [searchParams.get('tab')]);

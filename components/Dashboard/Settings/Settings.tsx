@@ -51,7 +51,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
     }
 
     function isDifferent(newObj: any, oldObj: any, updateAndLoadExcluded: boolean = false) {
-        let diff = getObjectDiff(newObj, oldObj) ?? {};
+        let diff = getObjectDiff(newObj, oldObj, { emptyStringIsNull: true }) ?? {};
         if (updateAndLoadExcluded) {
             if (diff?.updatedAt) delete diff.updatedAt;
             if (diff?.createdAt) delete diff.createdAt;
@@ -60,7 +60,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
         return !isEmpty(diff);
     }
 
-    function getObjectDiff(current: { [s: string]: unknown; } | ArrayLike<unknown>, original: { [x: string]: any; }) {
+    function getObjectDiff(current: { [s: string]: unknown; } | ArrayLike<unknown>, original: { [x: string]: any; }, options: { emptyStringIsNull?: boolean; } = { emptyStringIsNull: false }) {
         const changes = {} as any;
 
         // Check current object's properties
@@ -76,11 +76,14 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
             const originalValue = original[key];
             const currentValue = value;
 
-            // Handle different types of comparisons
+            // Handle empty string as null or undefined if option is set
+            const isEmptyString = (val: any) => options.emptyStringIsNull && (val === '' || val === null || val === undefined);
+
             if (
-                originalValue !== currentValue &&
+                (isEmptyString(originalValue) && isEmptyString(currentValue)) ||
+                (originalValue !== currentValue &&
                 String(originalValue) !== String(currentValue) &&
-                JSON.stringify(originalValue) !== JSON.stringify(currentValue)
+                JSON.stringify(originalValue) !== JSON.stringify(currentValue))
             ) {
                 changes[key] = {
                     oldValue: originalValue,

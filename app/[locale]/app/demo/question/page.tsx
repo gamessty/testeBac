@@ -39,7 +39,7 @@ interface QuestionData {
 }
 
 const demoQuestionData: QuestionData[] = [{
-    "category": 'entrance',
+    "category": 'admission',
     "subject": 'biology',
     "folder": "UMFCV",
     "type": "multipleChoice",
@@ -60,7 +60,7 @@ const demoQuestionData: QuestionData[] = [{
     ]
 },
 {
-    "category": 'entrance',
+    "category": 'admission',
     "subject": 'informatics',
     "folder": "POLIBUC",
     "type": "singleChoice",
@@ -87,7 +87,7 @@ const demoQuestionData: QuestionData[] = [{
     ]
 },
 {
-    "category": 'entrance',
+    "category": 'admission',
     "subject": 'chemistry',
     "folder": "UMFCV",
     type: 'singleChoice',

@@ -1,7 +1,7 @@
 {
     "HomePage": {
         "title": "Welcome to",
-        "about": "TesteBac prepares students for the baccalaureate or college entrance exam. This platform is dedicated to students who want to test their knowledge and prepare for the important exams of their lives. The platform uses a grid test system, which provides instant feedback and helps students improve their knowledge. The tests are structured by subjects and chapters, to provide the most efficient and personalized preparation. To get started, choose the subject and chapter you want and press the start button. Good luck with your studies!",
+        "about": "TesteBac prepares students for the baccalaureate or university admission exam. This platform is dedicated to students who want to test their knowledge and prepare for the important exams of their lives. The platform uses a grid test system, which provides instant feedback and helps students improve their knowledge. The tests are structured by subjects and chapters, to provide the most efficient and personalized preparation. To get started, choose the subject and chapter you want and press the start button. Good luck with your studies!",
         "redirectApp": "Go to the app",
         "userNotAuthorized": {
             "title": "Registration not accepted yet",
@@ -34,12 +34,13 @@
         "refresh": "Try again",
         "LocaleSwitcher": {
             "label": "Change language",
-            "locale": "{locale, select, ro {🇷🇴 Romanian} en {🇬🇧 English} fr {🇫🇷 French} other {Unknown}}",
-            "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} other {?}}",
+            "locale": "{locale, select, ro {🇷🇴 Romanian} en {🇬🇧 English} fr {🇫🇷 French} de {🇩🇪 German} other {Unknown}}",
+            "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} de {DE} other {?}}",
             "locales": {
                 "ro": "Romanian",
                 "en": "English",
-                "fr": "French"
+                "fr": "French",
+                "de": "German"
             }
         },
         "ColorSchemeToggle": {
@@ -120,7 +121,7 @@
         }
     },
     "Tests": {
-        "category": "{category, select, entrance {College Entrance} bac {Baccalaureate} other {Unknown}}",
+        "category": "{category, select, admission {University Admission} bac {Baccalaureate} other {Unknown}}",
         "Subjects": {
             "mathematics": "Mathematics",
             "romanian": "Romanian",
@@ -169,7 +170,7 @@
             "notifications": "Notifications",
             "saveChanges": "Save changes",
             "fontSize": {
-                "label": "Font size"
+                "label": "Site scale"
             },
             "Account": {
                 "title": "Account",

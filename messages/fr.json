@@ -34,12 +34,13 @@
     "refresh": "Réessayer",
     "LocaleSwitcher": {
       "label": "Changer de langue",
-      "locale": "{locale, select, ro {🇷🇴 Roumain} en {🇬🇧 Anglais} fr {🇫🇷 Français} other {Inconnu}}",
-      "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} other {?}}",
+      "locale": "{locale, select, ro {🇷🇴 Roumain} en {🇬🇧 Anglais} fr {🇫🇷 Français} de {🇩🇪 Allemand} other {Inconnu}}",
+      "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} de {DE} other {?}}",
       "locales": {
         "ro": "Roumain",
         "en": "Anglais",
-        "fr": "Français"
+        "fr": "Français",
+        "de": "Allemand"
       }
     },
     "ColorSchemeToggle": {
@@ -120,7 +121,6 @@
     }
   },
   "Tests": {
-    "Categories": {},
     "Subjects": {
       "mathematics": "Mathématiques",
       "romanian": "Roumain",
@@ -137,7 +137,7 @@
     },
     "resumeTest": "Reprendre le test",
     "lastQuestion": "Dernière question",
-    "category": "{catégorie, sélection, entrée {entrée du collège} BAC {Baccalauréat} Autre {inconnu}}"
+    "category": "{catégorie, sélection, admission {Admission à l'université} bac {Baccalauréat} other {inconnu}}"
   },
   "Dashboard": {
     "Navbar": {
@@ -149,17 +149,17 @@
       "profile": "Profil",
       "settings": "Paramètres",
       "admin": {
-        "title": "Panneau d'administration",
+        "title": "Administrer",
         "users": "Utilisateurs",
         "roles": "Rôles"
       }
     },
     "Home": {
-      "welcome": "Salut !",
+      "welcome": "Salut<renderName></renderName>!",
       "recentTests": "Tests récents",
       "lastTest": "Reprendre le test",
       "quickStats": "Statistiques rapides",
-      "nameFormatting": ", {nom}"
+      "nameFormatting": ", {name}"
     },
     "Settings": {
       "title": "Paramètres",
@@ -188,7 +188,7 @@
         }
       },
       "fontSize": {
-        "label": "Taille de la police"
+        "label": "Échelle du site"
       }
     },
     "backToTop": "Revenir en haut",
@@ -228,22 +228,22 @@
       "close": "Fermer",
       "confirm": {
         "create": {
-          "message": "Êtes-vous sûr de vouloir créer le rôle {nom}?",
+          "message": "Êtes-vous sûr de vouloir créer le rôle {name}?",
           "title": "Créer un rôle"
         },
         "delete": {
-          "message": "Êtes-vous sûr de vouloir supprimer le rôle {nom}? \nCette action ne peut pas être annulée.",
+          "message": "Êtes-vous sûr de vouloir supprimer le rôle {name}? \nCette action ne peut pas être annulée.",
           "title": "Supprimer le rôle"
         }
       },
       "create": "Créer",
       "errors": {
         "fetch": {
-          "message": "{Error, Select, non autorisé {Vous n'êtes pas autorisé à accéder à cette page d'administration. \nSi vous croyez qu'il s'agit d'une erreur, actualisez la page et réessayez plus tard.} Autre {erreur générale inconnue. \nVeuillez réessayer plus tard.}}",
-          "title": "{Erreur, sélectionnez, non autorisé {non autorisé} Autre {erreur générale}}"
+          "message": "{error, select, Unauthorized {Vous n'êtes pas autorisé à accéder à cette page d'administration. Si vous pensez qu'il s'agit d'une erreur, actualisez la page et réessayez plus tard.} other {Erreur générale inconnue. Veuillez réessayer plus tard.}}",
+          "title": "{error, select, Unauthorized {Erreur d'autorisation} other {Erreur générale}}"
         },
         "role": {
-          "message": "Une erreur est arrivée lors du traitement du rôle {nom}. \nVeuillez réessayer plus tard."
+          "message": "Une erreur est arrivée lors du traitement du rôle {name}. \nVeuillez réessayer plus tard."
         }
       },
       "newRole": "Nouveau rôle",
@@ -252,7 +252,7 @@
         "createdAt": "Créé à",
         "updatedAt": "Mis à jour à"
       },
-      "roles": "{comte, pluriel, = 1 {",
+      "roles": "{count, plural, =1 {# rôle} other {# rôles}}",
       "success": {
         "create": {
           "message": "Le rôle {name} a été créé avec succès.",
@@ -271,7 +271,7 @@
     },
     "Tests": {
       "description": "Ici, vous pouvez voir vos progrès et les tests que vous avez passés. \nVous pouvez également voir vos résultats et les sujets que vous avez étudiés. \nContinuez votre bon travail et bonne chance avec vos études!",
-      "tests": "{count, pluriel, = 0 {pas de tests} = 1 {",
+      "tests": "{count, plural, =0 {Pas de tests} =1 {# tests} other {# tests}}",
       "title": "Tests"
     },
     "UserManager": {
@@ -307,13 +307,13 @@
       },
       "errors": {
         "fetch": {
-          "message": "{Error, Select, non autorisé {Vous n'êtes pas autorisé à accéder à cette page d'administration. \nSi vous croyez qu'il s'agit d'une erreur, actualisez la page et réessayez plus tard.} Autre {erreur générale inconnue. \nVeuillez réessayer plus tard.}}",
-          "title": "{Erreur, sélectionnez, non autorisé {non autorisé} Autre {erreur générale}}"
+          "message": "{error, select, Unauthorized {Vous n'êtes pas autorisé à accéder à cette page d'administration. \nSi vous croyez qu'il s'agit d'une erreur, actualisez la page et réessayez plus tard.} other {Erreur générale inconnue. Veuillez réessayer plus tard.}}",
+          "title": "{error, select, Unauthorized {Erreur d'autorisation} other {Erreur générale}}"
         }
       },
       "title": "Responsable des utilisateurs",
       "unauthorized": "Non autorisé",
-      "users": "{comte, pluriel, = 1 {",
+      "users": "{count, plural, =1 {# utilisateur} other {# utilisateurs}}",
       "viewProfile": "Afficher le profil"
     }
   },

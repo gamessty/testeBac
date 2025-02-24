@@ -35,11 +35,12 @@
     "LocaleSwitcher": {
       "label": "Schimbă limba",
       "locale": "{locale, select, ro {🇷🇴 Română} en {🇬🇧 Engleză} fr {🇫🇷 Franceză} other {Necunoscută}}",
-      "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} other {?}}",
+      "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} de {🇩🇪} other {?}}",
       "locales": {
         "ro": "Română",
         "en": "Engleză",
-        "fr": "Franceză"
+        "fr": "Franceză",
+        "de": "Germană"
       }
     },
     "ColorSchemeToggle": {
@@ -120,7 +121,7 @@
     }
   },
   "Tests": {
-    "category": "{category, select, entrance {Admitere} bac {Bac} other {Categorie necunoscută}}",
+    "category": "{category, select, admission {Admitere} bac {Bac} other {Categorie necunoscută}}",
     "Subjects": {
       "mathematics": "Matematică",
       "romanian": "Română",

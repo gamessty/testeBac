@@ -1,0 +1,340 @@
+{
+  "Authentication": {
+    "customPages": {
+      "error": {
+        "Callback": {
+          "description": "Bei der Verarbeitung Ihrer Anmeldeanfrage wurde etwas schief gelaufen. \nBitte versuchen Sie es erneut.",
+          "title": "Login-Rückruffehler"
+        },
+        "CredentialsSignin": {
+          "description": "Ihre Anmeldedaten sind falsch. \nBitte überprüfen Sie sie und versuchen Sie es erneut.",
+          "title": "Fehler bei der Anmeldung"
+        },
+        "Default": {
+          "description": "Ein unbekannter Fehler ist aufgetreten. \nBitte aktualisieren Sie die Seite oder versuchen Sie es später erneut.",
+          "title": "Unerwarteter Fehler"
+        },
+        "EmailCreateAccount": {
+          "description": "Wir konnten Ihr Konto mit dieser E-Mail nicht erstellen. \nBitte versuchen Sie es später erneut.",
+          "title": "E-Mail -Registrierung fehlgeschlagen"
+        },
+        "EmailSignin": {
+          "description": "Wir konnten die Überprüfungs -E-Mail nicht senden. \nBitte überprüfen Sie Ihre E-Mail -Adresse und versuchen Sie es erneut.",
+          "title": "E-Mail-Anmeldung fehlgeschlagen"
+        },
+        "OAuthAccountNotLinked": {
+          "description": "Diese E-Mail ist mit einer anderen Anmeldemethode verknüpft. \nBitte verwenden Sie die ursprüngliche Methode, um sich anzumelden.",
+          "title": "Konto nicht verknüpft"
+        },
+        "OAuthCallback": {
+          "description": "Es gab ein Problem mit der Verarbeitung der Antwort des Anmeldemittels. \nBitte versuchen Sie es erneut.",
+          "title": "Anmeldefehler"
+        },
+        "OAuthCreateAccount": {
+          "description": "Wir konnten Ihr Konto nicht mit diesem Login -Anbieter erstellen. \nBitte versuchen Sie es erneut oder verwenden Sie eine andere Methode.",
+          "title": "Kontoerstellung fehlgeschlagen"
+        },
+        "OAuthSignin": {
+          "description": "Wir konnten die Autorisierungs -URL nicht erstellen. \nBitte versuchen Sie es später erneut.",
+          "title": "Autorisierung fehlgeschlagen"
+        },
+        "SessionRequired": {
+          "description": "Sie müssen angemeldet werden, um auf diese Seite zuzugreifen. \nBitte melden Sie sich an, um fortzufahren.",
+          "title": "Anmelden erforderlich"
+        }
+      },
+      "signIn": {
+        "disclaimer": "Durch Anmelden stimmen Sie unserem zu",
+        "invalidEmail": "Die E-Mail ist ungültig.",
+        "or": "Oder fahren Sie mit E-Mail fort",
+        "privacyPolicy": "Datenschutzrichtlinie",
+        "signIn": "Melden Sie sich an",
+        "welcome": "Willkommen zu"
+      },
+      "verifyRequest": {
+        "backToHome": "Geh zurück",
+        "message": "Wir haben Ihnen eine E-Mail mit einem Link gesendet, um Ihre E-Mail -Adresse zu überprüfen. \nBitte überprüfen Sie Ihren Posteingang und klicken Sie in der E-Mail auf den Link, um auf die App zuzugreifen.",
+        "title": "Überprüfen Sie Ihre E-Mail -Adresse"
+      }
+    },
+    "refresh": "Versuchen Sie es erneut",
+    "signIn": "Anmelden",
+    "signInMail": "Melden Sie sich mit E-Mail an",
+    "signOut": "Abmelden",
+    "signUp": "Melden Sie sich an",
+    "userNotAuthorized": {
+      "message": "Bitte warten Sie, bis Ihre Registrierung von einem Moderator validiert wird. \nDies kann bis zu 24 Stunden dauern. \n\n\nWenn Sie Fragen haben, kontaktieren Sie uns bitte unter {email}.",
+      "title": "Registrierung noch nicht akzeptiert"
+    },
+    "userSignedOut": {
+      "message": "Sie haben erfolgreich von Testebac unterschrieben! \nWir hoffen, Sie bald zu sehen!",
+      "title": "Unterschrieben"
+    }
+  },
+  "Dashboard": {
+    "Home": {
+      "lastTest": "Test fortsetzen",
+      "nameFormatting": ", {name}",
+      "quickStats": "Schnelle Statistiken",
+      "recentTests": "Neuere Tests",
+      "welcome": "Hallo<rendername></rendername>!"
+    },
+    "Navbar": {
+      "admin": {
+        "roles": "Rollen",
+        "users": "Benutzer",
+        "title": "Administrator"
+      },
+      "home": "Heim",
+      "profile": "Profil",
+      "results": "Ergebnisse",
+      "settings": "Einstellungen",
+      "stats": "Statistiken",
+      "subjects": "Themen",
+      "tests": "Tests"
+    },
+    "RoleManager": {
+      "close": "Schließen",
+      "confirm": {
+        "create": {
+          "message": "Sind Sie sicher, dass Sie die Rolle {Name} erstellen möchten?",
+          "title": "Rolle erstellen"
+        },
+        "delete": {
+          "message": "Sind Sie sicher, dass Sie die Rolle {Name} löschen möchten? \nDiese Aktion kann nicht rückgängig gemacht werden.",
+          "title": "Rolle löschen"
+        }
+      },
+      "create": "Erstellen",
+      "drawer": {
+        "category": {
+          "error": "Die Rollenkategorie ist erforderlich.",
+          "label": "Kategorie",
+          "placeholder": "Wählen Sie die Rollenkategorie aus"
+        },
+        "delete": "Rolle löschen",
+        "description": {
+          "label": "Beschreibung",
+          "placeholder": "Geben Sie die Rollenbeschreibung ein"
+        },
+        "name": {
+          "description": "Der Rollenname muss eindeutig sein.",
+          "error": "Der Rollenname ist erforderlich und muss mindestens 3 Zeichen lang sein.",
+          "label": "Name",
+          "placeholder": "Geben Sie den Rollennamen ein"
+        },
+        "permissions": {
+          "error": "Berechtigungen sind erforderlich.",
+          "label": "Berechtigungen",
+          "placeholder": "Wählen Sie Berechtigungen aus"
+        },
+        "priority": {
+          "error": "Die Priorität ist erforderlich.",
+          "label": "Priorität",
+          "placeholder": "Geben Sie die Rollenpriorität ein"
+        },
+        "save": "Speichern"
+      },
+      "errors": {
+        "fetch": {
+          "message": "{error, select, Unauthorized {Sie sind nicht berechtigt, auf diese Administrationsseite zuzugreifen. \nWenn Sie glauben, dass dies ein Fehler ist, aktualisieren Sie die Seite und versuchen Sie es später erneut.} other {Unbekannter allgemeiner Fehler. \nBitte versuchen Sie es später erneut.}}",
+          "title": "{error, select, Unauthorized {Nicht autorisiert} other {Allgemeiner Fehler}}"
+        },
+        "role": {
+          "message": "Ein Fehler, der bei der Verarbeitung der Rolle {name} einging. \nBitte versuchen Sie es später erneut."
+        }
+      },
+      "newRole": "Neue Rolle",
+      "nothingFound": "Keine Rollen gefunden.",
+      "roleCard": {
+        "createdAt": "Erstellt at",
+        "updatedAt": "Aktualisiert at"
+      },
+      "roles": "{count, plural, =1 {# Rolle} other {# Rollen}}",
+      "success": {
+        "create": {
+          "message": "Die Rolle {name} wurde erfolgreich erstellt.",
+          "title": "Rolle erstellt"
+        },
+        "delete": {
+          "message": "Die Rolle {name} wurde erfolgreich gelöscht.",
+          "title": "Rolle gelöscht"
+        },
+        "update": {
+          "message": "Die Rolle {name} wurde erfolgreich aktualisiert.",
+          "title": "Rolle aktualisiert"
+        }
+      },
+      "title": "Rollenmanager",
+      "viewRole": "Rolle anzeigen"
+    },
+    "Settings": {
+      "Account": {
+        "deleteAccount": "Konto löschen",
+        "deleteCancel": "Stornieren",
+        "deleteConfirmation": "Sind Sie sicher, dass Sie Ihr Konto löschen möchten? \nDiese Aktion kann nicht rückgängig gemacht werden.",
+        "deleteError": "Beim Löschen Ihres Kontos trat ein Fehler auf. \nBitte versuchen Sie es später erneut.",
+        "deleteSuccess": "Ihr Konto wurde erfolgreich gelöscht.",
+        "email": "E-Mail",
+        "name": {
+          "label": "Name",
+          "placeholder": "Geben Sie Ihren Namen ein"
+        },
+        "personalInfo": "Persönliche Informationen",
+        "title": "Konto",
+        "username": {
+          "label": "Benutzername",
+          "placeholder": "Geben Sie Ihren Benutzernamen ein"
+        }
+      },
+      "account": "Konto",
+      "debug": "Debuggen",
+      "display": "Anzeige",
+      "fontSize": {
+        "label": "Schriftgröße"
+      },
+      "language": "Sprache",
+      "notifications": "Benachrichtigungen",
+      "saveChanges": "Änderungen speichern",
+      "title": "Einstellungen"
+    },
+    "Tests": {
+      "description": "Hier können Sie Ihre Fortschritte und die von Ihnen durchgeführten Tests sehen. \nSie können auch Ihre Ergebnisse und die von Ihnen studierten Themen sehen. \nMachen Sie weiter so und viel Glück mit Ihrem Studium!",
+      "tests": "{count, plural, =0 {Keine Tests} =1 {# Test} other {# Tests}}",
+      "title": "Tests"
+    },
+    "UserManager": {
+      "authorized": "Autorisiert",
+      "drawer": {
+        "authorized": {
+          "description": "Der Benutzer wurde autorisiert, die App zu verwenden.",
+          "label": "Genehmigung"
+        },
+        "avatar": {
+          "label": "Avatar",
+          "placeholder": "Fügen Sie eine URL in ein Bild ein"
+        },
+        "delete": "Konto löschen",
+        "email": {
+          "description": "Die E-Mail muss einzigartig sein.",
+          "error": "Die E-Mail ist erforderlich und muss eine gültige E-Mail -Adresse sein.",
+          "label": "E-Mail",
+          "placeholder": "Geben Sie die E-Mail ein"
+        },
+        "roles": {
+          "error": "Rollen sind erforderlich.",
+          "label": "Rollen",
+          "placeholder": "Rollen auswählen"
+        },
+        "save": "Speichern",
+        "username": {
+          "description": "Der Benutzername muss einzigartig sein.",
+          "error": "Der Benutzername ist erforderlich und muss mindestens 3 Zeichen lang sein.",
+          "label": "Benutzername",
+          "placeholder": "Geben Sie den Benutzernamen ein"
+        }
+      },
+      "errors": {
+        "fetch": {
+          "message": "{error, select, Unauthorized {Sie sind nicht berechtigt, auf diese Administrationsseite zuzugreifen. \nWenn Sie glauben, dass dies ein Fehler ist, aktualisieren Sie die Seite und versuchen Sie es später erneut.} other {Unbekannter allgemeiner Fehler. \nBitte versuchen Sie es später erneut.}}",
+          "title": "{error, select, Unauthorized {Nicht autorisiert} other {Allgemeiner Fehler}}"
+        }
+      },
+      "title": "Benutzermanager",
+      "unauthorized": "Nicht autorisiert",
+      "users": "{count, plural, =1 {# Benutzer} other {# Benutzer}}",
+      "viewProfile": "Profil anzeigen"
+    },
+    "backToTop": "Scrollen Sie nach oben",
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "title": "Armaturenbrett"
+  },
+  "Demo": {
+    "TestGenerator": {
+      "steps": {
+        "1": {
+          "description": "Welche Art von Test?",
+          "label": "Kategorie"
+        },
+        "2": {
+          "description": "Welcher Ordner und welches Thema?",
+          "label": "Ordner"
+        },
+        "3": {
+          "description": "Welche Kapitel?",
+          "label": "Kapitel"
+        },
+        "back": "Zurück",
+        "next": "Nächste"
+      }
+    }
+  },
+  "Email": {
+    "MagicLink": {
+      "Old": {
+        "disclaimer": "Wenn Sie diese E-Mail nicht angefordert haben, können Sie sie sicher ignorieren. \nSie können versuchen, sich anzumelden, erhalten jedoch jetzt einen Fehler. \nSie können sich nach der Genehmigung Ihrer Registrierung von einem Moderator anmelden.",
+        "message": "Vielen Dank für die Registrierung bei Testebac. \nIhre Registrierung ist eine Genehmigung durch einen Moderator aus. \nDieser Vorgang kann bis zu 24 Stunden dauern. \n\n\nWenn Sie Fragen haben, kontaktieren Sie uns bitte unter {E-Mail}.",
+        "signIn": "anmelden",
+        "subject": "Melden Sie sich bei testebac an",
+        "text": "Melden Sie sich an:",
+        "text_alt": "Wenn Sie Probleme haben, auf die Schaltfläche \"{Signin}\" zu klicken, kopieren Sie die URL unten in Ihren Webbrowser: {SigninLink}",
+        "title": "Melden Sie sich bei testebac <strong> ({Host}) </strong> an"
+      },
+      "disclaimer": "Wenn Sie diese E-Mail nicht angefordert haben, können Sie sie sicher ignorieren. \nWenden Sie sich an Support, wenn Sie Fragen unter {E-Mail} haben.",
+      "message": "Dieser Link ist nur für die nächsten 24 Stunden gültig.",
+      "signIn": "anmelden",
+      "subject": "Melden Sie sich bei testebac an",
+      "text": "Melden Sie sich an:",
+      "title": "Melden Sie sich bei testebac <strong> ({Host}) </strong> an"
+    }
+  },
+  "General": {
+    "ColorSchemeToggle": {
+      "colorScheme": "{colorScheme, select, light {Hell} dark {Dunkel} auto {Auto} other {Unbekannte}}",
+      "label": "Farbschema umschalten"
+    },
+    "LocaleSwitcher": {
+      "label": "Sprache ändern",
+      "locale": "{locale, select, ro {🇷🇴 Rumänisch} en {🇬🇧 Englisch} fr {🇫🇷 Französisch} de {🇩🇪 Deutsch} other {Unbekannte}}",
+      "locales": {
+        "en": "Englisch",
+        "fr": "Französisch",
+        "ro": "Rumänisch",
+        "de": "Deutsch"
+      },
+      "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} de {DE} other {?}}"
+    },
+    "error": "Fehler",
+    "loading": "Laden...",
+    "refresh": "Versuchen Sie es erneut"
+  },
+  "HomePage": {
+    "about": "TesteBac bereitet Studenten auf die Baccalaureate- oder Universitätsaufnahmeprüfung vor. \nDiese Plattform widmet sich Studenten, die ihr Wissen testen und sich auf die wichtigen Prüfungen ihres Lebens vorbereiten möchten. \nDie Plattform verwendet ein Grid -Testsystem, das sofortiges Feedback bietet und den Schülern hilft, ihr Wissen zu verbessern. \nDie Tests werden von Themen und Kapiteln strukturiert, um die effizienteste und personalisierte Vorbereitung zu ermöglichen. \nWählen Sie, um zu starten, das gewünschte Thema und das Kapitel und drücken Sie die Start -Taste. \nViel Glück mit deinem Studium!",
+    "redirectApp": "Gehen Sie zur App",
+    "title": "Willkommen zu",
+    "userNotAuthorized": {
+      "message": "Bitte warten Sie, bis Ihre Registrierung von einem Moderator validiert wird. \nDies kann bis zu 24 Stunden dauern. \n\n\nWenn Sie Fragen haben, kontaktieren Sie uns bitte unter {E-Mail}.",
+      "short": "Sie müssen berechtigt sein, auf die App zuzugreifen.",
+      "title": "Registrierung noch nicht akzeptiert"
+    }
+  },
+  "Tests": {
+    "Subjects": {
+      "biology": "Biologie",
+      "chemistry": "Chemie",
+      "english": "Englisch",
+      "french": "Französisch",
+      "geography": "Geographie",
+      "german": "Deutsch",
+      "history": "Geschichte",
+      "informatics": "Informatik",
+      "mathematics": "Mathematik",
+      "physics": "Physik",
+      "romanian": "Rumänisch",
+      "spanish": "Spanisch"
+    },
+    "category": "{Kategorie, ausgewählt, Eingang {Universitätsaufnahme} bac {baccalaureat} Andere {unbekannt}}",
+    "lastQuestion": "Letzte Frage",
+    "resumeTest": "Test fortsetzen"
+  }
+}

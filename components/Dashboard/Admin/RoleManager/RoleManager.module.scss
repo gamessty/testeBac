@@ -43,7 +43,7 @@
   bottom: 140px;
   right: 20px;
 
-  @include m.smaller-than(m.$mantine-breakpoint-sm) {
+  @include m.larger-than(m.$mantine-breakpoint-sm) {
     bottom: 65px;
     right: 20px;
   }

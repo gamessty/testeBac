@@ -137,7 +137,7 @@
     },
     "resumeTest": "Reprendre le test",
     "lastQuestion": "Dernière question",
-    "category": "{catégorie, sélection, admission {Admission à l'université} bac {Baccalauréat} other {inconnu}}"
+    "category": "{category, select, admission {Admission à l'université} bac {Baccalauréat} other {Inconnu}}"
   },
   "Dashboard": {
     "Navbar": {

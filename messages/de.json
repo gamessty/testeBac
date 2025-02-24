@@ -77,7 +77,7 @@
       "nameFormatting": ", {name}",
       "quickStats": "Schnelle Statistiken",
       "recentTests": "Neuere Tests",
-      "welcome": "Hallo<rendername></rendername>!"
+      "welcome": "Hallo<renderName></renderName>!"
     },
     "Navbar": {
       "admin": {
@@ -273,19 +273,19 @@
     "MagicLink": {
       "Old": {
         "disclaimer": "Wenn Sie diese E-Mail nicht angefordert haben, können Sie sie sicher ignorieren. \nSie können versuchen, sich anzumelden, erhalten jedoch jetzt einen Fehler. \nSie können sich nach der Genehmigung Ihrer Registrierung von einem Moderator anmelden.",
-        "message": "Vielen Dank für die Registrierung bei Testebac. \nIhre Registrierung ist eine Genehmigung durch einen Moderator aus. \nDieser Vorgang kann bis zu 24 Stunden dauern. \n\n\nWenn Sie Fragen haben, kontaktieren Sie uns bitte unter {E-Mail}.",
-        "signIn": "anmelden",
+        "message": "Vielen Dank für die Registrierung bei Testebac. \nIhre Registrierung ist eine Genehmigung durch einen Moderator aus. \nDieser Vorgang kann bis zu 24 Stunden dauern. \n\n\nWenn Sie Fragen haben, kontaktieren Sie uns bitte unter {email}.",
+        "signIn": "Anmelden",
         "subject": "Melden Sie sich bei testebac an",
         "text": "Melden Sie sich an:",
-        "text_alt": "Wenn Sie Probleme haben, auf die Schaltfläche \"{Signin}\" zu klicken, kopieren Sie die URL unten in Ihren Webbrowser: {SigninLink}",
-        "title": "Melden Sie sich bei testebac <strong> ({Host}) </strong> an"
+        "text_alt": "Wenn Sie Probleme haben, auf die Schaltfläche \"{signIn}\" zu klicken, kopieren Sie die URL unten in Ihren Webbrowser: {signInLink}",
+        "title": "Melden Sie sich bei testebac <strong> ({host}) </strong> an"
       },
-      "disclaimer": "Wenn Sie diese E-Mail nicht angefordert haben, können Sie sie sicher ignorieren. \nWenden Sie sich an Support, wenn Sie Fragen unter {E-Mail} haben.",
+      "disclaimer": "Wenn Sie diese E-Mail nicht angefordert haben, können Sie sie sicher ignorieren. \nWenden Sie sich an Support, wenn Sie Fragen unter {email} haben.",
       "message": "Dieser Link ist nur für die nächsten 24 Stunden gültig.",
-      "signIn": "anmelden",
+      "signIn": "Anmelden",
       "subject": "Melden Sie sich bei testebac an",
       "text": "Melden Sie sich an:",
-      "title": "Melden Sie sich bei testebac <strong> ({Host}) </strong> an"
+      "title": "Melden Sie sich bei testebac <strong>({host})</strong> an"
     }
   },
   "General": {
@@ -333,7 +333,7 @@
       "romanian": "Rumänisch",
       "spanish": "Spanisch"
     },
-    "category": "{Kategorie, ausgewählt, Eingang {Universitätsaufnahme} bac {baccalaureat} Andere {unbekannt}}",
+    "category": "{category, select, admission {Universitätsaufnahme} bac {Abitur} Andere {Unbekannt}}",
     "lastQuestion": "Letzte Frage",
     "resumeTest": "Test fortsetzen"
   }

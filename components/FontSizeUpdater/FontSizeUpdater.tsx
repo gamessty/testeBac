@@ -1,5 +1,6 @@
 "use client";
-import { useDidUpdate, useLocalStorage } from "@mantine/hooks";
+import { useLocalStorage } from "@mantine/hooks";
+import { useEffect } from "react";
 
 export default function FontSizeUpdater() {
     const [fontSize] = useLocalStorage({
@@ -7,7 +8,7 @@ export default function FontSizeUpdater() {
         defaultValue: 100,
     });
 
-    useDidUpdate(() => {
+    useEffect(() => {
         document.documentElement.style.fontSize = `${fontSize}%`
     }, [fontSize]);
 

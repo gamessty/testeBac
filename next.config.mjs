@@ -12,13 +12,10 @@ const withBundleAnalyzer = createBundleAnalyzer({
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   devIndicators: {
-    buildActivityPosition: 'top-right'
+    position: 'top-right'
   },
   experimental: {
-    serverActions: {
-      allowedForwardedHosts: ['studious-rotary-phone-grrpw56w99g3p4jg-3000.app.github.dev']
-    },
-    optimizePackageImports: ["@mantine/core", "@mantine/hooks", "@mantine/modals", "@mantine/notifications", "@tabler/icons-react"],
+    optimizePackageImports: ["@mantine/core", "@mantine/hooks", "@mantine/modals", "@mantine/notifications", "@tabler/icons-react", "react-world-flags"],
   },
   sassOptions: {
     implementation: 'sass-embedded',

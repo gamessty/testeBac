@@ -1,0 +1,39 @@
+model Folder {
+    id             String               @id @default(auto()) @map("_id") @db.ObjectId
+    category       String               @default("BAC")
+    additionalData AdditionalFolderData
+    subjects       Subject[]
+
+    @@map("folders")
+}
+
+model Subject {
+    id        String     @id @default(auto()) @map("_id") @db.ObjectId
+    folderId  String     @db.ObjectId
+    name      String     @unique
+    questions Question[]
+    chapters  Chapter[]
+
+    folder Folder @relation(fields: [folderId], references: [id], onDelete: Cascade)
+
+    @@map("subjects")
+}
+
+model Chapter {
+    id        String     @id @default(auto()) @map("_id") @db.ObjectId
+    subjectId String     @db.ObjectId
+    name      String     @unique
+    questions Question[]
+
+    subject Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+
+    @@map("chapters")
+}
+
+type AdditionalFolderData {
+    country     String?
+    year        Int?
+    description String?
+    image       String?
+    color       String?
+}

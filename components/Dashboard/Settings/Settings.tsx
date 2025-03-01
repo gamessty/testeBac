@@ -215,7 +215,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                             <JsonInput
                                 formatOnBlur
                                 autosize
-                                value={JSON.stringify(getDifferences(userChanges, session?.user, ['updatedAt', 'createdAt']) ?? {}, null, 2)}
+                                value={JSON.stringify(getDifferences(userChanges, session?.user, { ignoredKeys: ['updatedAt', 'createdAt'] }) ?? {}, null, 2)}
                                 minRows={4}
                             />
                         </Grid.Col>
@@ -223,14 +223,14 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                 </Grid.Col>
             }
             <Affix position={affixPosition}>
-                <Transition transition="slide-up" mounted={isDifferent(userChanges, session?.user, true)}>
+                <Transition transition="slide-up" mounted={isEmpty(getDifferences(userChanges, session?.user, { ignoredKeys: ['updatedAt', 'createdAt'] }))}>
                     {(transitionStyles) => (
                         <Button
                             leftSection={userChanges.loading ? <Loader size="xs" color="white" type="bars" /> : <IconDeviceFloppy />}
                             style={transitionStyles}
                             onClick={async () => {
                                 setUserChanges({ loading: true });
-                                await putUser({ id: session?.user?.id, data: getDifferences(userChanges, session?.user, ['updatedAt', 'createdAt']) });
+                                await putUser({ id: session?.user?.id, data: getDifferences(userChanges, session?.user, { ignoredKeys: ['updatedAt', 'createdAt'] }) });
                                 setUserChanges({ loading: undefined });
                             }}
                             disabled={userChanges.loading}

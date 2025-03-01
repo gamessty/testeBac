@@ -231,7 +231,6 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                         </Group>
                     </Grid.Col>
                 </Grid>
-
             </AppShell.Footer>
             <Affix position={affixPosition}>
                 <Transition transition="slide-up" mounted={scroll.y > 0}>

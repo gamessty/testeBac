@@ -5,6 +5,7 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["prismaSchemaFolder"]
 }
 
 model User {
@@ -16,6 +17,7 @@ model User {
   rolesIDs       String[]        @db.ObjectId
   roles          Role[]          @relation(references: [id], fields: [rolesIDs])
   userAuthorized Boolean         @default(false)
+  preferances    UserPreferances
   username       String?         @unique
   accounts       Account[]
   sessions       Session[]
@@ -26,6 +28,10 @@ model User {
   updatedAt DateTime @updatedAt
 
   @@map("users")
+}
+
+type UserPreferances {
+  codingLanguage String @default("cpp")
 }
 
 model Account {

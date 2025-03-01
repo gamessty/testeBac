@@ -17,7 +17,7 @@ model User {
   rolesIDs       String[]        @db.ObjectId
   roles          Role[]          @relation(references: [id], fields: [rolesIDs])
   userAuthorized Boolean         @default(false)
-  preferances    UserPreferances
+  preferences    UserPreferences
   username       String?         @unique
   accounts       Account[]
   sessions       Session[]
@@ -30,7 +30,7 @@ model User {
   @@map("users")
 }
 
-type UserPreferances {
+type UserPreferences {
   codingLanguage String @default("cpp")
 }
 

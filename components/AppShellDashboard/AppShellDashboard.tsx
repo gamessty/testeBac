@@ -12,7 +12,7 @@ import Settings from "../Dashboard/Settings/Settings";
 import Stats from "../Dashboard/Stats/Stats";
 import Tests from "../Dashboard/Tests/Tests";
 import { chkP, enumToString, getInitialsColor } from "../../utils";
-import React, { useEffect, useRef, useState } from "react";
+import React, { Suspense, useEffect, useRef, useState } from "react";
 import UserManager from "../Dashboard/Admin/UserManager/UserManager";
 import { ITabData, Permissions } from "../../data";
 import AvatarFallback from "../AvatarFallback/AvatarFallback";
@@ -24,6 +24,7 @@ import classes from './AppShellDashboard.module.css';
 
 interface AppShellDashboardProps {
     session: Session | null | undefined;
+    children: React.ReactNode;
 }
 interface SettingsSetState {
     tab: string;
@@ -33,7 +34,7 @@ interface SettingsSetState {
     year: number;
 }
 
-export default function AppShellDashboard({ session }: Readonly<AppShellDashboardProps>) {
+export default function AppShellDashboard({ session, children }: Readonly<AppShellDashboardProps>) {
     const searchParams = useSearchParams();
 
     const t = useTranslations('Dashboard');
@@ -49,8 +50,8 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
 
     useDocumentTitle(settings.title);
 
-    //const [scrollPosition, setScrollPosition] = useState({ x: 0, y: 0 });
-    //const viewport = useRef<HTMLDivElement>(null);
+    const [scrollPosition, setScrollPosition] = useState({ x: 0, y: 0 });
+    const viewport = useRef<HTMLDivElement>(null);
 
 
     useDidUpdate(() => {
@@ -176,23 +177,25 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
             </AppShell.Navbar>
             <AppShell.Main>
                 <ScrollArea
-                    //onScrollPositionChange={setScrollPosition}
+                    onScrollPositionChange={setScrollPosition}
                     h={{ base: sizeMobile, sm: size }}
-                    //viewportRef={viewport}
+                    viewportRef={viewport}
                     classNames={{
                         viewport: classes.appShellScrollArea
                     }}>
-                    {
-                        tabsData.map((tab) => (
-                            <Transition key={tab.tab + "_tabComponent"} transition="fade-right" timingFunction="ease" duration={500} mounted={settings.tab == tab.tab} >
-                                {(transitionStyles) => (
-                                    <>
-                                        {settings.tab == tab.tab && tab.component && <tab.component session={session} style={transitionStyles} />}
-                                    </>
-                                )}
-                            </Transition>
-                        ))
-                    }
+                    <Suspense>
+                        {
+                            tabsData.map((tab) => (
+                                <Transition key={tab.tab + "_tabComponent"} transition="fade-right" timingFunction="ease" duration={500} mounted={settings.tab == tab.tab} >
+                                    {(transitionStyles) => (
+                                        <>
+                                            {settings.tab == tab.tab && tab.component && <tab.component session={session} style={transitionStyles} />}
+                                        </>
+                                    )}
+                                </Transition>
+                            ))
+                        }
+                    </Suspense>
                 </ScrollArea>
             </AppShell.Main>
             <AppShell.Footer p={15} display={{ sm: "none" }}>

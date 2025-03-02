@@ -223,7 +223,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                 </Grid.Col>
             }
             <Affix position={affixPosition}>
-                <Transition transition="slide-up" mounted={isEmpty(getDifferences(userChanges, session?.user, { ignoredKeys: ['updatedAt', 'createdAt'] }))}>
+                <Transition transition="slide-up" mounted={!isEmpty(getDifferences(userChanges, session?.user, { ignoredKeys: ['updatedAt', 'createdAt'] }))}>
                     {(transitionStyles) => (
                         <Button
                             leftSection={userChanges.loading ? <Loader size="xs" color="white" type="bars" /> : <IconDeviceFloppy />}

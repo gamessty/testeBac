@@ -4,10 +4,9 @@ import { useEffect } from "react";
 
 export default function FontSizeUpdater() {
     const [fontSize] = useLocalStorage({
-        key: 'fontSize',
-        defaultValue: 100,
+        key: 'fontSize'
     });
-
+    
     useEffect(() => {
         document.documentElement.style.fontSize = `${fontSize}%`
     }, [fontSize]);

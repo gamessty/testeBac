@@ -3,6 +3,7 @@ import '@mantine/notifications/styles.css';
 import '@mantine/code-highlight/styles.css';
 
 import React from "react";
+import dynamic from 'next/dynamic'
 import { NextIntlClientProvider } from 'next-intl';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';

@@ -1,6 +1,6 @@
 'use client';
 import { AppShell, Group, Button, ActionIcon, Text, Divider, Stack, Grid, Affix, Transition, Badge, Flex, Tooltip, useMatches, Menu, ScrollArea } from "@mantine/core";
-import { useDidUpdate, useDocumentTitle, useLocalStorage, useSetState, useWindowScroll } from "@mantine/hooks";
+import { useDidUpdate, useDocumentTitle, useSetState } from "@mantine/hooks";
 import { IconHome, IconSettingsCog, IconChecklist, IconChartInfographic, IconArrowUp, IconUsers, IconLogout, IconUserPlus } from "@tabler/icons-react";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
@@ -12,7 +12,7 @@ import Settings from "../Dashboard/Settings/Settings";
 import Stats from "../Dashboard/Stats/Stats";
 import Tests from "../Dashboard/Tests/Tests";
 import { chkP, enumToString, getInitialsColor } from "../../utils";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import UserManager from "../Dashboard/Admin/UserManager/UserManager";
 import { ITabData, Permissions } from "../../data";
 import AvatarFallback from "../AvatarFallback/AvatarFallback";
@@ -49,7 +49,9 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
 
     useDocumentTitle(settings.title);
 
-    const [scroll, scrollTo] = useWindowScroll();
+    //const [scrollPosition, setScrollPosition] = useState({ x: 0, y: 0 });
+    //const viewport = useRef<HTMLDivElement>(null);
+
 
     useDidUpdate(() => {
         setSettings({ title: 'testeBac | ' + t('Navbar.' + (searchParams.get('tab') ?? 'home')), tab: searchParams.get('tab') ?? 'home' });
@@ -173,9 +175,13 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                 </AppShell.Section>
             </AppShell.Navbar>
             <AppShell.Main>
-                <ScrollArea h={{ base: sizeMobile, sm: size }} classNames={{
-                    viewport: classes.appShellScrollArea
-                }}>
+                <ScrollArea
+                    //onScrollPositionChange={setScrollPosition}
+                    h={{ base: sizeMobile, sm: size }}
+                    //viewportRef={viewport}
+                    classNames={{
+                        viewport: classes.appShellScrollArea
+                    }}>
                     {
                         tabsData.map((tab) => (
                             <Transition key={tab.tab + "_tabComponent"} transition="fade-right" timingFunction="ease" duration={500} mounted={settings.tab == tab.tab} >
@@ -233,12 +239,15 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                 </Grid>
             </AppShell.Footer>
             <Affix position={affixPosition}>
-                <Transition transition="slide-up" mounted={scroll.y > 0}>
+                <Transition transition="slide-up" mounted={false}>
                     {(transitionStyles) => (
                         <Button
                             leftSection={<IconArrowUp size={16} />}
                             style={{ boxShadow: "var(--mantine-shadow-xl)", ...transitionStyles }}
-                            onClick={() => scrollTo({ y: 0 })}
+                            /*onClick={
+                                () => 
+                                    viewport.current?.scrollTo({ top: 0, behavior: 'smooth' })
+                            }*/
                             variant="gradient"
                             gradient={{ from: 'purple', to: 'pink' }}
                         >

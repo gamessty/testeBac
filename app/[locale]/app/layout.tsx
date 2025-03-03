@@ -1,10 +1,9 @@
 'use client';
 
 import { Affix, AppShell, Badge, Button, Divider, Flex, Grid, Group, ScrollArea, Stack, Text, Tooltip, Transition, useMatches } from "@mantine/core";
-import { Link } from "../../../i18n/routing";
+import { Link, useRouter } from "../../../i18n/routing";
 import { Suspense, useEffect, useRef, useState, Fragment } from "react";
 import Navbar from "../../../components/AppShellDashboard/Navbar/Navbar";
-
 import tabsData from "../../../components/tabs";
 import classes from '../../../components/AppShellDashboard/AppShellDashboard.module.css';
 import { IconArrowUp } from "@tabler/icons-react";
@@ -14,7 +13,6 @@ import ColorSchemeToggleIcon from "../../../components/ColorSchemeToggleIcon/Col
 import SignOutButtonClient from "../../../components/SignOutButton/SignOutButton.client";
 import { chkP, enumToString, getInitialsColor } from "../../../utils";
 import { useSession } from "next-auth/react";
-import router from "next/router";
 
 
 export default function Layout({
@@ -26,6 +24,7 @@ export default function Layout({
 }>) {
     const t = useTranslations('Dashboard');
     const { data: session } = useSession();
+    const router = useRouter();
 
     const [time, setTime] = useState({ hour: (new Date()).getHours(), minute: (new Date()).getMinutes(), year: (new Date()).getFullYear() });
     useEffect(() => {
@@ -47,13 +46,13 @@ export default function Layout({
 
 
     useEffect(() => {
-        if(!session?.user || !session.user.userAuthorized) {
+        if (!session?.user || !session.user.userAuthorized) {
             router.push('/');
         }
     }, [session]);
 
     return (
-        <AppShell
+        session?.user && <AppShell
             header={{ height: 60 }}
             navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: true } }}
             padding={0}

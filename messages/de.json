@@ -247,7 +247,41 @@
     },
     "backToTop": "Scrollen Sie nach oben",
     "privacyPolicy": "Datenschutzrichtlinie",
-    "title": "Armaturenbrett"
+    "title": "Armaturenbrett",
+    "Tabs": {
+      "admin": {
+        "description": "Hier können Sie Benutzer, Rollen und Berechtigungen verwalten.",
+        "roles": {
+          "description": "Hier können Sie Rollen und Berechtigungen verwalten.",
+          "title": "Rollen"
+        },
+        "title": "Administrator",
+        "users": {
+          "description": "Hier können Sie Benutzer, Rollen und Berechtigungen verwalten.",
+          "title": "Benutzer"
+        }
+      },
+      "home": {
+        "description": "Willkommen im Testebac Dashboard! \nHier können Sie Ihre Fortschritte und die von Ihnen durchgeführten Tests sehen.",
+        "title": "Heim"
+      },
+      "notFound": {
+        "description": "Die Seite, nach der Sie suchen, gibt es nicht. \nMöglicherweise haben Sie die Adresse verwickelt, oder die Seite wurde in eine andere URL verschoben. \nWenn Sie der Meinung sind, dass dies ein Fehler bei der Kontaktunterstützung ist.",
+        "title": "Nicht gefunden"
+      },
+      "settings": {
+        "description": "Hier können Sie Ihr Passwort ändern, Ihr Konto löschen und mehr.",
+        "title": "Einstellungen"
+      },
+      "stats": {
+        "description": "Hier können Sie Ihre Fortschritte und die von Ihnen studierten Themen sehen. \nMachen Sie weiter so und viel Glück mit Ihrem Studium!",
+        "title": "Statistiken"
+      },
+      "tests": {
+        "description": "Hier sehen Sie alle Tests, die Sie durchgeführt haben, einschließlich der, die Sie begonnen haben und die Sie abgeschlossen haben.",
+        "title": "Tests"
+      }
+    }
   },
   "Demo": {
     "TestGenerator": {
@@ -306,7 +340,12 @@
     },
     "error": "Fehler",
     "loading": "Laden...",
-    "refresh": "Versuchen Sie es erneut"
+    "refresh": "Versuchen Sie es erneut",
+    "NotFound": {
+      "button": "Bring mich zurück zur Startseite",
+      "description": "Seite, die Sie öffnen möchten, existiert nicht. \nMöglicherweise haben Sie die Adresse verwickelt, oder die Seite wurde in eine andere URL verschoben. \nWenn Sie der Meinung sind, dass dies ein Fehler bei der Kontaktunterstützung ist.",
+      "title": "Hier nichts zu sehen"
+    }
   },
   "HomePage": {
     "about": "TesteBac bereitet Studenten auf die Baccalaureate-oder Universitätsaufnahmeprüfung vor. \nDiese Plattform widmet sich Studenten, die ihr Wissen testen und sich auf die wichtigen Prüfungen ihres Lebens vorbereiten möchten. \nDie Plattform verwendet ein Grid -Testsystem, das sofortiges Feedback bietet und den Schülern hilft, ihr Wissen zu verbessern. \nDie Tests werden von Themen und Kapiteln strukturiert, um die effizienteste und personalisierte Vorbereitung zu ermöglichen. \nWählen Sie, um zu starten, das gewünschte Thema und das Kapitel und drücken Sie die Start -Taste. \nViel Glück mit deinem Studium!",

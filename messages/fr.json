@@ -46,6 +46,11 @@
     "ColorSchemeToggle": {
       "label": "Changer le thème",
       "colorScheme": "{colorScheme, select, light {Clair} dark {Sombre} auto {Auto} other {Inconnu}}"
+    },
+    "NotFound": {
+      "button": "Ramenez-moi à la page d'accueil",
+      "description": "Page que vous essayez d'ouvrir n'existe pas. \nVous avez peut-être trompé l'adresse, ou la page a été déplacée vers une autre URL. \nSi vous pensez qu'il s'agit d'un support de contact d'erreur.",
+      "title": "Rien à voir ici"
     }
   },
   "Authentication": {
@@ -315,6 +320,40 @@
       "unauthorized": "Non autorisé",
       "users": "{count, plural, =1 {# utilisateur} other {# utilisateurs}}",
       "viewProfile": "Afficher le profil"
+    },
+    "Tabs": {
+      "admin": {
+        "description": "Ici, vous pouvez gérer les utilisateurs, les rôles et les autorisations.",
+        "roles": {
+          "description": "Ici, vous pouvez gérer les rôles et les autorisations.",
+          "title": "Rôles"
+        },
+        "title": "Administrer",
+        "users": {
+          "description": "Ici, vous pouvez gérer les utilisateurs, les rôles et les autorisations.",
+          "title": "Utilisateurs"
+        }
+      },
+      "home": {
+        "description": "Bienvenue sur le tableau de bord Testebac! \nIci, vous pouvez voir vos progrès et les tests que vous avez passés.",
+        "title": "Maison"
+      },
+      "notFound": {
+        "description": "La page que vous recherchez n'existe pas. \nVous avez peut-être trompé l'adresse, ou la page a été déplacée vers une autre URL. \nSi vous pensez qu'il s'agit d'un support de contact d'erreur.",
+        "title": "Pas trouvé"
+      },
+      "settings": {
+        "description": "Ici, vous pouvez modifier votre mot de passe, supprimer votre compte et plus encore.",
+        "title": "Paramètres"
+      },
+      "stats": {
+        "description": "Ici, vous pouvez voir vos progrès et les sujets que vous avez étudiés. \nContinuez votre bon travail et bonne chance avec vos études!",
+        "title": "Statistiques"
+      },
+      "tests": {
+        "description": "Ici, vous pouvez voir tous les tests que vous avez passés, y compris ceux que vous avez commencé et ceux que vous avez effectués.",
+        "title": "Tests"
+      }
     }
   },
   "Demo": {

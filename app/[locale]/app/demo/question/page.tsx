@@ -8,7 +8,7 @@ export default function QuestionDemo() {
 
     return (
         <>
-            <Center h="100vh" w="100vw">
+            <Center h="100%" w="100%">
                 <QuestionCard type={demoQuestionData[q].type} w={{ base: "80%", md: "50%" }} additionalData={demoQuestionData[q].additionalData} question={demoQuestionData[q].question} options={demoQuestionData[q].options} questionNumber={demoQuestionData[q].questionNumber} />
             </Center>
             <Affix position={{ bottom: 20, right: 20 }}>

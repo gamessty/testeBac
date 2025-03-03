@@ -47,7 +47,7 @@ export default async function HomePage({ searchParams }: Readonly<{ searchParams
                     mb="5vh"
                 >
                     <Welcome />
-                    <AppRedirect />
+                    {session?.user && <AppRedirect session={session} />}
                 </Stack>
                 <NotificationUnathorized show={show && getBooleanValue(notification)} data={{
                     withBorder: true,

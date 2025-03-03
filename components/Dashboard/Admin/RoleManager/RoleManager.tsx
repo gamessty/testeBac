@@ -1,3 +1,4 @@
+"use client";
 import { Session } from "next-auth";
 import { ContainerProps, Container, Blockquote, Title, Text, SimpleGrid, Accordion, Affix, Button, Badge, Group } from "@mantine/core";
 import { IconAlertTriangleFilled, IconUserPlus } from "@tabler/icons-react";

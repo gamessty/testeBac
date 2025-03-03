@@ -19,6 +19,7 @@ import {
 
 import { theme, resolver } from "../../theme";
 import FontSizeUpdater from "../../components/FontSizeUpdater/FontSizeUpdater";
+import { SessionProvider } from "next-auth/react";
 
 export const metadata = {
   title: "testeBac | Home",
@@ -47,13 +48,15 @@ export default async function Locale({ children, params }: Readonly<{ children: 
         />
       </head>
       <body>
-        <NextIntlClientProvider messages={messages}>
-          <MantineProvider defaultColorScheme="auto" theme={theme} cssVariablesResolver={resolver}>
-            <FontSizeUpdater />
-            <Notifications />
-            <ModalsProvider>{children}</ModalsProvider>
-          </MantineProvider>
-        </NextIntlClientProvider>
+        <SessionProvider>
+          <NextIntlClientProvider messages={messages}>
+            <MantineProvider defaultColorScheme="auto" theme={theme} cssVariablesResolver={resolver}>
+              <FontSizeUpdater />
+              <Notifications />
+              <ModalsProvider>{children}</ModalsProvider>
+            </MantineProvider>
+          </NextIntlClientProvider>
+        </SessionProvider>
       </body>
     </html>
   );

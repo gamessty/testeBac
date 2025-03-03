@@ -46,6 +46,11 @@
     "ColorSchemeToggle": {
       "label": "Schimbă schema de culori",
       "colorScheme": "{colorScheme, select, light {Luminos} dark {Întunecat} auto {Automat} other {Necunoscut}}"
+    },
+    "NotFound": {
+      "button": "Du -mă înapoi la pagina principală",
+      "description": "Pagina pe care încercați să o deschideți nu există. \nEste posibil să fi greșit adresa, sau pagina a fost mutată la o altă adresă URL. \nDacă credeți că acesta este un suport de contact de eroare.",
+      "title": "Nimic de văzut aici"
     }
   },
   "Authentication": {
@@ -315,7 +320,41 @@
     },
     "backToTop": "Înapoi sus",
     "privacyPolicy": "Politica de confidențialitate",
-    "title": "Tablou de bord"
+    "title": "Tablou de bord",
+    "Tabs": {
+      "admin": {
+        "description": "Aici puteți gestiona utilizatorii, rolurile și permisiunile.",
+        "roles": {
+          "description": "Aici puteți gestiona roluri și permisiuni.",
+          "title": "Roluri"
+        },
+        "title": "Administrator",
+        "users": {
+          "description": "Aici puteți gestiona utilizatorii, rolurile și permisiunile.",
+          "title": "Utilizatori"
+        }
+      },
+      "home": {
+        "description": "Bine ați venit la tabloul de bord Testebac! \nAici vă puteți vedea progresul și testele pe care le -ați făcut.",
+        "title": "Acasă"
+      },
+      "notFound": {
+        "description": "Pagina pe care o căutați nu există. \nEste posibil să fi greșit adresa, sau pagina a fost mutată la o altă adresă URL. \nDacă credeți că acesta este un suport de contact de eroare.",
+        "title": "Nu a fost găsit"
+      },
+      "settings": {
+        "description": "Aici vă puteți schimba parola, vă puteți șterge contul și multe altele.",
+        "title": "Setări"
+      },
+      "stats": {
+        "description": "Aici vă puteți vedea progresul și subiectele pe care le -ați studiat. \nContinuați munca bună și mult noroc cu studiile dvs.!",
+        "title": "Statistici"
+      },
+      "tests": {
+        "description": "Aici puteți vedea toate testele pe care le -ați făcut, inclusiv cele pe care le -ați început și cele pe care le -ați finalizat.",
+        "title": "Teste"
+      }
+    }
   },
   "Demo": {
     "TestGenerator": {

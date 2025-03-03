@@ -1,6 +1,6 @@
 import { DefaultMantineColor } from "@mantine/core";
 import { Icon, IconProps } from "@tabler/icons-react";
-import { ForwardRefExoticComponent, JSX } from "react";
+import { ComponentType, ForwardRefExoticComponent, JSX } from "react";
 
 /**
  * @enum {Permissions}
@@ -50,6 +50,7 @@ export const PermissionsData: IPermissionData[] = [
 
 export interface ITabData {
     tab: string;
+    description?: string;
     icon: ForwardRefExoticComponent<IconProps & React.RefAttributes<Icon>>;
     component?: (...args: any) => JSX.Element;
     category: { name: string, order: number, namespaced: boolean, showLabel: boolean, permissionNeeded?: Permissions | Permissions[]; };

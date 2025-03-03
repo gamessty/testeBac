@@ -1,10 +1,10 @@
 "use client";
 import { useLocale, useTranslations } from "next-intl";
 import { routing, usePathname, useRouter } from "../../i18n/routing";
-import { SegmentedControl, Stack, Text } from "@mantine/core";
+import { SegmentedControl, SegmentedControlProps, Stack, Text } from "@mantine/core";
 import { useSearchParams } from "next/navigation";
 
-export default function LocaleSwitch() {
+export default function LocaleSwitch({ ...props}: Readonly<Omit<SegmentedControlProps, 'data'>>) {
     const locale = useLocale();
     const router = useRouter();
     const pathname = usePathname();
@@ -22,7 +22,7 @@ export default function LocaleSwitch() {
             <Text size="sm" fw={500} mt={3}>
                 {t('label')}
             </Text>
-            <SegmentedControl transitionTimingFunction="linear" transitionDuration={250} onChange={handleChange} defaultValue={locale} data={
+            <SegmentedControl transitionTimingFunction="linear" transitionDuration={250} onChange={handleChange} defaultValue={locale} {...props} data={
                 routing.locales.map((lang) => ({
                     label: t('locale', { locale: lang }),
                     value: lang

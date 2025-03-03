@@ -21,10 +21,12 @@ import { Link } from "../../i18n/routing";
 import RoleManager from "../Dashboard/Admin/RoleManager/RoleManager";
 import SignOutButtonClient from "../SignOutButton/SignOutButton.client";
 import classes from './AppShellDashboard.module.css';
+import { Metadata } from "next";
 
 interface AppShellDashboardProps {
     session: Session | null | undefined;
     children: React.ReactNode;
+    tab: string;
 }
 interface SettingsSetState {
     tab: string;
@@ -34,15 +36,13 @@ interface SettingsSetState {
     year: number;
 }
 
-export default function AppShellDashboard({ session, children }: Readonly<AppShellDashboardProps>) {
-    const searchParams = useSearchParams();
-
+export default function AppShellDashboard({ session, children, tab }: Readonly<AppShellDashboardProps>) {
     const t = useTranslations('Dashboard');
     const ta = useTranslations('Authentication');
 
     const [settings, setSettings] = useSetState<SettingsSetState>({
-        tab: searchParams.get('tab') ?? 'home',
-        title: 'testeBac | ' + t('Navbar.' + (searchParams.get('tab') ?? 'home')),
+        tab: tab ?? 'home',
+        title: 'testeBac | ' + t('Navbar.' + (tab ?? 'home')),
         hour: (new Date()).getHours(),
         minute: (new Date()).getMinutes(),
         year: (new Date()).getUTCFullYear()
@@ -53,10 +53,9 @@ export default function AppShellDashboard({ session, children }: Readonly<AppShe
     const [scrollPosition, setScrollPosition] = useState({ x: 0, y: 0 });
     const viewport = useRef<HTMLDivElement>(null);
 
-
     useDidUpdate(() => {
-        setSettings({ title: 'testeBac | ' + t('Navbar.' + (searchParams.get('tab') ?? 'home')), tab: searchParams.get('tab') ?? 'home' });
-    }, [searchParams.get('tab')]);
+        setSettings({ title: 'testeBac | ' + t('Navbar.' + (tab ?? 'home')), tab: tab ?? 'home' });
+    }, [tab]);
 
     useEffect(() => {
         setInterval(() => {
@@ -66,9 +65,7 @@ export default function AppShellDashboard({ session, children }: Readonly<AppShe
 
     function handleTabChange({ tab }: { tab: string }) {
         setSettings({ tab, title: 'testeBac | ' + t('Navbar.' + tab) });
-        const params = new URLSearchParams(searchParams.toString());
-        params.set('tab', tab);
-        if (typeof window !== 'undefined') window.history.pushState(null, '', `?${params.toString()}`);
+        if (typeof window !== 'undefined') window.history.pushState(null, '', `/${tab}`);
     }
 
     const affixPosition = useMatches({
@@ -242,7 +239,7 @@ export default function AppShellDashboard({ session, children }: Readonly<AppShe
                 </Grid>
             </AppShell.Footer>
             <Affix position={affixPosition}>
-                <Transition transition="slide-up" mounted={false}>
+                <Transition transition="slide-up" mounted={scrollPosition.y > 0}>
                     {(transitionStyles) => (
                         <Button
                             leftSection={<IconArrowUp size={16} />}

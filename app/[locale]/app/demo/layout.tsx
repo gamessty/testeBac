@@ -3,6 +3,7 @@ import { auth } from "../../../../auth"
 import { redirect } from "../../../../i18n/routing";
 import { chkP } from "../../../../utils";
 import AppShellDashboard from "../../../../components/AppShellDashboard/AppShellDashboard";
+import { Container } from "@mantine/core";
 
 export default async function DemoLayout({
   children,
@@ -13,8 +14,9 @@ export default async function DemoLayout({
   const session = await auth();
   if (!session?.user) return redirect({ href: '/', locale });
   if (!session?.user.userAuthorized || !chkP('developer:debug', session.user)) return redirect({ href: '/', locale });
-  return(
-  <AppShellDashboard session={session}>
-    {children}
-  </AppShellDashboard>)
+  return (
+    <>
+      {children}
+    </>
+  )
 }

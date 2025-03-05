@@ -31,3 +31,5 @@ export default function LocaleSwitch({ ...props}: Readonly<Omit<SegmentedControl
         </Stack>
     );
 }
+
+//ERROR, IT SENDS THE USER TO THE HOMEPAGE ROOT

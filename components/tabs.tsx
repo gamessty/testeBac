@@ -1,5 +1,8 @@
+import React from 'react';
 import { IconHome, IconChecklist, IconChartInfographic, IconSettingsCog, IconUsers, IconUserPlus } from "@tabler/icons-react";
 import { ITabData, Permissions } from "../data";
+import dynamic from 'next/dynamic';
+
 import RoleManager from "./Dashboard/Admin/RoleManager/RoleManager";
 import UserManager from "./Dashboard/Admin/UserManager/UserManager";
 import Home from "./Dashboard/Home/Home";

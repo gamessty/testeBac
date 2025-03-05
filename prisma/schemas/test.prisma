@@ -33,8 +33,8 @@ model Chapter {
 
     subject Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
 
-    createdBy User? @relation(fields: [createdById], references: [id])
-    createdById String?  @db.ObjectId
+    createdBy   User?   @relation(fields: [createdById], references: [id])
+    createdById String? @db.ObjectId
 
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
@@ -51,11 +51,11 @@ type AdditionalFolderData {
 }
 
 model UserTest {
-    id        String     @id @default(auto()) @map("_id") @db.ObjectId
-    userId    String     @db.ObjectId
-    questions Question[]
+    id              String           @id @default(auto()) @map("_id") @db.ObjectId
+    userId          String           @db.ObjectId
+    questions       Question[]
     selectedAnswers SelectedAnswer[]
-    score     Int
+    score           Int
 
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -67,6 +67,6 @@ model UserTest {
 
 type SelectedAnswer {
     // NOT YET IMPLEMENTED TBD
-    answer    String // the uuid of the option
+    answer     String// the uuid of the option
     questionId String @db.ObjectId
 }

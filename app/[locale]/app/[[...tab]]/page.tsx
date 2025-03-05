@@ -4,6 +4,7 @@ import { getTranslations } from "next-intl/server";
 import { Transition } from "@mantine/core";
 import NotFound from "../../../../components/404/404";
 import { auth } from "../../../../auth";
+import AppShellDashboardTabs from "../../../../components/AppShellDashboard/Tab/Tab";
 
 type Props = {
     params: Promise<{ tab: string[] }>
@@ -27,10 +28,12 @@ export default async function Page({
 }: Readonly<Props>) {
     const tabName = (await params).tab?.join('.') ?? 'home';
     console.log(tabName);
-    const tab = tabsData.find(tab => tab.tab == tabName);
-    if (!tab?.component) return <NotFound />;
+    const taby = tabsData.find(tab => tab.tab == tabName);
+    if (!taby?.component) return <NotFound />;
     const session = await auth();
-    return (tab.component && <tab.component session={session}/>)
+    return (
+        <AppShellDashboardTabs tabName={tabName} session={session} />
+    );
 }
 
 /*

@@ -4,7 +4,6 @@ import { Affix, AppShell, Badge, Button, Divider, Flex, Grid, Group, ScrollArea,
 import { Link, useRouter } from "../../../i18n/routing";
 import { Suspense, useEffect, useRef, useState, Fragment } from "react";
 import Navbar from "../../../components/AppShellDashboard/Navbar/Navbar";
-import tabsData from "../../../components/tabs";
 import classes from '../../../components/AppShellDashboard/AppShellDashboard.module.css';
 import { IconArrowUp } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
@@ -71,9 +70,7 @@ export default function Layout({
             </AppShell.Header>
             <AppShell.Navbar p="md">
                 <AppShell.Section grow mt="md" component={ScrollArea}>
-                    <Suspense>
-                        <Navbar />
-                    </Suspense>
+                    <Navbar />
                 </AppShell.Section>
                 <AppShell.Section>
                     <Grid>
@@ -101,7 +98,9 @@ export default function Layout({
                     classNames={{
                         viewport: classes.appShellScrollArea
                     }}>
-                    {children}
+                    <Suspense>
+                        {children}
+                    </Suspense>
                 </ScrollArea>
             </AppShell.Main>
             <Affix position={affixPosition}>

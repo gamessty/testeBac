@@ -1,6 +1,6 @@
 import { DefaultMantineColor } from "@mantine/core";
 import { Icon, IconProps } from "@tabler/icons-react";
-import { ComponentType, ForwardRefExoticComponent, JSX } from "react";
+import { ComponentType, ForwardRefExoticComponent, JSX, LazyExoticComponent, ReactNode } from "react";
 
 /**
  * @enum {Permissions}

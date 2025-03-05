@@ -2,6 +2,7 @@ model Question {
     id             String         @id @default(auto()) @map("_id") @db.ObjectId
     subjectId      String?        @db.ObjectId
     chapterId      String?        @db.ObjectId
+    userTestId     String?        @db.ObjectId
     type           QuestionType
     answer         String? // the answer to the question, used in case of fill in the blank or true/false
     question       String
@@ -10,8 +11,9 @@ model Question {
     createdAt      DateTime       @default(now())
     updatedAt      DateTime       @updatedAt
 
-    subject Subject? @relation(fields: [subjectId], references: [id], onDelete: Cascade)
-    chapter Chapter? @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+    subject  Subject?  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+    chapter  Chapter?  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+    userTest UserTest? @relation(fields: [userTestId], references: [id], onDelete: Cascade)
 
     @@map("questions")
 }
@@ -25,23 +27,25 @@ enum QuestionType {
 }
 
 type Option {
-    option    String
-    image     String?
-    code      Code[]
-    isCorrect Boolean @default(false)
+    //TBD the id system
+    id           String @default(uuid())
+    option       String
+    image        String?
+    code         Code[]
+    isCorrect    Boolean        @default(false)
     localization Localization[]
 }
 
 type AdditionalData {
-    image         String?
-    code          Code[]
+    image        String?
+    code         Code[]
     explanation  AnswerIndicator?
     localization Localization[]
 }
 
 type Localization {
-    locale   String
-    text String
+    locale String
+    text   String
 }
 
 type AnswerIndicator {

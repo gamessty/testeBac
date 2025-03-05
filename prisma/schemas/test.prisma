@@ -4,6 +4,9 @@ model Folder {
     additionalData AdditionalFolderData
     subjects       Subject[]
 
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
     @@map("folders")
 }
 
@@ -16,6 +19,9 @@ model Subject {
 
     folder Folder @relation(fields: [folderId], references: [id], onDelete: Cascade)
 
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
     @@map("subjects")
 }
 
@@ -27,6 +33,12 @@ model Chapter {
 
     subject Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
 
+    createdBy   User?   @relation(fields: [createdById], references: [id])
+    createdById String? @db.ObjectId
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
     @@map("chapters")
 }
 
@@ -36,4 +48,25 @@ type AdditionalFolderData {
     description String?
     image       String?
     color       String?
+}
+
+model UserTest {
+    id              String           @id @default(auto()) @map("_id") @db.ObjectId
+    userId          String           @db.ObjectId
+    questions       Question[]
+    selectedAnswers SelectedAnswer[]
+    score           Int
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("userTests")
+}
+
+type SelectedAnswer {
+    // NOT YET IMPLEMENTED TBD
+    answer     String// the uuid of the option
+    questionId String @db.ObjectId
 }

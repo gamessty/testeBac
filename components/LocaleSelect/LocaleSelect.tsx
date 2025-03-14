@@ -6,7 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { useMediaQuery } from "@mantine/hooks";
 import { useState } from "react";
 
-export default function LocalSelect({ dynamic = true, ...props}: Readonly<{ dynamic: boolean} & Omit<NativeSelectProps, 'data' | 'fw' | 'w' | 'rightSectionWidth' | 'defaultValue' | 'onChange'>>) {
+export default function LocalSelect({ dynamic = true, ...props}: Readonly<{ dynamic?: boolean} & Omit<NativeSelectProps, 'data' | 'fw' | 'w' | 'rightSectionWidth' | 'defaultValue' | 'onChange'>>) {
     const locale = useLocale();
     const router = useRouter();
     const pathname = usePathname();

@@ -3,9 +3,10 @@
 import { Title, Text, Grid, MantineStyleProp, Center, Flex, useMatches, SimpleGrid, rem } from "@mantine/core";
 import classes from "./Home.module.css";
 import { useTranslations } from "next-intl";
-import TestCard from "../TestCard/TestCard";
+import TestCard from "../../Cards/TestCard/TestCard";
 import { Session } from "next-auth";
 import { getInitialsColor } from "../../../utils";
+import CreateTestCard from "../../Cards/CreateTestCard/CreateTestCard";
 
 interface HomeProps {
     style?: MantineStyleProp;

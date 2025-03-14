@@ -1,12 +1,12 @@
 "use client";
 import { useLocale, useTranslations } from "next-intl";
 import { routing, usePathname, useRouter } from "../../i18n/routing";
-import { NativeSelect, NativeSelectProps, Loader, em } from "@mantine/core";
+import { NativeSelect, NativeSelectProps, Loader, em, MantineStyleProps, InputStylesNames } from "@mantine/core";
 import { useSearchParams } from "next/navigation";
 import { useMediaQuery } from "@mantine/hooks";
 import { useState } from "react";
 
-export default function LocalSelect(props: Readonly<Omit<NativeSelectProps, 'data' | 'fw' | 'w' | 'rightSectionWidth' | 'defaultValue' | 'onChange'>>) {
+export default function LocalSelect({ dynamic = true, ...props}: Readonly<{ dynamic: boolean} & Omit<NativeSelectProps, 'data' | 'fw' | 'w' | 'rightSectionWidth' | 'defaultValue' | 'onChange'>>) {
     const locale = useLocale();
     const router = useRouter();
     const pathname = usePathname();
@@ -21,9 +21,9 @@ export default function LocalSelect(props: Readonly<Omit<NativeSelectProps, 'dat
             router.push(pathname + "?" + params.toString(), { locale: value });
     }
     return (
-            <NativeSelect fw={500} disabled={loading} w={{ xs: 60, md: 'initial' }} leftSection={loading ? <Loader size="xs" /> : undefined} onChange={(event) => handleChange(event.currentTarget.value)} rightSectionWidth={20} defaultValue={locale} data={
+            <NativeSelect fw={500} disabled={loading} w={dynamic ? { xs: 60, md: 'initial' }: undefined} leftSection={loading ? <Loader size="xs" /> : undefined} onChange={(event) => handleChange(event.currentTarget.value)} rightSectionWidth={20} defaultValue={locale} data={
                 routing.locales.map((lang) => ({
-                    label: isMobile ?  lang.toUpperCase() : t('locale', { locale: lang }),
+                    label: (isMobile && dynamic) ?  lang.toUpperCase() : t('locale', { locale: lang }),
                     value: lang
                 }))
             } {...props}/>

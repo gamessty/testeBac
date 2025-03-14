@@ -3,7 +3,7 @@
 import { Container, MantineStyleProp, SimpleGrid, Text, Title, Drawer, Group, Stack, Input, Checkbox, MultiSelect, Button, Transition, JsonInput, Blockquote, TextInput, Loader, CloseButton, ScrollArea, ContainerProps } from "@mantine/core";
 import { type Session, type User } from "next-auth";
 import { useTranslations } from "next-intl";
-import UserCard from "../../UserCard/UserCard";
+import UserCard from "../../../Cards/UserCard/UserCard";
 import getManyUser from "../../../../actions/PrismaFunctions/getManyUser";
 import { useEffect, useState } from "react";
 import { useDebouncedCallback, useDebouncedValue, useDisclosure } from "@mantine/hooks";

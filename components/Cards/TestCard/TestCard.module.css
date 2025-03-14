@@ -13,6 +13,7 @@
 
 .test-card {
     position: relative;
+    margin-bottom: var(--mantine-spacing-md);
 }
 
 .test-card:has(.test-card_button_section) {
@@ -27,4 +28,10 @@
     position: absolute;
     bottom: var(--mantine-spacing-lg);
     width: 100%;
+}
+
+.test-card .action-button { 
+    position: absolute;
+    bottom: var(--mantine-spacing-sm);
+    right: var(--mantine-spacing-sm);
 }

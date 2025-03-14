@@ -1,7 +1,7 @@
 'use client';
 import { AppShell, Group, Button, ActionIcon, Text, Divider, Stack, Grid, Affix, Transition, Badge, Flex, Tooltip, useMatches, Menu, ScrollArea } from "@mantine/core";
 import { useDidUpdate, useDocumentTitle, useSetState } from "@mantine/hooks";
-import { IconHome, IconSettingsCog, IconChecklist, IconChartInfographic, IconArrowUp, IconUsers, IconLogout, IconUserPlus } from "@tabler/icons-react";
+import { IconHome, IconSettingsCog, IconChecklist, IconChartInfographic, IconArrowUp, IconUsers, IconLogout, IconUserPlus, IconFile } from "@tabler/icons-react";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import ColorSchemeToggleIcon from "../ColorSchemeToggleIcon/ColorSchemeToggleIcon";
@@ -49,8 +49,8 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
 
     useDocumentTitle(settings.title);
 
-    //const [scrollPosition, setScrollPosition] = useState({ x: 0, y: 0 });
-    //const viewport = useRef<HTMLDivElement>(null);
+    const [scrollPosition, setScrollPosition] = useState({ x: 0, y: 0 });
+    const viewport = useRef<HTMLDivElement>(null);
 
 
     useDidUpdate(() => {
@@ -176,15 +176,15 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
             </AppShell.Navbar>
             <AppShell.Main>
                 <ScrollArea
-                    //onScrollPositionChange={setScrollPosition}
+                    onScrollPositionChange={setScrollPosition}
                     h={{ base: sizeMobile, sm: size }}
-                    //viewportRef={viewport}
+                    viewportRef={viewport}
                     classNames={{
                         viewport: classes.appShellScrollArea
                     }}>
                     {
                         tabsData.map((tab) => (
-                            <Transition key={tab.tab + "_tabComponent"} transition="fade-right" timingFunction="ease" duration={500} mounted={settings.tab == tab.tab} >
+                            <Transition key={tab.tab + "_tabComponent"} transition="fade-right" timingFunction="ease" duration={300} mounted={settings.tab == tab.tab} >
                                 {(transitionStyles) => (
                                     <>
                                         {settings.tab == tab.tab && tab.component && <tab.component session={session} style={transitionStyles} />}
@@ -239,7 +239,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                 </Grid>
             </AppShell.Footer>
             <Affix position={affixPosition}>
-                <Transition transition="slide-up" mounted={false}>
+                <Transition transition="slide-up" mounted={scrollPosition.y > 0}>
                     {(transitionStyles) => (
                         <Button
                             leftSection={<IconArrowUp size={16} />}
@@ -338,4 +338,18 @@ export const tabsData: ITabData[] = [
         },
         "permissionNeeded": Permissions["role:manage"]
     }
+    /*,
+    {
+        "tab": "demo.questionCard",
+        "icon": IconFile,
+        "component": undefined,//DemoQuestion
+        "category": {
+            "name": "demo",
+            "order": 2,
+            "namespaced": false,
+            "showLabel": true,
+            "permissionNeeded": Permissions["developer:debug"]
+        },
+        permissionNeeded: Permissions["developer:debug"]
+    }*/
 ]

@@ -4,8 +4,34 @@ import Google from "next-auth/providers/google"
 import { sendVerificationRequest } from "./lib/authSendRequest"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "./lib/prisma"
-import { Role } from "@prisma/client"
+import { PrismaClient, Role } from "@prisma/client"
 import type { Provider } from "next-auth/providers"
+import { type Adapter } from "next-auth/adapters";
+
+function CustomPrismaAdapter(p: PrismaClient): Adapter {
+  const originalAdapter = PrismaAdapter(p);
+  return {
+    ...originalAdapter,
+    deleteSession: async (sessionToken: string) => {
+      try {
+        const session = await p.session.findUnique({
+          where: { sessionToken },
+        });
+
+        if (!session) {
+          return null;
+        }
+
+        return await p.session.delete({
+          where: { sessionToken },
+        });
+      } catch (error) {
+        console.error("Failed to delete session", error);
+        return null;
+      }
+    },
+  } as Adapter;
+}
 
 const providers: Provider[] = [
   Mailgun({
@@ -29,36 +55,37 @@ export const providerMap = providers
   })
   .filter((provider) => provider.id !== "credentials")
 
-  export const authOptions: NextAuthConfig = {
-    adapter: PrismaAdapter(prisma),
-    providers,
-    pages: {
-      signIn: "/signin",
-      verifyRequest: "/verify-request",
-    },
-    callbacks: {
-      async session({ session, user }) {
-        // `session.user.roles` is now a valid property, and will be type-checked
-        // in places like `useSession().data.user` or `auth().user`
-        const roles = await prisma.role.findMany({
-          where: {
-            userIDs: {
-              hasSome: [user.id]
-            }
+export const authOptions: NextAuthConfig = {
+  debug: process.env.NODE_ENV === "development" || process.env.VERCEL_ENV === "development" || process.env.VERCEL_ENV === "preview",
+  adapter: CustomPrismaAdapter(prisma),
+  providers,
+  pages: {
+    signIn: "/signin",
+    verifyRequest: "/verify-request",
+  },
+  callbacks: {
+    async session({ session, user }) {
+      // `session.user.roles` is now a valid property, and will be type-checked
+      // in places like `useSession().data.user` or `auth().user`
+      const roles = await prisma.role.findMany({
+        where: {
+          userIDs: {
+            hasSome: [user.id]
           }
-        });
-        return {
-          ...session,
-          user: {
-            ...session.user,
-            roles,
-            username: user.username,
-            userAuthorized: user.userAuthorized
-          },
         }
-      },
+      });
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          roles,
+          username: user.username,
+          userAuthorized: user.userAuthorized
+        },
+      }
     },
-  }
+  },
+}
 
 export const { handlers, auth, signIn, signOut, unstable_update } = NextAuth(authOptions)
 

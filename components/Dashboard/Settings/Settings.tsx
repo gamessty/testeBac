@@ -10,6 +10,8 @@ import putUser from "../../../actions/PrismaFunctions/putUser";
 import { chkP, getDifferences, getInitialsColor } from "../../../utils";
 import AvatarFallback from "../../AvatarFallback/AvatarFallback";
 import { useState } from "react";
+import LocaleSelect from "../../LocaleSelect/LocaleSelect";
+import { useGetCookie, useSetCookie } from "cookies-next";
 
 interface SettingsProps {
     session: Session | null | undefined;
@@ -23,12 +25,14 @@ interface SettingsUser extends User {
 export default function Settings({ session, style }: Readonly<SettingsProps>) {
     // TO-DO: Implement the settings logic and add the necessary modification to the saveChanges button Affix
     const [userChanges, setUserChanges] = useSetState((session?.user ?? {}) as SettingsUser);
+    const getCookie = useGetCookie();
+    const setCookie = useSetCookie();
     const [fontSize, setFontSize] = useState(100);
     const [debounced] = useDebouncedValue(fontSize, 200);
-    const [fontSizeLS ,setFontSizeLS] = useLocalStorage<number>({
-        key: 'fontSize',
-        defaultValue: 100,    
-    });
+    const [fontSizeLS, setFontSizeLS] = [
+        Number(getCookie('fontSize')) || 100,
+        (value: number) => setCookie('fontSize', value.toString())
+    ]
 
     useDidUpdate(() => {
         setFontSizeLS(debounced);
@@ -182,7 +186,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                     {t('display')}
                 </Title>
                 <Stack align="flex-start" >
-                    <LocaleSwitch />
+                    <LocaleSelect dynamic={false} mt="md" />
                     <ColorSchemeToggleIconSegmented />
                 </Stack>
             </Grid.Col>

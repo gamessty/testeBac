@@ -53,9 +53,14 @@ type AdditionalFolderData {
 model UserTest {
     id              String           @id @default(auto()) @map("_id") @db.ObjectId
     userId          String           @db.ObjectId
+    score           Int
     questions       Question[]
     selectedAnswers SelectedAnswer[]
-    score           Int
+    testType        TestType         @default(GENERAL)
+    finished        Boolean          @default(false)
+    startedAt       DateTime         @default(now())
+    finishedAt      DateTime?        
+    timeLeft        Int?
 
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -65,8 +70,14 @@ model UserTest {
     @@map("userTests")
 }
 
+enum TestType {
+    GENERAL
+    TIME_LIMITED
+}
+
+
 type SelectedAnswer {
     // NOT YET IMPLEMENTED TBD
-    answer     String// the uuid of the option
-    questionId String @db.ObjectId
+    answer     String[] // the uuid or uuids of the option(s) selected by the user
+    questionId String   @db.ObjectId
 }

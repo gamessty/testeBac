@@ -152,6 +152,11 @@
         "title": "Administrare",
         "users": "Utilizatori",
         "roles": "Roluri"
+      },
+      "demo": {
+        "questionCard": "Card de întrebare",
+        "testGenerator": "Generator de testare",
+        "title": "Demo"
       }
     },
     "Home": {
@@ -311,7 +316,8 @@
     "Tests": {
       "title": "Teste",
       "description": "Aici puteți vedea progresul dumneavoastră și testele pe care le-ați susținut. Puteți vedea, de asemenea, rezultatele dumneavoastră și materiile pe care le-ați studiat. Continuați munca bună și succes la învățat!",
-      "tests": "{count, plural, =0 {Niciun test} =1 {# test} other {# teste}}"
+      "tests": "{count, plural, =0 {Niciun test} =1 {# test} other {# teste}}",
+      "generateTestTitle": "Generează test"
     },
     "backToTop": "Înapoi sus",
     "privacyPolicy": "Politica de confidențialitate",

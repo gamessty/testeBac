@@ -3,7 +3,6 @@ import '@mantine/notifications/styles.css';
 import '@mantine/code-highlight/styles.css';
 
 import React from "react";
-import dynamic from 'next/dynamic'
 import { NextIntlClientProvider } from 'next-intl';
 import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
@@ -19,6 +18,7 @@ import {
 
 import { theme, resolver } from "../../theme";
 import FontSizeUpdater from "../../components/FontSizeUpdater/FontSizeUpdater";
+import { cookies } from "next/headers";
 
 export const metadata = {
   title: "testeBac | Home",
@@ -28,16 +28,21 @@ export const metadata = {
 export default async function Locale({ children, params }: Readonly<{ children: React.ReactNode; params: Promise<{ locale: string }> }>) {
   // Ensure that the incoming `locale` is valid
   const { locale } = await params;
+
   if (!routing.locales.includes(locale as any)) {
     notFound();
   }
+
+  const fontSize = (await cookies()).get('fontSize')?.value ?? 100;
 
   // Providing all messages to the client
   // side is the easiest way to get started
   const messages = await getMessages();
 
   return (
-    <html lang={locale} {...mantineHtmlProps} suppressHydrationWarning>
+    <html lang={locale} {...mantineHtmlProps} 
+    style={ { fontSize: `${fontSize}%` } } 
+    suppressHydrationWarning>
       <head>
         <ColorSchemeScript />
         <link rel="shortcut icon" href="/favicon.svg" />
@@ -49,7 +54,8 @@ export default async function Locale({ children, params }: Readonly<{ children: 
       <body>
         <NextIntlClientProvider messages={messages}>
           <MantineProvider defaultColorScheme="auto" theme={theme} cssVariablesResolver={resolver}>
-            <FontSizeUpdater />
+            {//<FontSizeUpdater />
+            }
             <Notifications />
             <ModalsProvider>{children}</ModalsProvider>
           </MantineProvider>

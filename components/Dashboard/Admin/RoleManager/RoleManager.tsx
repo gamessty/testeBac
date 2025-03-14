@@ -6,7 +6,7 @@ import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import { Role } from "@prisma/client";
 import getManyRole from "../../../../actions/PrismaFunctions/getManyRole";
-import RoleCard from "../../RoleCard/RoleCard";
+import RoleCard from "../../../Cards/RoleCard/RoleCard";
 import NewRoleModal from "../../../NewRoleModal/NewRoleModal";
 import { useDisclosure } from "@mantine/hooks";
 import styles from './RoleManager.module.scss';

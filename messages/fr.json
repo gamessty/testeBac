@@ -152,6 +152,11 @@
         "title": "Administrer",
         "users": "Utilisateurs",
         "roles": "Rôles"
+      },
+      "demo": {
+        "questionCard": "Carte de question",
+        "testGenerator": "Générateur de test",
+        "title": "Démo"
       }
     },
     "Home": {
@@ -272,7 +277,8 @@
     "Tests": {
       "description": "Ici, vous pouvez voir vos progrès et les tests que vous avez passés. \nVous pouvez également voir vos résultats et les sujets que vous avez étudiés. \nContinuez votre bon travail et bonne chance avec vos études!",
       "tests": "{count, plural, =0 {Pas de tests} =1 {# tests} other {# tests}}",
-      "title": "Tests"
+      "title": "Tests",
+      "generateTestTitle": "Générer un test"
     },
     "UserManager": {
       "authorized": "Autorisé",

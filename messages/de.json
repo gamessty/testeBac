@@ -91,7 +91,12 @@
       "settings": "Einstellungen",
       "stats": "Statistiken",
       "subjects": "Themen",
-      "tests": "Tests"
+      "tests": "Tests",
+      "demo": {
+        "questionCard": "Fragekarte",
+        "testGenerator": "Testgenerator",
+        "title": "Demo"
+      }
     },
     "RoleManager": {
       "close": "Schließen",
@@ -201,7 +206,8 @@
     "Tests": {
       "description": "Hier können Sie Ihre Fortschritte und die von Ihnen durchgeführten Tests sehen. \nSie können auch Ihre Ergebnisse und die von Ihnen studierten Themen sehen. \nMachen Sie weiter so und viel Glück mit Ihrem Studium!",
       "tests": "{count, plural, =0 {Keine Tests} =1 {# Test} other {# Tests}}",
-      "title": "Tests"
+      "title": "Tests",
+      "generateTestTitle": "Test generieren"
     },
     "UserManager": {
       "authorized": "Autorisiert",

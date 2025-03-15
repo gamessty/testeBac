@@ -1,3 +1,7 @@
 .appShellScrollArea > div {
     height: 100%;
 }
+
+.back-to-top {
+    max-width: 40vw;
+}

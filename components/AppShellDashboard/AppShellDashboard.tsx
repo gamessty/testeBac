@@ -264,6 +264,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                 <Transition transition="slide-up" mounted={scrollPosition.y > 0}>
                     {(transitionStyles) => (
                         <Button
+                            className={classes["back-to-top"]}
                             leftSection={<IconArrowUp size={16} />}
                             style={{ boxShadow: "var(--mantine-shadow-xl)", ...transitionStyles }}
                             onClick={
@@ -273,7 +274,9 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                             variant="gradient"
                             gradient={{ from: 'purple', to: 'pink' }}
                         >
-                            {t('backToTop')}
+                            <Text truncate inherit>
+                                {t('backToTop')}
+                            </Text>
                         </Button>
                     )}
                 </Transition>

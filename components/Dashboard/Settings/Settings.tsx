@@ -12,6 +12,7 @@ import AvatarFallback from "../../AvatarFallback/AvatarFallback";
 import { useState } from "react";
 import LocaleSelect from "../../LocaleSelect/LocaleSelect";
 import { useGetCookie, useSetCookie } from "cookies-next";
+import classes from './Settings.module.css';
 
 interface SettingsProps {
     session: Session | null | undefined;
@@ -230,12 +231,14 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                     </Grid>
                 </Grid.Col>
             }
-            <Affix position={affixPosition}>
+            <Affix position={affixPosition}
+            >
                 <Transition transition="slide-up" mounted={!isEmpty(getDifferences(userChanges, session?.user, { ignoredKeys: ['updatedAt', 'createdAt'] }))}>
                     {(transitionStyles) => (
                         <Button
                             leftSection={userChanges.loading ? <Loader size="xs" color="white" type="bars" /> : <IconDeviceFloppy />}
                             style={transitionStyles}
+                            className={classes["save-button"]}
                             onClick={async () => {
                                 setUserChanges({ loading: true });
                                 await putUser({ id: session?.user?.id, data: getDifferences(userChanges, session?.user, { ignoredKeys: ['updatedAt', 'createdAt'] }) });
@@ -243,7 +246,9 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                             }}
                             disabled={userChanges.loading}
                         >
-                            {t('saveChanges')}
+                            <Text truncate inherit>
+                                {t('saveChanges')}
+                            </Text>
                         </Button>
                     )}
                 </Transition>

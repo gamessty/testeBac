@@ -10,29 +10,64 @@
     right: 16px;
 }
 
-@-webkit-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@-moz-keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
-@keyframes fadeIn { from { opacity:0; } to { opacity:1; } }
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
 
 .tooltip {
     opacity: 0;
-    -webkit-animation:fadeIn ease-in 0.2s;
-    -moz-animation:fadeIn ease-in 0.2s;
-    animation:fadeIn ease-in 0.2s;
+    background-color: transparent;
+    -webkit-animation: fadeIn ease-in 0.2s;
+    -moz-animation: fadeIn ease-in 0.2s;
+    animation: fadeIn ease-in 0.2s;
 
-    -webkit-animation-fill-mode:forwards; 
-    -moz-animation-fill-mode:forwards;
-    animation-fill-mode:forwards;
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
 
-    -webkit-animation-duration:0.2s;
-    -moz-animation-duration:0.2s;
-    animation-duration:0.2s;
+    -webkit-animation-duration: 0.2s;
+    -moz-animation-duration: 0.2s;
+    animation-duration: 0.2s;
 }
 
 .test-card {
     position: relative;
     margin-bottom: var(--mantine-spacing-md);
     transition: top ease 0.2s;
+}
+
+.test-card.compact {
+    cursor: none;
+
+    * {
+        cursor: none;
+    }
 }
 
 .test-card:hover {
@@ -54,7 +89,7 @@
     width: 100%;
 }
 
-.test-card .action-button { 
+.test-card .action-button {
     position: absolute;
     bottom: var(--mantine-spacing-sm);
     right: var(--mantine-spacing-sm);

@@ -2,7 +2,7 @@
 import { Card, Group, Badge, Button, Image, Text, Avatar, CardProps, Box, Stack, Flex, Progress, ActionIcon, Tooltip } from "@mantine/core";
 import { useTranslations } from "next-intl";
 import classes from './TestCard.module.css';
-import { IconArrowBackUp, IconCodeAsterisk, IconFlask2, IconMicroscope, IconPencil, IconPlayerPlay, IconPlayerTrackNextFilled, IconSchool } from "@tabler/icons-react";
+import { IconArrowBackUp, IconCodeAsterisk, IconFlask2, IconMicroscope, IconPencil, IconPlayerPlay, IconPlayerPlayFilled, IconPlayerTrackNextFilled, IconSchool } from "@tabler/icons-react";
 import AvatarFallback from "../../AvatarFallback/AvatarFallback";
 import { Link } from "../../../i18n/routing";
 import { getInitialsColor } from "../../../utils";
@@ -41,8 +41,8 @@ export default function TestCard({ category, subject, coverImage, lastQuestion, 
                     marginTop: '-2px',
                 }} classNames={{
                     tooltip: classes["tooltip"]
-                }} color="grape" label={!tooltipText ? <IconPlayerTrackNextFilled size={15} /> : t('resumeTest')}>
-                    <Card {...rest} className={classes["test-card"]} component={Link} href={href ?? ''} w={"100%"} shadow="lg" radius="sm" >
+                }} label={!tooltipText ? <ActionIcon color="grape" className={classes["tooltip-icon"]}> <IconPlayerPlayFilled size={15} /> </ActionIcon> : t('resumeTest')}>
+                    <Card {...rest} className={`${classes["test-card"]} ${classes["compact"]}`} component={Link} href={href ?? ''} w={"100%"} shadow="lg" radius="sm" >
                         <Stack justify="space-between" h="100%" w="100%">
                             <Box w="100%">
                                 {coverImage && <Card.Section>

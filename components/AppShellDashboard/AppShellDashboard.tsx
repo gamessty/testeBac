@@ -72,7 +72,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
     }
 
     const affixPosition = useMatches({
-        base: { bottom: 95, right: 20 },
+        base: { bottom: 100, right: 20 },
         sm: { bottom: 20, right: 20 }
     })
 
@@ -192,7 +192,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                 <AppShell.Section>
                     <Group justify="space-between" mt={10}>
                         <Text ta="center" size="sm">Ⓒ {settings.year}</Text>
-                        <Text ta="center" size="sm" component="a" href="/privacy-policy">{t('privacyPolicy')}</Text>
+                        <Text ta="center" size="sm" component={Link} href="/privacy-policy">{t('privacyPolicy')}</Text>
                     </Group>
                 </AppShell.Section>
             </AppShell.Navbar>

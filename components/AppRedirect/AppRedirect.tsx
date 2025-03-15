@@ -2,6 +2,7 @@ import { Button, Group, Tooltip } from "@mantine/core";
 import { getTranslations } from "next-intl/server";
 import { auth } from "../../auth";
 import { IconLayoutDashboardFilled, IconArrowRight } from '@tabler/icons-react';
+import { Link } from "../../i18n/routing";
 
 export default async function AppRedirect() {
     const t = await getTranslations('HomePage');
@@ -11,7 +12,7 @@ export default async function AppRedirect() {
         <Group justify="center" mt={30}>
             <Tooltip label={t('userNotAuthorized.short')} withArrow disabled={session?.user.userAuthorized}>
                     <Button
-                        component="a"
+                        component={Link}
                         href={!session?.user.userAuthorized ? '/' : '/app'}
                         leftSection={<IconLayoutDashboardFilled size={14} />}
                         rightSection={<IconArrowRight size={14} />}

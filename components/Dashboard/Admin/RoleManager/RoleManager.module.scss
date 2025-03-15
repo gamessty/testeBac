@@ -40,7 +40,7 @@
 }
 
 .affix {
-  bottom: 140px;
+  bottom: 145px;
   right: 20px;
 
   @include m.larger-than(m.$mantine-breakpoint-sm) {

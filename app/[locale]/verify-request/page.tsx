@@ -1,7 +1,7 @@
 "use client";
 import { Center, Paper, rem, Text, Button } from "@mantine/core"
 import { useTranslations } from "next-intl";
-import Link from "next/link"
+import { Link } from "../../../i18n/routing";
 
 export default function VerifyRequestPage() {
     const t = useTranslations("Authentication.customPages.verifyRequest");
@@ -21,7 +21,7 @@ export default function VerifyRequestPage() {
                 </Text>
                 <Center mt="lg">
                     <Button
-                        component="a"
+                        component={Link}
                         href="/"
                         variant="gradient"
                         gradient={{ from: 'purple', to: 'red' }}

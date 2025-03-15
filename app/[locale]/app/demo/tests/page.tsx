@@ -16,7 +16,7 @@ export default function Tests() {
             <Flex direction="column" pt={{ base: 5, sm: 10 }} h="100%" pb="md">
                 <Center style={{ flexGrow: 1 }}>
                     <SimpleGrid maw="100vw" cols={1} w={{ base: "95%", md: "70%", lg: '60%'}}>
-                        <CreateTestCard />
+                        <CreateTestCard toggleLoading />
                         <Divider />
                         <TestCard design="compact" mih="100%" progress={50} category="bac" subject="biology" href="#" lastQuestion="Ce este biologia?" />
                         <Divider variant="dashed" />

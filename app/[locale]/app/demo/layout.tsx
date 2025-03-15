@@ -17,7 +17,7 @@ export default async function DemoLayout({
     if(!session?.user) return redirect({ href: '/', locale});
     if(!session?.user.userAuthorized || !chkP('developer:debug', session.user)) return redirect({ href: '/', locale});
     return <>
-        <ReturnButton hideFrom="demo" className={classes["return-button"]} />
+        <ReturnButton className={classes["return-button"]} />
         {children}
     </>
   }

@@ -13,6 +13,8 @@ import { useState } from "react";
 import LocaleSelect from "../../LocaleSelect/LocaleSelect";
 import { useGetCookie, useSetCookie } from "cookies-next";
 import classes from './Settings.module.css';
+import { Link } from "../../../i18n/routing";
+import LoadingButton from "../../LoadingButton/LoadingButton";
 
 interface SettingsProps {
     session: Session | null | undefined;
@@ -37,6 +39,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
 
     useDidUpdate(() => {
         setFontSizeLS(debounced);
+        document.documentElement.style.fontSize = `${debounced}%`;
     }, [debounced]);
 
     useDidUpdate(() => {
@@ -112,7 +115,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
 
 
     const affixPosition = useMatches({
-        base: { bottom: 95, left: 20 },
+        base: { bottom: 100, left: 20 },
         sm: { bottom: 20, left: 320 }
     })
 
@@ -200,7 +203,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                     <Title order={2} ta="left">
                         {t('debug')}
                     </Title>
-                    <Button mt={10} component="a" href="./app/demo/">DEMOS</Button>
+                    <LoadingButton mt={10} component={Link} href="./app/demo/">Demo components</LoadingButton>
                     <Text mt={10} c="dimmed" size="sm">BASIC STRING COMPARE: {(JSON.stringify(userChanges) !== JSON.stringify(session?.user)).toString()}</Text>
                     <Text mt={10} c="dimmed" size="sm">FUNCTION COMPARE: {isDifferent(userChanges, session?.user, true).toString()}</Text>
                     <Grid columns={12} mt={10} w="100%" grow>

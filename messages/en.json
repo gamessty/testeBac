@@ -32,6 +32,7 @@
     "loading": "Loading...",
     "error": "Error",
     "refresh": "Try again",
+    "return": "Return",
     "LocaleSwitcher": {
       "label": "Change language",
       "locale": "{locale, select, ro {🇷🇴 Romanian} en {🇬🇧 English} fr {🇫🇷 French} de {🇩🇪 German} other {Unknown}}",
@@ -152,6 +153,9 @@
         "title": "Admin",
         "users": "Users",
         "roles": "Roles"
+      },
+      "test": {
+        "generator": "Test Generator"
       },
       "demo": {
         "title": "Demo",

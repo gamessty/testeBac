@@ -166,6 +166,10 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                         placeholder={t('Account.username.placeholder')}
                     />
                     <InputLabel>{t('fontSize.label')}</InputLabel>
+                    {
+                        //ADD SOME SORT OF WARNING TO RELOAD THE PAGE TO APPLY THE CHANGES TO THE FONT SIZE
+                        //REFACTOR THE FONTSIZE LOGIC TO BE MORE USER FRIENDLY AND LESS STRANGE, REPLACE THE HOOKS AS THEY ARE NO LONGER NEEDED WITH THE NEW COOKIE APPROACH
+                    }
                     <Slider
                         value={fontSize}
                         min={70}

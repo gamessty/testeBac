@@ -46,7 +46,8 @@
     "ColorSchemeToggle": {
       "label": "Changer le thème",
       "colorScheme": "{colorScheme, select, light {Clair} dark {Sombre} auto {Auto} other {Inconnu}}"
-    }
+    },
+    "return": "Retour"
   },
   "Authentication": {
     "signIn": "Se connecter",
@@ -157,6 +158,9 @@
         "questionCard": "Carte de question",
         "testGenerator": "Générateur de test",
         "title": "Démo"
+      },
+      "test": {
+        "generator": "Générateur de test"
       }
     },
     "Home": {

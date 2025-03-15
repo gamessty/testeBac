@@ -12,7 +12,7 @@ import Settings from "../Dashboard/Settings/Settings";
 import Stats from "../Dashboard/Stats/Stats";
 import Tests from "../Dashboard/Tests/Tests";
 import { chkP, enumToString, getInitialsColor } from "../../utils";
-import React, { useEffect, useRef, useState } from "react";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import UserManager from "../Dashboard/Admin/UserManager/UserManager";
 import { ITabData, Permissions } from "../../data";
 import AvatarFallback from "../AvatarFallback/AvatarFallback";
@@ -21,6 +21,7 @@ import { Link } from "../../i18n/routing";
 import RoleManager from "../Dashboard/Admin/RoleManager/RoleManager";
 import SignOutButtonClient from "../SignOutButton/SignOutButton.client";
 import classes from './AppShellDashboard.module.css';
+import TestGenerator from "../TestGenerator/TestGenerator";
 
 interface AppShellDashboardProps {
     session: Session | null | undefined;
@@ -106,23 +107,44 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                     >
                         {
                             // sort the tabsData by category order and by category and add a divider and the title of the category before the first tab of the category if the category has the showLabel property set to true
-                            tabsData.toSorted((a, b) => a.category.order - b.category.order).map((tab, index, array) => {
-                                if ((tab.category.showLabel && index == 0) || (tab.category.showLabel && index > 0 && array[index - 1].category.name != tab.category.name)) {
-                                    return (
-                                        <React.Fragment key={tab.category.name + index}>
-                                            {tab.category.permissionNeeded && chkP(enumToString(tab.category.permissionNeeded), session?.user) &&
+                            tabsData
+                                .toSorted((a, b) => a.category.order - b.category.order)
+                                .map((tab, index, array) => {
+                                    const prevCategory = array[index - 1]?.category.name;
+                                    const showCategoryLabel =
+                                        tab.category.showLabel &&
+                                        (index === 0 || prevCategory !== tab.category.name);
+
+                                    const hasCategoryPermission = !tab.category.permissionNeeded
+                                        || chkP(enumToString(tab.category.permissionNeeded), session?.user);
+
+                                    const hasTabPermission = chkP(enumToString(tab.permissionNeeded), session?.user);
+
+                                    return hasTabPermission ? (
+                                        <Fragment key={tab.category.name + index}>
+                                            {showCategoryLabel && hasCategoryPermission && (
                                                 <>
                                                     {index !== 0 && <Divider />}
-                                                    <Text c="dimmed" ta="left">{t(`Navbar.${tab.category.name}.title`)}</Text>
+                                                    <Text c="dimmed" ta="left">
+                                                        {t(`Navbar.${tab.category.name}.title`)}
+                                                    </Text>
                                                 </>
-                                            }
-                                            {chkP(enumToString(tab.permissionNeeded), session?.user) && <Button style={{ boxShadow: "var(--mantine-shadow-xl)" }} key={tab.tab} color={tab.color ?? getInitialsColor(tab.tab)} onClick={() => handleTabChange({ tab: tab.tab })} variant={settings.tab == tab.tab ? 'light' : 'outline'} justify="left" h={35} leftSection={<tab.icon size={17} />}>{t(`Navbar.${tab.tab}`)}</Button>}
-                                        </React.Fragment>
-                                    )
-                                } else {
-                                    return (chkP(enumToString(tab.permissionNeeded), session?.user) && <Button style={{ boxShadow: "var(--mantine-shadow-xl)" }} key={tab.tab} color={tab.color ?? getInitialsColor(tab.tab)} onClick={() => handleTabChange({ tab: tab.tab })} variant={settings.tab == tab.tab ? 'light' : 'outline'} justify="left" h={35} leftSection={<tab.icon size={17} />}>{t(`Navbar.${tab.tab}`)}</Button>)
-                                }
-                            })
+                                            )}
+                                            {(tab.visible || typeof(tab.visible) == 'undefined') && <Button
+                                                style={{ boxShadow: "var(--mantine-shadow-xl)" }}
+                                                key={tab.tab}
+                                                color={tab.color ?? getInitialsColor(tab.tab)}
+                                                onClick={() => handleTabChange({ tab: tab.tab })} 
+                                                variant={tab.tab === settings.tab ? "light" : "outline"}
+                                                justify="left"
+                                                h={35}
+                                                leftSection={<tab.icon size={17} />}
+                                            >
+                                                {t(`Navbar.${tab.tab}`)}
+                                            </Button>}
+                                        </Fragment>
+                                    ) : null;
+                                })
                         }
                     </Stack>
                 </AppShell.Section>
@@ -187,7 +209,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                             <Transition key={tab.tab + "_tabComponent"} transition="fade-right" timingFunction="ease" duration={300} mounted={settings.tab == tab.tab} >
                                 {(transitionStyles) => (
                                     <>
-                                        {settings.tab == tab.tab && tab.component && <tab.component session={session} style={transitionStyles} />}
+                                        {settings.tab == tab.tab && tab.component && <tab.component session={session} settab={handleTabChange} style={transitionStyles} />}
                                     </>
                                 )}
                             </Transition>
@@ -199,7 +221,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                 <Grid grow>
                     <Grid.Col span={1}>
                         <AvatarMenu shadow="md" position="top-start" offset={20} transitionProps={{ transition: 'pop-bottom-left', duration: 200 }} AvatarProps={{ src: session?.user?.image ?? undefined, name: session?.user?.username ?? session?.user?.email ?? undefined, color: 'initials' }}>
-                            {tabsData.filter(t => !t.mobile && chkP(enumToString(t.permissionNeeded), session?.user)).toSorted((a, b) => b.category.order - a.category.order).map((tab, index, array) => (
+                            {tabsData.filter(t => !t.mobile && (t.visible || typeof(t.visible) == 'undefined') && chkP(enumToString(t.permissionNeeded), session?.user)).toSorted((a, b) => b.category.order - a.category.order).map((tab, index, array) => (
                                 <React.Fragment key={tab.tab + "_menu"}>
                                     {((index > 0 && array[index - 1].category.name != tab.category.name) || index == 0) && (!tab.category.permissionNeeded || chkP(enumToString(tab.category.permissionNeeded), session?.user)) &&
                                         <>
@@ -244,10 +266,10 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                         <Button
                             leftSection={<IconArrowUp size={16} />}
                             style={{ boxShadow: "var(--mantine-shadow-xl)", ...transitionStyles }}
-                            /*onClick={
-                                () => 
+                            onClick={
+                                () =>
                                     viewport.current?.scrollTo({ top: 0, behavior: 'smooth' })
-                            }*/
+                            }
                             variant="gradient"
                             gradient={{ from: 'purple', to: 'pink' }}
                         >
@@ -337,6 +359,20 @@ export const tabsData: ITabData[] = [
             "permissionNeeded": [Permissions["user:*"], Permissions["role:*"]]
         },
         "permissionNeeded": Permissions["role:manage"]
+    },
+    {
+        "tab": "test.generator",
+        "icon": IconFile,
+        "component": TestGenerator,
+        "visible": false,
+        "category": {
+            "name": "test",
+            "order": 2,
+            "namespaced": false,
+            "showLabel": false,
+            "permissionNeeded": Permissions["user:*"]
+        },
+        "permissionNeeded": Permissions["user:*"]
     }
     /*,
     {

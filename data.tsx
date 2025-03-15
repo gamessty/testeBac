@@ -55,5 +55,6 @@ export interface ITabData {
     category: { name: string, order: number, namespaced: boolean, showLabel: boolean, permissionNeeded?: Permissions | Permissions[]; };
     color?: DefaultMantineColor;
     mobile?: boolean;
+    visible?: boolean;
     permissionNeeded: Permissions | Permissions[];
 }

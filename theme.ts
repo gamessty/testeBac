@@ -7,6 +7,7 @@ export const theme = createTheme({
     appShellFooterHeight: '75px',
     darkModeImageFilter: 'invert(1) hue-rotate(180deg)',
     darkModeImageFilter2: 'invert(0.823)'
+    
   },
   /* Put your mantine theme override here */
   breakpoints: {

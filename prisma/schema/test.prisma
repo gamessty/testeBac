@@ -54,12 +54,14 @@ model UserTest {
     id              String           @id @default(auto()) @map("_id") @db.ObjectId
     userId          String           @db.ObjectId
     score           Int
+    folder          String
+    subject         String[]
     questions       Question[]
     selectedAnswers SelectedAnswer[]
     testType        TestType         @default(GENERAL)
     finished        Boolean          @default(false)
     startedAt       DateTime         @default(now())
-    finishedAt      DateTime?        
+    finishedAt      DateTime?
     timeLeft        Int?
 
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -74,7 +76,6 @@ enum TestType {
     GENERAL
     TIME_LIMITED
 }
-
 
 type SelectedAnswer {
     // NOT YET IMPLEMENTED TBD

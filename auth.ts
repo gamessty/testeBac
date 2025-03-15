@@ -4,9 +4,13 @@ import Google from "next-auth/providers/google"
 import { sendVerificationRequest } from "./lib/authSendRequest"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "./lib/prisma"
-import { PrismaClient, Role } from "@prisma/client"
+import { PrismaClient, Question, Role, UserTest } from "@prisma/client"
 import type { Provider } from "next-auth/providers"
 import { type Adapter } from "next-auth/adapters";
+
+interface UserActiveTest extends UserTest {
+  questions: Question[]
+}
 
 function CustomPrismaAdapter(p: PrismaClient): Adapter {
   const originalAdapter = PrismaAdapter(p);
@@ -67,6 +71,22 @@ export const authOptions: NextAuthConfig = {
     async session({ session, user }) {
       // `session.user.roles` is now a valid property, and will be type-checked
       // in places like `useSession().data.user` or `auth().user`
+      const userTests = await prisma.userTest.findMany({
+        where: {
+          userId: user.id
+        }
+      });
+
+      let userActiveTests = userTests.map(async (test) => {
+        let userActiveTest = test as UserActiveTest;
+        userActiveTest.questions = await prisma.question.findMany({
+          where: {
+            userTestId: test.id
+          }
+        }) ?? [];
+        return userActiveTest;
+      });
+
       const roles = await prisma.role.findMany({
         where: {
           userIDs: {
@@ -79,6 +99,7 @@ export const authOptions: NextAuthConfig = {
         user: {
           ...session.user,
           roles,
+          userActiveTests,
           username: user.username,
           userAuthorized: user.userAuthorized
         },
@@ -108,7 +129,8 @@ declare module "next-auth" {
     } & DefaultSession["user"]
   }
   interface User {
-    roles?: Role[]
+    roles?: Role[],
+    activeTests?: UserActiveTest[],
     userAuthorized?: boolean
     username?: string | null
   }

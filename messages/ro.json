@@ -46,7 +46,8 @@
     "ColorSchemeToggle": {
       "label": "Schimbă schema de culori",
       "colorScheme": "{colorScheme, select, light {Luminos} dark {Întunecat} auto {Automat} other {Necunoscut}}"
-    }
+    },
+    "return": "Înapoi"
   },
   "Authentication": {
     "signIn": "Conectare",
@@ -157,6 +158,9 @@
         "questionCard": "Card de întrebare",
         "testGenerator": "Generator de testare",
         "title": "Demo"
+      },
+      "test": {
+        "generator": "Generator de teste"
       }
     },
     "Home": {

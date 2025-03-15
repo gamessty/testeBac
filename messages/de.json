@@ -96,6 +96,9 @@
         "questionCard": "Fragekarte",
         "testGenerator": "Testgenerator",
         "title": "Demo"
+      },
+      "test": {
+        "generator": "Testgenerator"
       }
     },
     "RoleManager": {
@@ -312,7 +315,8 @@
     },
     "error": "Fehler",
     "loading": "Laden...",
-    "refresh": "Versuchen Sie es erneut"
+    "refresh": "Versuchen Sie es erneut",
+    "return": "Zurückkehren"
   },
   "HomePage": {
     "about": "TesteBac bereitet Studenten auf die Baccalaureate-oder Universitätsaufnahmeprüfung vor. \nDiese Plattform widmet sich Studenten, die ihr Wissen testen und sich auf die wichtigen Prüfungen ihres Lebens vorbereiten möchten. \nDie Plattform verwendet ein Grid -Testsystem, das sofortiges Feedback bietet und den Schülern hilft, ihr Wissen zu verbessern. \nDie Tests werden von Themen und Kapiteln strukturiert, um die effizienteste und personalisierte Vorbereitung zu ermöglichen. \nWählen Sie, um zu starten, das gewünschte Thema und das Kapitel und drücken Sie die Start -Taste. \nViel Glück mit deinem Studium!",

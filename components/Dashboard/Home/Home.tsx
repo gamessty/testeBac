@@ -31,11 +31,11 @@ export default function Home({ style, session }: Readonly<HomeProps>) {
             <Center style={{ flexGrow: 1 }}>
                 <SimpleGrid maw="100vw" cols={2} w={{ base: "95%", xs: '90%', md: "60%", lg: '50%', xxl: '35%' }}>
                     <TestCard mih="100%" category="bac" subject="biology" href="./#" />
-                    <TestCard mih="100%" category="admission" subject="chemistry" href="#" />
-                    <TestCard mih="100%" category="admission" subject="informatics" href="#" />
+                    <TestCard design="compact" mih="100%" category="admission" subject="chemistry" href="#" />
+                    <TestCard design="compact" mih="100%" category="admission" subject="informatics" href="#" />
                     <TestCard mih="100%" category="bac" subject="chemistry" href="#" />
                     <TestCard mih="100%" category="bac" subject="informatics" href="#" />
-                    <TestCard mih="100%" category="admission" subject="chemistry" href="#" />
+                    <TestCard design="compact" mih="100%" category="admission" subject="chemistry" href="#" />
                 </SimpleGrid>
             </Center>
         </Flex>

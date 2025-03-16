@@ -33,9 +33,12 @@ export default function ReturnButton({ justIcon, hideFrom, ...props }: Readonly<
             router.back();
         }, 100);
     }
+
     useEffect(() => {
         setLoading(false);
     }, [path]);
+    
+    if(window.history.length <= 1) return null;
     if (justIcon) {
         return (
             <ActionIcon

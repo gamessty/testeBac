@@ -15,6 +15,7 @@ import { useGetCookie, useSetCookie } from "cookies-next";
 import classes from './Settings.module.css';
 import { Link } from "../../../i18n/routing";
 import LoadingButton from "../../LoadingButton/LoadingButton";
+import { CodingLanguageSelect } from "../../CodingLanguageSelect/CodingLanguageSelect";
 
 interface SettingsProps {
     session: Session | null | undefined;
@@ -84,7 +85,6 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
             const originalValue = original[key];
             const currentValue = value;
 
-            // Handle empty string as null or undefined if option is set
             const isEmptyString = (val: any) => options.emptyStringIsNull && (val === '' || val === null || val === undefined);
 
             if (
@@ -168,6 +168,13 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                         label={t('Account.username.label')}
                         value={userChanges.username ?? ''}
                         placeholder={t('Account.username.placeholder')}
+                    />
+                    <CodingLanguageSelect 
+                        mb={10}
+                        label={t('Account.codingLanguage.label')}
+                        loadAsync={false}
+                        defaultOption={session?.user.preferences.codingLanguage}
+                        onChange={(language) => setUserChanges({ preferences: { codingLanguage: language.aliases[0] ?? language.language } })}
                     />
                     <InputLabel>{t('fontSize.label')}</InputLabel>
                     {

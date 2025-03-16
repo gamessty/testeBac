@@ -33,6 +33,10 @@
     "error": "Error",
     "refresh": "Try again",
     "return": "Return",
+    "nothingFound": "Nothing found",
+    "noResults": "No results",
+    "search": "Search...",
+    "searchLanguageOrAlias": "Search by language or alias",
     "LocaleSwitcher": {
       "label": "Change language",
       "locale": "{locale, select, ro {🇷🇴 Romanian} en {🇬🇧 English} fr {🇫🇷 French} de {🇩🇪 German} other {Unknown}}",
@@ -197,7 +201,10 @@
         "deleteConfirmation": "Are you sure you want to delete your account? This action cannot be undone.",
         "deleteSuccess": "Your account has been deleted successfully.",
         "deleteError": "An error occurred while deleting your account. Please try again later.",
-        "deleteCancel": "Cancel"
+        "deleteCancel": "Cancel",
+        "codingLanguage": {
+          "label": "Coding Language"
+        }
       }
     },
     "UserManager": {

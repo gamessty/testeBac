@@ -4,7 +4,7 @@ import Google from "next-auth/providers/google"
 import { sendVerificationRequest } from "./lib/authSendRequest"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "./lib/prisma"
-import { PrismaClient, Question, Role, UserTest } from "@prisma/client"
+import { PrismaClient, Question, Role, UserPreferences, UserTest } from "@prisma/client"
 import type { Provider } from "next-auth/providers"
 import { type Adapter } from "next-auth/adapters";
 
@@ -99,6 +99,7 @@ export const authOptions: NextAuthConfig = {
         user: {
           ...session.user,
           roles,
+          preferences: user.preferences,
           userActiveTests,
           username: user.username,
           userAuthorized: user.userAuthorized
@@ -131,6 +132,7 @@ declare module "next-auth" {
   interface User {
     roles?: Role[],
     activeTests?: UserActiveTest[],
+    preferences: UserPreferences
     userAuthorized?: boolean
     username?: string | null
   }

@@ -47,7 +47,11 @@
       "label": "Schimbă schema de culori",
       "colorScheme": "{colorScheme, select, light {Luminos} dark {Întunecat} auto {Automat} other {Necunoscut}}"
     },
-    "return": "Înapoi"
+    "return": "Înapoi",
+    "noResults": "Fără rezultate",
+    "nothingFound": "Nimic nu a fost găsit",
+    "search": "Căutare...",
+    "searchLanguageOrAlias": "Căutați după limbă sau alias"
   },
   "Authentication": {
     "signIn": "Conectare",
@@ -197,7 +201,10 @@
         "deleteConfirmation": "Ești sigur că vrei să ștergi contul? Această acțiune este ireversibilă.",
         "deleteSuccess": "Contul a fost șters cu succes.",
         "deleteError": "A apărut o eroare la ștergerea contului. Vă rugăm să încercați din nou.",
-        "deleteCancel": "Anulează"
+        "deleteCancel": "Anulează",
+        "codingLanguage": {
+          "label": "Limbaj de programare"
+        }
       }
     },
     "UserManager": {

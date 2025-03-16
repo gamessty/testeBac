@@ -47,7 +47,11 @@
       "label": "Changer le thème",
       "colorScheme": "{colorScheme, select, light {Clair} dark {Sombre} auto {Auto} other {Inconnu}}"
     },
-    "return": "Retour"
+    "return": "Retour",
+    "noResults": "Aucun résultat",
+    "nothingFound": "Rien trouvé",
+    "search": "Recherche...",
+    "searchLanguageOrAlias": "Recherche par langue ou alias"
   },
   "Authentication": {
     "signIn": "Se connecter",
@@ -194,6 +198,9 @@
         "username": {
           "label": "Nom d'utilisateur",
           "placeholder": "Entrez votre nom d'utilisateur"
+        },
+        "codingLanguage": {
+          "label": "Langue de codage"
         }
       },
       "fontSize": {

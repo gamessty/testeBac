@@ -22,7 +22,7 @@ export default function UserManager({ session, style }: Readonly<{ session: Sess
     const [users, setUsers] = useState([] as User[]);
     const [roles, setRoles] = useState([] as Role[]);
     const [user, setUser] = useState({} as User);
-    const [userChanges, setUserChanges] = useState({} as User);
+    const [userChanges, setUserChanges] = useState<Partial<User>>({} as User);
     const [debouncedUserChanges] = useDebouncedValue(userChanges, 1000);
     const [opened, { open, close }] = useDisclosure(false);
     const [error, setError] = useState<string | null>(null);
@@ -63,7 +63,7 @@ export default function UserManager({ session, style }: Readonly<{ session: Sess
     }, [users]);
 
     function updateUsersAfterChange(userUp: User = user, clearUserChanges: boolean = false, deleteUser: boolean = false) {
-        if (clearUserChanges) setUserChanges({});
+        if (clearUserChanges) setUserChanges({} as User);
         if (deleteUser) return setUsers(users.filter((u) => u.id !== userUp.id));
         setUsers(users.map((u) => u.id === userUp.id ? userUp : u));
     }

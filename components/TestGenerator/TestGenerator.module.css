@@ -1,3 +1,20 @@
 .return-button {
     margin-bottom: 15px;
 }
+
+.blockquote {
+    width: 100%;
+    margin-block: var(--mantine-spacing-xl);
+}
+
+.loader {
+    margin-block: var(--mantine-spacing-xl);
+}
+
+.divider {
+    margin-block: var(--mantine-spacing-md);
+}
+
+.main-container {
+    min-height: 100%;
+}

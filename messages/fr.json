@@ -205,7 +205,9 @@
       },
       "fontSize": {
         "label": "Échelle du site"
-      }
+      },
+      "createSampleData": "Créer des exemples de données",
+      "demoComponents": "Composants de démonstration"
     },
     "backToTop": "Revenir en haut",
     "privacyPolicy": "Politique de confidentialité",
@@ -332,6 +334,38 @@
       "unauthorized": "Non autorisé",
       "users": "{count, plural, =1 {# utilisateur} other {# utilisateurs}}",
       "viewProfile": "Afficher le profil"
+    },
+    "TestGenerator": {
+      "Selector": {
+        "updatedAt": "Mise à jour à:"
+      },
+      "errors": {
+        "fetch": {
+          "message": "{Error, Select, non autorisé {Vous n'êtes pas autorisé à accéder à cette page d'administration. \nSi vous croyez qu'il s'agit d'une erreur, actualisez la page et réessayez plus tard.} Autre {erreur générale inconnue. \nVeuillez réessayer plus tard.}}",
+          "title": "{Erreur, sélectionnez, non autorisé {non autorisé} Autre {erreur générale}}"
+        }
+      },
+      "steps": {
+        "1": {
+          "description": "Quel type de test?",
+          "label": "Catégorie"
+        },
+        "2": {
+          "description": "Quel dossier?",
+          "label": "Dossier"
+        },
+        "3": {
+          "description": "Quels sujets et chapitre?",
+          "label": "Sujets et chapitres"
+        },
+        "4": {
+          "description": "Traitez-le à votre goût",
+          "label": "Configuration finale"
+        },
+        "back": "Retourner",
+        "generate": "Générer un test",
+        "next": "Suivant"
+      }
     }
   },
   "Demo": {
@@ -353,5 +387,7 @@
         "next": "Suivant"
       }
     }
-  }
+  },
+  "createSampleData": "Créer des exemples de données",
+  "demo-components": "Composants de démonstration"
 }

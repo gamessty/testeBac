@@ -1,6 +1,6 @@
 "use client";
 import { ButtonProps, Button, ActionIcon, ActionIconProps, Loader } from "@mantine/core";
-import { useIsomorphicEffect, useShallowEffect } from "@mantine/hooks";
+import { useIsomorphicEffect, useMounted, useShallowEffect } from "@mantine/hooks";
 import { IconArrowBackUp } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
@@ -26,6 +26,7 @@ export default function ReturnButton({ justIcon, hideFrom, ...props }: Readonly<
     const router = useRouter();
     const path = usePathname();
     const [loading, setLoading] = useState(false);
+    const mounted = useMounted();
     const t = useTranslations('General');
     function handleRouterBack() {
         setLoading(true);
@@ -38,7 +39,7 @@ export default function ReturnButton({ justIcon, hideFrom, ...props }: Readonly<
         setLoading(false);
     }, [path]);
     
-    if(window.history.length <= 1) return null;
+    if(mounted && typeof window !== undefined && window.history.length <= 1) return null;
     if (justIcon) {
         return (
             <ActionIcon

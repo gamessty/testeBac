@@ -1,5 +1,5 @@
 "use client";
-import { Affix, Button, Grid, Group, Stack, Title, Transition, useMatches, Text, MantineStyleProp, Fieldset, TextInput, JsonInput, Loader, Tooltip, Badge, Slider, Input, InputLabel } from "@mantine/core";
+import { Affix, Button, Grid, Group, Stack, Title, Transition, useMatches, Text, MantineStyleProp, Fieldset, TextInput, JsonInput, Loader, Tooltip, Badge, Slider, Input, InputLabel, ButtonGroup } from "@mantine/core";
 import { useDebouncedValue, useDidUpdate, useIsFirstRender, useLocalStorage, useSet, useSetState } from "@mantine/hooks";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
@@ -16,6 +16,7 @@ import classes from './Settings.module.css';
 import { Link } from "../../../i18n/routing";
 import LoadingButton from "../../LoadingButton/LoadingButton";
 import { CodingLanguageSelect } from "../../CodingLanguageSelect/CodingLanguageSelect";
+import createSampleData from "../../../actions/PrismaFunctions/createSampleData";
 
 interface SettingsProps {
     session: Session | null | undefined;
@@ -90,8 +91,8 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
             if (
                 (isEmptyString(originalValue) && isEmptyString(currentValue)) ||
                 (originalValue !== currentValue &&
-                String(originalValue) !== String(currentValue) &&
-                JSON.stringify(originalValue) !== JSON.stringify(currentValue))
+                    String(originalValue) !== String(currentValue) &&
+                    JSON.stringify(originalValue) !== JSON.stringify(currentValue))
             ) {
                 changes[key] = {
                     oldValue: originalValue,
@@ -169,7 +170,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                         value={userChanges.username ?? ''}
                         placeholder={t('Account.username.placeholder')}
                     />
-                    <CodingLanguageSelect 
+                    <CodingLanguageSelect
                         mb={10}
                         label={t('Account.codingLanguage.label')}
                         loadAsync={false}
@@ -210,7 +211,15 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                     <Title order={2} ta="left">
                         {t('debug')}
                     </Title>
-                    <LoadingButton mt={10} component={Link} href="./app/demo/">Demo components</LoadingButton>
+                    <ButtonGroup mt={10}>
+                        <LoadingButton mt={10} variant="outline" component={Link} href="./app/demo/">{t('demoComponents')}</LoadingButton>
+                        {
+                            chkP("developer:*", session?.user) &&
+                            <Button variant="outline" mt={10} onClick={async () => {
+                                createSampleData();
+                            }}>{t('createSampleData')}</Button>
+                        }
+                    </ButtonGroup>
                     <Text mt={10} c="dimmed" size="sm">BASIC STRING COMPARE: {(JSON.stringify(userChanges) !== JSON.stringify(session?.user)).toString()}</Text>
                     <Text mt={10} c="dimmed" size="sm">FUNCTION COMPARE: {isDifferent(userChanges, session?.user, true).toString()}</Text>
                     <Grid columns={12} mt={10} w="100%" grow>

@@ -43,6 +43,7 @@
 .tooltip {
     opacity: 0;
     background-color: transparent;
+    border-color: black !important;
     -webkit-animation: fadeIn ease-in 0.2s;
     -moz-animation: fadeIn ease-in 0.2s;
     animation: fadeIn ease-in 0.2s;
@@ -59,7 +60,7 @@
 .test-card {
     position: relative;
     margin-bottom: var(--mantine-spacing-md);
-    transition: top ease 0.2s;
+    transition: top ease 0.3s;
 }
 
 .test-card.compact {

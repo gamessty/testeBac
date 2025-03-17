@@ -1,6 +1,7 @@
 model Folder {
     id             String               @id @default(auto()) @map("_id") @db.ObjectId
     category       String               @default("BAC")
+    name           String               @unique
     additionalData AdditionalFolderData
     subjects       Subject[]
 

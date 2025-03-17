@@ -205,7 +205,9 @@
         "codingLanguage": {
           "label": "Limbaj de programare"
         }
-      }
+      },
+      "createSampleData": "Creați date de probă",
+      "demoComponents": "Componente demo"
     },
     "UserManager": {
       "title": "Utilizatori",
@@ -332,7 +334,39 @@
     },
     "backToTop": "Înapoi sus",
     "privacyPolicy": "Politica de confidențialitate",
-    "title": "Tablou de bord"
+    "title": "Tablou de bord",
+    "TestGenerator": {
+      "Selector": {
+        "updatedAt": "Actualizat la:"
+      },
+      "errors": {
+        "fetch": {
+          "message": "{eroare, selectat, neautorizat {Nu sunteți autorizat să accesați această pagină de administrare. \nDacă credeți că aceasta este o eroare, reîmprospătați pagina și încercați din nou mai târziu.} Altă {eroare generală necunoscută. \nVă rugăm să încercați din nou mai târziu.}}",
+          "title": "{eroare, selectat, neautorizat {neautorizat} alt {eroare generală}}"
+        }
+      },
+      "steps": {
+        "1": {
+          "description": "Ce tip de test?",
+          "label": "Categorie"
+        },
+        "2": {
+          "description": "Ce folder?",
+          "label": "Folder"
+        },
+        "3": {
+          "description": "Ce subiecte și capitole?",
+          "label": "Subiecte și capitole"
+        },
+        "4": {
+          "description": "Reglează-l pe placul tău",
+          "label": "Configurație finală"
+        },
+        "back": "Înapoi",
+        "generate": "Generați test",
+        "next": "Următorul"
+      }
+    }
   },
   "Demo": {
     "TestGenerator": {
@@ -353,5 +387,7 @@
         "back": "Înapoi"
       }
     }
-  }
+  },
+  "createSampleData": "Creați date de probă",
+  "demo-components": "Componente demo"
 }

@@ -205,7 +205,9 @@
         "codingLanguage": {
           "label": "Coding Language"
         }
-      }
+      },
+      "demoComponents": "Demo Components",
+      "createSampleData": "Create sample data"
     },
     "UserManager": {
       "title": "User Manager",
@@ -330,6 +332,38 @@
       "tests": "{count, plural, =0 {No tests} =1 {# test} other {# tests}}",
       "generateTestTitle": "Generate test"
     },
+    "TestGenerator": {
+      "steps": {
+        "1": {
+          "label": "Category",
+          "description": "What type of test?"
+        },
+        "2": {
+          "label": "Folder",
+          "description": "What folder?"
+        },
+        "3": {
+          "label": "Subjects and chapters",
+          "description": "Which subjects and chapter?"
+        },
+        "4": {
+          "label": "Final configuration",
+          "description": "Tune it to your liking"
+        },
+        "next": "Next",
+        "back": "Back",
+        "generate": "Generate test"
+      },
+      "errors": {
+        "fetch": {
+          "title": "{error, select, Unauthorized {Unauthorized} other {General error}}",
+          "message": "{error, select, Unauthorized {You are not authorized to access this administration page. If you believe this is an error, refresh the page and try again later.} other {Unknown general error. Please try again later.}}"
+        }
+      },
+      "Selector": {
+        "updatedAt": "Updated at:"
+      }
+    },
     "backToTop": "Scroll to top",
     "privacyPolicy": "Privacy Policy",
     "title": "Dashboard"
@@ -353,5 +387,7 @@
         "back": "Back"
       }
     }
-  }
+  },
+  "demo-components": "Demo components",
+  "createSampleData": "Create sample data"
 }

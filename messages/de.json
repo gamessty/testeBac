@@ -207,7 +207,9 @@
       "language": "Sprache",
       "notifications": "Benachrichtigungen",
       "saveChanges": "Änderungen speichern",
-      "title": "Einstellungen"
+      "title": "Einstellungen",
+      "createSampleData": "Beispieldaten erstellen",
+      "demoComponents": "Demo -Komponenten"
     },
     "Tests": {
       "description": "Hier können Sie Ihre Fortschritte und die von Ihnen durchgeführten Tests sehen. \nSie können auch Ihre Ergebnisse und die von Ihnen studierten Themen sehen. \nMachen Sie weiter so und viel Glück mit Ihrem Studium!",
@@ -259,7 +261,39 @@
     },
     "backToTop": "Scrollen Sie nach oben",
     "privacyPolicy": "Datenschutzrichtlinie",
-    "title": "Armaturenbrett"
+    "title": "Armaturenbrett",
+    "TestGenerator": {
+      "Selector": {
+        "updatedAt": "Aktualisiert bei:"
+      },
+      "errors": {
+        "fetch": {
+          "message": "{Fehler, wählen Sie nicht autorisiert {Sie sind nicht berechtigt, auf diese Administrationsseite zuzugreifen. \nWenn Sie glauben, dass dies ein Fehler ist, aktualisieren Sie die Seite und versuchen Sie es später erneut.} Andere {unbekannte allgemeine Fehler. \nBitte versuchen Sie es später erneut.}}",
+          "title": "{Fehler, auswählen, nicht autorisiert {nicht autorisiert} Andere {allgemeine Fehler}}"
+        }
+      },
+      "steps": {
+        "1": {
+          "description": "Welche Art von Test?",
+          "label": "Kategorie"
+        },
+        "2": {
+          "description": "Welcher Ordner?",
+          "label": "Ordner"
+        },
+        "3": {
+          "description": "Welche Themen und Kapitel?",
+          "label": "Themen und Kapitel"
+        },
+        "4": {
+          "description": "Schalten Sie es nach Ihren Wünschen",
+          "label": "Endgültige Konfiguration"
+        },
+        "back": "Zurück",
+        "generate": "Test erstellen",
+        "next": "Nächste"
+      }
+    }
   },
   "Demo": {
     "TestGenerator": {
@@ -353,5 +387,7 @@
     "category": "{category, select, admission {Universitätsaufnahme} bac {Abitur} other {Unbekannt}}",
     "lastQuestion": "Letzte Frage",
     "resumeTest": "Test fortsetzen"
-  }
+  },
+  "createSampleData": "Beispieldaten erstellen",
+  "demo-components": "Demo -Komponenten"
 }

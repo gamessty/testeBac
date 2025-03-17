@@ -23,7 +23,7 @@ export default function Tests({ session, settab, ...props }: Readonly<{ session:
                         { // add the test logic later
                         }
                         <CreateTestCard onClick={
-                            () => { setTimeout(() => settab({ tab: 'test.generator' }), 1000) }
+                            () => { setTimeout(() => settab({ tab: 'test.generator' }), 400) }
                         } />
                         <Divider />
                         {

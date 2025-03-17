@@ -45,7 +45,7 @@ export default function TestCard({ category, subject, coverImage, lastQuestion, 
                     <Card {...rest} className={`${classes["test-card"]} ${classes["compact"]}`} component={Link} href={href ?? ''} w={"100%"} shadow="lg" radius="sm" >
                         <Stack justify="space-between" h="100%" w="100%">
                             <Box w="100%">
-                                {coverImage && <Card.Section>
+                                {coverImage && coverImage !== 'none' && <Card.Section>
                                     <Image
                                         src={coverImage}
                                         height={70}
@@ -75,7 +75,7 @@ export default function TestCard({ category, subject, coverImage, lastQuestion, 
                                     </Box>
 
                                     }
-                                    <ActionIcon className={classes["action-button"]} variant="transparent" color="gray"><IconPencil style={{ width: '80%', height: '80%' }} stroke={1.5} /></ActionIcon>
+                                    { coverImage !== 'none' && <ActionIcon className={classes["action-button"]} variant="transparent" color="gray"><IconPencil style={{ width: '80%', height: '80%' }} stroke={1.5} /></ActionIcon>}
                                 </Card.Section>
                             </Box>
                         </Stack>

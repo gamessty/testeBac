@@ -105,7 +105,7 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
     const isMobile = useMediaQuery(`(max-width: ${em(750)})`, true);
 
     return (
-        <Container p={{ base: 30, sm: 35 }} pt={{ base: 20, sm: 25 }} className={classes['main-container']} {...props}>
+        <Container size="lg" p={{ base: 30, sm: 35 }} pt={{ base: 20, sm: 25 }} className={classes['main-container']} {...props}>
             <ReturnButton size="xs" className={classes["return-button"]} />
             {
                 error && (

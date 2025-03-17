@@ -1,6 +1,6 @@
 "use client";
 import { useState } from 'react';
-import { Checkbox, Group, Radio, Stack, Text } from '@mantine/core';
+import { Center, Checkbox, Container, Group, Loader, LoaderProps, Radio, Stack, Text } from '@mantine/core';
 import classes from './TestGeneratorSelector.module.css';
 import { Chapter, Folder, Subject } from '@prisma/client';
 import { useLocale, useTranslations } from 'next-intl';
@@ -13,6 +13,9 @@ type label = {
 interface TestGeneratorSelectorPropsBase {
     data: Folder[] | Subject[] | Chapter[] | label[];
     allowMultiple?: boolean;
+    loaderProps?: LoaderProps;
+    loader?: boolean; //controlled way to show loader
+    cardSwoosh?: boolean; //controlled way to show transition the opacity of the cards
 }
 
 interface TestGeneratorSelectorPropsSingle extends TestGeneratorSelectorPropsBase {
@@ -41,18 +44,21 @@ function determineType(data: Folder[] | Subject[] | Chapter[] | unknown[]): 'Fol
 export default function TestGeneratorSelector({
     data,
     allowMultiple = false,
-    onChange
+    onChange,
+    loader = false,
+    loaderProps,
+    cardSwoosh = true
 }: Readonly<TestGeneratorSelectorProps>) {
     const t = useTranslations('Dashboard.TestGenerator.Selector');
     const locale = useLocale();
     const [value, setValue] = useState<string[] | string>();
-    
 
     let cards;
 
     switch (determineType(data)) {
         case 'Folder':
             cards = (data as Folder[]).map((folder) => (TestGeneratorSelectorCard({
+                cardSwoosh,
                 id: folder.id,
                 name: folder.name,
                 description: folder.additionalData.description,
@@ -61,14 +67,16 @@ export default function TestGeneratorSelector({
             break;
         case 'Subject':
             cards = (data as Subject[]).map((subject) => (TestGeneratorSelectorCard({
+                cardSwoosh,
                 id: subject.id,
                 name: subject.name,
-                description:  t('updatedAt') + ' ' + subject.updatedAt.toLocaleDateString(locale),
+                description: t('updatedAt') + ' ' + subject.updatedAt.toLocaleDateString(locale),
                 type: allowMultiple ? 'checkbox' : 'radio'
             })));
             break;
         case 'Chapter':
             cards = (data as Chapter[]).map((chapter) => (TestGeneratorSelectorCard({
+                cardSwoosh,
                 id: chapter.id,
                 name: chapter.name,
                 description: t('updatedAt') + ' ' + chapter.updatedAt.toLocaleDateString(locale),
@@ -77,6 +85,7 @@ export default function TestGeneratorSelector({
             break;
         default:
             cards = (data as label[]).map((label) => (TestGeneratorSelectorCard({
+                cardSwoosh,
                 name: label.name,
                 description: label.description,
                 type: allowMultiple ? 'checkbox' : 'radio'
@@ -87,6 +96,14 @@ export default function TestGeneratorSelector({
         setValue(selected);
         if (onChange) onChange(selected as any);
     };
+
+    if (!data || loader) {
+        return <Container fluid>
+            <Center>
+                <Loader {...loaderProps} />
+            </Center>
+        </Container>
+    }
 
     if (allowMultiple)
         return (
@@ -129,17 +146,19 @@ interface TestGeneratorSelectorCardProps {
     name: string;
     description?: string | null;
     type?: 'radio' | 'checkbox';
+    cardSwoosh?: boolean;
 }
 
 function TestGeneratorSelectorCard({
     id,
     name,
     description,
-    type = 'radio'
+    type = 'radio',
+    cardSwoosh = true
 }: Readonly<TestGeneratorSelectorCardProps>) {
     if (type == 'checkbox')
         return (
-            <Checkbox.Card className={classes.root} radius="md" value={id ?? name} key={id ?? name}>
+            <Checkbox.Card className={classes.root + (cardSwoosh ? " " + classes.cardTransition : '')} radius="md" value={id ?? name} key={id ?? name}>
                 <Group wrap="nowrap" align="flex-start">
                     <Checkbox.Indicator />
                     <div>
@@ -151,7 +170,7 @@ function TestGeneratorSelectorCard({
         );
     else
         return (
-            <Radio.Card className={classes.root} radius="md" value={id ?? name} key={id ?? name}>
+            <Radio.Card className={classes.root + (cardSwoosh ? " " + classes.cardTransition : '')} radius="md" value={id ?? name} key={id ?? name}>
                 <Group wrap="nowrap" align="flex-start">
                     <Radio.Indicator />
                     <div>

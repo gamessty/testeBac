@@ -3,7 +3,17 @@
 import { auth } from "../../auth";
 import { prisma } from "../../lib/prisma";
 import { chkP } from "../../utils";
+import { uniqueNamesGenerator, Config, animals, starWars } from 'unique-names-generator';
 
+const configSubject: Config = {
+    dictionaries: [animals],
+    style: 'upperCase'
+};
+
+const configChapter: Config = {
+    dictionaries: [starWars],
+    style: 'capital'
+};
 
 export default async function createSampleData(): Promise<{ message: string }> {
     const session = await auth();
@@ -25,7 +35,7 @@ export default async function createSampleData(): Promise<{ message: string }> {
 
 async function seedDatabase() {
     // Create Folder
-    const folder = await prisma.folder.create({
+    /*const folder = await prisma.folder.create({
         data: {
             category: "BAC",
             name: "Sample Folder",
@@ -33,13 +43,13 @@ async function seedDatabase() {
                 description: "Baccalaureate exam preparation",
             },
         },
-    });
+    });*/
 
     // Create Subject
     const subject = await prisma.subject.create({
         data: {
-            folderId: folder.id,
-            name: "INFO",
+            folderId: "67d720703dcf1577b7854730",
+            name: uniqueNamesGenerator(configSubject),
         },
     });
 
@@ -47,7 +57,7 @@ async function seedDatabase() {
     const chapter = await prisma.chapter.create({
         data: {
             subjectId: subject.id,
-            name: "Recursivitate",
+            name: uniqueNamesGenerator(configChapter).replace(" ", "_"),
         },
     });
 
@@ -55,7 +65,6 @@ async function seedDatabase() {
     await prisma.question.createMany({
         data: [
             {
-                subjectId: subject.id,
                 chapterId: chapter.id,
                 type: "singleChoice",
                 question: "Ce se afișează în urma apelului de mai jos?",
@@ -89,7 +98,6 @@ async function seedDatabase() {
                 ],
             },
             {
-                subjectId: subject.id,
                 chapterId: chapter.id,
                 type: "singleChoice",
                 question: "Ce se afișează în urma apelului de mai jos?",
@@ -119,7 +127,6 @@ async function seedDatabase() {
                 ],
             },
             {
-                subjectId: subject.id,
                 chapterId: chapter.id,
                 type: "singleChoice",
                 question:

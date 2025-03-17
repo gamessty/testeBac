@@ -31,3 +31,48 @@
     color: var(--mantine-color-dimmed);
     font-size: var(--mantine-font-size-xs);
 }
+
+@-webkit-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@-moz-keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+.cardTransition {
+    opacity: 0;
+    -webkit-animation: fadeIn ease-in 0.2s;
+    -moz-animation: fadeIn ease-in 0.2s;
+    animation: fadeIn ease-in 0.2s;
+
+    -webkit-animation-fill-mode: forwards;
+    -moz-animation-fill-mode: forwards;
+    animation-fill-mode: forwards;
+
+    -webkit-animation-duration: 0.2s;
+    -moz-animation-duration: 0.2s;
+    animation-duration: 0.2s;
+}

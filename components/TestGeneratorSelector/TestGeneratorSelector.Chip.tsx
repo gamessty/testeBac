@@ -1,4 +1,4 @@
-import { Chip } from "@mantine/core";
+import { Chip, ChipProps, Group, InputLabel } from "@mantine/core";
 import { Folder, Subject, Chapter } from "@prisma/client";
 import { useState } from "react";
 import styles from './TestGeneratorSelector.Chip.module.css';
@@ -11,6 +11,8 @@ type label = {
 interface TestGeneratorSelectorChipPropsBase {
     data: Folder[] | Subject[] | Chapter[] | label[];
     allowMultiple?: boolean;
+    label?: string;
+    chipProps?: Omit<ChipProps, 'children' | 'value' | 'onChange'>;
 }
 
 interface TestGeneratorSelectorChipPropsSingle extends TestGeneratorSelectorChipPropsBase {
@@ -36,7 +38,7 @@ function determineType(data: Folder[] | Subject[] | Chapter[] | unknown[]): 'Fol
     return 'Unknown';
 }
 
-export default function TestGeneratorSelectorChip({ data, allowMultiple = false, onChange }: Readonly<TestGeneratorSelectorChipProps>) {
+export default function TestGeneratorSelectorChip({ data, allowMultiple = false, onChange, label, chipProps }: Readonly<TestGeneratorSelectorChipProps>) {
     const [value, setValue] = useState<string | string[]>();
 
     function handleChange(selected: string | string[]) {
@@ -51,30 +53,33 @@ export default function TestGeneratorSelectorChip({ data, allowMultiple = false,
     switch (determineType(data)) {
         case 'Folder':
             chips = (data as Folder[]).map((folder) => (
-                <Chip className={styles["chip"]} key={folder.id} value={folder.id}>{folder.name}</Chip>
+                <Chip {...chipProps} className={styles["chip"]} key={folder.id} value={folder.id}>{folder.name}</Chip>
             ));
             break;
         case 'Subject':
             chips = (data as Subject[]).map((subject) => (
-                <Chip className={styles["chip"]} key={subject.id} value={subject.id}>{subject.name}</Chip>
+                <Chip {...chipProps} className={styles["chip"]} key={subject.id} value={subject.id}>{subject.name}</Chip>
             ));
             break;
         case 'Chapter':
             chips = (data as Chapter[]).map((chapter) => (
-                <Chip className={styles["chip"]} key={chapter.id} value={chapter.id}>{chapter.name}</Chip>
+                <Chip {...chipProps} className={styles["chip"]} key={chapter.id} value={chapter.id}>{chapter.name}</Chip>
             ));
             break;
         default:
             chips = (data as label[]).map((label) => (
-                <Chip className={styles["chip"]} key={label.id ?? label.name} value={label.id ?? label.name}>{label.name}</Chip>
+                <Chip {...chipProps} className={styles["chip"]} key={label.id ?? label.name} value={label.id ?? label.name}>{label.name}</Chip>
             ));
 
     }
 
     return (
         <Chip.Group multiple={allowMultiple} value={value} onChange={handleChange}>
-            {
-                chips
-            }
+            {label && <InputLabel>{label}</InputLabel>}
+            <Group className={styles['group']}>
+                {
+                    chips
+                }
+            </Group>
         </Chip.Group>);
 }

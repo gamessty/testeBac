@@ -96,7 +96,7 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
         if (!configurations) setAllowedStep(0);
         if (configurations?.category) setAllowedStep(1);
         if (configurations?.folder) setAllowedStep(2);
-        if (configurations?.chapters && configurations.chapters.length) setAllowedStep(3);
+        if (configurations?.chapters?.length) setAllowedStep(3);
     }, [configurations])
 
     const [active, setActive] = useState(0);
@@ -164,6 +164,7 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
                             <Stepper.Step label={isMobile ? undefined : t('steps.3.label')} description={isMobile ? undefined : t('steps.3.description')}>
                                 {
                                     <TestGeneratorSelectorChip
+                                        label="Select Subjects"
                                         data={subjects.filter((subject) => subject.folderId == configurations?.folder?.id)}
                                         onChange={(value) => {
                                             setConfigurations((prev) => {
@@ -176,6 +177,9 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
                                             });
                                         }}
                                         allowMultiple={true}
+                                        chipProps={{
+                                            variant: 'light',
+                                        }}
                                     />
                                 }
                                 <Divider className={classes['divider']} />
@@ -191,8 +195,15 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
                                                 }
                                             });
                                         }}
+                                        loaderProps={{
+                                            mb: 30,
+                                            color: 'grey',
+                                            type: 'dots'
+                                        }}
+                                        loader={(configurations?.subjects && configurations?.subjects?.length !== 0) && chapters.length === 0}
                                     />
                                 }
+                                {typeof configurations?.subjects}
                             </Stepper.Step>
                             <Stepper.Step label={isMobile ? undefined : t('steps.4.label')} description={isMobile ? undefined : t('steps.4.description')}>
                                 {

@@ -60,7 +60,7 @@ export const providerMap = providers
   .filter((provider) => provider.id !== "credentials")
 
 export const authOptions: NextAuthConfig = {
-  debug: process.env.NODE_ENV === "development" || process.env.VERCEL_ENV === "development" || process.env.VERCEL_ENV === "preview",
+  debug: (process.env.AUTH_DEBUG == "true" || process.env.NODE_ENV === "development" || process.env.VERCEL_ENV === "development" || process.env.VERCEL_ENV === "preview") && process.env.AUTH_DEBUG !== "false",
   adapter: CustomPrismaAdapter(prisma),
   providers,
   pages: {

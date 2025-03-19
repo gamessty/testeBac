@@ -2,6 +2,7 @@ import { Chip, ChipProps, Group, InputLabel } from "@mantine/core";
 import { Folder, Subject, Chapter } from "@prisma/client";
 import { useState } from "react";
 import styles from './TestGeneratorSelector.Chip.module.css';
+import { useUncontrolled } from "@mantine/hooks";
 
 type label = {
     name: string;
@@ -17,11 +18,15 @@ interface TestGeneratorSelectorChipPropsBase {
 
 interface TestGeneratorSelectorChipPropsSingle extends TestGeneratorSelectorChipPropsBase {
     allowMultiple?: false;
+    value?: string; // for controlled component
+    defaultValue?: string; // for uncontrolled component
     onChange?: (value: string) => void;
 }
 
 interface TestGeneratorSelectorChipPropsMultiple extends TestGeneratorSelectorChipPropsBase {
     allowMultiple: true;
+    value?: string[]; // for controlled component, if null (by default) then it will be an "uncontrolled" component
+    defaultValue?: string[]; // for uncontrolled component
     onChange?: (value: string[]) => void;
 }
 
@@ -38,15 +43,12 @@ function determineType(data: Folder[] | Subject[] | Chapter[] | unknown[]): 'Fol
     return 'Unknown';
 }
 
-export default function TestGeneratorSelectorChip({ data, allowMultiple = false, onChange, label, chipProps }: Readonly<TestGeneratorSelectorChipProps>) {
-    const [value, setValue] = useState<string | string[]>();
-
-    function handleChange(selected: string | string[]) {
-        setValue(selected);
-        if (onChange) {
-            onChange(selected as any);
-        }
-    };
+export default function TestGeneratorSelectorChip({ data, allowMultiple = false, value, defaultValue, onChange, label, chipProps }: Readonly<TestGeneratorSelectorChipProps>) {
+    const [_value, handleChange] = useUncontrolled<typeof value>({
+        value,
+        defaultValue,
+        onChange: (val: string | string[] | undefined) => onChange?.(val as any),
+    });
 
     let chips;
 
@@ -74,7 +76,7 @@ export default function TestGeneratorSelectorChip({ data, allowMultiple = false,
     }
 
     return (
-        <Chip.Group multiple={allowMultiple} value={value} onChange={handleChange}>
+        <Chip.Group multiple={allowMultiple} value={_value} onChange={handleChange}>
             {label && <InputLabel>{label}</InputLabel>}
             <Group className={styles['group']}>
                 {

@@ -5,11 +5,14 @@ import { IconArrowBackUp } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { modals, openConfirmModal } from "@mantine/modals";
 
 
 interface ReturnButtonBaseProps {
     hideFrom?: string;
     justIcon?: boolean;
+    timeout?: number;
+    confirmModal?: Omit<Parameters<typeof openConfirmModal>[0], 'onConfirm'>;
 }
 
 interface ReturnButtonProps extends ReturnButtonBaseProps, ButtonProps {
@@ -22,7 +25,7 @@ interface ReturnButtonPropsJustIcon extends ReturnButtonBaseProps, ActionIconPro
 
 type ReturnButtonType = ReturnButtonProps | ReturnButtonPropsJustIcon;
 
-export default function ReturnButton({ justIcon, hideFrom, ...props }: Readonly<ReturnButtonType>) {
+export default function ReturnButton({ justIcon, confirmModal, hideFrom, timeout = 100, ...props }: Readonly<ReturnButtonType>) {
     const router = useRouter();
     const path = usePathname();
     const [loading, setLoading] = useState(false);
@@ -32,14 +35,18 @@ export default function ReturnButton({ justIcon, hideFrom, ...props }: Readonly<
         setLoading(true);
         setTimeout(() => {
             router.back();
-        }, 100);
+        }, timeout);
     }
 
     useEffect(() => {
         setLoading(false);
     }, [path]);
+
+    const confirmationModal = () => {
+            modals.openConfirmModal({ onConfirm: handleRouterBack , ...confirmModal});
+    };
     
-    if(mounted && typeof window !== undefined && window.history.length <= 1) return null;
+    if(mounted && (typeof window !== "undefined") && window.history.length <= 1) return null;
     if (justIcon) {
         return (
             <ActionIcon
@@ -58,7 +65,7 @@ export default function ReturnButton({ justIcon, hideFrom, ...props }: Readonly<
                 {...props as ButtonProps}
                 variant="light"
                 display={path.split("/").at(-1) == hideFrom ? "none" : undefined}
-                onClick={handleRouterBack}
+                onClick={confirmModal ? confirmationModal : handleRouterBack}
                 loading={loading}
                 leftSection={<IconArrowBackUp />}
             >

@@ -35,20 +35,20 @@ export default async function createSampleData(): Promise<{ message: string }> {
 
 async function seedDatabase() {
     // Create Folder
-    /*const folder = await prisma.folder.create({
+    const folder = await prisma.folder.create({
         data: {
             category: "BAC",
-            name: "Sample Folder",
+            name: "Sample Folder 3",
             additionalData: {
-                description: "Baccalaureate exam preparation",
+                description: "Baccalaureate exam preparation - 2nd Test Folder",
             },
         },
-    });*/
+    });
 
     // Create Subject
     const subject = await prisma.subject.create({
         data: {
-            folderId: "67d720703dcf1577b7854730",
+            folderId: folder.id,//"67d720703dcf1577b7854730",
             name: uniqueNamesGenerator(configSubject),
         },
     });

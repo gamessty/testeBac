@@ -1,9 +1,10 @@
 "use client";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Center, Checkbox, Container, Group, Loader, LoaderProps, Radio, Stack, Text } from '@mantine/core';
 import classes from './TestGeneratorSelector.module.css';
 import { Chapter, Folder, Subject } from '@prisma/client';
 import { useLocale, useTranslations } from 'next-intl';
+import { useUncontrolled } from '@mantine/hooks';
 
 type label = {
     name: string;
@@ -20,11 +21,15 @@ interface TestGeneratorSelectorPropsBase {
 
 interface TestGeneratorSelectorPropsSingle extends TestGeneratorSelectorPropsBase {
     allowMultiple?: false;
+    value?: string; // for controlled component
+    defaultValue?: string; // for uncontrolled component
     onChange?: (value: string) => void;
 }
 
 interface TestGeneratorSelectorPropsMultiple extends TestGeneratorSelectorPropsBase {
     allowMultiple: true;
+    value?: string[]; // for controlled component, if null (by default) then it will be an "uncontrolled" component
+    defaultValue?: string[]; // for uncontrolled component
     onChange?: (value: string[]) => void;
 }
 
@@ -44,6 +49,8 @@ function determineType(data: Folder[] | Subject[] | Chapter[] | unknown[]): 'Fol
 export default function TestGeneratorSelector({
     data,
     allowMultiple = false,
+    value,
+    defaultValue,
     onChange,
     loader = false,
     loaderProps,
@@ -51,7 +58,11 @@ export default function TestGeneratorSelector({
 }: Readonly<TestGeneratorSelectorProps>) {
     const t = useTranslations('Dashboard.TestGenerator.Selector');
     const locale = useLocale();
-    const [value, setValue] = useState<string[] | string>();
+    const [_value, handleChange] = useUncontrolled<typeof value>({
+        value,
+        defaultValue,
+        onChange: (val: string | string[] | undefined) => onChange?.(val as any),
+    });
 
     let cards;
 
@@ -92,11 +103,6 @@ export default function TestGeneratorSelector({
             })));
     }
 
-    function handleChange(selected: string | string[]) {
-        setValue(selected);
-        if (onChange) onChange(selected as any);
-    };
-
     if (!data || loader) {
         return <Container fluid>
             <Center>
@@ -109,7 +115,7 @@ export default function TestGeneratorSelector({
         return (
             <>
                 <Checkbox.Group
-                    value={value as string[]}
+                    value={_value as string[]}
                     onChange={handleChange}
                 >
                     <Stack pt="md" gap="xs">
@@ -126,7 +132,7 @@ export default function TestGeneratorSelector({
         return (
             <>
                 <Radio.Group
-                    value={value as string}
+                    value={_value as string}
                     onChange={handleChange}
                 >
                     <Stack pt="md" gap="xs">

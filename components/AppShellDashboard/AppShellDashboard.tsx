@@ -27,7 +27,7 @@ interface AppShellDashboardProps {
     session: Session | null | undefined;
 }
 interface SettingsSetState {
-    tab: string;
+    tab: { tab: string, disableNavigation?: boolean };
     title: string;
     hour: number;
     minute: number;
@@ -41,7 +41,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
     const ta = useTranslations('Authentication');
 
     const [settings, setSettings] = useSetState<SettingsSetState>({
-        tab: searchParams.get('tab') ?? 'home',
+        tab: { tab: searchParams.get('tab') ?? 'home' },
         title: 'testeBac | ' + t('Navbar.' + (searchParams.get('tab') ?? 'home')),
         hour: (new Date()).getHours(),
         minute: (new Date()).getMinutes(),
@@ -55,7 +55,8 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
 
 
     useDidUpdate(() => {
-        setSettings({ title: 'testeBac | ' + t('Navbar.' + (searchParams.get('tab') ?? 'home')), tab: searchParams.get('tab') ?? 'home' });
+        const tabName = searchParams.get('tab') ?? 'home';
+        setSettings({ title: 'testeBac | ' + t('Navbar.' + tabName), tab: { tab: tabName, disableNavigation: tabsData.find((tab) => tab.tab == tabName)?.disableNavigation } });
     }, [searchParams.get('tab')]);
 
     useEffect(() => {
@@ -64,8 +65,8 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
         }, 60000);
     });
 
-    function handleTabChange({ tab }: { tab: string }) {
-        setSettings({ tab, title: 'testeBac | ' + t('Navbar.' + tab) });
+    function handleTabChange({ tab, disableNavigation }: { tab: string, disableNavigation?: boolean }) {
+        setSettings({ tab: { tab, disableNavigation }, title: 'testeBac | ' + t('Navbar.' + tab) });
         const params = new URLSearchParams(searchParams.toString());
         params.set('tab', tab);
         if (typeof window !== 'undefined') window.history.pushState(null, '', `?${params.toString()}`);
@@ -82,7 +83,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
     return (
         <AppShell
             header={{ height: 60 }}
-            navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: true } }}
+            navbar={{ width: settings.tab.disableNavigation ? 0 : 300, breakpoint: 'sm', collapsed: { mobile: true } }}
             padding={0}
         >
             <AppShell.Header>
@@ -97,7 +98,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                     </Text>
                 </Group>
             </AppShell.Header>
-            <AppShell.Navbar p="md">
+            <AppShell.Navbar p="md" className={settings.tab.disableNavigation ? classes.hide : undefined}>
                 <AppShell.Section grow mt="md" component={ScrollArea}>
                     <Stack
                         align="stretch"
@@ -130,12 +131,12 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                                                     </Text>
                                                 </>
                                             )}
-                                            {(tab.visible || typeof(tab.visible) == 'undefined') && <Button
+                                            {(tab.visible || typeof (tab.visible) == 'undefined') && <Button
                                                 style={{ boxShadow: "var(--mantine-shadow-xl)" }}
                                                 key={tab.tab}
                                                 color={tab.color ?? getInitialsColor(tab.tab)}
-                                                onClick={() => handleTabChange({ tab: tab.tab })} 
-                                                variant={tab.tab === settings.tab ? "light" : "outline"}
+                                                onClick={() => handleTabChange({ tab: tab.tab, disableNavigation: tab.disableNavigation })}
+                                                variant={tab.tab === settings.tab.tab ? "light" : "outline"}
                                                 justify="left"
                                                 h={35}
                                                 leftSection={<tab.icon size={17} />}
@@ -199,17 +200,17 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
             <AppShell.Main>
                 <ScrollArea
                     onScrollPositionChange={setScrollPosition}
-                    h={{ base: sizeMobile, sm: size }}
+                    h={{ base: settings.tab.disableNavigation ? size : sizeMobile, sm: size }}
                     viewportRef={viewport}
                     classNames={{
                         viewport: classes.appShellScrollArea
                     }}>
                     {
                         tabsData.map((tab) => (
-                            <Transition key={tab.tab + "_tabComponent"} transition="fade-right" timingFunction="ease" duration={300} mounted={settings.tab == tab.tab} >
+                            <Transition key={tab.tab + "_tabComponent"} transition="fade-right" timingFunction="ease" enterDelay={tab.disableNavigation ? 100 : 0} duration={tab.disableNavigation ? 800 : 300} mounted={settings.tab.tab == tab.tab} >
                                 {(transitionStyles) => (
                                     <>
-                                        {settings.tab == tab.tab && tab.component && <tab.component session={session} settab={handleTabChange} style={transitionStyles} />}
+                                        {settings.tab.tab == tab.tab && tab.component && <tab.component session={session} settab={handleTabChange} style={transitionStyles} />}
                                     </>
                                 )}
                             </Transition>
@@ -217,11 +218,11 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                     }
                 </ScrollArea>
             </AppShell.Main>
-            <AppShell.Footer p={15} display={{ sm: "none" }}>
+            <AppShell.Footer p={15} display={{ sm: "none" }} className={settings.tab.disableNavigation ? classes.hide : undefined}>
                 <Grid grow>
                     <Grid.Col span={1}>
                         <AvatarMenu shadow="md" position="top-start" offset={20} transitionProps={{ transition: 'pop-bottom-left', duration: 200 }} AvatarProps={{ src: session?.user?.image ?? undefined, name: session?.user?.username ?? session?.user?.email ?? undefined, color: 'initials' }}>
-                            {tabsData.filter(t => !t.mobile && (t.visible || typeof(t.visible) == 'undefined') && chkP(enumToString(t.permissionNeeded), session?.user)).toSorted((a, b) => b.category.order - a.category.order).map((tab, index, array) => (
+                            {tabsData.filter(t => !t.mobile && (t.visible || typeof (t.visible) == 'undefined') && chkP(enumToString(t.permissionNeeded), session?.user)).toSorted((a, b) => b.category.order - a.category.order).map((tab, index, array) => (
                                 <React.Fragment key={tab.tab + "_menu"}>
                                     {((index > 0 && array[index - 1].category.name != tab.category.name) || index == 0) && (!tab.category.permissionNeeded || chkP(enumToString(tab.category.permissionNeeded), session?.user)) &&
                                         <>
@@ -251,7 +252,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                                     aria-label={tab.tab}
                                     size="lg"
                                     onClick={() => handleTabChange({ tab: tab.tab })}
-                                    color={settings.tab == tab.tab ? undefined : 'gray'}
+                                    color={settings.tab.tab == tab.tab ? undefined : 'gray'}
                                 >
                                     <tab.icon />
                                 </ActionIcon>
@@ -368,6 +369,7 @@ export const tabsData: ITabData[] = [
         "icon": IconFile,
         "component": TestGenerator,
         "visible": false,
+        "disableNavigation": true,
         "category": {
             "name": "test",
             "order": 2,

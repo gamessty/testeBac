@@ -52,6 +52,7 @@ export interface ITabData {
     tab: string;
     icon: ForwardRefExoticComponent<IconProps & React.RefAttributes<Icon>>;
     component?: (...args: any) => JSX.Element;
+    disableNavigation?: boolean;
     category: { name: string, order: number, namespaced: boolean, showLabel: boolean, permissionNeeded?: Permissions | Permissions[]; };
     color?: DefaultMantineColor;
     mobile?: boolean;

@@ -1,0 +1,50 @@
+[
+    {
+        "name": "Simple",
+        "id": "simple",
+        "description": "Simple test with multiple choice questions",
+        "configurations": [
+            {
+                "id": "showAnswers",
+                "default": true
+            },
+            {
+                "id": "numberOfQuestions"
+            }
+        ]
+    },
+    {
+        "id": "mockExam",
+        "name": "Mock Exam",
+        "description": "Mock exam with multiple choice questions",
+        "options": {
+            "showAnswers": false
+        },
+        "configurations": [
+            {
+                "id": "timeLimit",
+                "default": 60,
+                "min": "1",
+                "max": "1440"
+            },
+            {
+                "id": "numberOfQuestions"
+            }
+        ]
+    },
+    {
+        "name": "Complex",
+        "id": "complex",
+        "description": "Complex test with lots of configuration options",
+        "configurations": [
+            {
+                "id": "showAnswers",
+                "default": true
+            },
+            {
+                "id": "numberOfQuestions",
+                "individualEditor": true
+            }
+        ]
+    }
+]

@@ -30,3 +30,8 @@
         margin-bottom: calc(1.5*var(--mantine-spacing-xl));
     }
 }
+
+.test-type-selector {
+    width: 100%;
+    margin-block: var(--mantine-spacing-md);
+}

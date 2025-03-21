@@ -11,7 +11,7 @@ export default async function getSubjects({ folderId }: { folderId: string }): P
     if (!session?.user) {
         return { message: "Not authenticated" };
     }
-    if (!chkP("user:*", session.user)) {
+    if (!chkP("general:*", session.user)) {
         return { message: "Unauthorized" };
     }
     let subjects = await prisma.subject.findMany({

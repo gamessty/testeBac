@@ -21,7 +21,7 @@ export default async function getQuestions(params: Readonly<ChapterQuestion | Su
     if (!session?.user) {
         return { message: "Not authenticated" };
     }
-    if (!chkP("user:*", session.user)) {
+    if (!chkP("general:*", session.user)) {
         return { message: "Unauthorized" };
     }
     let questions = await prisma.question.findMany({

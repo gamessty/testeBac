@@ -7,7 +7,7 @@
 //ADD A WAY TO SELECT THE NUMBER OF QUESTIONS PER CHAPTER, PROBABLY IN THE FINAL STEP
 "use client";
 import { Blockquote, Box, Button, Center, Container, ContainerProps, Divider, em, FocusTrap, Group, Loader, Overlay, Stack, Stepper, Text } from "@mantine/core";
-import { useDidUpdate, useDisclosure, useFocusTrap, useMediaQuery } from "@mantine/hooks";
+import { useDidUpdate, useDisclosure, useFocusReturn, useFocusTrap, useMediaQuery } from "@mantine/hooks";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
@@ -20,7 +20,8 @@ import TestGeneratorSelector from "../TestGeneratorSelector/TestGeneratorSelecto
 import getSubjects from "../../actions/PrismaFunctions/getSubjects";
 import getChapters from "../../actions/PrismaFunctions/getChapters";
 import TestGeneratorSelectorChip from "../TestGeneratorSelector/TestGeneratorSelector.Chip";
-import { modals } from "@mantine/modals";
+import findFirstFocusable from "./findFirstFocusable";
+import TestTypeSelector from "./TestTypeSelector/TestTypeSelector";
 
 interface TestConfiguration {
     category?: string;
@@ -41,6 +42,7 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
     const [chapters, setChapters] = useState<Chapter[]>([]);
     const [error, setError] = useState<string | null>(null);
     const submitButtonRef = useRef<HTMLButtonElement>(null);
+    const stepperRef = useRef<HTMLDivElement>(null);
     const [activeFocus, { open: openFocusTrap }] = useDisclosure(true);
     //ADD INVISIBLE AUTOFOCUS ELEMENT WITHIN THE TRAP SO THAT THE FOCUS IS NOT LOST WHEN NEXT BUTTON IS DISABLED
 
@@ -72,6 +74,8 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
     useDidUpdate(() => {
         async function fetchData() {
             if (!configurations?.folder) return;
+            setSubjects([]);
+            setConfigurations((prev) => ({ ...prev, subjects: [] }));
             const fetchedSubjects = await getSubjects({
                 folderId: configurations?.folder?.id
             });
@@ -89,6 +93,7 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
         async function fetchData() {
             if (!configurations?.subjects) return;
             setChapters([]);
+            setConfigurations((prev) => ({ ...prev, chapters: [] }));
             for (let subject of configurations.subjects) {
                 const fetchedChapters = await getChapters({
                     subjectId: subject.id
@@ -113,24 +118,25 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
         if (configurations?.category) setAllowedStep(1);
         if (configurations?.folder) setAllowedStep(2);
         if (configurations?.chapters?.length) setAllowedStep(3);
-        submitButtonRef.current?.focus();
+        if(!submitButtonRef.current?.disabled) submitButtonRef.current?.focus();
+        else if(stepperRef.current) findFirstFocusable(stepperRef.current)?.focus();
     }, [configurations])
 
     const [active, setActive] = useState(0);
-    const nextStep = () => { openFocusTrap(); setActive((current) => (current < 4 ? current + 1 : current)); };
-    const prevStep = () => { openFocusTrap(); setActive((current) => (current > 0 ? current - 1 : current)); };
+    const nextStep = () => { setActive((current) => (current < 4 ? current + 1 : current)); if(stepperRef.current) findFirstFocusable(stepperRef.current)?.focus(); };
+    const prevStep = () => { setActive((current) => (current > 0 ? current - 1 : current)); if(stepperRef.current) findFirstFocusable(stepperRef.current)?.focus(); };
     const isMobile = useMediaQuery(`(max-width: ${em(750)})`, true);
 
 
     const confirmTestConfigurationExitProps = {
-        title: 'Leave test configuration',
+        title: t('exitConfiguration.title'),
         centered: true,
         children: (
             <Text size="sm">
-                Are you sure you want to leave the test configuration? All the progress will be lost.
+                {t('exitConfiguration.message')}
             </Text>
         ),
-        labels: { confirm: 'Leave', cancel: "No!! Don't delete it" },
+        labels: { confirm: t('exitConfiguration.confirm'), cancel: t('exitConfiguration.cancel') },
         confirmProps: { color: 'red' },
     }
 
@@ -148,7 +154,7 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
             {!error &&
                 <FocusTrap active={activeFocus}>
                     <Stack justify="space-between" h="100%" className={classes['main-stack']}>
-                        <Stepper active={active} onStepClick={setActive} allowNextStepsSelect={false}>
+                        <Stepper active={active} onStepClick={setActive} allowNextStepsSelect={false} ref={stepperRef}>
                             <Stepper.Step  label={isMobile ? undefined : t('steps.1.label')} description={isMobile ? undefined : t('steps.1.description')}>
                                 {categories && categories.length > 0 &&
                                     <TestGeneratorSelector
@@ -212,6 +218,8 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
                                         value={configurations?.subjects?.map((subject) => subject.id)}
                                         allowMultiple={true}
                                         chipProps={{
+                                            size: 'sm',
+                                            radius: 'sm',
                                             variant: 'light',
                                         }}
                                     />
@@ -240,9 +248,7 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
                                 }
                             </Stepper.Step>
                             <Stepper.Step label={isMobile ? undefined : t('steps.4.label')} description={isMobile ? undefined : t('steps.4.description')}>
-                                {
-                                    "TUNE IT UP"
-                                }
+                                <TestTypeSelector radius="lg" className={classes['test-type-selector']} />
                             </Stepper.Step>
                             <Stepper.Completed>
                                 Completed, click back button to get to previous step

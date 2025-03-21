@@ -79,7 +79,7 @@ export default function UserManager({ session, style }: Readonly<{ session: Sess
         handleSearch(event.currentTarget.value);
     }
 
-    if (!chkP("user:manage", session?.user)) return (<Blockquote w="100%" color="red" cite={"– " + t('errors.fetch.title', { error: 'Unauthorized' })} icon={<IconAlertTriangleFilled />} mt="xl">
+    if (!chkP("user:manage", session?.user)) return (<Blockquote mx="xl" w="100%" color="red" cite={"– " + t('errors.fetch.title', { error: 'Unauthorized' })} icon={<IconAlertTriangleFilled />} mt="xl">
         {t('errors.fetch.message', { error: 'Unauthorized' })}
     </Blockquote>);
 
@@ -91,7 +91,7 @@ export default function UserManager({ session, style }: Readonly<{ session: Sess
             </Text>
         </Title>
         {
-            error && <Blockquote w="100%" color="red" cite={"– " + t('errors.fetch.title', { error })} icon={<IconAlertTriangleFilled />} mt="xl">
+            error && <Blockquote mx="xl" w="100%" color="red" cite={"– " + t('errors.fetch.title', { error })} icon={<IconAlertTriangleFilled />} mt="xl">
                 {t('errors.fetch.message', { error })}
             </Blockquote>
         }

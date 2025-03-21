@@ -337,12 +337,15 @@
     },
     "TestGenerator": {
       "Selector": {
-        "updatedAt": "Mise à jour à:"
+        "updatedAt": "Mise à jour à:",
+        "TestTypeSelector": {
+          "type": "{id, select, simple {Simple} mockExam {Examen Blanc} complex {Complexe} other {Inconnu}}"
+        }
       },
       "errors": {
         "fetch": {
-          "message": "{Error, Select, non autorisé {Vous n'êtes pas autorisé à accéder à cette page d'administration. \nSi vous croyez qu'il s'agit d'une erreur, actualisez la page et réessayez plus tard.} Autre {erreur générale inconnue. \nVeuillez réessayer plus tard.}}",
-          "title": "{Erreur, sélectionnez, non autorisé {non autorisé} Autre {erreur générale}}"
+          "message": "{error, select, Unauthorized {Vous n'êtes pas autorisé à accéder à cette page d'administration. \nSi vous croyez qu'il s'agit d'une erreur, actualisez la page et réessayez plus tard.} other {Erreur générale inconnue. Veuillez réessayer plus tard.}}",
+          "title": "{error, select, Unauthorized {Erreur d'autorisation} other {Erreur générale}}"
         }
       },
       "steps": {
@@ -365,6 +368,12 @@
         "back": "Retourner",
         "generate": "Générer un test",
         "next": "Suivant"
+      },
+      "exitConfiguration": {
+        "title": "Laisser la configuration du test",
+        "message": "Êtes-vous sûr de vouloir quitter la configuration du test? \nTous les progrès seront perdus.",
+        "confirm": "Partir",
+        "cancel": "Non!! \nNe le supprimez pas"
       }
     }
   },

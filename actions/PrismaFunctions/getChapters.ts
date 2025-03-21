@@ -11,7 +11,7 @@ export default async function getChapters({ subjectId }: { subjectId: string }):
     if (!session?.user) {
         return { message: "Not authenticated" };
     }
-    if (!chkP("user:*", session.user)) {
+    if (!chkP("general:*", session.user)) {
         return { message: "Unauthorized" };
     }
     let chapters = await prisma.chapter.findMany({

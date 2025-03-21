@@ -41,7 +41,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
     const ta = useTranslations('Authentication');
 
     const [settings, setSettings] = useSetState<SettingsSetState>({
-        tab: { tab: searchParams.get('tab') ?? 'home' },
+        tab: { tab: searchParams.get('tab') ?? 'home', disableNavigation: tabsData.find((tab) => tab.tab == (searchParams.get('tab') ?? 'home'))?.disableNavigation },
         title: 'testeBac | ' + t('Navbar.' + (searchParams.get('tab') ?? 'home')),
         hour: (new Date()).getHours(),
         minute: (new Date()).getMinutes(),
@@ -104,7 +104,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                         align="stretch"
                         justify="space-around"
                         gap="md"
-                        pb={25}
+                        pb={10}
                     >
                         {
                             // sort the tabsData by category order and by category and add a divider and the title of the category before the first tab of the category if the category has the showLabel property set to true
@@ -132,14 +132,14 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                                                 </>
                                             )}
                                             {(tab.visible || typeof (tab.visible) == 'undefined') && <Button
-                                                style={{ boxShadow: "var(--mantine-shadow-xl)" }}
+                                                className={classes["navbar-tab"]}
                                                 key={tab.tab}
+                                                size="sm"
                                                 color={tab.color ?? getInitialsColor(tab.tab)}
                                                 onClick={() => handleTabChange({ tab: tab.tab, disableNavigation: tab.disableNavigation })}
                                                 variant={tab.tab === settings.tab.tab ? "light" : "outline"}
                                                 justify="left"
-                                                h={35}
-                                                leftSection={<tab.icon size={17} />}
+                                                leftSection={<tab.icon size={20} />}
                                             >
                                                 {t(`Navbar.${tab.tab}`)}
                                             </Button>}
@@ -176,7 +176,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                                 {session?.user?.email}
                             </Text>
                             <Grid gutter={3} w="100%">
-                                {
+                                { (session?.user?.roles?.length ?? 0) > 1 &&
                                     session?.user?.roles?.map((role) => (
                                         <Grid.Col pt={0} mt={-6} span="content" key={role.id}>
                                             <Tooltip tt="capitalize" label={role.name} color={getInitialsColor(role.name)} withArrow>
@@ -374,10 +374,9 @@ export const tabsData: ITabData[] = [
             "name": "test",
             "order": 2,
             "namespaced": false,
-            "showLabel": false,
-            "permissionNeeded": Permissions["user:*"]
+            "showLabel": false
         },
-        "permissionNeeded": Permissions["user:*"]
+        "permissionNeeded": Permissions["general:*"]
     }
     /*,
     {

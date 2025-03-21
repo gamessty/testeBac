@@ -82,8 +82,13 @@
     "Navbar": {
       "admin": {
         "roles": "Rollen",
-        "users": "Benutzer",
-        "title": "Administrator"
+        "title": "Administrator",
+        "users": "Benutzer"
+      },
+      "demo": {
+        "questionCard": "Fragekarte",
+        "testGenerator": "Testgenerator",
+        "title": "Demo"
       },
       "home": "Heim",
       "profile": "Profil",
@@ -91,15 +96,10 @@
       "settings": "Einstellungen",
       "stats": "Statistiken",
       "subjects": "Themen",
-      "tests": "Tests",
-      "demo": {
-        "questionCard": "Fragekarte",
-        "testGenerator": "Testgenerator",
-        "title": "Demo"
-      },
       "test": {
         "generator": "Testgenerator"
-      }
+      },
+      "tests": "Tests"
     },
     "RoleManager": {
       "close": "Schließen",
@@ -178,6 +178,9 @@
     },
     "Settings": {
       "Account": {
+        "codingLanguage": {
+          "label": "Codierungssprache"
+        },
         "deleteAccount": "Konto löschen",
         "deleteCancel": "Stornieren",
         "deleteConfirmation": "Sind Sie sicher, dass Sie Ihr Konto löschen möchten? \nDiese Aktion kann nicht rückgängig gemacht werden.",
@@ -193,13 +196,12 @@
         "username": {
           "label": "Benutzername",
           "placeholder": "Geben Sie Ihren Benutzernamen ein"
-        },
-        "codingLanguage": {
-          "label": "Codierungssprache"
         }
       },
       "account": "Konto",
+      "createSampleData": "Beispieldaten erstellen",
       "debug": "Debuggen",
+      "demoComponents": "Demo -Komponenten",
       "display": "Anzeige",
       "fontSize": {
         "label": "Schriftgröße"
@@ -207,15 +209,54 @@
       "language": "Sprache",
       "notifications": "Benachrichtigungen",
       "saveChanges": "Änderungen speichern",
-      "title": "Einstellungen",
-      "createSampleData": "Beispieldaten erstellen",
-      "demoComponents": "Demo -Komponenten"
+      "title": "Einstellungen"
+    },
+    "TestGenerator": {
+      "Selector": {
+        "TestTypeSelector": {
+          "type": "{id, select, simple {einfach} mockexam {Mock Prüfung} complex {Komplex} other {unbekannte}}"
+        },
+        "updatedAt": "Aktualisiert bei:"
+      },
+      "errors": {
+        "fetch": {
+          "message": "{error, select, Unauthorized {Sie sind nicht berechtigt, auf diese Administrationsseite zuzugreifen. \nWenn Sie glauben, dass dies ein Fehler ist, aktualisieren Sie die Seite und versuchen Sie es später erneut.} other {unbekannte allgemeine Fehler. \nBitte versuchen Sie es später erneut.}}",
+          "title": "{error, select, Unauthorized {nicht autorisiert} other {allgemeine Fehler}}"
+        }
+      },
+      "exitConfiguration": {
+        "cancel": "NEIN!! \nLöschen Sie es nicht",
+        "confirm": "Verlassen",
+        "message": "Sind Sie sicher, dass Sie die Testkonfiguration verlassen möchten? \nAlle Fortschritte werden verloren gehen.",
+        "title": "Testkonfiguration verlassen"
+      },
+      "steps": {
+        "1": {
+          "description": "Welche Art von Test?",
+          "label": "Kategorie"
+        },
+        "2": {
+          "description": "Welcher Ordner?",
+          "label": "Ordner"
+        },
+        "3": {
+          "description": "Welche Themen und Kapitel?",
+          "label": "Themen und Kapitel"
+        },
+        "4": {
+          "description": "Schalten Sie es nach Ihren Wünschen",
+          "label": "Endgültige Konfiguration"
+        },
+        "back": "Zurück",
+        "generate": "Test erstellen",
+        "next": "Nächste"
+      }
     },
     "Tests": {
       "description": "Hier können Sie Ihre Fortschritte und die von Ihnen durchgeführten Tests sehen. \nSie können auch Ihre Ergebnisse und die von Ihnen studierten Themen sehen. \nMachen Sie weiter so und viel Glück mit Ihrem Studium!",
+      "generateTestTitle": "Test generieren",
       "tests": "{count, plural, =0 {Keine Tests} =1 {# Test} other {# Tests}}",
-      "title": "Tests",
-      "generateTestTitle": "Test generieren"
+      "title": "Tests"
     },
     "UserManager": {
       "authorized": "Autorisiert",
@@ -261,39 +302,7 @@
     },
     "backToTop": "Scrollen Sie nach oben",
     "privacyPolicy": "Datenschutzrichtlinie",
-    "title": "Armaturenbrett",
-    "TestGenerator": {
-      "Selector": {
-        "updatedAt": "Aktualisiert bei:"
-      },
-      "errors": {
-        "fetch": {
-          "message": "{Fehler, wählen Sie nicht autorisiert {Sie sind nicht berechtigt, auf diese Administrationsseite zuzugreifen. \nWenn Sie glauben, dass dies ein Fehler ist, aktualisieren Sie die Seite und versuchen Sie es später erneut.} Andere {unbekannte allgemeine Fehler. \nBitte versuchen Sie es später erneut.}}",
-          "title": "{Fehler, auswählen, nicht autorisiert {nicht autorisiert} Andere {allgemeine Fehler}}"
-        }
-      },
-      "steps": {
-        "1": {
-          "description": "Welche Art von Test?",
-          "label": "Kategorie"
-        },
-        "2": {
-          "description": "Welcher Ordner?",
-          "label": "Ordner"
-        },
-        "3": {
-          "description": "Welche Themen und Kapitel?",
-          "label": "Themen und Kapitel"
-        },
-        "4": {
-          "description": "Schalten Sie es nach Ihren Wünschen",
-          "label": "Endgültige Konfiguration"
-        },
-        "back": "Zurück",
-        "generate": "Test erstellen",
-        "next": "Nächste"
-      }
-    }
+    "title": "Armaturenbrett"
   },
   "Demo": {
     "TestGenerator": {
@@ -343,19 +352,19 @@
       "label": "Sprache ändern",
       "locale": "{locale, select, ro {🇷🇴 Rumänisch} en {🇬🇧 Englisch} fr {🇫🇷 Französisch} de {🇩🇪 Deutsch} other {Unbekannte}}",
       "locales": {
+        "de": "Deutsch",
         "en": "Englisch",
         "fr": "Französisch",
-        "ro": "Rumänisch",
-        "de": "Deutsch"
+        "ro": "Rumänisch"
       },
       "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} de {DE} other {?}}"
     },
     "error": "Fehler",
     "loading": "Laden...",
-    "refresh": "Versuchen Sie es erneut",
-    "return": "Zurückkehren",
     "noResults": "Keine Ergebnisse",
     "nothingFound": "Nichts gefunden",
+    "refresh": "Versuchen Sie es erneut",
+    "return": "Zurückkehren",
     "search": "Suchen...",
     "searchLanguageOrAlias": "Suche nach Sprache oder Alias"
   },

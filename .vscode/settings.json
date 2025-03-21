@@ -1,9 +1,12 @@
 {
+    "i18n-ally.enabledFrameworks": ["custom"],
     "i18n-ally.localesPaths": [
         "./messages"
     ],
     "i18n-ally.usage.scanningIgnore": [
         "**/analyze/nodejs.html",
     ],
+    "i18n-ally.sourceLanguage": "en",
+    "i18n-ally.sortKeys": true,
     "i18n-ally.keystyle": "nested"
 }

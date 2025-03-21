@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client"
+import { Prisma, PrismaClient } from "@prisma/client"
 import { getRandomUserName, alwaysRandomUsernames, getRandomUserImageURL } from "../utils";
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
@@ -54,6 +54,12 @@ export const prisma = globalForPrisma.prisma || new PrismaClient().$extends({
                         },
                     };
                 }
+
+                args.data.preferences = {
+                    set: {
+                        codingLanguage: "cpp",
+                    }
+                };
 
                 if (process.env.ALWAYS_USE_AVATARS === "true" && !args.data.image || args.data.image === "") {
                     args.data.image = getRandomUserImageURL(username);

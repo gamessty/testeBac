@@ -1,10 +1,20 @@
-import React from 'react';
+"use client";
+import React, { useEffect } from 'react';
 import { Title, Text, Anchor, List, ListItem } from '@mantine/core';
 
 // Privacy Policy - TBD - NEEDS EDITING
 // ADD an afix that says powed by termly.io
 
 export default function PrivacyPolicy() {
+  const [baseURL, setBaseURL] = React.useState<string | undefined>(undefined);
+
+  useEffect(() => {
+    if(!window || !window.location) return;
+    setBaseURL(window.location.host);
+  }
+  , []);
+
+  const baseURLGenerator = (host?: string) => process.env.BASE_URL ?? (host?.includes('localhost') ? 'http://' + host : 'https://' + host) ?? 'https://teste.gamessty.eu';
   return (
     <div>
       PRIVACY POLICY Last updated February 07, 2025 This Privacy Notice for
@@ -15,9 +25,9 @@ export default function PrivacyPolicy() {
       <List type="unordered">
         <ListItem>
           Visit our website at{' '}
-          <Anchor href="https://teste.gamessty.eu" target="_blank">
-            https://teste.gamessty.eu
-          </Anchor>{' '}
+          <Anchor href={baseURLGenerator(baseURL)} target="_blank">
+            {baseURLGenerator(baseURL)}
+          </Anchor>
           , or any website of ours that links to this Privacy Notice
         </ListItem>
       </List>{' '}

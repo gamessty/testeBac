@@ -1,5 +1,5 @@
 "use client";
-import { Affix, Button, Grid, Group, Stack, Title, Transition, useMatches, Text, MantineStyleProp, Fieldset, TextInput, JsonInput, Loader, Tooltip, Badge, Slider, Input, InputLabel, ButtonGroup } from "@mantine/core";
+import { Affix, Button, Grid, Group, Stack, Title, Transition, useMatches, Text, MantineStyleProp, Fieldset, TextInput, JsonInput, Loader, Tooltip, Badge, Slider, Input, InputLabel, ButtonGroup, SegmentedControl } from "@mantine/core";
 import { useDebouncedValue, useDidUpdate, useIsFirstRender, useLocalStorage, useSet, useSetState } from "@mantine/hooks";
 import { IconDeviceFloppy } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
@@ -17,6 +17,8 @@ import { Link } from "../../../i18n/routing";
 import LoadingButton from "../../LoadingButton/LoadingButton";
 import { CodingLanguageSelect } from "../../CodingLanguageSelect/CodingLanguageSelect";
 import createSampleData from "../../../actions/PrismaFunctions/createSampleData";
+
+const fontSizeMarks = generateNumberArray(70, 130, 10).map(value => ({ value: value.toString(), label: `${value}%` }));
 
 interface SettingsProps {
     session: Session | null | undefined;
@@ -142,7 +144,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                             <Text fw={500} mb={-5} ta="center">{session?.user?.username ?? session?.user?.email}</Text>
                             <Text c="dimmed" size='sm' ta="center" display={{ base: session?.user?.username ? "inherit" : "none" }}>{session?.user?.email}</Text>
                             <Grid gutter={3} w="100%">
-                                {
+                                {(session?.user?.roles?.length ?? 0) > 1 &&
                                     session?.user?.roles?.map((role) => (
                                         <Grid.Col pt={0} mt={-6} span="content" key={role.id}>
                                             <Tooltip tt="capitalize" label={role.name} color={getInitialsColor(role.name)} withArrow>
@@ -178,22 +180,11 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                         onChange={(language) => setUserChanges({ preferences: { codingLanguage: language.aliases[0] ?? language.language } })}
                     />
                     <InputLabel>{t('fontSize.label')}</InputLabel>
-                    {
-                        //ADD SOME SORT OF WARNING TO RELOAD THE PAGE TO APPLY THE CHANGES TO THE FONT SIZE
-                        //REFACTOR THE FONTSIZE LOGIC TO BE MORE USER FRIENDLY AND LESS STRANGE, REPLACE THE HOOKS AS THEY ARE NO LONGER NEEDED WITH THE NEW COOKIE APPROACH
-                    }
-                    <Slider
-                        value={fontSize}
-                        min={70}
-                        max={130}
-                        mb={10}
-                        marks={[
-                            { value: 70, label: '70%' },
-                            { value: 100, label: '100%' },
-                            { value: 130, label: '130%' },
-                        ]}
-                        step={10}
-                        onChange={setFontSize}
+                    <SegmentedControl
+                        value={fontSize.toString()}
+                        onChange={(value) => setFontSize(Number(value))}
+                        data={fontSizeMarks}
+                        className={classes["font-size-segmented-control"]}
                     />
                 </Fieldset>
             </Grid.Col>
@@ -274,4 +265,19 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
             </Affix>
         </Grid>
     );
+}
+
+/**
+ * Generates an array of numbers from min to max with a specified step.
+ * @param {number} min - The minimum value.
+ * @param {number} max - The maximum value.
+ * @param {number} step - The step value.
+ * @returns {number[]} - The generated array of numbers.
+ */
+export function generateNumberArray(min: number, max: number, step: number): number[] {
+    const result: number[] = [];
+    for (let i = min; i <= max; i += step) {
+        result.push(i);
+    }
+    return result;
 }

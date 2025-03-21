@@ -1,5 +1,4 @@
 "use client";
-import { useEffect, useState } from 'react';
 import { Center, Checkbox, Container, Group, Loader, LoaderProps, Radio, Stack, Text } from '@mantine/core';
 import classes from './TestGeneratorSelector.module.css';
 import { Chapter, Folder, Subject } from '@prisma/client';
@@ -17,6 +16,7 @@ interface TestGeneratorSelectorPropsBase {
     loaderProps?: LoaderProps;
     loader?: boolean; //controlled way to show loader
     cardSwoosh?: boolean; //controlled way to show transition the opacity of the cards
+    preventDuplicates?: boolean; // way to prevent duplicates of data
 }
 
 interface TestGeneratorSelectorPropsSingle extends TestGeneratorSelectorPropsBase {
@@ -54,7 +54,8 @@ export default function TestGeneratorSelector({
     onChange,
     loader = false,
     loaderProps,
-    cardSwoosh = true
+    cardSwoosh = true,
+    preventDuplicates = true
 }: Readonly<TestGeneratorSelectorProps>) {
     const t = useTranslations('Dashboard.TestGenerator.Selector');
     const locale = useLocale();
@@ -63,6 +64,10 @@ export default function TestGeneratorSelector({
         defaultValue,
         onChange: (val: string | string[] | undefined) => onChange?.(val as any),
     });
+
+    if (preventDuplicates && determineType(data) !== 'Unknown') {
+        data = data.filter((v, i, a) => a.findIndex(t => (t as any).id === (v as any).id) === i);
+    }
 
     let cards;
 

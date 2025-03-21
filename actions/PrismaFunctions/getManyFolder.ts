@@ -11,7 +11,7 @@ export default async function getManyFolder(): Promise<Folder[] | { message: str
     if (!session?.user) {
         return { message: "Not authenticated" };
     }
-    if (!chkP("user:*", session.user)) {
+    if (!chkP("general:*", session.user)) {
         return { message: "Unauthorized" };
     }
     let folders = await prisma.folder.findMany();

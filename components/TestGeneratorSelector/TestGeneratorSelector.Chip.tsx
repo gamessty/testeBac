@@ -43,7 +43,36 @@ function determineType(data: Folder[] | Subject[] | Chapter[] | unknown[]): 'Fol
     return 'Unknown';
 }
 
+interface InterceptEnterKeyDownInput<T> {
+    e: React.KeyboardEvent<HTMLInputElement>;
+    /** Value for controlled state */
+    currentValue?: T;
+
+    /** Controlled state onChange handler */
+    handleChange: (value: T) => void;
+
+    callback?: (e: React.KeyboardEvent<HTMLInputElement>) => void;
+}
+
+
+function interceptEnterKeyDown(input: InterceptEnterKeyDownInput<string | string[]>): void {
+    const { e, currentValue, handleChange } = input;
+    const value = e.currentTarget.value;
+    if (e.key === 'Enter') {
+        if (typeof currentValue === 'string') handleChange(value);
+        else if (currentValue?.includes(value)) {
+            handleChange(currentValue.filter((val: any) => val !== value));
+        } else if(currentValue) {
+            handleChange([...currentValue, value]);
+        } else {
+            handleChange([value]);
+        }
+    }
+}
+
 export default function TestGeneratorSelectorChip({ data, allowMultiple = false, value, defaultValue, onChange, label, chipProps }: Readonly<TestGeneratorSelectorChipProps>) {
+    const { onKeyDown, ...chipPropsRest } = chipProps ?? {};
+    chipProps = chipPropsRest;
     const [_value, handleChange] = useUncontrolled<typeof value>({
         value,
         defaultValue,
@@ -55,22 +84,22 @@ export default function TestGeneratorSelectorChip({ data, allowMultiple = false,
     switch (determineType(data)) {
         case 'Folder':
             chips = (data as Folder[]).map((folder) => (
-                <Chip {...chipProps} className={styles["chip"]} key={folder.id} value={folder.id}>{folder.name}</Chip>
+                <Chip onKeyDown={ (e) => interceptEnterKeyDown({ e, handleChange, currentValue: _value, callback: onKeyDown }) } {...chipProps} className={styles["chip"]} key={folder.id} value={folder.id}>{folder.name}</Chip>
             ));
             break;
         case 'Subject':
             chips = (data as Subject[]).map((subject) => (
-                <Chip {...chipProps} className={styles["chip"]} key={subject.id} value={subject.id}>{subject.name}</Chip>
+                <Chip onKeyDown={ (e) => interceptEnterKeyDown({ e, handleChange, currentValue: _value, callback: onKeyDown }) } {...chipProps} className={styles["chip"]} key={subject.id} value={subject.id}>{subject.name}</Chip>
             ));
             break;
         case 'Chapter':
             chips = (data as Chapter[]).map((chapter) => (
-                <Chip {...chipProps} className={styles["chip"]} key={chapter.id} value={chapter.id}>{chapter.name}</Chip>
+                <Chip onKeyDown={ (e) => interceptEnterKeyDown({ e, handleChange, currentValue: _value, callback: onKeyDown }) } {...chipProps} className={styles["chip"]} key={chapter.id} value={chapter.id}>{chapter.name}</Chip>
             ));
             break;
         default:
             chips = (data as label[]).map((label) => (
-                <Chip {...chipProps} className={styles["chip"]} key={label.id ?? label.name} value={label.id ?? label.name}>{label.name}</Chip>
+                <Chip onKeyDown={ (e) => interceptEnterKeyDown({ e, handleChange, currentValue: _value, callback: onKeyDown }) } {...chipProps} className={styles["chip"]} key={label.id ?? label.name} value={label.id ?? label.name}>{label.name}</Chip>
             ));
 
     }

@@ -9,3 +9,18 @@
 .hide {
     visibility: hidden;
 }
+
+.navbar-tab {
+    box-shadow: var(--mantine-shadow-xl);
+    border-radius: var(--mantine-spacing-xs);
+
+    &[data-variant="outline"] {
+        border-color: var(--mantine-color-gray-5);
+    }
+
+    @mixin dark {
+        &[data-variant="outline"] {
+            border-color: var(--mantine-color-dark-9);
+        }
+    }
+}

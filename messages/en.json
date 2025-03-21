@@ -361,7 +361,16 @@
         }
       },
       "Selector": {
+        "TestTypeSelector": {
+          "type": "{id, select, simple {Simple} mockExam {Mock Exam} complex {Complex} other {Unknown}}"
+        },
         "updatedAt": "Updated at:"
+      },
+      "exitConfiguration": {
+        "title": "Leave test configuration",
+        "message": "Are you sure you want to leave the test configuration? All the progress will be lost.",
+        "confirm": "Leave",
+        "cancel": "No!! Don't delete it"
       }
     },
     "backToTop": "Scroll to top",
@@ -389,5 +398,11 @@
     }
   },
   "demo-components": "Demo components",
-  "createSampleData": "Create sample data"
+  "createSampleData": "Create sample data",
+  "exitConfiguration": "Are you sure you want to leave the test configuration? All the progress will be lost.",
+  "TestType": {
+    "Types": {
+      "simple": "Simple"
+    }
+  }
 }

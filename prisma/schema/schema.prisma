@@ -17,7 +17,7 @@ model User {
   rolesIDs        String[]        @db.ObjectId
   roles           Role[]          @relation(references: [id], fields: [rolesIDs])
   userAuthorized  Boolean         @default(false)
-  preferences     UserPreferences
+  preferences     UserPreferences 
   username        String?         @unique
   activeTests     UserTest[]
   chaptersCreated Chapter[]

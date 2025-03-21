@@ -20,9 +20,10 @@ export default function TestTypeSelector({
     ...props
 }: Readonly<TestTypeSelectorProps & TabsProps>) {
     const t = useTranslations('Dashboard.TestGenerator.Selector.TestTypeSelector');
+    const defaultData = testTypes.map(Ttype => { return { label: t("type", { id: Ttype.id }), value: Ttype.id } });
     const [_value, handleChange] = useUncontrolled<string | null>({
         value,
-        defaultValue,
+        defaultValue: defaultValue ?? defaultData[0].value,
         onChange,
     });
     const [rootRef, setRootRef] = useState<HTMLDivElement | null>(null);
@@ -31,12 +32,6 @@ export default function TestTypeSelector({
         controlsRefs[val] = node;
         setControlsRefs(controlsRefs);
     };
-
-    const defaultData = testTypes.map(Ttype => { return { label: t("type", { id: Ttype.id }), value: Ttype.id } });
-
-    useEffect(() => {
-        handleChange(defaultData[0].value);
-    }, [handleChange, defaultData]);
 
     return (
         <>

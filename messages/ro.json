@@ -22,6 +22,10 @@
           "description": "Nu am putut trimite emailul de verificare. Verificați adresa de email și încercați din nou.",
           "title": "Eșec la Autentificarea prin Email"
         },
+        "MissingCSRF": {
+          "description": "Tokenul CSRF lipsește. Vă rugăm să reîmprospătați pagina și să încercați din nou.",
+          "title": "Lipsește tokenul CSRF"
+        },
         "OAuthAccountNotLinked": {
           "description": "Acest email este deja asociat cu o altă metodă de autentificare. Vă rugăm să folosiți metoda originală pentru a vă autentifica.",
           "title": "Cont Neconectat"

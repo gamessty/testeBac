@@ -2,6 +2,10 @@
   "Authentication": {
     "customPages": {
       "error": {
+        "MissingCSRF": {
+          "title": "Missing CSRF token",
+          "description": "The CSRF token is missing. Please refresh the page and try again."
+        },
         "Callback": {
           "description": "Something went wrong while processing your login request. Please try again.",
           "title": "Login Callback Error"

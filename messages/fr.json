@@ -22,6 +22,10 @@
           "description": "Nous n'avons pas pu envoyer l'e-mail de vérification. \nVeuillez vérifier votre adresse e-mail et réessayer.",
           "title": "La connexion par e-mail a échoué"
         },
+        "MissingCSRF": {
+          "description": "Le jeton CSRF est manquant. Veuillez rafraîchir la page et réessayer.",
+          "title": "Token CSRF manquant"
+        },
         "OAuthAccountNotLinked": {
           "description": "Cet e-mail est lié à une autre méthode de connexion. \nVeuillez utiliser la méthode d'origine pour vous connecter.",
           "title": "Compte non lié"

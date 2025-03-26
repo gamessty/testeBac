@@ -22,6 +22,10 @@
           "description": "Wir konnten die Überprüfungs -E-Mail nicht senden. \nBitte überprüfen Sie Ihre E-Mail -Adresse und versuchen Sie es erneut.",
           "title": "E-Mail-Anmeldung fehlgeschlagen"
         },
+        "MissingCSRF": {
+          "description": "Das CSRF-Token fehlt. Bitte aktualisieren Sie die Seite und versuchen Sie es erneut.",
+          "title": "Fehlendes CSRF-Token"
+        },
         "OAuthAccountNotLinked": {
           "description": "Diese E-Mail ist mit einer anderen Anmeldemethode verknüpft. \nBitte verwenden Sie die ursprüngliche Methode, um sich anzumelden.",
           "title": "Konto nicht verknüpft"

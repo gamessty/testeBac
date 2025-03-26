@@ -1,377 +1,308 @@
 {
-  "HomePage": {
-    "title": "Welcome to",
-    "about": "TesteBac prepares students for the baccalaureate or university admission exam. This platform is dedicated to students who want to test their knowledge and prepare for the important exams of their lives. The platform uses a grid test system, which provides instant feedback and helps students improve their knowledge. The tests are structured by subjects and chapters, to provide the most efficient and personalized preparation. To get started, choose the subject and chapter you want and press the start button. Good luck with your studies!",
-    "redirectApp": "Go to the app",
-    "userNotAuthorized": {
-      "title": "Registration not accepted yet",
-      "message": "Please wait for your registration to be validated by a moderator. This may take up to 24 hours. \n\nIf you have any questions, please contact us at {email}.",
-      "short": "You need to be authorized to access the app."
-    }
-  },
-  "Email": {
-    "MagicLink": {
-      "Old": {
-        "subject": "Sign in to TesteBac",
-        "title": "Sign in to TesteBac <strong>({host})</strong>",
-        "message": "Thank you for registering on TesteBac. Your registration is pending approval by a moderator. This process may take up to 24 hours. \n\nIf you have any questions, please contact us at {email}.",
-        "disclaimer": "If you did not request this email you can safely ignore it. You can try to login but you will receive an error now. You will be able to login after your registration is approved by a moderator.",
-        "signIn": "Sign in",
-        "text_alt": "If you have trouble clicking the \"{signIn}\" button, copy and paste the URL below into your web browser: {signInLink}",
-        "text": "Sign in to:"
-      },
-      "subject": "Sign in to TesteBac",
-      "title": "Sign in to TesteBac <strong>({host})</strong>",
-      "message": "This link will only be valid for the next 24 hours.",
-      "disclaimer": "If you did not request this email you can safely ignore it. Contact support if you have any questions at {email}.",
-      "signIn": "Sign in",
-      "text": "Sign in to:"
-    }
-  },
-  "General": {
-    "loading": "Loading...",
-    "error": "Error",
-    "refresh": "Try again",
-    "return": "Return",
-    "nothingFound": "Nothing found",
-    "noResults": "No results",
-    "search": "Search...",
-    "searchLanguageOrAlias": "Search by language or alias",
-    "LocaleSwitcher": {
-      "label": "Change language",
-      "locale": "{locale, select, ro {🇷🇴 Romanian} en {🇬🇧 English} fr {🇫🇷 French} de {🇩🇪 German} other {Unknown}}",
-      "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} de {DE} other {?}}",
-      "locales": {
-        "ro": "Romanian",
-        "en": "English",
-        "fr": "French",
-        "de": "German"
-      }
-    },
-    "ColorSchemeToggle": {
-      "label": "Toggle color scheme",
-      "colorScheme": "{colorScheme, select, light {Light} dark {Dark} auto {Auto} other {Unknown}}"
-    }
-  },
   "Authentication": {
-    "signIn": "Sign In",
-    "signInMail": "Sign In with Email",
-    "signUp": "Sign Up",
-    "signOut": "Sign Out",
-    "refresh": "Try again",
-    "userSignedOut": {
-      "title": "Signed out",
-      "message": "You have successfully signed out of TesteBac! We hope to see you soon!"
-    },
-    "userNotAuthorized": {
-      "title": "Registration not accepted yet",
-      "message": "Please wait for your registration to be validated by a moderator. This may take up to 24 hours. \n\nIf you have any questions, please contact us at {email}."
-    },
     "customPages": {
-      "signIn": {
-        "welcome": "Welcome to",
-        "signIn": "sign in with",
-        "or": "Or continue with email",
-        "disclaimer": "By signing in, you agree to our",
-        "privacyPolicy": "privacy policy",
-        "invalidEmail": "The email is invalid."
-      },
-      "verifyRequest": {
-        "title": "Verify your email address",
-        "message": "We have sent you an email with a link to verify your email address. Please check your inbox and click on the link in the email to access the app.",
-        "backToHome": "Go back"
-      },
       "error": {
-        "OAuthSignin": {
-          "title": "Authorization Failed",
-          "description": "We couldn't create the authorization URL. Please try again later."
-        },
-        "OAuthCallback": {
-          "title": "Login Error",
-          "description": "There was a problem processing the response from the login provider. Please try again."
-        },
-        "OAuthCreateAccount": {
-          "title": "Account Creation Failed",
-          "description": "We couldn't create your account using this login provider. Please try again or use a different method."
-        },
-        "EmailCreateAccount": {
-          "title": "Email Registration Failed",
-          "description": "We couldn't create your account with this email. Please try again later."
-        },
         "Callback": {
-          "title": "Login Callback Error",
-          "description": "Something went wrong while processing your login request. Please try again."
-        },
-        "OAuthAccountNotLinked": {
-          "title": "Account Not Linked",
-          "description": "This email is linked to another login method. Please use the original method to sign in."
-        },
-        "EmailSignin": {
-          "title": "Email Sign-In Failed",
-          "description": "We couldn't send the verification email. Please check your email address and try again."
+          "description": "Something went wrong while processing your login request. Please try again.",
+          "title": "Login Callback Error"
         },
         "CredentialsSignin": {
-          "title": "Login Failed",
-          "description": "Your login details are incorrect. Please check them and try again."
-        },
-        "SessionRequired": {
-          "title": "Sign-In Required",
-          "description": "You need to be signed in to access this page. Please log in to continue."
+          "description": "Your login details are incorrect. Please check them and try again.",
+          "title": "Login Failed"
         },
         "Default": {
-          "title": "Unexpected Error",
-          "description": "An unknown error occurred. Please refresh the page or try again later."
+          "description": "An unknown error occurred. Please refresh the page or try again later.",
+          "title": "Unexpected Error"
+        },
+        "EmailCreateAccount": {
+          "description": "We couldn't create your account with this email. Please try again later.",
+          "title": "Email Registration Failed"
+        },
+        "EmailSignin": {
+          "description": "We couldn't send the verification email. Please check your email address and try again.",
+          "title": "Email Sign-In Failed"
+        },
+        "OAuthAccountNotLinked": {
+          "description": "This email is linked to another login method. Please use the original method to sign in.",
+          "title": "Account Not Linked"
+        },
+        "OAuthCallback": {
+          "description": "There was a problem processing the response from the login provider. Please try again.",
+          "title": "Login Error"
+        },
+        "OAuthCreateAccount": {
+          "description": "We couldn't create your account using this login provider. Please try again or use a different method.",
+          "title": "Account Creation Failed"
+        },
+        "OAuthSignin": {
+          "description": "We couldn't create the authorization URL. Please try again later.",
+          "title": "Authorization Failed"
+        },
+        "SessionRequired": {
+          "description": "You need to be signed in to access this page. Please log in to continue.",
+          "title": "Sign-In Required"
         }
+      },
+      "signIn": {
+        "disclaimer": "By signing in, you agree to our",
+        "invalidEmail": "The email is invalid.",
+        "or": "Or continue with email",
+        "privacyPolicy": "privacy policy",
+        "signIn": "sign in with",
+        "welcome": "Welcome to"
+      },
+      "signOut": {
+        "confirm": "Are you sure you want to sign out?",
+        "title": "Sign Out"
+      },
+      "verifyRequest": {
+        "backToHome": "Go back",
+        "message": "We have sent you an email with a link to verify your email address. Please check your inbox and click on the link in the email to access the app.",
+        "title": "Verify your email address"
       }
+    },
+    "refresh": "Try again",
+    "signIn": "Sign In",
+    "signInMail": "Sign In with Email",
+    "signOut": "Sign Out",
+    "signUp": "Sign Up",
+    "userNotAuthorized": {
+      "message": "Please wait for your registration to be validated by a moderator. This may take up to 24 hours. \n\nIf you have any questions, please contact us at {email}.",
+      "title": "Registration not accepted yet"
+    },
+    "userSignedOut": {
+      "message": "You have successfully signed out of TesteBac! We hope to see you soon!",
+      "title": "Signed out"
     }
   },
-  "Tests": {
-    "category": "{category, select, admission {University Admission} bac {Baccalaureate} other {Unknown}}",
-    "Subjects": {
-      "mathematics": "Mathematics",
-      "romanian": "Romanian",
-      "history": "History",
-      "geography": "Geography",
-      "biology": "Biology",
-      "physics": "Physics",
-      "chemistry": "Chemistry",
-      "informatics": "Informatics",
-      "english": "English",
-      "french": "French",
-      "german": "Germany",
-      "spanish": "Spanish"
-    },
-    "resumeTest": "Resume test",
-    "lastQuestion": "Last question"
-  },
   "Dashboard": {
+    "Home": {
+      "lastTest": "Resume test",
+      "nameFormatting": ", {name}",
+      "quickStats": "Quick stats",
+      "recentTests": "Recent tests",
+      "welcome": "Hi<renderName></renderName>!"
+    },
     "Navbar": {
-      "home": "Home",
-      "subjects": "Subjects",
-      "tests": "Tests",
-      "results": "Results",
-      "stats": "Stats",
-      "profile": "Profile",
-      "settings": "Settings",
       "admin": {
+        "roles": "Roles",
         "title": "Admin",
-        "users": "Users",
-        "roles": "Roles"
+        "users": "Users"
       },
+      "demo": {
+        "questionCard": "Question Card",
+        "testGenerator": "Test Generator",
+        "title": "Demo"
+      },
+      "home": "Home",
+      "profile": "Profile",
+      "results": "Results",
+      "settings": "Settings",
+      "stats": "Stats",
+      "subjects": "Subjects",
       "test": {
         "generator": "Test Generator"
       },
-      "demo": {
-        "title": "Demo",
-        "testGenerator": "Test Generator",
-        "questionCard": "Question Card"
-      }
+      "tests": "Tests"
     },
-    "Home": {
-      "welcome": "Hi<renderName></renderName>!",
-      "nameFormatting": ", {name}",
-      "recentTests": "Recent tests",
-      "lastTest": "Resume test",
-      "quickStats": "Quick stats"
-    },
-    "Settings": {
-      "title": "Settings",
-      "account": "Account",
-      "language": "Language",
-      "display": "Display",
-      "debug": "Debug",
-      "notifications": "Notifications",
-      "saveChanges": "Save changes",
-      "fontSize": {
-        "label": "Site scale"
+    "RoleManager": {
+      "close": "Close",
+      "confirm": {
+        "create": {
+          "message": "Are you sure you want to create the role {name}?",
+          "title": "Create role"
+        },
+        "delete": {
+          "message": "Are you sure you want to delete the role {name}? This action cannot be undone.",
+          "title": "Delete role"
+        }
       },
-      "Account": {
-        "title": "Account",
-        "email": "Email",
-        "deleteAccount": "Delete account",
-        "personalInfo": "Personal information",
-        "username": {
-          "label": "Username",
-          "placeholder": "Enter your username"
+      "create": "Create",
+      "drawer": {
+        "category": {
+          "error": "The role category is required.",
+          "label": "Category",
+          "placeholder": "Select the role category"
+        },
+        "delete": "Delete role",
+        "description": {
+          "label": "Description",
+          "placeholder": "Enter the role description"
         },
         "name": {
+          "description": "The role name must be unique.",
+          "error": "The role name is required and must be at least 3 characters long.",
           "label": "Name",
-          "placeholder": "Enter your name"
+          "placeholder": "Enter the role name"
         },
-        "deleteConfirmation": "Are you sure you want to delete your account? This action cannot be undone.",
-        "deleteSuccess": "Your account has been deleted successfully.",
-        "deleteError": "An error occurred while deleting your account. Please try again later.",
-        "deleteCancel": "Cancel",
-        "codingLanguage": {
-          "label": "Coding Language"
-        }
-      },
-      "demoComponents": "Demo Components",
-      "createSampleData": "Create sample data"
-    },
-    "UserManager": {
-      "title": "User Manager",
-      "viewProfile": "View profile",
-      "authorized": "Authorized",
-      "unauthorized": "Unauthorized",
-      "users": "{count, plural, =1 {# user} other {# users}}",
-      "drawer": {
-        "save": "Save",
-        "delete": "Delete account",
-        "username": {
-          "label": "Username",
-          "placeholder": "Enter the username",
-          "error": "The username is required and must be at least 3 characters long.",
-          "description": "The username must be unique."
+        "permissions": {
+          "error": "Permissions are required.",
+          "label": "Permissions",
+          "placeholder": "Select permissions"
         },
-        "email": {
-          "label": "Email",
-          "placeholder": "Enter the email",
-          "error": "The email is required and must be a valid email address.",
-          "description": "The email must be unique."
+        "priority": {
+          "error": "The role priority is required.",
+          "label": "Priority",
+          "placeholder": "Enter the role priority"
         },
-        "avatar": {
-          "label": "Avatar",
-          "placeholder": "Insert a url to an image"
-        },
-        "roles": {
-          "label": "Roles",
-          "placeholder": "Select roles",
-          "error": "Roles are required."
-        },
-        "authorized": {
-          "label": "Authorization",
-          "description": "The user's authorized to use the app."
-        }
+        "save": "Save"
       },
       "errors": {
         "fetch": {
-          "title": "{error, select, Unauthorized {Unauthorized} other {General error}}",
-          "message": "{error, select, Unauthorized {You are not authorized to access this administration page. If you believe this is an error, refresh the page and try again later.} other {Unknown general error. Please try again later.}}"
+          "message": "{error, select, Unauthorized {You are not authorized to access this administration page. If you believe this is an error, refresh the page and try again later.} other {Unknown general error. Please try again later.}}",
+          "title": "{error, select, Unauthorized {Unauthorized} other {General error}}"
+        },
+        "role": {
+          "message": "An error arrised while processing role {name}. Please try again later."
         }
-      }
-    },
-    "RoleManager": {
-      "title": "Role Manager",
-      "viewRole": "View role",
-      "roles": "{count, plural, =1 {# role} other {# roles}}",
+      },
       "newRole": "New role",
-      "create": "Create",
-      "close": "Close",
       "nothingFound": "No roles found.",
       "roleCard": {
         "createdAt": "Created at",
         "updatedAt": "Updated at"
       },
+      "roles": "{count, plural, =1 {# role} other {# roles}}",
       "success": {
         "create": {
-          "title": "Role created",
-          "message": "The role {name} has been created successfully."
+          "message": "The role {name} has been created successfully.",
+          "title": "Role created"
+        },
+        "delete": {
+          "message": "The role {name} has been deleted successfully.",
+          "title": "Role deleted"
         },
         "update": {
-          "title": "Role updated",
-          "message": "The role {name} has been updated successfully."
-        },
-        "delete": {
-          "title": "Role deleted",
-          "message": "The role {name} has been deleted successfully."
+          "message": "The role {name} has been updated successfully.",
+          "title": "Role updated"
         }
       },
-      "confirm": {
-        "delete": {
-          "title": "Delete role",
-          "message": "Are you sure you want to delete the role {name}? This action cannot be undone."
+      "title": "Role Manager",
+      "viewRole": "View role"
+    },
+    "Settings": {
+      "Account": {
+        "codingLanguage": {
+          "label": "Coding Language"
         },
-        "create": {
-          "title": "Create role",
-          "message": "Are you sure you want to create the role {name}?"
-        }
-      },
-      "drawer": {
-        "save": "Save",
-        "delete": "Delete role",
+        "deleteAccount": "Delete account",
+        "deleteCancel": "Cancel",
+        "deleteConfirmation": "Are you sure you want to delete your account? This action cannot be undone.",
+        "deleteError": "An error occurred while deleting your account. Please try again later.",
+        "deleteSuccess": "Your account has been deleted successfully.",
+        "email": "Email",
         "name": {
           "label": "Name",
-          "placeholder": "Enter the role name",
-          "error": "The role name is required and must be at least 3 characters long.",
-          "description": "The role name must be unique."
+          "placeholder": "Enter your name"
         },
-        "category": {
-          "label": "Category",
-          "placeholder": "Select the role category",
-          "error": "The role category is required."
-        },
-        "description": {
-          "label": "Description",
-          "placeholder": "Enter the role description"
-        },
-        "priority": {
-          "label": "Priority",
-          "placeholder": "Enter the role priority",
-          "error": "The role priority is required."
-        },
-        "permissions": {
-          "label": "Permissions",
-          "placeholder": "Select permissions",
-          "error": "Permissions are required."
+        "personalInfo": "Personal information",
+        "title": "Account",
+        "username": {
+          "label": "Username",
+          "placeholder": "Enter your username"
         }
       },
-      "errors": {
-        "fetch": {
-          "title": "{error, select, Unauthorized {Unauthorized} other {General error}}",
-          "message": "{error, select, Unauthorized {You are not authorized to access this administration page. If you believe this is an error, refresh the page and try again later.} other {Unknown general error. Please try again later.}}"
-        },
-        "role": {
-          "message": "An error arrised while processing role {name}. Please try again later."
-        }
-      }
-    },
-    "Tests": {
-      "title": "Tests",
-      "description": "Here you can see your progress and the tests you have taken. You can also see your results and the subjects you have studied. Keep up the good work and good luck with your studies!",
-      "tests": "{count, plural, =0 {No tests} =1 {# test} other {# tests}}",
-      "generateTestTitle": "Generate test"
+      "account": "Account",
+      "createSampleData": "Create sample data",
+      "debug": "Debug",
+      "demoComponents": "Demo Components",
+      "display": "Display",
+      "fontSize": {
+        "label": "Site scale"
+      },
+      "language": "Language",
+      "notifications": "Notifications",
+      "saveChanges": "Save changes",
+      "title": "Settings"
     },
     "TestGenerator": {
-      "steps": {
-        "1": {
-          "label": "Category",
-          "description": "What type of test?"
-        },
-        "2": {
-          "label": "Folder",
-          "description": "What folder?"
-        },
-        "3": {
-          "label": "Subjects and chapters",
-          "description": "Which subjects and chapter?"
-        },
-        "4": {
-          "label": "Final configuration",
-          "description": "Tune it to your liking"
-        },
-        "next": "Next",
-        "back": "Back",
-        "generate": "Generate test"
-      },
-      "errors": {
-        "fetch": {
-          "title": "{error, select, Unauthorized {Unauthorized} other {General error}}",
-          "message": "{error, select, Unauthorized {You are not authorized to access this administration page. If you believe this is an error, refresh the page and try again later.} other {Unknown general error. Please try again later.}}"
-        }
-      },
       "Selector": {
         "TestTypeSelector": {
           "type": "{id, select, simple {Simple} mockExam {Mock Exam} complex {Complex} other {Unknown}}"
         },
         "updatedAt": "Updated at:"
       },
+      "errors": {
+        "fetch": {
+          "message": "{error, select, Unauthorized {You are not authorized to access this administration page. If you believe this is an error, refresh the page and try again later.} other {Unknown general error. Please try again later.}}",
+          "title": "{error, select, Unauthorized {Unauthorized} other {General error}}"
+        }
+      },
       "exitConfiguration": {
-        "title": "Leave test configuration",
-        "message": "Are you sure you want to leave the test configuration? All the progress will be lost.",
+        "cancel": "Cancel",
         "confirm": "Leave",
-        "cancel": "No!! Don't delete it"
+        "message": "Are you sure you want to leave the test configuration? All the progress will be lost.",
+        "title": "Leave test configuration"
+      },
+      "steps": {
+        "1": {
+          "description": "What type of test?",
+          "label": "Category"
+        },
+        "2": {
+          "description": "What folder?",
+          "label": "Folder"
+        },
+        "3": {
+          "description": "Which subjects and chapter?",
+          "label": "Subjects and chapters"
+        },
+        "4": {
+          "description": "Tune it to your liking",
+          "label": "Final configuration"
+        },
+        "back": "Back",
+        "generate": "Generate test",
+        "next": "Next"
       }
+    },
+    "Tests": {
+      "description": "Here you can see your progress and the tests you have taken. You can also see your results and the subjects you have studied. Keep up the good work and good luck with your studies!",
+      "generateTestTitle": "Generate test",
+      "tests": "{count, plural, =0 {No tests} =1 {# test} other {# tests}}",
+      "title": "Tests"
+    },
+    "UserManager": {
+      "authorized": "Authorized",
+      "drawer": {
+        "authorized": {
+          "description": "The user's authorized to use the app.",
+          "label": "Authorization"
+        },
+        "avatar": {
+          "label": "Avatar",
+          "placeholder": "Insert a url to an image"
+        },
+        "delete": "Delete account",
+        "email": {
+          "description": "The email must be unique.",
+          "error": "The email is required and must be a valid email address.",
+          "label": "Email",
+          "placeholder": "Enter the email"
+        },
+        "roles": {
+          "error": "Roles are required.",
+          "label": "Roles",
+          "placeholder": "Select roles"
+        },
+        "save": "Save",
+        "username": {
+          "description": "The username must be unique.",
+          "error": "The username is required and must be at least 3 characters long.",
+          "label": "Username",
+          "placeholder": "Enter the username"
+        }
+      },
+      "errors": {
+        "fetch": {
+          "message": "{error, select, Unauthorized {You are not authorized to access this administration page. If you believe this is an error, refresh the page and try again later.} other {Unknown general error. Please try again later.}}",
+          "title": "{error, select, Unauthorized {Unauthorized} other {General error}}"
+        }
+      },
+      "title": "User Manager",
+      "unauthorized": "Unauthorized",
+      "users": "{count, plural, =1 {# user} other {# users}}",
+      "viewProfile": "View profile"
     },
     "backToTop": "Scroll to top",
     "privacyPolicy": "Privacy Policy",
@@ -381,28 +312,102 @@
     "TestGenerator": {
       "steps": {
         "1": {
-          "label": "Category",
-          "description": "What type of test?"
+          "description": "What type of test?",
+          "label": "Category"
         },
         "2": {
-          "label": "Folder",
-          "description": "What folder and subject?"
+          "description": "What folder and subject?",
+          "label": "Folder"
         },
         "3": {
-          "label": "Chapters",
-          "description": "Which chapters?"
+          "description": "Which chapters?",
+          "label": "Chapters"
         },
-        "next": "Next",
-        "back": "Back"
+        "back": "Back",
+        "next": "Next"
       }
     }
   },
-  "demo-components": "Demo components",
-  "createSampleData": "Create sample data",
-  "exitConfiguration": "Are you sure you want to leave the test configuration? All the progress will be lost.",
+  "Email": {
+    "MagicLink": {
+      "Old": {
+        "disclaimer": "If you did not request this email you can safely ignore it. You can try to login but you will receive an error now. You will be able to login after your registration is approved by a moderator.",
+        "message": "Thank you for registering on TesteBac. Your registration is pending approval by a moderator. This process may take up to 24 hours. \n\nIf you have any questions, please contact us at {email}.",
+        "signIn": "Sign in",
+        "subject": "Sign in to TesteBac",
+        "text": "Sign in to:",
+        "text_alt": "If you have trouble clicking the \"{signIn}\" button, copy and paste the URL below into your web browser: {signInLink}",
+        "title": "Sign in to TesteBac <strong>({host})</strong>"
+      },
+      "disclaimer": "If you did not request this email you can safely ignore it. Contact support if you have any questions at {email}.",
+      "message": "This link will only be valid for the next 24 hours.",
+      "signIn": "Sign in",
+      "subject": "Sign in to TesteBac",
+      "text": "Sign in to:",
+      "title": "Sign in to TesteBac <strong>({host})</strong>"
+    }
+  },
+  "General": {
+    "ColorSchemeToggle": {
+      "colorScheme": "{colorScheme, select, light {Light} dark {Dark} auto {Auto} other {Unknown}}",
+      "label": "Toggle color scheme"
+    },
+    "LocaleSwitcher": {
+      "label": "Change language",
+      "locale": "{locale, select, ro {🇷🇴 Romanian} en {🇬🇧 English} fr {🇫🇷 French} de {🇩🇪 German} other {Unknown}}",
+      "locales": {
+        "de": "German",
+        "en": "English",
+        "fr": "French",
+        "ro": "Romanian"
+      },
+      "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} de {DE} other {?}}"
+    },
+    "error": "Error",
+    "launch": "Go to!",
+    "loading": "Loading...",
+    "noResults": "No results",
+    "nothingFound": "Nothing found",
+    "refresh": "Try again",
+    "return": "Return",
+    "search": "Search...",
+    "searchLanguageOrAlias": "Search by language or alias"
+  },
+  "HomePage": {
+    "about": "TesteBac prepares students for the baccalaureate or university admission exam. This platform is dedicated to students who want to test their knowledge and prepare for the important exams of their lives. The platform uses a grid test system, which provides instant feedback and helps students improve their knowledge. The tests are structured by subjects and chapters, to provide the most efficient and personalized preparation. To get started, choose the subject and chapter you want and press the start button. Good luck with your studies!",
+    "redirectApp": "Go to the app",
+    "title": "Welcome to",
+    "userNotAuthorized": {
+      "message": "Please wait for your registration to be validated by a moderator. This may take up to 24 hours. \n\nIf you have any questions, please contact us at {email}.",
+      "short": "You need to be authorized to access the app.",
+      "title": "Registration not accepted yet"
+    }
+  },
   "TestType": {
     "Types": {
-      "simple": "Simple"
+      "simple": "Standard"
     }
-  }
+  },
+  "Tests": {
+    "Subjects": {
+      "biology": "Biology",
+      "chemistry": "Chemistry",
+      "english": "English",
+      "french": "French",
+      "geography": "Geography",
+      "german": "Germany",
+      "history": "History",
+      "informatics": "Informatics",
+      "mathematics": "Mathematics",
+      "physics": "Physics",
+      "romanian": "Romanian",
+      "spanish": "Spanish"
+    },
+    "category": "{category, select, admission {University Admission} bac {Baccalaureate} other {Unknown}}",
+    "lastQuestion": "Last question",
+    "resumeTest": "Resume test"
+  },
+  "createSampleData": "Create sample data",
+  "demo-components": "Demo components",
+  "exitConfiguration": "Are you sure you want to leave the test configuration? All the progress will be lost."
 }

@@ -57,41 +57,53 @@
     animation-duration: 0.2s;
 }
 
-.test-card {
+.link-card {
     position: relative;
     margin-bottom: var(--mantine-spacing-md);
     transition: top ease 0.3s;
-}
-
-.test-card.compact {
-    cursor: url('/cursors/play_cursor_28.png'), pointer;
-
-    * {
-        cursor: url('/cursors/play_cursor_28.png'), pointer;
+    .title {
+        text-transform: capitalize;
     }
 }
 
-.test-card:hover {
+.link-card.compact:not(:has(:global(.mantine-Badge-root))) .title {
+    font-size: var(--text-fz, var(--mantine-font-size-lg));
+}   
+
+.link-card.compact {
+    cursor: url('/cursors/click_cursor_28.png'), pointer;
+
+    * {
+        cursor: url('/cursors/click_cursor_28.png'), pointer;
+    }
+}
+
+.link-card:hover {
     background-color: light-dark(var(--mantine-color-gray-1), lighten(var(--mantine-color-dark-6), 0.02));
     top: -5px;
 }
 
-.test-card:has(.test-card_button_section) {
+.link-card:has(.link-card_button_section) {
     padding-bottom: var(--mantine-spacing-xl);
 }
 
-.test-card:has(.test-card_button_section):nth-last-child(2) {
+.link-card:has(.link-card_button_section):nth-last-child(2) {
     margin-bottom: calc("25px" + var(--mantine-spacing-xl));
 }
 
-.test-card_button_section {
+.link-card_button_section {
     position: absolute;
     bottom: var(--mantine-spacing-lg);
     width: 100%;
 }
 
-.test-card .action-button {
+.link-card .action-button {
     position: absolute;
-    bottom: var(--mantine-spacing-sm);
-    right: var(--mantine-spacing-sm);
+    bottom: var(--mantine-spacing-xs);
+    right: var(--mantine-spacing-xs);
+    svg {
+        width: 80%;
+        height: 80%;
+        stroke-width: 2;
+    }
 }

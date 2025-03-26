@@ -1,20 +1,29 @@
 
 "use client";
-import { Title, Text, Grid, MantineStyleProp, Center, Flex, useMatches, SimpleGrid, rem } from "@mantine/core";
+import { Title, Text, MantineStyleProp, Center, Flex, SimpleGrid, rem } from "@mantine/core";
 import classes from "./Home.module.css";
 import { useTranslations } from "next-intl";
-import TestCard from "../../Cards/TestCard/TestCard";
 import { Session } from "next-auth";
-import { getInitialsColor } from "../../../utils";
-import CreateTestCard from "../../Cards/CreateTestCard/CreateTestCard";
+import { chkP, getInitialsColor } from "../../../utils";
+import LinkCard from "@/components/Cards/LinkCard/LinkCard";
+import { usePathname } from "@/i18n/routing";
+import { useCallback } from "react";
+import { IconFile, IconGraph, IconLogout, IconSettings, IconUser, IconUserPlus } from "@tabler/icons-react";
 
 interface HomeProps {
     style?: MantineStyleProp;
     session: Session
 }
 
+const createQueryString = (name: string, value: string) => {
+    const params = new URLSearchParams()
+    params.set(name, value)
+    return params.toString()
+}
+
 export default function Home({ style, session }: Readonly<HomeProps>) {
     const t = useTranslations('Dashboard');
+    const pathname = usePathname();
 
     return (
         <Flex direction="column" pt={{ base: 5, sm: 10 }} h="100%" pb="md" style={{ ...style }}>
@@ -29,13 +38,18 @@ export default function Home({ style, session }: Readonly<HomeProps>) {
                 {t.rich('Home.welcome', { renderName: () => (<WelcomeMessage name={session.user.name ?? ''} />) })}
             </Title>
             <Center style={{ flexGrow: 1 }}>
-                <SimpleGrid maw="100vw" cols={2} w={{ base: "95%", xs: '90%', md: "60%", lg: '50%', xxl: '35%' }}>
-                    <TestCard mih="100%" category="bac" subject="biology" href="./#" />
-                    <TestCard design="compact" mih="100%" category="admission" subject="chemistry" href="#" />
-                    <TestCard design="compact" mih="100%" category="admission" subject="informatics" href="#" />
-                    <TestCard mih="100%" category="bac" subject="chemistry" href="#" />
-                    <TestCard mih="100%" category="bac" subject="informatics" href="#" />
-                    <TestCard design="compact" mih="100%" category="admission" subject="chemistry" href="#" />
+                <SimpleGrid maw="100vw" verticalSpacing="lg" cols={2} w={{ base: "90%", xs: '80%', md: "60%", lg: '50%', xxl: '35%' }}>
+                    <LinkCard design="compact" mih="100%" actionIcon={<IconFile />} name="tests" href={pathname + "?" + createQueryString("tab", "tests")} />
+                    <LinkCard design="compact" mih="100%" actionIcon={<IconSettings />} name="Settings" href={pathname + "?" + createQueryString("tab", "settings")} />
+                    <LinkCard design="compact" mih="100%" actionIcon={<IconGraph />} name="Stats" href={pathname + "?" + createQueryString("tab", "stats")} />
+                    <LinkCard design="compact" mih="100%" actionIcon={<IconLogout color="red" />} name="Logout" href="/api/auth/signout" noLocale />
+                    {
+                        chkP("*:*", session.user) &&
+                        <>
+                            <LinkCard withBorder design="compact" mih="100%" actionIcon={<IconUser />} badge="admin" name="Users" href={pathname + "?" + createQueryString("tab", "admin.users")} />
+                            <LinkCard withBorder design="compact" mih="100%" actionIcon={<IconUserPlus />} badge="admin" name="Roles" href={pathname + "?" + createQueryString("tab", "admin.roles")} />
+                        </>
+                    }
                 </SimpleGrid>
             </Center>
         </Flex>

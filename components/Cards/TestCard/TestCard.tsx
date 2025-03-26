@@ -36,51 +36,44 @@ export default function TestCard({ category, subject, coverImage, lastQuestion, 
     switch (design) {
         case 'compact':
             return (
-                <Tooltip.Floating style={{
-                    marginLeft: '-27px',
-                    marginTop: '-2px',
-                }} classNames={{
-                    tooltip: classes["tooltip"]
-                }} label={!tooltipText ? <ActionIcon color="grape" className={classes["tooltip-icon"]}> <IconPlayerPlayFilled size={15} /> </ActionIcon> : t('resumeTest')}>
-                    <Card {...rest} className={`${classes["test-card"]} ${classes["compact"]}`} component={Link} href={href ?? ''} w={"100%"} shadow="lg" radius="sm" >
-                        <Stack justify="space-between" h="100%" w="100%">
-                            <Box w="100%">
-                                {coverImage && coverImage !== 'none' && <Card.Section>
-                                    <Image
-                                        src={coverImage}
-                                        height={70}
-                                        alt={"Cover image test " + subject}
-                                    />
-                                    {category && <Badge radius="sm" className={classes["card-badge"]} color={getInitialsColor(category)}>{t("category", { category })}</Badge>}
-                                </Card.Section>}
+                <Card {...rest} className={`${classes["test-card"]} ${classes["compact"]}`} component={Link} href={href ?? ''} w={"100%"} shadow="lg" radius="sm" >
+                    <Stack justify="space-between" h="100%" w="100%">
+                        <Box w="100%">
+                            {coverImage && coverImage !== 'none' && <Card.Section>
+                                <Image
+                                    src={coverImage}
+                                    height={70}
+                                    alt={"Cover image test " + subject}
+                                />
+                                {category && <Badge radius="sm" className={classes["card-badge"]} color={getInitialsColor(category)}>{t("category", { category })}</Badge>}
+                            </Card.Section>}
 
-                                <Card.Section inheritPadding py="md" w="100%">
-                                    {subject && <Flex justify="left" align="center" mb="xs" gap={10} w="100%">
-                                        {!coverImage && <AvatarFallback name={subject} color="initials">{getAvatarIcon(subject)}</AvatarFallback>}
-                                        <Stack gap={7} w="100%">
-                                            <Text truncate="end" w="100%" mb='-6' fw={500}>{t(`Subjects.${subject}`)}</Text>
-                                            {!coverImage && category && <Badge radius="xs" size="sm" variant="light" mr={5} color="cyan">{t("category", { category })}</Badge>}
-                                            {progress && <Progress value={progress} radius="xs" />}
-                                        </Stack>
-                                    </Flex>}
+                            <Card.Section inheritPadding py="md" w="100%">
+                                {subject && <Flex justify="left" align="center" mb="xs" gap={10} w="100%">
+                                    {!coverImage && <AvatarFallback name={subject} color="initials">{getAvatarIcon(subject)}</AvatarFallback>}
+                                    <Stack gap={7} w="100%">
+                                        <Text truncate="end" w="100%" mb='-6' fw={500}>{t(`Subjects.${subject}`)}</Text>
+                                        {!coverImage && category && <Badge radius="xs" size="sm" variant="light" mr={5} color="cyan">{t("category", { category })}</Badge>}
+                                        {progress && <Progress value={progress} radius="xs" />}
+                                    </Stack>
+                                </Flex>}
 
 
-                                    {lastQuestion && <Box>
-                                        <Text size="sm" fw="500" aria-label="Last Question" c="dimmed">
-                                            {t('lastQuestion')}
-                                        </Text>
-                                        <Text size="sm" fw="500" aria-label="Last Question">
-                                            {lastQuestion}
-                                        </Text>
-                                    </Box>
+                                {lastQuestion && <Box>
+                                    <Text size="sm" fw="500" aria-label="Last Question" c="dimmed">
+                                        {t('lastQuestion')}
+                                    </Text>
+                                    <Text size="sm" fw="500" aria-label="Last Question">
+                                        {lastQuestion}
+                                    </Text>
+                                </Box>
 
-                                    }
-                                    { coverImage !== 'none' && <ActionIcon className={classes["action-button"]} variant="transparent" color="gray"><IconPencil style={{ width: '80%', height: '80%' }} stroke={1.5} /></ActionIcon>}
-                                </Card.Section>
-                            </Box>
-                        </Stack>
-                    </Card>
-                </Tooltip.Floating>
+                                }
+                                {coverImage !== 'none' && <ActionIcon className={classes["action-button"]} variant="transparent" color="gray"><IconPencil style={{ width: '80%', height: '80%' }} stroke={1.5} /></ActionIcon>}
+                            </Card.Section>
+                        </Box>
+                    </Stack>
+                </Card>
             );
         case 'default':
         default:

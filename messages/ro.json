@@ -51,6 +51,10 @@
         "signIn": "conectați-vă cu",
         "welcome": "Bine ați venit la"
       },
+      "signOut": {
+        "confirm": "Sunteți sigur că doriți să vă deconectați?",
+        "title": "Deconectare"
+      },
       "verifyRequest": {
         "backToHome": "Înapoi",
         "message": "Ți-am trimis un email cu un link pentru verificarea adresei tale de email. Te rugăm să verifici inboxul și să dai clic pe linkul din email pentru a vă conecta la aplicație.",
@@ -225,7 +229,7 @@
         }
       },
       "exitConfiguration": {
-        "cancel": "Nu!! \nNu-l șterge",
+        "cancel": "Anulează",
         "confirm": "Ieși",
         "message": "Ești sigur că vrei să părăsești configurarea testului? \nTot progresul se va pierde.",
         "title": "Ieșiți"
@@ -360,6 +364,7 @@
       "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} de {🇩🇪} other {?}}"
     },
     "error": "Eroare",
+    "launch": "Du-te la!",
     "loading": "Se încarcă...",
     "noResults": "Fără rezultate",
     "nothingFound": "Nimic nu a fost găsit",
@@ -376,6 +381,11 @@
       "message": "Vă rugăm să așteptați ca înregistrarea dumneavoastră să fie validată de un moderator. Acest proces poate dura până la 24 de ore. \n\nDacă aveți întrebări, vă rugăm să ne contactați la {email}.",
       "short": "Trebuie să fiți autorizat pentru a accesa aplicația.",
       "title": "Înregistrarea nu a fost încă acceptată"
+    }
+  },
+  "TestType": {
+    "Types": {
+      "simple": "Standard"
     }
   },
   "Tests": {
@@ -398,5 +408,6 @@
     "resumeTest": "Continuă testul"
   },
   "createSampleData": "Creați date de probă",
-  "demo-components": "Componente demo"
+  "demo-components": "Componente demo",
+  "exitConfiguration": "Sunteți sigur că doriți să părăsiți configurația de test? Toate progresele vor fi pierdute."
 }

@@ -1,7 +1,7 @@
 'use client';
 import { AppShell, Group, Button, ActionIcon, Text, Divider, Stack, Grid, Affix, Transition, Badge, Flex, Tooltip, useMatches, Menu, ScrollArea } from "@mantine/core";
 import { useDidUpdate, useDocumentTitle, useSetState } from "@mantine/hooks";
-import { IconHome, IconSettingsCog, IconChecklist, IconChartInfographic, IconArrowUp, IconUsers, IconLogout, IconUserPlus, IconFile } from "@tabler/icons-react";
+import { IconHome, IconSettingsCog, IconChecklist, IconChartInfographic, IconArrowUp, IconUsers, IconLogout, IconUserPlus, IconFile, IconGraph } from "@tabler/icons-react";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import ColorSchemeToggleIcon from "../ColorSchemeToggleIcon/ColorSchemeToggleIcon";
@@ -199,6 +199,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
             </AppShell.Navbar>
             <AppShell.Main>
                 <ScrollArea
+                    maw={"100vw"}
                     onScrollPositionChange={setScrollPosition}
                     h={{ base: settings.tab.disableNavigation ? size : sizeMobile, sm: size }}
                     viewportRef={viewport}
@@ -315,7 +316,7 @@ export const tabsData: ITabData[] = [
     },
     {
         "tab": "stats",
-        "icon": IconChartInfographic,
+        "icon": IconGraph,
         "component": Stats,
         "category": {
             "name": "general",

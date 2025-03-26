@@ -1,0 +1,9 @@
+.signout-button {
+    transition: top ease 0.8s;
+    min-width: 100%;
+
+    &:hover {
+        top: -5px;
+    }
+    
+}

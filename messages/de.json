@@ -51,6 +51,10 @@
         "signIn": "Melden Sie sich an",
         "welcome": "Willkommen zu"
       },
+      "signOut": {
+        "confirm": "Sind Sie sicher, dass Sie sich abmelden wollen?",
+        "title": "Abmelden"
+      },
       "verifyRequest": {
         "backToHome": "Geh zurück",
         "message": "Wir haben Ihnen eine E-Mail mit einem Link gesendet, um Ihre E-Mail -Adresse zu überprüfen. \nBitte überprüfen Sie Ihren Posteingang und klicken Sie in der E-Mail auf den Link, um auf die App zuzugreifen.",
@@ -225,7 +229,7 @@
         }
       },
       "exitConfiguration": {
-        "cancel": "NEIN!! \nLöschen Sie es nicht",
+        "cancel": "Stornieren",
         "confirm": "Verlassen",
         "message": "Sind Sie sicher, dass Sie die Testkonfiguration verlassen möchten? \nAlle Fortschritte werden verloren gehen.",
         "title": "Testkonfiguration verlassen"
@@ -360,6 +364,7 @@
       "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} de {DE} other {?}}"
     },
     "error": "Fehler",
+    "launch": "Gehe zu!",
     "loading": "Laden...",
     "noResults": "Keine Ergebnisse",
     "nothingFound": "Nichts gefunden",
@@ -376,6 +381,11 @@
       "message": "Bitte warten Sie, bis Ihre Registrierung von einem Moderator validiert wird. \nDies kann bis zu 24 Stunden dauern. \n\n\nWenn Sie Fragen haben, kontaktieren Sie uns bitte unter {E-Mail}.",
       "short": "Sie müssen berechtigt sein, auf die App zuzugreifen.",
       "title": "Registrierung noch nicht akzeptiert"
+    }
+  },
+  "TestType": {
+    "Types": {
+      "simple": "Standard"
     }
   },
   "Tests": {
@@ -398,5 +408,6 @@
     "resumeTest": "Test fortsetzen"
   },
   "createSampleData": "Beispieldaten erstellen",
-  "demo-components": "Demo -Komponenten"
+  "demo-components": "Demo -Komponenten",
+  "exitConfiguration": "Sind Sie sicher, dass Sie die Testkonfiguration verlassen wollen? Der gesamte Fortschritt geht dann verloren."
 }

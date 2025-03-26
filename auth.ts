@@ -119,6 +119,8 @@ declare module "next-auth" {
     user: {
       /** The user's roles. */
       roles: Role[]
+      activeTests?: UserActiveTest[]
+      preferences: UserPreferences
       userAuthorized: boolean
       username?: string | null
       /**

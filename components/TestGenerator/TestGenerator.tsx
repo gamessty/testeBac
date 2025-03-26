@@ -43,7 +43,7 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
     const [error, setError] = useState<string | null>(null);
     const submitButtonRef = useRef<HTMLButtonElement>(null);
     const stepperRef = useRef<HTMLDivElement>(null);
-    const [activeFocus, { open: openFocusTrap }] = useDisclosure(true);
+    const [activeFocus] = useDisclosure(true);
     //ADD INVISIBLE AUTOFOCUS ELEMENT WITHIN THE TRAP SO THAT THE FOCUS IS NOT LOST WHEN NEXT BUTTON IS DISABLED
 
     useEffect(() => {
@@ -113,13 +113,12 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
     }, [configurations?.subjects]);
 
     useDidUpdate(() => {
-        openFocusTrap();
         if (!configurations) setAllowedStep(0);
         if (configurations?.category) setAllowedStep(1);
         if (configurations?.folder) setAllowedStep(2);
         if (configurations?.chapters?.length) setAllowedStep(3);
         if(!submitButtonRef.current?.disabled) submitButtonRef.current?.focus();
-        else if(stepperRef.current) findFirstFocusable(stepperRef.current)?.focus();
+        else if(stepperRef.current && active !== 2) findFirstFocusable(stepperRef.current)?.focus();
     }, [configurations])
 
     const [active, setActive] = useState(0);

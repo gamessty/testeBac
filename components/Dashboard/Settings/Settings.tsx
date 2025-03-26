@@ -17,6 +17,8 @@ import { Link } from "../../../i18n/routing";
 import LoadingButton from "../../LoadingButton/LoadingButton";
 import { CodingLanguageSelect } from "../../CodingLanguageSelect/CodingLanguageSelect";
 import createSampleData from "../../../actions/PrismaFunctions/createSampleData";
+import FontSizeSelector from "@/components/FontSizeSelector/FontSizeSelector";
+import FontSizeSelectorButton from "@/components/FontSizeSelector/FontSizeSelector.button";
 
 const fontSizeMarks = generateNumberArray(70, 130, 10).map(value => ({ value: value.toString(), label: `${value}%` }));
 
@@ -34,21 +36,12 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
     const [userChanges, setUserChanges] = useSetState((session?.user ?? {}) as SettingsUser);
     const getCookie = useGetCookie();
     const setCookie = useSetCookie();
-    const [fontSize, setFontSize] = useState(100);
-    const [debounced] = useDebouncedValue(fontSize, 200);
-    const [fontSizeLS, setFontSizeLS] = [
-        Number(getCookie('fontSize')) || 100,
-        (value: number) => setCookie('fontSize', value.toString())
-    ]
+    const [fontSize, setFontSize] = useState(Number(getCookie('fontSize')) || 100);
 
     useDidUpdate(() => {
-        setFontSizeLS(debounced);
-        document.documentElement.style.fontSize = `${debounced}%`;
-    }, [debounced]);
-
-    useDidUpdate(() => {
-        setFontSize(fontSizeLS);
-    }, [fontSizeLS]);
+        document.documentElement.style.fontSize = `${fontSize}%`;
+        setCookie('fontSize', fontSize);
+    }, [fontSize]);
 
     const t = useTranslations('Dashboard.Settings');
 
@@ -123,7 +116,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
     })
 
     return (
-        <Grid p={{ base: 30, sm: 35 }} pt={{ base: 20, sm: 25 }} pb={95} style={style}>
+        <Grid p={{ base: 30, sm: 35 }} pt={{ base: 20, sm: 25 }} maw={"100vw"} pb={95} style={style}>
             <Grid.Col span={12}>
                 <Title order={1} ta="left">
                     {t('title')}
@@ -157,7 +150,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                         </Stack>
                     </Group>
                 }
-                <Fieldset w={{ base: "90%", md: "75%", xl: "50%", "xxl": "30%" }} legend={t('Account.personalInfo')} mt={10}>
+                <Fieldset w={{ base: "90%", md: "75%", xl: "55%", "xxl": "40%" }} legend={t('Account.personalInfo')} mt={10}>
                     <TextInput
                         mb={10}
                         onChange={(Event) => setUserChanges({ name: Event.currentTarget.value })}
@@ -180,10 +173,17 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                         onChange={(language) => setUserChanges({ preferences: { codingLanguage: language.aliases[0] ?? language.language } })}
                     />
                     <InputLabel>{t('fontSize.label')}</InputLabel>
-                    <SegmentedControl
+                    <FontSizeSelector
                         value={fontSize.toString()}
-                        onChange={(value) => setFontSize(Number(value))}
                         data={fontSizeMarks}
+                        onChange={(value) => setFontSize(Number(value))}
+                        className={classes["font-size-segmented-control"] + " " + classes["hide-on-mobile"]}
+                    />
+                    <FontSizeSelectorButton
+                        hiddenFrom="md"
+                        value={fontSize.toString()}
+                        data={fontSizeMarks}
+                        onChange={(value) => setFontSize(Number(value))}
                         className={classes["font-size-segmented-control"]}
                     />
                 </Fieldset>

@@ -27,6 +27,7 @@ interface TestConfiguration {
     category?: string;
     folder?: Folder;
     subjects?: Subject[];
+    subjectsQuestions?: Subject[];
     chapters?: Chapter[];
 }
 
@@ -116,14 +117,14 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
         if (!configurations) setAllowedStep(0);
         if (configurations?.category) setAllowedStep(1);
         if (configurations?.folder) setAllowedStep(2);
-        if (configurations?.chapters?.length) setAllowedStep(3);
-        if(!submitButtonRef.current?.disabled) submitButtonRef.current?.focus();
-        else if(stepperRef.current && active !== 2) findFirstFocusable(stepperRef.current)?.focus();
+        if (configurations?.chapters?.length || configurations?.subjectsQuestions?.length) setAllowedStep(3);
+        if (!submitButtonRef.current?.disabled) submitButtonRef.current?.focus();
+        else if (stepperRef.current && active !== 2) findFirstFocusable(stepperRef.current)?.focus();
     }, [configurations])
 
     const [active, setActive] = useState(0);
-    const nextStep = () => { setActive((current) => (current < 4 ? current + 1 : current)); if(stepperRef.current) findFirstFocusable(stepperRef.current)?.focus(); };
-    const prevStep = () => { setActive((current) => (current > 0 ? current - 1 : current)); if(stepperRef.current) findFirstFocusable(stepperRef.current)?.focus(); };
+    const nextStep = () => { setActive((current) => (current < 4 ? current + 1 : current)); if (stepperRef.current) findFirstFocusable(stepperRef.current)?.focus(); };
+    const prevStep = () => { setActive((current) => (current > 0 ? current - 1 : current)); if (stepperRef.current) findFirstFocusable(stepperRef.current)?.focus(); };
     const isMobile = useMediaQuery(`(max-width: ${em(750)})`, true);
 
 
@@ -154,7 +155,7 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
                 <FocusTrap active={activeFocus}>
                     <Stack justify="space-between" h="100%" className={classes['main-stack']}>
                         <Stepper active={active} onStepClick={setActive} allowNextStepsSelect={false} ref={stepperRef}>
-                            <Stepper.Step  label={isMobile ? undefined : t('steps.1.label')} description={isMobile ? undefined : t('steps.1.description')}>
+                            <Stepper.Step label={isMobile ? undefined : t('steps.1.label')} description={isMobile ? undefined : t('steps.1.description')}>
                                 {categories && categories.length > 0 &&
                                     <TestGeneratorSelector
                                         value={configurations?.category}
@@ -184,67 +185,75 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
                                 }
                             </Stepper.Step>
                             <Stepper.Step label={isMobile ? undefined : t('steps.2.label')} description={isMobile ? undefined : t('steps.2.description')}>
-                                {
-                                    <TestGeneratorSelector
-                                        value={configurations?.folder?.id}
-                                        data={folder.filter((folder) => folder.category == configurations?.category)}
-                                        onChange={(value) => {
-                                            setConfigurations((prev) => {
-                                                if (prev) return {
-                                                    ...prev,
-                                                    folder: folder.find((folder) => folder.id == value)
-                                                }
-                                            });
-                                        }}
-                                    />
-                                }
+                                <TestGeneratorSelector
+                                    value={configurations?.folder?.id}
+                                    data={folder.filter((folder) => folder.category == configurations?.category)}
+                                    onChange={(value) => {
+                                        setConfigurations((prev) => {
+                                            if (prev) return {
+                                                ...prev,
+                                                folder: folder.find((folder) => folder.id == value)
+                                            }
+                                        });
+                                    }}
+                                />
                             </Stepper.Step>
                             <Stepper.Step label={isMobile ? undefined : t('steps.3.label')} description={isMobile ? undefined : t('steps.3.description')}>
-                                {
-                                    <TestGeneratorSelectorChip
-                                        label="Select Subjects"
-                                        data={subjects.filter((subject) => subject.folderId == configurations?.folder?.id)}
-                                        onChange={(value) => {
-                                            setConfigurations((prev) => {
-                                                if (prev) {
-                                                    return {
-                                                        ...prev,
-                                                        subjects: value.map((subject) => subjects.find((s) => s.id == subject) as Subject)
-                                                    }
-                                                }
-                                            });
-                                        }}
-                                        value={configurations?.subjects?.map((subject) => subject.id)}
-                                        allowMultiple={true}
-                                        chipProps={{
-                                            size: 'sm',
-                                            radius: 'sm',
-                                            variant: 'light',
-                                        }}
-                                    />
-                                }
-                                <Divider className={classes['divider']} />
-                                {
-                                    <TestGeneratorSelector
-                                        value={configurations?.chapters?.map((chapter) => chapter.id)}
-                                        data={chapters.filter((chapter) => configurations?.subjects?.map((subject) => subject.id).includes(chapter.subjectId))}
-                                        allowMultiple={true}
-                                        onChange={(value) => {
-                                            setConfigurations((prev) => {
-                                                if (prev) return {
+                                <TestGeneratorSelectorChip
+                                    label="Select Subjects"
+                                    data={subjects.filter((subject) => subject.folderId == configurations?.folder?.id && subject.type == "CHAPTER")}  //TBD ADD FILTER FOR THE SUBJECTS THAT ONLY HAVE QUESTIONS AND MAKE THEM APPEAR AS CARDS, PROBABLY FETCH ALL THE CHAPTERS IN LOADING... OR ADD A SUBJECT TYPE PROPERTY IN THE DATABASE ( PROBABLY EASIER )
+                                    onChange={(value) => {
+                                        setConfigurations((prev) => {
+                                            if (prev) {
+                                                return {
                                                     ...prev,
-                                                    chapters: value.map((chapter) => chapters.find((c) => c.id == chapter) as Chapter)
+                                                    subjects: value.map((subject) => subjects.find((s) => s.id == subject) as Subject)
                                                 }
-                                            });
-                                        }}
-                                        loaderProps={{
-                                            mb: 30,
-                                            color: 'grey',
-                                            type: 'dots'
-                                        }}
-                                        loader={(configurations?.subjects && configurations?.subjects?.length !== 0) && chapters.length === 0}
-                                    />
-                                }
+                                            }
+                                        });
+                                    }}
+                                    value={configurations?.subjects?.map((subject) => subject.id)}
+                                    allowMultiple={true}
+                                    chipProps={{
+                                        size: 'sm',
+                                        radius: 'sm',
+                                        variant: 'light',
+                                    }}
+                                />
+                                <Divider className={classes['divider']} />
+                                <TestGeneratorSelector
+                                    value={configurations?.subjectsQuestions?.map((subject) => subject.id)}
+                                    data={subjects.filter((subject) => subject.folderId == configurations?.folder?.id && subject.type == "QUESTION")}
+                                    allowMultiple={true}
+                                    onChange={(value) => {
+                                        setConfigurations((prev) => {
+                                            if (prev) return {
+                                                ...prev,
+                                                subjectsQuestions: value.map((subject) => subjects.find((s) => s.id == subject) as Subject)
+                                            }
+                                        });
+                                    }}
+                                />
+                                <Divider className={classes['divider']} />
+                                <TestGeneratorSelector
+                                    value={configurations?.chapters?.map((chapter) => chapter.id)}
+                                    data={chapters.filter((chapter) => configurations?.subjects?.map((subject) => subject.id).includes(chapter.subjectId))}
+                                    allowMultiple={true}
+                                    onChange={(value) => {
+                                        setConfigurations((prev) => {
+                                            if (prev) return {
+                                                ...prev,
+                                                chapters: value.map((chapter) => chapters.find((c) => c.id == chapter) as Chapter)
+                                            }
+                                        });
+                                    }}
+                                    loaderProps={{
+                                        mb: 30,
+                                        color: 'grey',
+                                        type: 'dots'
+                                    }}
+                                    loader={(configurations?.subjects && configurations?.subjects?.length !== 0) && chapters.length === 0}
+                                />
                             </Stepper.Step>
                             <Stepper.Step label={isMobile ? undefined : t('steps.4.label')} description={isMobile ? undefined : t('steps.4.description')}>
                                 <TestTypeSelector radius="lg" className={classes['test-type-selector']} />

@@ -39,16 +39,17 @@ export default function Home({ style, session }: Readonly<HomeProps>) {
             </Title>
             <Center style={{ flexGrow: 1 }}>
                 <SimpleGrid maw="100vw" verticalSpacing="lg" cols={2} w={{ base: "90%", xs: '80%', md: "60%", lg: '50%', xxl: '35%' }}>
-                    <LinkCard design="compact" mih="100%" actionIcon={<IconFile />} name="tests" href={pathname + "?" + createQueryString("tab", "tests")} />
-                    <LinkCard design="compact" mih="100%" actionIcon={<IconSettings />} name="Settings" href={pathname + "?" + createQueryString("tab", "settings")} />
-                    <LinkCard design="compact" mih="100%" actionIcon={<IconGraph />} name="Stats" href={pathname + "?" + createQueryString("tab", "stats")} />
-                    <LinkCard design="compact" mih="100%" actionIcon={<IconLogout color="red" />} name="Logout" href="/api/auth/signout" noLocale />
+                    <LinkCard design="compact" mih="100%" actionIcon={<IconFile />} name={t("Navbar.tests")} href={pathname + "?" + createQueryString("tab", "tests")} />
+                    <LinkCard design="compact" mih="100%" actionIcon={<IconSettings />} name={t('Navbar.settings')} href={pathname + "?" + createQueryString("tab", "settings")} />
+                    <LinkCard design="compact" mih="100%" actionIcon={<IconGraph />} name={t("Navbar.stats")} href={pathname + "?" + createQueryString("tab", "stats")} />
+                    <LinkCard design="compact" mih="100%" actionIcon={<IconLogout color="red" />} name={t('Navbar.signout')} href="/api/auth/signout" />
                     {
-                        chkP("*:*", session.user) &&
-                        <>
-                            <LinkCard withBorder design="compact" mih="100%" actionIcon={<IconUser />} badge="admin" name="Users" href={pathname + "?" + createQueryString("tab", "admin.users")} />
-                            <LinkCard withBorder design="compact" mih="100%" actionIcon={<IconUserPlus />} badge="admin" name="Roles" href={pathname + "?" + createQueryString("tab", "admin.roles")} />
-                        </>
+                        chkP("user:manage", session.user) &&
+                        <LinkCard withBorder design="compact" mih="100%" actionIcon={<IconUser />} badge="admin" name={t("Navbar.admin.users")} href={pathname + "?" + createQueryString("tab", "admin.users")} />
+                    }
+                    {
+                        chkP("role:manage", session.user) &&
+                        <LinkCard withBorder design="compact" mih="100%" actionIcon={<IconUserPlus />} badge="admin" name={t('Navbar.admin.roles')} href={pathname + "?" + createQueryString("tab", "admin.roles")} />
                     }
                 </SimpleGrid>
             </Center>

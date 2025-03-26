@@ -12,9 +12,10 @@ model Folder {
 }
 
 model Subject {
-    id        String     @id @default(auto()) @map("_id") @db.ObjectId
-    folderId  String     @db.ObjectId
-    name      String     @unique
+    id        String      @id @default(auto()) @map("_id") @db.ObjectId
+    folderId  String      @db.ObjectId
+    name      String      @unique
+    type      SubjectType @default(CHAPTER)
     questions Question[]
     chapters  Chapter[]
 
@@ -76,6 +77,11 @@ model UserTest {
 enum TestType {
     GENERAL
     TIME_LIMITED
+}
+
+enum SubjectType {
+    QUESTION
+    CHAPTER
 }
 
 type SelectedAnswer {

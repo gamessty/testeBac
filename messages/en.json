@@ -2,10 +2,6 @@
   "Authentication": {
     "customPages": {
       "error": {
-        "MissingCSRF": {
-          "title": "Missing CSRF token",
-          "description": "The CSRF token is missing. Please refresh the page and try again."
-        },
         "Callback": {
           "description": "Something went wrong while processing your login request. Please try again.",
           "title": "Login Callback Error"
@@ -25,6 +21,10 @@
         "EmailSignin": {
           "description": "We couldn't send the verification email. Please check your email address and try again.",
           "title": "Email Sign-In Failed"
+        },
+        "MissingCSRF": {
+          "description": "The CSRF token is missing. Please refresh the page and try again.",
+          "title": "Missing CSRF token"
         },
         "OAuthAccountNotLinked": {
           "description": "This email is linked to another login method. Please use the original method to sign in.",
@@ -102,6 +102,7 @@
       "profile": "Profile",
       "results": "Results",
       "settings": "Settings",
+      "signout": "Sign Out",
       "stats": "Stats",
       "subjects": "Subjects",
       "test": {

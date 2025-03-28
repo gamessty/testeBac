@@ -22,6 +22,8 @@ import getChapters from "../../actions/PrismaFunctions/getChapters";
 import TestGeneratorSelectorChip from "../TestGeneratorSelector/TestGeneratorSelector.Chip";
 import findFirstFocusable from "./findFirstFocusable";
 import TestTypeSelector from "./TestTypeSelector/TestTypeSelector";
+import { useRouter } from "next/navigation";
+import { modals } from "@mantine/modals";
 
 interface TestConfiguration {
     category?: string;
@@ -34,6 +36,7 @@ interface TestConfiguration {
 export default function TestGenerator({ session, ...props }: Readonly<{ session: Session } & ContainerProps>) {
     // ... rest of the code
     const t = useTranslations('Dashboard.TestGenerator');
+    const router = useRouter();
 
     const [configurations, setConfigurations] = useState<TestConfiguration>();
     const [allowedStep, setAllowedStep] = useState<number>(0);
@@ -42,7 +45,6 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
     const [subjects, setSubjects] = useState<Subject[]>([]);
     const [chapters, setChapters] = useState<Chapter[]>([]);
     const [error, setError] = useState<string | null>(null);
-    const submitButtonRef = useRef<HTMLButtonElement>(null);
     const stepperRef = useRef<HTMLDivElement>(null);
     const [activeFocus] = useDisclosure(true);
     //ADD INVISIBLE AUTOFOCUS ELEMENT WITHIN THE TRAP SO THAT THE FOCUS IS NOT LOST WHEN NEXT BUTTON IS DISABLED
@@ -68,11 +70,6 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
     }, [configurations?.category]);
 
     useDidUpdate(() => {
-        setAllowedStep(1);
-        setConfigurations((prev) => ({ category: prev?.category, folder: prev?.folder }));
-    }, [configurations?.folder]); //PROBABLY MERGE THESE TWO HOOKS AS THEY CHECK FOR UPDATES ON THE SAME THING.
-
-    useDidUpdate(() => {
         async function fetchData() {
             if (!configurations?.folder) return;
             setSubjects([]);
@@ -88,6 +85,8 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
             }
         }
         fetchData();
+        setAllowedStep(1);
+        setConfigurations((prev) => ({ category: prev?.category, folder: prev?.folder }));
     }, [configurations?.folder]);
 
     useDidUpdate(() => {
@@ -118,8 +117,6 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
         if (configurations?.category) setAllowedStep(1);
         if (configurations?.folder) setAllowedStep(2);
         if (configurations?.chapters?.length || configurations?.subjectsQuestions?.length) setAllowedStep(3);
-        if (!submitButtonRef.current?.disabled) submitButtonRef.current?.focus();
-        else if (stepperRef.current && active !== 2) findFirstFocusable(stepperRef.current)?.focus();
     }, [configurations])
 
     const [active, setActive] = useState(0);
@@ -140,6 +137,16 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
         confirmProps: { color: 'red' },
     }
 
+    const confirmationModal = () => {
+        modals.openConfirmModal({ onConfirm: () => { router.back(); }, ...confirmTestConfigurationExitProps });
+    };
+
+    useEffect(() => {
+        window.onpopstate = (event) => {
+        }
+
+        
+    }, [router]);
 
     return (
         <Container size="xl" p={{ base: 30, sm: 35 }} pt={{ base: 20, sm: 25 }} className={classes['main-container']} {...props}>
@@ -270,7 +277,7 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
 
                         <Group justify="center" mt="xl">
                             <Button disabled={active == 0} variant="default" onClick={prevStep}>{t('steps.back')}</Button>
-                            <Button ref={submitButtonRef} rightSection={<IconChevronRight />} disabled={active + 1 > allowedStep} onClick={nextStep}>{active == 3 ? t('steps.generate') : t('steps.next')}</Button>
+                            <Button rightSection={<IconChevronRight />} disabled={active + 1 > allowedStep} onClick={nextStep}>{active == 3 ? t('steps.generate') : t('steps.next')}</Button>
                         </Group>
                     </Stack>
                 </FocusTrap>

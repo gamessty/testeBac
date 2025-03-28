@@ -21,6 +21,7 @@ import FontSizeSelector from "@/components/FontSizeSelector/FontSizeSelector";
 import FontSizeSelectorButton from "@/components/FontSizeSelector/FontSizeSelector.button";
 import { ITabModuleProps } from "@/data";
 import { initiateFontSize } from "@/actions/PrismaFunctions/initiateFontSize";
+import { importQuestionsFromJson } from "@/actions/PrismaFunctions/createSampleData2";
 
 const fontSizeMarks = generateNumberArray(60, 130, 10).map(value => ({ value: value.toString(), label: `${value}%` }));
 
@@ -116,6 +117,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
         sm: { bottom: 20, left: 320 }
     })
 
+
     return (
         <Grid p={{ base: 30, sm: 35 }} pt={{ base: 20, sm: 25 }} maw={"100vw"} pb={95} style={style}>
             <Grid.Col span={12}>
@@ -209,9 +211,11 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                         <LoadingButton mt={10} variant="outline" component={Link} href="./app/demo/">{t('demoComponents')}</LoadingButton>
                         {
                             chkP("developer:*", session?.user) &&
-                            <Button variant="outline" mt={10} onClick={async () => {
+                            <><Button variant="outline" mt={10} onClick={async () => {
                                 createSampleData();
-                            }}>{t('createSampleData')}</Button>
+                            }}>{t('createSampleData')}</Button><Button variant="outline" mt={10} onClick={async () => {
+                                importQuestionsFromJson();
+                            }}>{t('createSampleData')+ ' 2'}</Button></>
                         }
                     </ButtonGroup>
                     <Text mt={10} c="dimmed" size="sm">BASIC STRING COMPARE: {(JSON.stringify(userChanges) !== JSON.stringify(session?.user)).toString()}</Text>

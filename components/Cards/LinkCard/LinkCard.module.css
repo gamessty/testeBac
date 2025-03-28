@@ -72,10 +72,10 @@
 }   
 
 .link-card.compact {
-    cursor: url('/cursors/click_cursor_28.png'), pointer;
+    cursor: url('/cursors/click_cursor_25.png'), pointer;
 
     * {
-        cursor: url('/cursors/click_cursor_28.png'), pointer;
+        cursor: url('/cursors/click_cursor_25.png'), pointer;
     }
 }
 

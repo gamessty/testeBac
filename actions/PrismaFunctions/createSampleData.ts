@@ -20,7 +20,7 @@ export default async function createSampleData(): Promise<{ message: string }> {
     if (!session?.user) {
         return { message: "Not authenticated" };
     }
-    if (!chkP("developer:*", session.user)) {
+    if (!chkP("developer:database", session.user)) {
         return { message: "Unauthorized" };
     }
     try {
@@ -163,3 +163,8 @@ async function seedDatabase() {
 }
 
 export { createSampleData };
+
+
+const sampleData = {
+
+}

@@ -64,10 +64,10 @@
 }
 
 .test-card.compact {
-    cursor: url('/cursors/play_cursor_28.png'), pointer;
+    cursor: url('/cursors/play_cursor_25.png'), pointer;
 
     * {
-        cursor: url('/cursors/play_cursor_28.png'), pointer;
+        cursor: url('/cursors/play_cursor_25.png'), pointer;
     }
 }
 

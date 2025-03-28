@@ -1,4 +1,4 @@
-import { Box, Center, Container, ContainerProps, Divider, Flex, MantineStyleProp, SimpleGrid, Text, Title } from "@mantine/core";
+import { Box, Center, Container, ContainerProps, Divider, Flex, MantineStyleProp, SimpleGrid, Stack, Text, Title } from "@mantine/core";
 import { useTranslations } from "next-intl";
 import TestCard from "../../Cards/TestCard/TestCard";
 import CreateTestCard from "../../Cards/CreateTestCard/CreateTestCard";
@@ -19,7 +19,7 @@ export default function Tests({ session, settab, ...props }: Readonly<{ session:
             </Title>
             <Flex direction="column" pt={{ base: 5, sm: 10 }} h="100%" pb="md">
                 <Center style={{ flexGrow: 1 }}>
-                    <SimpleGrid maw="100vw" cols={1} w={{ base: "95%", md: "70%", lg: '60%' }}>
+                    <Stack maw="100vw" w={{ base: "100%", md: "70%", lg: '60%' }}>
                         { // add the test logic later
                         }
                         <CreateTestCard onClick={
@@ -44,7 +44,7 @@ export default function Tests({ session, settab, ...props }: Readonly<{ session:
                         <TestCard design="compact" mih="100%" category="admission" subject="chemistry" href="#" />
                         <Divider variant="dashed" />
                         <TestCard design="compact" mih="100%" category="admission" subject="informatics" href="#" />
-                    </SimpleGrid>
+                    </Stack>
                 </Center>
             </Flex>
         </Container>

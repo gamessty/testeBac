@@ -57,6 +57,7 @@
       },
       "signOut": {
         "confirm": "Sunteți sigur că doriți să vă deconectați?",
+        "signOut": "Deconectare",
         "title": "Deconectare"
       },
       "verifyRequest": {
@@ -200,7 +201,7 @@
           "label": "Nume",
           "placeholder": "Nume Prenume"
         },
-        "personalInfo": "Informații personale",
+        "personalInfo": "Informații și preferințe personale",
         "title": "Cont",
         "username": {
           "label": "Nume de utilizator",

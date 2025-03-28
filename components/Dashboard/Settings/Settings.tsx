@@ -9,9 +9,9 @@ import { Session, User } from "next-auth";
 import putUser from "../../../actions/PrismaFunctions/putUser";
 import { chkP, getDifferences, getInitialsColor } from "../../../utils";
 import AvatarFallback from "../../AvatarFallback/AvatarFallback";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import LocaleSelect from "../../LocaleSelect/LocaleSelect";
-import { useGetCookie, useSetCookie } from "cookies-next";
+import { setCookie, getCookie, hasCookie } from "cookies-next/client";
 import classes from './Settings.module.css';
 import { Link } from "../../../i18n/routing";
 import LoadingButton from "../../LoadingButton/LoadingButton";
@@ -19,13 +19,12 @@ import { CodingLanguageSelect } from "../../CodingLanguageSelect/CodingLanguageS
 import createSampleData from "../../../actions/PrismaFunctions/createSampleData";
 import FontSizeSelector from "@/components/FontSizeSelector/FontSizeSelector";
 import FontSizeSelectorButton from "@/components/FontSizeSelector/FontSizeSelector.button";
+import { ITabModuleProps } from "@/data";
+import { initiateFontSize } from "@/actions/PrismaFunctions/initiateFontSize";
 
-const fontSizeMarks = generateNumberArray(70, 130, 10).map(value => ({ value: value.toString(), label: `${value}%` }));
+const fontSizeMarks = generateNumberArray(60, 130, 10).map(value => ({ value: value.toString(), label: `${value}%` }));
 
-interface SettingsProps {
-    session: Session | null | undefined;
-    style?: MantineStyleProp;
-}
+interface SettingsProps extends ITabModuleProps{ }
 
 interface SettingsUser extends User {
     loading?: boolean;
@@ -34,13 +33,15 @@ interface SettingsUser extends User {
 export default function Settings({ session, style }: Readonly<SettingsProps>) {
     // TO-DO: Implement the settings logic and add the necessary modification to the saveChanges button Affix
     const [userChanges, setUserChanges] = useSetState((session?.user ?? {}) as SettingsUser);
-    const getCookie = useGetCookie();
-    const setCookie = useSetCookie();
-    const [fontSize, setFontSize] = useState(Number(getCookie('fontSize')) || 100);
+    const [fontSize, setFontSize] = useState(Number(getCookie('fontSize') ?? 0));
 
     useDidUpdate(() => {
-        document.documentElement.style.fontSize = `${fontSize}%`;
+        if(!getCookie('fontSize') ) { initiateFontSize(100); }
+        document.documentElement.style.fontSize = `${fontSize-10}%`;
         setCookie('fontSize', fontSize);
+    }, [fontSize]);
+    useEffect(() => {
+        if(fontSize == 0 ) { initiateFontSize(100); setFontSize(100); }
     }, [fontSize]);
 
     const t = useTranslations('Dashboard.Settings');
@@ -150,7 +151,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                         </Stack>
                     </Group>
                 }
-                <Fieldset w={{ base: "90%", md: "75%", xl: "55%", "xxl": "40%" }} legend={t('Account.personalInfo')} mt={10}>
+                <Fieldset w={{ base: "100%", md: "75%", xl: "55%", "xxl": "40%" }} legend={t('Account.personalInfo')} className={classes["fieldset"]}>
                     <TextInput
                         mb={10}
                         onChange={(Event) => setUserChanges({ name: Event.currentTarget.value })}
@@ -174,12 +175,14 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
                     />
                     <InputLabel>{t('fontSize.label')}</InputLabel>
                     <FontSizeSelector
+                        disabled={!fontSize}
                         value={fontSize.toString()}
-                        data={fontSizeMarks}
+                        data={fontSizeMarks.slice(1)}
                         onChange={(value) => setFontSize(Number(value))}
                         className={classes["font-size-segmented-control"] + " " + classes["hide-on-mobile"]}
                     />
                     <FontSizeSelectorButton
+                        disabled={!fontSize}
                         hiddenFrom="md"
                         value={fontSize.toString()}
                         data={fontSizeMarks}

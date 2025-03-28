@@ -9,11 +9,9 @@ import LinkCard from "@/components/Cards/LinkCard/LinkCard";
 import { usePathname } from "@/i18n/routing";
 import { useCallback } from "react";
 import { IconFile, IconGraph, IconLogout, IconSettings, IconUser, IconUserPlus } from "@tabler/icons-react";
+import { ITabModuleProps } from "@/data";
 
-interface HomeProps {
-    style?: MantineStyleProp;
-    session: Session
-}
+interface HomeProps extends ITabModuleProps {}
 
 const createQueryString = (name: string, value: string) => {
     const params = new URLSearchParams()
@@ -21,7 +19,7 @@ const createQueryString = (name: string, value: string) => {
     return params.toString()
 }
 
-export default function Home({ style, session }: Readonly<HomeProps>) {
+export default function Home({ style, session, settab }: Readonly<HomeProps>) {
     const t = useTranslations('Dashboard');
     const pathname = usePathname();
 
@@ -39,17 +37,17 @@ export default function Home({ style, session }: Readonly<HomeProps>) {
             </Title>
             <Center style={{ flexGrow: 1 }}>
                 <SimpleGrid maw="100vw" verticalSpacing="lg" cols={2} w={{ base: "90%", xs: '80%', md: "60%", lg: '50%', xxl: '35%' }}>
-                    <LinkCard design="compact" mih="100%" actionIcon={<IconFile />} name={t("Navbar.tests")} href={pathname + "?" + createQueryString("tab", "tests")} />
-                    <LinkCard design="compact" mih="100%" actionIcon={<IconSettings />} name={t('Navbar.settings')} href={pathname + "?" + createQueryString("tab", "settings")} />
-                    <LinkCard design="compact" mih="100%" actionIcon={<IconGraph />} name={t("Navbar.stats")} href={pathname + "?" + createQueryString("tab", "stats")} />
-                    <LinkCard design="compact" mih="100%" actionIcon={<IconLogout color="red" />} name={t('Navbar.signout')} href="/api/auth/signout" />
+                    <LinkCard design="compact" mih="100%" actionIcon={<IconFile />} name={t("Navbar.tests")} onClick={() => { settab({ tab: 'tests' }) }} />
+                    <LinkCard design="compact" mih="100%" actionIcon={<IconSettings />} name={t('Navbar.settings')} onClick={() => { settab({ tab: 'settings' }) }} />
+                    <LinkCard design="compact" mih="100%" actionIcon={<IconGraph />} name={t("Navbar.stats")} onClick={() => { settab({ tab: 'stats' }) }} />
+                    <LinkCard design="compact" mih="100%" actionIcon={<IconLogout color="var(--mantine-color-red-5)" />} name={t('Navbar.signout')} href="/api/auth/signout" />
                     {
                         chkP("user:manage", session.user) &&
-                        <LinkCard withBorder design="compact" mih="100%" actionIcon={<IconUser />} badge="admin" name={t("Navbar.admin.users")} href={pathname + "?" + createQueryString("tab", "admin.users")} />
+                        <LinkCard withBorder design="compact" mih="100%" actionIcon={<IconUser />} badge="admin" name={t("Navbar.admin.users")} onClick={() => { settab({ tab: 'admin.users' }) }} />
                     }
                     {
                         chkP("role:manage", session.user) &&
-                        <LinkCard withBorder design="compact" mih="100%" actionIcon={<IconUserPlus />} badge="admin" name={t('Navbar.admin.roles')} href={pathname + "?" + createQueryString("tab", "admin.roles")} />
+                        <LinkCard withBorder design="compact" mih="100%" actionIcon={<IconUserPlus />} badge="admin" name={t('Navbar.admin.roles')} onClick={() => { settab({ tab: 'admin.roles' }) }} />
                     }
                 </SimpleGrid>
             </Center>

@@ -1,9 +1,31 @@
 .signout-button {
-    transition: top ease 0.8s;
-    min-width: 100%;
+    transition: top ease 0.2s;
+    width: 100%;
+    background-color: var(--mantine-color-red-6);
+    top: 0;
 
     &:hover {
+        background-color: var(--mantine-color-red-6);
         top: -5px;
     }
-    
+}
+
+.signout-title {
+    margin-bottom: var(--mantine-spacing-xs);
+    display: flex;
+    align-items: center;
+    gap: var(--mantine-spacing-xs);
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 99vh;
+}
+
+.paper {
+    max-width: 80vw;
+    width: 700px;
 }

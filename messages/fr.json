@@ -57,6 +57,7 @@
       },
       "signOut": {
         "confirm": "Êtes-vous sûr de vouloir vous déconnecter ?",
+        "signOut": "S'inscrire",
         "title": "S'inscrire"
       },
       "verifyRequest": {
@@ -200,7 +201,7 @@
           "label": "Nom",
           "placeholder": "Entrez votre nom"
         },
-        "personalInfo": "Information personnelle",
+        "personalInfo": "Informations et préférences personnelles",
         "title": "Compte",
         "username": {
           "label": "Nom d'utilisateur",

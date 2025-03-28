@@ -20,12 +20,16 @@
     text-align: center;
     min-width: 0;
 
-    @mixin hover {
+    &[disabled] {
+        cursor: not-allowed;
+    }
+
+    &:hover:not([disabled]) {
         color: light-dark(var(--mantine-color-black), var(--mantine-color-white));
         background-color: light-dark(var(--mantine-color-gray-1), var(--mantine-color-dark-7));
     }
 
-    &[data-active] {
+    &[data-active]:not([disabled]) {
         color: var(--mantine-color-white);
     }
 }

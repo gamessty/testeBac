@@ -1,5 +1,5 @@
 'use client';
-import { AppShell, Group, Button, ActionIcon, Text, Divider, Stack, Grid, Affix, Transition, Badge, Flex, Tooltip, useMatches, Menu, ScrollArea } from "@mantine/core";
+import { AppShell, Group, Button, ActionIcon, Text, Divider, Stack, Grid, Affix, Transition, Badge, Flex, Tooltip, useMatches, Menu, ScrollArea, LoadingOverlay } from "@mantine/core";
 import { useDidUpdate, useDocumentTitle, useSetState } from "@mantine/hooks";
 import { IconHome, IconSettingsCog, IconChecklist, IconChartInfographic, IconArrowUp, IconUsers, IconLogout, IconUserPlus, IconFile, IconGraph } from "@tabler/icons-react";
 import { Session } from "next-auth";
@@ -32,6 +32,7 @@ interface SettingsSetState {
     hour: number;
     minute: number;
     year: number;
+    tabLoading?: boolean;
 }
 
 export default function AppShellDashboard({ session }: Readonly<AppShellDashboardProps>) {
@@ -45,13 +46,16 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
         title: 'testeBac | ' + t('Navbar.' + (searchParams.get('tab') ?? 'home')),
         hour: (new Date()).getHours(),
         minute: (new Date()).getMinutes(),
-        year: (new Date()).getUTCFullYear()
+        year: (new Date()).getUTCFullYear(),
+        tabLoading: false
     });
 
     useDocumentTitle(settings.title);
 
     const [scrollPosition, setScrollPosition] = useState({ x: 0, y: 0 });
     const viewport = useRef<HTMLDivElement>(null);
+
+
 
 
     useDidUpdate(() => {
@@ -66,6 +70,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
     });
 
     function handleTabChange({ tab, disableNavigation }: { tab: string, disableNavigation?: boolean }) {
+        if(!disableNavigation) { disableNavigation = tabsData.find((tabData) => tabData.tab == tab)?.disableNavigation; }
         setSettings({ tab: { tab, disableNavigation }, title: 'testeBac | ' + t('Navbar.' + tab) });
         const params = new URLSearchParams(searchParams.toString());
         params.set('tab', tab);
@@ -199,10 +204,11 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
             </AppShell.Navbar>
             <AppShell.Main>
                 <ScrollArea
-                    maw={"100vw"}
+                    maw={"99vw"}
                     onScrollPositionChange={setScrollPosition}
                     h={{ base: settings.tab.disableNavigation ? size : sizeMobile, sm: size }}
                     viewportRef={viewport}
+                    scrollbars="y"
                     classNames={{
                         viewport: classes.appShellScrollArea
                     }}>
@@ -211,7 +217,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                             <Transition key={tab.tab + "_tabComponent"} transition="fade-right" timingFunction="ease" enterDelay={tab.disableNavigation ? 100 : 0} duration={tab.disableNavigation ? 800 : 300} mounted={settings.tab.tab == tab.tab} >
                                 {(transitionStyles) => (
                                     <>
-                                        {settings.tab.tab == tab.tab && tab.component && <tab.component session={session} settab={handleTabChange} style={transitionStyles} />}
+                                        {settings.tab.tab == tab.tab && tab.component && <tab.component session={session} settab={handleTabChange} triggerloading={(loadingStatus: boolean) => setSettings({ tabLoading: loadingStatus }) } style={transitionStyles} />}
                                     </>
                                 )}
                             </Transition>

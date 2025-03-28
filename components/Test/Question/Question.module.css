@@ -2,6 +2,7 @@
     position: relative;
     padding: var(--mantine-spacing-xs);
     transition: border-color 150ms ease;
+    border-color: initial;
 
     &[data-checked] {
         border-color: var(--mantine-primary-color-filled);

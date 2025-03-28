@@ -17,8 +17,8 @@ import {
 } from "@mantine/core";
 
 import { theme, resolver } from "../../theme";
-import FontSizeUpdater from "../../components/FontSizeUpdater/FontSizeUpdater";
 import { cookies } from "next/headers";
+import { initiateFontSize } from "@/actions/PrismaFunctions/initiateFontSize";
 
 export const metadata = {
   title: "testeBac | Home",
@@ -28,23 +28,26 @@ export const metadata = {
 export default async function Locale({ children, params }: Readonly<{ children: React.ReactNode; params: Promise<{ locale: string }> }>) {
   // Ensure that the incoming `locale` is valid
   const { locale } = await params;
+  const cookiez = await cookies()
+  let fontSize = cookiez.get('fontSize')?.value
 
   if (!routing.locales.includes(locale as any)) {
     notFound();
   }
 
-  const fontSize = (await cookies()).get('fontSize')?.value ?? 100;
-
+  if(isNaN(Number(fontSize))) {
+    fontSize = '100'
+  }
   // Providing all messages to the client
   // side is the easiest way to get started
   const messages = await getMessages();
 
   return (
-    <html lang={locale} {...mantineHtmlProps} 
-    style={ { fontSize: `${fontSize}%` } } 
-    suppressHydrationWarning>
+    <html lang={locale} {...mantineHtmlProps}
+      style={{ fontSize: `${Number(fontSize)-10}%` }}
+      suppressHydrationWarning>
       <head>
-        <ColorSchemeScript />
+        <ColorSchemeScript defaultColorScheme="auto" />
         <link rel="shortcut icon" href="/favicon.svg" />
         <meta
           name="viewport"
@@ -54,8 +57,6 @@ export default async function Locale({ children, params }: Readonly<{ children: 
       <body>
         <NextIntlClientProvider messages={messages}>
           <MantineProvider defaultColorScheme="auto" theme={theme} cssVariablesResolver={resolver}>
-            {//<FontSizeUpdater />
-            }
             <Notifications />
             <ModalsProvider>{children}</ModalsProvider>
           </MantineProvider>

@@ -60,7 +60,8 @@
 .link-card {
     position: relative;
     margin-bottom: var(--mantine-spacing-md);
-    transition: top ease 0.3s;
+    transition: top ease 0.2s;
+    top: 0;
     .title {
         text-transform: capitalize;
     }

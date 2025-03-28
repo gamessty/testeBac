@@ -1,5 +1,6 @@
 import { DefaultMantineColor } from "@mantine/core";
 import { Icon, IconProps } from "@tabler/icons-react";
+import { Session } from "next-auth";
 import { ForwardRefExoticComponent, JSX } from "react";
 
 /**
@@ -58,4 +59,11 @@ export interface ITabData {
     mobile?: boolean;
     visible?: boolean;
     permissionNeeded: Permissions | Permissions[];
+}
+
+export interface ITabModuleProps {
+    settab: (tabData: {tab: string, disableNavigation?: boolean}) => void;
+    triggerloading: (loading: boolean) => void;
+    style: React.CSSProperties;
+    session: Session;
 }

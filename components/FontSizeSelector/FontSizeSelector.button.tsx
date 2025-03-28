@@ -1,5 +1,5 @@
 import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
-import { Button, ButtonGroupProps } from '@mantine/core';
+import { Button, ButtonGroupProps, Loader } from '@mantine/core';
 import { useCounter, usePagination, useUncontrolled } from '@mantine/hooks';
 import classes from './FontSizeSelector.button.module.css';
 
@@ -13,6 +13,7 @@ interface FontSizeSelectorButtonProps {
     defaultValue?: string;
     data: DataType[];
     onChange?: (value: string) => void;
+    disabled?: boolean;
 }
 
 export default function FontSizeSelectorButton({
@@ -20,6 +21,7 @@ export default function FontSizeSelectorButton({
     defaultValue,
     data,
     onChange,
+    disabled,
     ...props
 }: Readonly<FontSizeSelectorButtonProps & ButtonGroupProps>) {
 
@@ -33,13 +35,13 @@ export default function FontSizeSelectorButton({
 
     return (
         <Button.Group { ...props }>
-            <Button variant="default" radius="md" onClick={pagination.previous}>
+            <Button variant="default" radius="md" className={classes['button']} onClick={pagination.previous} disabled={disabled}>
                 <IconChevronDown color="var(--mantine-color-red-text)" />
             </Button>
-            <Button.GroupSection variant="default" bg="var(--mantine-color-body)" className={classes['middle-section']} miw={80}>
-                {data[pagination.active].label}
+            <Button.GroupSection variant="default" bg="var(--mantine-color-body)" className={classes['middle-section']} data-disabled={disabled} miw={80}>
+                {disabled ? <Loader type='dots' color='gray' /> : data[pagination.active]?.label}
             </Button.GroupSection>
-            <Button variant="default" radius="md" onClick={pagination.next}>
+            <Button variant="default" radius="md" className={classes['button']} onClick={pagination.next} disabled={disabled}>
                 <IconChevronUp color="var(--mantine-color-teal-text)" />
             </Button>
         </Button.Group>

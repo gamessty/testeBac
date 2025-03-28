@@ -13,9 +13,10 @@ interface FontSizeSelectorProps {
     defaultValue?: string;
     data: DataType[];
     onChange?: (value: string) => void;
+    disabled?: boolean;
 }
 
-export default function FontSizeSelector({ value, defaultValue, data, onChange, ...props }: Readonly<FontSizeSelectorProps & Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>>) {
+export default function FontSizeSelector({ value, defaultValue, data, onChange, disabled, ...props }: Readonly<FontSizeSelectorProps & Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>>) {
   const { className: classNameProp, ...others } = props;
   const [rootRef, setRootRef] = useState<HTMLDivElement | null>(null);
   const [controlsRefs, setControlsRefs] = useState<Record<string, HTMLButtonElement | null>>({});
@@ -32,6 +33,7 @@ export default function FontSizeSelector({ value, defaultValue, data, onChange, 
 
   const controls = data.map((item, index) => (
     <UnstyledButton
+      disabled={disabled}
       key={item.value}
       className={classes.control}
       ref={setControlRef(item.value)}

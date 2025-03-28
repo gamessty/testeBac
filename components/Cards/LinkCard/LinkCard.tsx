@@ -6,6 +6,7 @@ import { IconHandFinger, IconLink, IconPlayerPlayFilled } from "@tabler/icons-re
 import AvatarFallback from "../../AvatarFallback/AvatarFallback";
 import { getInitialsColor } from "../../../utils";
 import Link from "next/link";
+import { MouseEventHandler } from "react";
 
 interface LinkCardProps {
     name?: string;
@@ -16,15 +17,16 @@ interface LinkCardProps {
     avatarIcon?: React.ReactNode;
     actionIcon?: React.ReactNode;
     withBorder?: boolean;
+    onClick?: MouseEventHandler<HTMLAnchorElement>;
 }
 
-export default function LinkCard({ name, badge, avatarIcon, actionIcon, coverImage, design, withBorder, href, ...rest }: Readonly<LinkCardProps & CardProps>) {
+export default function LinkCard({ name, badge, avatarIcon, actionIcon, coverImage, design, withBorder, href, onClick, ...rest }: Readonly<LinkCardProps & CardProps>) {
     const t = useTranslations("General")
 
     switch (design) {
         case 'compact':
             return (
-                <Card {...rest} className={`${classes["link-card"]} ${classes["compact"]}`} component={Link}  href={href ?? '#'} w={"100%"} shadow="lg" radius="sm" withBorder={withBorder}>
+                <Card {...rest} className={`${classes["link-card"]} ${classes["compact"]}`} component={Link} onClick={onClick} href={href ?? '#'} w={"100%"} shadow="lg" radius="sm" withBorder={withBorder}>
                     <Stack justify="space-between" h="100%" w="100%">
                         <Box w="100%">
                             {coverImage && coverImage !== 'none' && <Card.Section>

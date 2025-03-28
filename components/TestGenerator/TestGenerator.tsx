@@ -221,20 +221,25 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
                                     }}
                                 />
                                 <Divider className={classes['divider']} />
-                                <TestGeneratorSelector
-                                    value={configurations?.subjectsQuestions?.map((subject) => subject.id)}
-                                    data={subjects.filter((subject) => subject.folderId == configurations?.folder?.id && subject.type == "QUESTION")}
-                                    allowMultiple={true}
-                                    onChange={(value) => {
-                                        setConfigurations((prev) => {
-                                            if (prev) return {
-                                                ...prev,
-                                                subjectsQuestions: value.map((subject) => subjects.find((s) => s.id == subject) as Subject)
-                                            }
-                                        });
-                                    }}
-                                />
-                                <Divider className={classes['divider']} />
+                                {
+                                    subjects.filter((subject) => subject.folderId == configurations?.folder?.id && subject.type == "QUESTION").length !== 0 &&
+                                    <>
+                                        <TestGeneratorSelector
+                                            value={configurations?.subjectsQuestions?.map((subject) => subject.id)}
+                                            data={subjects.filter((subject) => subject.folderId == configurations?.folder?.id && subject.type == "QUESTION")}
+                                            allowMultiple={true}
+                                            onChange={(value) => {
+                                                setConfigurations((prev) => {
+                                                    if (prev) return {
+                                                        ...prev,
+                                                        subjectsQuestions: value.map((subject) => subjects.find((s) => s.id == subject) as Subject)
+                                                    }
+                                                });
+                                            }}
+                                        />
+                                        <Divider className={classes['divider']} />
+                                    </>
+                                }
                                 <TestGeneratorSelector
                                     value={configurations?.chapters?.map((chapter) => chapter.id)}
                                     data={chapters.filter((chapter) => configurations?.subjects?.map((subject) => subject.id).includes(chapter.subjectId))}

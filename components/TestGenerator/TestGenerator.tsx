@@ -6,8 +6,8 @@
 //IMPROVE THE FETCH WAY, DON'T FETCH AGAIN IF THE DATA IS ALREADY FETCHED AND STORED IN THE STATE (USECONTEXT?)
 //ADD A WAY TO SELECT THE NUMBER OF QUESTIONS PER CHAPTER, PROBABLY IN THE FINAL STEP
 "use client";
-import { Blockquote, Box, Button, Center, Container, ContainerProps, Divider, em, FocusTrap, Group, Loader, Overlay, Stack, Stepper, Text } from "@mantine/core";
-import { useDidUpdate, useDisclosure, useFocusReturn, useFocusTrap, useMediaQuery } from "@mantine/hooks";
+import { Blockquote, Button, Center, Container, ContainerProps, Divider, em, FocusTrap, Group, Loader, Stack, Stepper, Text } from "@mantine/core";
+import { useDidUpdate, useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
@@ -15,15 +15,13 @@ import ReturnButton from "../ReturnButton/ReturnButton";
 import classes from './TestGenerator.module.css';
 import getManyFolder from "../../actions/PrismaFunctions/getManyFolder";
 import { Chapter, Folder, Subject } from "@prisma/client";
-import { IconAlertTriangleFilled, IconArrowAutofitRight, IconArrowRight, IconChevronCompactRight, IconChevronRight } from "@tabler/icons-react";
+import { IconAlertTriangleFilled, IconChevronRight } from "@tabler/icons-react";
 import TestGeneratorSelector from "../TestGeneratorSelector/TestGeneratorSelector";
 import getSubjects from "../../actions/PrismaFunctions/getSubjects";
 import getChapters from "../../actions/PrismaFunctions/getChapters";
 import TestGeneratorSelectorChip from "../TestGeneratorSelector/TestGeneratorSelector.Chip";
 import findFirstFocusable from "./findFirstFocusable";
 import TestTypeSelector from "./TestTypeSelector/TestTypeSelector";
-import { useRouter } from "next/navigation";
-import { modals } from "@mantine/modals";
 
 interface TestConfiguration {
     category?: string;
@@ -36,7 +34,6 @@ interface TestConfiguration {
 export default function TestGenerator({ session, ...props }: Readonly<{ session: Session } & ContainerProps>) {
     // ... rest of the code
     const t = useTranslations('Dashboard.TestGenerator');
-    const router = useRouter();
 
     const [configurations, setConfigurations] = useState<TestConfiguration>();
     const [allowedStep, setAllowedStep] = useState<number>(0);
@@ -136,17 +133,6 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
         labels: { confirm: t('exitConfiguration.confirm'), cancel: t('exitConfiguration.cancel') },
         confirmProps: { color: 'red' },
     }
-
-    const confirmationModal = () => {
-        modals.openConfirmModal({ onConfirm: () => { router.back(); }, ...confirmTestConfigurationExitProps });
-    };
-
-    useEffect(() => {
-        window.onpopstate = (event) => {
-        }
-
-        
-    }, [router]);
 
     return (
         <Container size="xl" p={{ base: 30, sm: 35 }} pt={{ base: 20, sm: 25 }} className={classes['main-container']} {...props}>

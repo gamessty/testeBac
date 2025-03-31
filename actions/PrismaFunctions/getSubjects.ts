@@ -23,3 +23,31 @@ export default async function getSubjects({ folderId }: { folderId: string }): P
 }
 
 export { getSubjects };
+
+export async function getSubjectNamesByIds(subjectIds: string[]): Promise<{ [key: string]: string } | { message: string }> {
+    const session = await auth();
+    if (!session?.user) {
+        return { message: "Not authenticated" };
+    }
+    if (!chkP("general:*", session.user)) {
+        return { message: "Unauthorized" };
+    }
+    const subjects = await prisma.subject.findMany({
+        where: {
+            id: {
+                in: subjectIds,
+            },
+        },
+        select: {
+            id: true,
+            name: true,
+        },
+    });
+
+    const subjectNames: { [key: string]: string } = {};
+    subjects.forEach((subject) => {
+        subjectNames[subject.id] = subject.name;
+    });
+
+    return subjectNames;
+}

@@ -27,7 +27,6 @@ enum QuestionType {
 }
 
 type Option {
-    //TBD the id system
     id           String @default(uuid())
     option       String
     image        String?
@@ -53,14 +52,14 @@ type AnswerIndicator {
     markdown String
 }
 
-/**
- * Code Block
- * the default language to be displayed in case the user's preferance is not set is going to be determined in the following order:
- * 1. The language with the first default optional value
- * 2. The first language in the list
- */
 type Code {
     language String[]
     code     String
     default  Boolean  @default(false)
+}
+
+type SchemaConfigurator {
+    showCorrectAnswer Boolean @default(false)
+    questionNumber    Int
+    timeLimit         Int?
 }

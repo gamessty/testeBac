@@ -25,3 +25,33 @@
         }
     }
 }
+
+.footer {
+    padding: var(--mantine-spacing-xs) !important;
+
+}
+
+.flex-footer {
+    height: 100%;
+    width: 100%;
+    align-items: center;
+
+    > *:first-child {
+        flex-basis: 7vw;
+        justify-items: center;
+        height: 100%;
+        width: 100%;
+        > * {
+            height: calc(var(--avatar-size-md) * 1.2 );
+            width: calc(var(--avatar-size-md) * 1.2 );
+        }
+    }
+}
+
+
+.footer-group {
+    flex-grow: 1;
+    > * {
+        height: 100%;
+    }
+}

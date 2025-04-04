@@ -55,9 +55,9 @@ type AdditionalFolderData {
 model UserTest {
     id              String           @id @default(auto()) @map("_id") @db.ObjectId
     userId          String           @db.ObjectId
-    score           Int
-    folder          String
-    subject         String[]
+    score           Int              @default(0)
+    folderId        String
+    subjectId       String[]
     questions       Question[]
     selectedAnswers SelectedAnswer[]
     testType        TestType         @default(GENERAL)
@@ -65,6 +65,7 @@ model UserTest {
     startedAt       DateTime         @default(now())
     finishedAt      DateTime?
     timeLeft        Int?
+    configurations  Json             @db.Json
 
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 

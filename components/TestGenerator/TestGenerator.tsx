@@ -1,13 +1,6 @@
-
-//TBD, WIP
-//ADD TEST TYPE AT THE BEGGINING IN THE FIRST STEP REQUIRED TO ADVANCE, GET THE ENUM TYPES FROM PRISMA I THINK
-//NEED TO ADD A WAY TO HANDLE THE SUBJECTS THAT HAVE NO CHAPTERS BUT QUESTIONS, PROBABLY MAKE A NEW TEST GENERATION NEXT TO THE THA CHAPTERS, ABOVE THEM, BUT BELOW THE SUBJECTS THAT HAVE CHAPTERS
-//ADD FINAL TEST CONFIGURATION
-//IMPROVE THE FETCH WAY, DON'T FETCH AGAIN IF THE DATA IS ALREADY FETCHED AND STORED IN THE STATE (USECONTEXT?)
-//ADD A WAY TO SELECT THE NUMBER OF QUESTIONS PER CHAPTER, PROBABLY IN THE FINAL STEP
 "use client";
-import { Blockquote, Button, Center, Container, ContainerProps, Divider, em, FocusTrap, Group, Loader, Stack, Stepper, Text } from "@mantine/core";
-import { useDidUpdate, useDisclosure, useMediaQuery } from "@mantine/hooks";
+import { Affix, Blockquote, Box, Button, Center, Container, ContainerProps, Divider, em, FocusTrap, Group, Loader, Overlay, Stack, Stepper, Text } from "@mantine/core";
+import { useDidUpdate, useDisclosure, useFocusReturn, useFocusTrap, useMediaQuery } from "@mantine/hooks";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
@@ -15,24 +8,28 @@ import ReturnButton from "../ReturnButton/ReturnButton";
 import classes from './TestGenerator.module.css';
 import getManyFolder from "../../actions/PrismaFunctions/getManyFolder";
 import { Chapter, Folder, Subject } from "@prisma/client";
-import { IconAlertTriangleFilled, IconChevronRight } from "@tabler/icons-react";
+import { IconAlertTriangleFilled, IconArrowAutofitRight, IconArrowRight, IconChevronCompactRight, IconChevronRight } from "@tabler/icons-react";
 import TestGeneratorSelector from "../TestGeneratorSelector/TestGeneratorSelector";
 import getSubjects from "../../actions/PrismaFunctions/getSubjects";
 import getChapters from "../../actions/PrismaFunctions/getChapters";
 import TestGeneratorSelectorChip from "../TestGeneratorSelector/TestGeneratorSelector.Chip";
 import findFirstFocusable from "./findFirstFocusable";
 import TestTypeSelector from "./TestTypeSelector/TestTypeSelector";
+import { useRouter } from "next/navigation";
+import { generateTest } from "../../actions/PrismaFunctions/createUserTest";
+import { TestGeneratorSelectorList } from "../TestGeneratorSelector/TestGeneratorSelector.List";
 
 interface TestConfiguration {
     category?: string;
-    folder?: Folder;
-    subjects?: Subject[];
-    subjectsQuestions?: Subject[];
-    chapters?: Chapter[];
+    folderId?: string;
+    subjectIds?: string[];
+    subjectQuestionIds?: string[];
+    chapterIds?: string[];
+    testType?: string;
+    configurations?: Record<string, any>;
 }
 
 export default function TestGenerator({ session, ...props }: Readonly<{ session: Session } & ContainerProps>) {
-    // ... rest of the code
     const t = useTranslations('Dashboard.TestGenerator');
 
     const [configurations, setConfigurations] = useState<TestConfiguration>();
@@ -44,7 +41,7 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
     const [error, setError] = useState<string | null>(null);
     const stepperRef = useRef<HTMLDivElement>(null);
     const [activeFocus] = useDisclosure(true);
-    //ADD INVISIBLE AUTOFOCUS ELEMENT WITHIN THE TRAP SO THAT THE FOCUS IS NOT LOST WHEN NEXT BUTTON IS DISABLED
+    const [cancelLoading, setCancelLoading] = useState(false);
 
     useEffect(() => {
         async function fetchData() {
@@ -68,11 +65,11 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
 
     useDidUpdate(() => {
         async function fetchData() {
-            if (!configurations?.folder) return;
+            if (!configurations?.folderId) return;
             setSubjects([]);
-            setConfigurations((prev) => ({ ...prev, subjects: [] }));
+            setConfigurations((prev) => ({ ...prev, subjectIds: [] }));
             const fetchedSubjects = await getSubjects({
-                folderId: configurations?.folder?.id
+                folderId: configurations?.folderId
             });
             if (!Array.isArray(fetchedSubjects) && fetchedSubjects?.message) {
                 return setError(fetchedSubjects.message);
@@ -83,17 +80,17 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
         }
         fetchData();
         setAllowedStep(1);
-        setConfigurations((prev) => ({ category: prev?.category, folder: prev?.folder }));
-    }, [configurations?.folder]);
+        setConfigurations((prev) => ({ category: prev?.category, folderId: prev?.folderId }));
+    }, [configurations?.folderId]);
 
     useDidUpdate(() => {
         async function fetchData() {
-            if (!configurations?.subjects) return;
+            if (!subjects) return;
             setChapters([]);
-            setConfigurations((prev) => ({ ...prev, chapters: [] }));
-            for (let subject of configurations.subjects) {
+            setConfigurations((prev) => ({ ...prev, chapterIds: [] }));
+            for (let subjectId of subjects.filter((subject) => subject.folderId == configurations?.folderId).map((subject) => subject.id)) {
                 const fetchedChapters = await getChapters({
-                    subjectId: subject.id
+                    subjectId: subjectId
                 });
                 if (!Array.isArray(fetchedChapters) && fetchedChapters?.message) {
                     return setError(fetchedChapters.message);
@@ -107,13 +104,13 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
             }
         }
         fetchData();
-    }, [configurations?.subjects]);
+    }, [subjects]);
 
     useDidUpdate(() => {
         if (!configurations) setAllowedStep(0);
         if (configurations?.category) setAllowedStep(1);
-        if (configurations?.folder) setAllowedStep(2);
-        if (configurations?.chapters?.length || configurations?.subjectsQuestions?.length) setAllowedStep(3);
+        if (configurations?.folderId) setAllowedStep(2);
+        if (configurations?.chapterIds?.length || configurations?.subjectIds?.length) setAllowedStep(3);
     }, [configurations])
 
     const [active, setActive] = useState(0);
@@ -121,22 +118,92 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
     const prevStep = () => { setActive((current) => (current > 0 ? current - 1 : current)); if (stepperRef.current) findFirstFocusable(stepperRef.current)?.focus(); };
     const isMobile = useMediaQuery(`(max-width: ${em(750)})`, true);
 
-
-    const confirmTestConfigurationExitProps = {
-        title: t('exitConfiguration.title'),
-        centered: true,
-        children: (
-            <Text size="sm">
-                {t('exitConfiguration.message')}
-            </Text>
-        ),
-        labels: { confirm: t('exitConfiguration.confirm'), cancel: t('exitConfiguration.cancel') },
-        confirmProps: { color: 'red' },
+    const handleLoadingCancel = () => {
+        setCancelLoading(true);
+        setTimeout(() => {
+            setCancelLoading(false);
+        }, 50);
     }
+
+    useEffect(() => {
+        const hasStartedConfiguration = configurations?.category && configurations.category.length > 0;
+
+        // Handle beforeunload event (for page reload and tab close)
+        const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+            if (hasStartedConfiguration) {
+                e.preventDefault();
+                e.returnValue = '';
+                return '';
+            }
+        };
+
+        // For App Router we need to use browser history directly
+        const handlePopState = (e: PopStateEvent) => {
+            if (hasStartedConfiguration) {
+                // Prevent the default back navigation
+                e.preventDefault();
+
+                // Show browser's native confirmation dialog
+                if (confirm(t('exitConfiguration.message'))) {
+                    // If user confirms, navigate back
+                    window.removeEventListener('popstate', handlePopState);
+                    window.removeEventListener('beforeunload', handleBeforeUnload);
+                    window.history.back();
+                } else {
+                    // If user cancels, stay on the page by pushing current state again
+                    window.history.pushState(null, '', window.location.href);
+                    handleLoadingCancel();
+                }
+            }
+        };
+
+        // Push a new state so we can capture the popstate event
+        if (hasStartedConfiguration) {
+            window.history.pushState(null, '', window.location.href);
+        }
+
+        // Add event listeners
+        window.addEventListener('beforeunload', handleBeforeUnload);
+        window.addEventListener('popstate', handlePopState);
+
+        return () => {
+            // Clean up event listeners
+            window.removeEventListener('beforeunload', handleBeforeUnload);
+            window.removeEventListener('popstate', handlePopState);
+        };
+    }, [configurations?.category, t]);
+
+    const handleGenerateTest = async () => {
+        if (configurations) {
+            const result = await generateTest(configurations);
+            if (result.success) {
+                // Handle success, e.g., navigate to the generated test page
+            } else {
+                // Handle error
+                setError(result.message ?? null);
+            }
+        }
+    };
+
+    const handleConfigurationsChange = (configs: Record<string, any>) => {
+        setConfigurations((prev) => {
+            if (prev) return {
+                ...prev,
+                configurations: configs
+            }
+        });
+    };
+
+
 
     return (
         <Container size="xl" p={{ base: 30, sm: 35 }} pt={{ base: 20, sm: 25 }} className={classes['main-container']} {...props}>
-            <ReturnButton timeout={!configurations?.category || configurations?.category?.length == 0 ? undefined : 0} confirmModal={!configurations?.category || configurations?.category?.length == 0 ? undefined : confirmTestConfigurationExitProps} size="xs" className={classes["return-button"]} />
+            <ReturnButton
+                cancelLoading={cancelLoading}
+                timeout={0}
+                size="xs"
+                className={classes["return-button"]}
+            />
             {
                 error && (
                     <Blockquote className={classes.blockquote} color="red" cite={"– " + t('errors.fetch.title', { error })} icon={<IconAlertTriangleFilled />}>
@@ -178,95 +245,84 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
                                 }
                             </Stepper.Step>
                             <Stepper.Step label={isMobile ? undefined : t('steps.2.label')} description={isMobile ? undefined : t('steps.2.description')}>
+                            <Text c='dimmed' fz="sm" mb={5} hidden={!isMobile}>{t('steps.2.description')}</Text>
                                 <TestGeneratorSelector
-                                    value={configurations?.folder?.id}
+                                    value={configurations?.folderId}
                                     data={folder.filter((folder) => folder.category == configurations?.category)}
                                     onChange={(value) => {
                                         setConfigurations((prev) => {
                                             if (prev) return {
                                                 ...prev,
-                                                folder: folder.find((folder) => folder.id == value)
+                                                folderId: value
                                             }
                                         });
                                     }}
                                 />
                             </Stepper.Step>
                             <Stepper.Step label={isMobile ? undefined : t('steps.3.label')} description={isMobile ? undefined : t('steps.3.description')}>
-                                <TestGeneratorSelectorChip
-                                    label="Select Subjects"
-                                    data={subjects.filter((subject) => subject.folderId == configurations?.folder?.id && subject.type == "CHAPTER")}  //TBD ADD FILTER FOR THE SUBJECTS THAT ONLY HAVE QUESTIONS AND MAKE THEM APPEAR AS CARDS, PROBABLY FETCH ALL THE CHAPTERS IN LOADING... OR ADD A SUBJECT TYPE PROPERTY IN THE DATABASE ( PROBABLY EASIER )
-                                    onChange={(value) => {
+                                <Text c='dimmed' fz="sm" mb={5} hidden={!isMobile}>{t('steps.3.description')}</Text>
+                                <TestGeneratorSelectorList
+                                    variant="card"
+                                    subjects={subjects}
+                                    chapters={chapters}
+                                    valueChapters={configurations?.chapterIds ?? []}
+                                    valueSubjects={configurations?.subjectQuestionIds ?? []}
+                                    onChaptersChange={(value) => {
                                         setConfigurations((prev) => {
-                                            if (prev) {
-                                                return {
-                                                    ...prev,
-                                                    subjects: value.map((subject) => subjects.find((s) => s.id == subject) as Subject)
-                                                }
+                                            if (prev) return {
+                                                ...prev,
+                                                chapterIds: value
                                             }
                                         });
                                     }}
-                                    value={configurations?.subjects?.map((subject) => subject.id)}
-                                    allowMultiple={true}
-                                    chipProps={{
-                                        size: 'sm',
-                                        radius: 'sm',
-                                        variant: 'light',
+                                    onSubjectsChange={(value) => {
+                                        setConfigurations((prev) => {
+                                            if (prev) return {
+                                                ...prev,
+                                                subjectQuestionIds: value
+                                            }
+                                        });
+                                    }}
+                                    onChapterSubjectChange={(value) => {
+                                        setConfigurations((prev) => {
+                                            if (prev) return {
+                                                ...prev,
+                                                subjectIds: value
+                                            }
+                                        });
                                     }}
                                 />
-                                <Divider className={classes['divider']} />
-                                {
-                                    subjects.filter((subject) => subject.folderId == configurations?.folder?.id && subject.type == "QUESTION").length !== 0 &&
-                                    <>
-                                        <TestGeneratorSelector
-                                            value={configurations?.subjectsQuestions?.map((subject) => subject.id)}
-                                            data={subjects.filter((subject) => subject.folderId == configurations?.folder?.id && subject.type == "QUESTION")}
-                                            allowMultiple={true}
-                                            onChange={(value) => {
-                                                setConfigurations((prev) => {
-                                                    if (prev) return {
-                                                        ...prev,
-                                                        subjectsQuestions: value.map((subject) => subjects.find((s) => s.id == subject) as Subject)
-                                                    }
-                                                });
-                                            }}
-                                        />
-                                        <Divider className={classes['divider']} />
-                                    </>
-                                }
-                                <TestGeneratorSelector
-                                    value={configurations?.chapters?.map((chapter) => chapter.id)}
-                                    data={chapters.filter((chapter) => configurations?.subjects?.map((subject) => subject.id).includes(chapter.subjectId))}
-                                    allowMultiple={true}
+                            </Stepper.Step>
+                            <Stepper.Step label={isMobile ? undefined : t('steps.4.label')} description={isMobile ? undefined : t('steps.4.description')}>
+                                <TestTypeSelector
+                                    radius="lg"
+                                    className={classes['test-type-selector']}
+                                    value={configurations?.testType}
                                     onChange={(value) => {
                                         setConfigurations((prev) => {
                                             if (prev) return {
                                                 ...prev,
-                                                chapters: value.map((chapter) => chapters.find((c) => c.id == chapter) as Chapter)
+                                                testType: value ?? undefined
                                             }
                                         });
                                     }}
-                                    loaderProps={{
-                                        mb: 30,
-                                        color: 'grey',
-                                        type: 'dots'
-                                    }}
-                                    loader={(configurations?.subjects && configurations?.subjects?.length !== 0) && chapters.length === 0}
+                                    onConfigurationsChange={handleConfigurationsChange}
                                 />
-                            </Stepper.Step>
-                            <Stepper.Step label={isMobile ? undefined : t('steps.4.label')} description={isMobile ? undefined : t('steps.4.description')}>
-                                <TestTypeSelector radius="lg" className={classes['test-type-selector']} />
                             </Stepper.Step>
                             <Stepper.Completed>
                                 Completed, click back button to get to previous step
                             </Stepper.Completed>
                         </Stepper>
-
-                        <Group justify="center" mt="xl">
-                            <Button disabled={active == 0} variant="default" onClick={prevStep}>{t('steps.back')}</Button>
-                            <Button rightSection={<IconChevronRight />} disabled={active + 1 > allowedStep} onClick={nextStep}>{active == 3 ? t('steps.generate') : t('steps.next')}</Button>
-                        </Group>
                     </Stack>
+                    <Affix position={{ bottom: 0, left: 0, right: 0 }} className={classes['stepper-buttons']}>
+                        <Group justify="center">
+                            <Button size="lg" disabled={active == 0} variant="default" onClick={prevStep}>{t('steps.back')}</Button>
+                            <Button size="lg" rightSection={<IconChevronRight />} disabled={active + 1 > allowedStep} onClick={active == 3 ? handleGenerateTest : nextStep}>{active == 3 ? t('steps.generate') : t('steps.next')}</Button>
+                        </Group>
+                    </Affix>
+
                 </FocusTrap>
+
             }
         </Container>
     )

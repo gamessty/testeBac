@@ -70,7 +70,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
     });
 
     function handleTabChange({ tab, disableNavigation }: { tab: string, disableNavigation?: boolean }) {
-        if(!disableNavigation) { disableNavigation = tabsData.find((tabData) => tabData.tab == tab)?.disableNavigation; }
+        if (!disableNavigation) { disableNavigation = tabsData.find((tabData) => tabData.tab == tab)?.disableNavigation; }
         setSettings({ tab: { tab, disableNavigation }, title: 'testeBac | ' + t('Navbar.' + tab) });
         const params = new URLSearchParams(searchParams.toString());
         params.set('tab', tab);
@@ -94,7 +94,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
             <AppShell.Header>
                 <Group h="100%" px="md" justify="space-between">
                     <Text variant="gradient" fw={700} size="xl" gradient={{ from: 'pink', to: 'yellow' }}>
-                        <Link href="/">
+                        <Link href="/app">
                             testeBac
                         </Link>
                     </Text>
@@ -181,7 +181,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                                 {session?.user?.email}
                             </Text>
                             <Grid gutter={3} w="100%">
-                                { (session?.user?.roles?.length ?? 0) > 1 &&
+                                {(session?.user?.roles?.length ?? 0) > 1 &&
                                     session?.user?.roles?.map((role) => (
                                         <Grid.Col pt={0} mt={-6} span="content" key={role.id}>
                                             <Tooltip tt="capitalize" label={role.name} color={getInitialsColor(role.name)} withArrow>
@@ -217,7 +217,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                             <Transition key={tab.tab + "_tabComponent"} transition="fade-right" timingFunction="ease" enterDelay={tab.disableNavigation ? 100 : 0} duration={tab.disableNavigation ? 800 : 300} mounted={settings.tab.tab == tab.tab} >
                                 {(transitionStyles) => (
                                     <>
-                                        {settings.tab.tab == tab.tab && tab.component && <tab.component session={session} settab={handleTabChange} triggerloading={(loadingStatus: boolean) => setSettings({ tabLoading: loadingStatus }) } style={transitionStyles} />}
+                                        {settings.tab.tab == tab.tab && tab.component && <tab.component session={session} settab={handleTabChange} triggerloading={(loadingStatus: boolean) => setSettings({ tabLoading: loadingStatus })} style={transitionStyles} />}
                                     </>
                                 )}
                             </Transition>
@@ -225,48 +225,44 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                     }
                 </ScrollArea>
             </AppShell.Main>
-            <AppShell.Footer p={15} display={{ sm: "none" }} className={settings.tab.disableNavigation ? classes.hide : undefined}>
-                <Grid grow>
-                    <Grid.Col span={1}>
-                        <AvatarMenu shadow="md" position="top-start" offset={20} transitionProps={{ transition: 'pop-bottom-left', duration: 200 }} AvatarProps={{ src: session?.user?.image ?? undefined, name: session?.user?.username ?? session?.user?.email ?? undefined, color: 'initials' }}>
-                            {tabsData.filter(t => !t.mobile && (t.visible || typeof (t.visible) == 'undefined') && chkP(enumToString(t.permissionNeeded), session?.user)).toSorted((a, b) => b.category.order - a.category.order).map((tab, index, array) => (
-                                <React.Fragment key={tab.tab + "_menu"}>
-                                    {((index > 0 && array[index - 1].category.name != tab.category.name) || index == 0) && (!tab.category.permissionNeeded || chkP(enumToString(tab.category.permissionNeeded), session?.user)) &&
-                                        <>
-                                            {tab.category.showLabel && <Menu.Label tt="capitalize">{t(`Navbar.${tab.category.name}.title`)}</Menu.Label>}
-                                            {index > 0 && <Menu.Divider />}
-                                        </>
-                                    }
-                                    <Menu.Item onClick={() => handleTabChange({ tab: tab.tab })} leftSection={<tab.icon size={14} />}>
-                                        {t(`Navbar.${tab.tab}`)}
-                                    </Menu.Item>
-                                </React.Fragment>
-                            ))}
+            <AppShell.Footer display={{ sm: "none" }} className={(settings.tab.disableNavigation ? classes.hide : undefined) + " " + classes["footer"]}>
+                <Flex className={classes["flex-footer"]}>
+                    <AvatarMenu shadow="md" position="top-start" offset={20} classNames={{  }}  transitionProps={{ transition: 'pop-bottom-left', duration: 200 }} AvatarProps={{ src: session?.user?.image ?? undefined, name: session?.user?.username ?? session?.user?.email ?? undefined, color: 'initials'}}>
+                        {tabsData.filter(t => !t.mobile && (t.visible || typeof (t.visible) == 'undefined') && chkP(enumToString(t.permissionNeeded), session?.user)).toSorted((a, b) => b.category.order - a.category.order).map((tab, index, array) => (
+                            <React.Fragment key={tab.tab + "_menu"}>
+                                {((index > 0 && array[index - 1].category.name != tab.category.name) || index == 0) && (!tab.category.permissionNeeded || chkP(enumToString(tab.category.permissionNeeded), session?.user)) &&
+                                    <>
+                                        {tab.category.showLabel && <Menu.Label tt="capitalize">{t(`Navbar.${tab.category.name}.title`)}</Menu.Label>}
+                                        {index > 0 && <Menu.Divider />}
+                                    </>
+                                }
+                                <Menu.Item onClick={() => handleTabChange({ tab: tab.tab })} leftSection={<tab.icon size={14} />}>
+                                    {t(`Navbar.${tab.tab}`)}
+                                </Menu.Item>
+                            </React.Fragment>
+                        ))}
 
-                            <Menu.Divider />
+                        <Menu.Divider />
 
-                            <Menu.Item color="red" onClick={() => signOut()} leftSection={<IconLogout size={14} />}>
-                                {ta('signOut')}
-                            </Menu.Item>
-                        </AvatarMenu>
-                    </Grid.Col>
-                    <Grid.Col span={10}>
-                        <Group justify="space-between" grow>
-                            {tabsData.filter(t => t.mobile && chkP(enumToString(t.permissionNeeded), session?.user)).map((tab) => (
-                                <ActionIcon
-                                    key={tab.tab}
-                                    variant='transparent'
-                                    aria-label={tab.tab}
-                                    size="lg"
-                                    onClick={() => handleTabChange({ tab: tab.tab })}
-                                    color={settings.tab.tab == tab.tab ? undefined : 'gray'}
-                                >
-                                    <tab.icon />
-                                </ActionIcon>
-                            ))}
-                        </Group>
-                    </Grid.Col>
-                </Grid>
+                        <Menu.Item color="red" onClick={() => signOut()} leftSection={<IconLogout size={14} />}>
+                            {ta('signOut')}
+                        </Menu.Item>
+                    </AvatarMenu>
+                    <Group justify="space-between" grow className={classes["footer-group"]}>
+                        {tabsData.filter(t => t.mobile && chkP(enumToString(t.permissionNeeded), session?.user)).map((tab) => (
+                            <ActionIcon
+                                key={tab.tab}
+                                variant='transparent'
+                                aria-label={tab.tab}
+                                size="lg"
+                                onClick={() => handleTabChange({ tab: tab.tab })}
+                                color={settings.tab.tab == tab.tab ? undefined : 'gray'}
+                            >
+                                <tab.icon />
+                            </ActionIcon>
+                        ))}
+                    </Group>
+                </Flex>
             </AppShell.Footer>
             <Affix position={affixPosition}>
                 <Transition transition="slide-up" mounted={scrollPosition.y > 0}>

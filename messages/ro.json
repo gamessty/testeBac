@@ -224,7 +224,7 @@
     "TestGenerator": {
       "Selector": {
         "TestTypeSelector": {
-          "type": "{id, select, simple {Simplu} mockexam {Simulare} complex {Avansat} other {necunoscut}}"
+          "type": "{id, select, simple {Simplu} mockExam {Simulare} complex {Avansat} other {Necunoscut}}"
         },
         "updatedAt": "Actualizat la:"
       },
@@ -242,15 +242,15 @@
       },
       "steps": {
         "1": {
-          "description": "Ce tip de test?",
+          "description": "Selectați tipul de test",
           "label": "Categorie"
         },
         "2": {
-          "description": "Ce folder?",
+          "description": "Selectați folderul",
           "label": "Folder"
         },
         "3": {
-          "description": "Ce subiecte și capitole?",
+          "description": "Selectați subiectele și capitolele",
           "label": "Subiecte și capitole"
         },
         "4": {

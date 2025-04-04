@@ -1,5 +1,6 @@
+"use client";
 import { useEffect, useState } from 'react';
-import { Container, Divider, FloatingIndicator, SegmentedControlItem, Switch, Tabs, TabsProps } from '@mantine/core';
+import { Container, Divider, FloatingIndicator, SegmentedControlItem, Switch, Tabs, TabsProps, NumberInput } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
 import testTypes from './testTypes.json';
 import { useTranslations } from 'next-intl';
@@ -10,6 +11,7 @@ interface TestTypeSelectorProps {
     defaultValue?: string;
     data?: (string | SegmentedControlItem)[];
     onChange?: (value: string) => void;
+    onConfigurationsChange?: (configs: Record<string, any>) => void;
 }
 
 export default function TestTypeSelector({
@@ -17,6 +19,7 @@ export default function TestTypeSelector({
     defaultValue,
     data,
     onChange,
+    onConfigurationsChange,
     ...props
 }: Readonly<TestTypeSelectorProps & TabsProps>) {
     const t = useTranslations('Dashboard.TestGenerator.Selector.TestTypeSelector');
@@ -31,6 +34,15 @@ export default function TestTypeSelector({
     const setControlRef = (val: string) => (node: HTMLButtonElement) => {
         controlsRefs[val] = node;
         setControlsRefs(controlsRefs);
+    };
+
+    const handleConfigChange = (configId: string, newValue: any) => {
+        if (onConfigurationsChange) {
+            onConfigurationsChange((prevConfigs: Record<string, any>) => ({
+                ...prevConfigs,
+                [configId]: newValue,
+            }));
+        }
     };
 
     return (
@@ -52,28 +64,50 @@ export default function TestTypeSelector({
 
                 {
                     defaultData.map((item) => {
-                        if (item.value === 'simple') {
-                            return (<Tabs.Panel p="lg" key={item.value} value={item.value} className={classes.panel}>
+                        const testType = testTypes.find(type => type.id === item.value);
+                        return (
+                            <Tabs.Panel key={item.value} value={item.value} className={classes.panel}>
                                 <Container className={classes.container}>
-                                    <Switch
-                                        classNames={{
-                                            body: classes.switch
-                                        }}
-                                        width="100%"
-                                        size='lg'
-                                        defaultChecked
-                                        label="Show answers after each question"
-                                        onChange={() => { }}
-                                        labelPosition='left'
-                                    />
+                                    {testType?.configurations.map(config => {
+                                        switch (config.type) {
+                                            case 'boolean':
+                                                return (
+                                                    <Switch
+                                                        key={config.id}
+                                                        classNames={{
+                                                            body: classes.switch
+                                                        }}
+                                                        width="100%"
+                                                        size='lg'
+                                                        defaultChecked={config.default as boolean}
+                                                        label={config.label}
+                                                        onChange={(event) => handleConfigChange(config.id, event.currentTarget.checked)}
+                                                        labelPosition='left'
+                                                    />
+                                                );
+                                            case 'number':
+                                                return (
+                                                    <NumberInput
+                                                        key={config.id}
+                                                        classNames={{
+                                                            input: classes.switch
+                                                        }}
+                                                        width="100%"
+                                                        size='lg'
+                                                        defaultValue={config.default as number}
+                                                        label={config.label}
+                                                        min={config.min}
+                                                        max={config.max}
+                                                        onChange={(value) => handleConfigChange(config.id, value)}
+                                                    />
+                                                );
+                                            default:
+                                                return null;
+                                        }
+                                    })}
                                 </Container>
-                            </Tabs.Panel>)
-                        }
-                        else {
-                            return (<Tabs.Panel key={item.value} value={item.value} className={classes.panel}>
-                                Panel: {item.label}
-                            </Tabs.Panel>)
-                        }
+                            </Tabs.Panel>
+                        );
                     })
                 }
             </Tabs>

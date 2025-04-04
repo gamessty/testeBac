@@ -4,11 +4,12 @@ import { createTheme, CSSVariablesResolver } from "@mantine/core";
 
 export const theme = createTheme({
   other: {
-    appShellFooterHeight: '75px',
+    appShellFooterHeight: '60px',
     darkModeImageFilter: 'invert(1) hue-rotate(180deg)',
     darkModeImageFilter2: 'invert(0.823)'
     
   },
+  scale: 0.9,
   /* Put your mantine theme override here */
   breakpoints: {
     xs: '30em',

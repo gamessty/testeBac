@@ -12,6 +12,7 @@ interface ReturnButtonBaseProps {
     hideFrom?: string;
     justIcon?: boolean;
     timeout?: number;
+    cancelLoading?: boolean;
     confirmModal?: Omit<Parameters<typeof openConfirmModal>[0], 'onConfirm'>;
 }
 
@@ -25,7 +26,7 @@ interface ReturnButtonPropsJustIcon extends ReturnButtonBaseProps, ActionIconPro
 
 type ReturnButtonType = ReturnButtonProps | ReturnButtonPropsJustIcon;
 
-export default function ReturnButton({ justIcon, confirmModal, hideFrom, timeout = 100, ...props }: Readonly<ReturnButtonType>) {
+export default function ReturnButton({ justIcon, cancelLoading, confirmModal, hideFrom, timeout = 100, ...props }: Readonly<ReturnButtonType>) {
     const router = useRouter();
     const path = usePathname();
     const [loading, setLoading] = useState(false);
@@ -42,8 +43,12 @@ export default function ReturnButton({ justIcon, confirmModal, hideFrom, timeout
         setLoading(false);
     }, [path]);
 
+    useEffect(() => {
+        if(cancelLoading) setLoading(false);
+    }, [cancelLoading]);
+
     const confirmationModal = () => {
-            modals.openConfirmModal({ onConfirm: handleRouterBack , ...confirmModal});
+        modals.openConfirmModal({ onConfirm: handleRouterBack , ...confirmModal});
     };
     
     if(mounted && (typeof window !== "undefined") && window.history.length <= 1) return null;

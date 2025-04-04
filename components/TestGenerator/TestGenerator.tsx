@@ -1,5 +1,5 @@
 "use client";
-import { Blockquote, Box, Button, Center, Container, ContainerProps, Divider, em, FocusTrap, Group, Loader, Overlay, Stack, Stepper, Text } from "@mantine/core";
+import { Affix, Blockquote, Box, Button, Center, Container, ContainerProps, Divider, em, FocusTrap, Group, Loader, Overlay, Stack, Stepper, Text } from "@mantine/core";
 import { useDidUpdate, useDisclosure, useFocusReturn, useFocusTrap, useMediaQuery } from "@mantine/hooks";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
@@ -16,13 +16,14 @@ import TestGeneratorSelectorChip from "../TestGeneratorSelector/TestGeneratorSel
 import findFirstFocusable from "./findFirstFocusable";
 import TestTypeSelector from "./TestTypeSelector/TestTypeSelector";
 import { useRouter } from "next/navigation";
-import { modals } from "@mantine/modals";
 import { generateTest } from "../../actions/PrismaFunctions/createUserTest";
+import { TestGeneratorSelectorList } from "../TestGeneratorSelector/TestGeneratorSelector.List";
 
 interface TestConfiguration {
     category?: string;
     folderId?: string;
     subjectIds?: string[];
+    subjectQuestionIds?: string[];
     chapterIds?: string[];
     testType?: string;
     configurations?: Record<string, any>;
@@ -30,7 +31,6 @@ interface TestConfiguration {
 
 export default function TestGenerator({ session, ...props }: Readonly<{ session: Session } & ContainerProps>) {
     const t = useTranslations('Dashboard.TestGenerator');
-    const router = useRouter();
 
     const [configurations, setConfigurations] = useState<TestConfiguration>();
     const [allowedStep, setAllowedStep] = useState<number>(0);
@@ -41,6 +41,7 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
     const [error, setError] = useState<string | null>(null);
     const stepperRef = useRef<HTMLDivElement>(null);
     const [activeFocus] = useDisclosure(true);
+    const [cancelLoading, setCancelLoading] = useState(false);
 
     useEffect(() => {
         async function fetchData() {
@@ -84,10 +85,10 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
 
     useDidUpdate(() => {
         async function fetchData() {
-            if (!configurations?.subjectIds) return;
+            if (!subjects) return;
             setChapters([]);
             setConfigurations((prev) => ({ ...prev, chapterIds: [] }));
-            for (let subjectId of configurations.subjectIds) {
+            for (let subjectId of subjects.filter((subject) => subject.folderId == configurations?.folderId).map((subject) => subject.id)) {
                 const fetchedChapters = await getChapters({
                     subjectId: subjectId
                 });
@@ -103,7 +104,7 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
             }
         }
         fetchData();
-    }, [configurations?.subjectIds]);
+    }, [subjects]);
 
     useDidUpdate(() => {
         if (!configurations) setAllowedStep(0);
@@ -117,36 +118,60 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
     const prevStep = () => { setActive((current) => (current > 0 ? current - 1 : current)); if (stepperRef.current) findFirstFocusable(stepperRef.current)?.focus(); };
     const isMobile = useMediaQuery(`(max-width: ${em(750)})`, true);
 
-    const confirmTestConfigurationExitProps = {
-        title: t('exitConfiguration.title'),
-        centered: true,
-        children: (
-            <Text size="sm">
-                {t('exitConfiguration.message')}
-            </Text>
-        ),
-        labels: { confirm: t('exitConfiguration.confirm'), cancel: t('exitConfiguration.cancel') },
-        confirmProps: { color: 'red' },
+    const handleLoadingCancel = () => {
+        setCancelLoading(true);
+        setTimeout(() => {
+            setCancelLoading(false);
+        }, 50);
     }
 
-    const confirmationModal = () => {
-        modals.openConfirmModal({ onConfirm: () => { router.back(); }, ...confirmTestConfigurationExitProps });
-    };
-
     useEffect(() => {
-        window.onpopstate = (event) => {
-            confirmationModal();
+        const hasStartedConfiguration = configurations?.category && configurations.category.length > 0;
+
+        // Handle beforeunload event (for page reload and tab close)
+        const handleBeforeUnload = (e: BeforeUnloadEvent) => {
+            if (hasStartedConfiguration) {
+                e.preventDefault();
+                e.returnValue = '';
+                return '';
+            }
+        };
+
+        // For App Router we need to use browser history directly
+        const handlePopState = (e: PopStateEvent) => {
+            if (hasStartedConfiguration) {
+                // Prevent the default back navigation
+                e.preventDefault();
+
+                // Show browser's native confirmation dialog
+                if (confirm(t('exitConfiguration.message'))) {
+                    // If user confirms, navigate back
+                    window.removeEventListener('popstate', handlePopState);
+                    window.removeEventListener('beforeunload', handleBeforeUnload);
+                    window.history.back();
+                } else {
+                    // If user cancels, stay on the page by pushing current state again
+                    window.history.pushState(null, '', window.location.href);
+                    handleLoadingCancel();
+                }
+            }
+        };
+
+        // Push a new state so we can capture the popstate event
+        if (hasStartedConfiguration) {
+            window.history.pushState(null, '', window.location.href);
         }
-        const handleBeforeUnload = (event: BeforeUnloadEvent) => {
-            event.preventDefault();
-            confirmationModal();
-            return (event.returnValue = t('exitConfiguration.message'));
-        };
+
+        // Add event listeners
         window.addEventListener('beforeunload', handleBeforeUnload);
+        window.addEventListener('popstate', handlePopState);
+
         return () => {
+            // Clean up event listeners
             window.removeEventListener('beforeunload', handleBeforeUnload);
+            window.removeEventListener('popstate', handlePopState);
         };
-    }, [router]);
+    }, [configurations?.category, t]);
 
     const handleGenerateTest = async () => {
         if (configurations) {
@@ -169,9 +194,16 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
         });
     };
 
+
+
     return (
         <Container size="xl" p={{ base: 30, sm: 35 }} pt={{ base: 20, sm: 25 }} className={classes['main-container']} {...props}>
-            <ReturnButton timeout={!configurations?.category || configurations?.category?.length == 0 ? undefined : 0} confirmModal={!configurations?.category || configurations?.category?.length == 0 ? undefined : confirmTestConfigurationExitProps} size="xs" className={classes["return-button"]} />
+            <ReturnButton
+                cancelLoading={cancelLoading}
+                timeout={0}
+                size="xs"
+                className={classes["return-button"]}
+            />
             {
                 error && (
                     <Blockquote className={classes.blockquote} color="red" cite={"– " + t('errors.fetch.title', { error })} icon={<IconAlertTriangleFilled />}>
@@ -213,6 +245,7 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
                                 }
                             </Stepper.Step>
                             <Stepper.Step label={isMobile ? undefined : t('steps.2.label')} description={isMobile ? undefined : t('steps.2.description')}>
+                            <Text c='dimmed' fz="sm" mb={5} hidden={!isMobile}>{t('steps.2.description')}</Text>
                                 <TestGeneratorSelector
                                     value={configurations?.folderId}
                                     data={folder.filter((folder) => folder.category == configurations?.category)}
@@ -227,52 +260,14 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
                                 />
                             </Stepper.Step>
                             <Stepper.Step label={isMobile ? undefined : t('steps.3.label')} description={isMobile ? undefined : t('steps.3.description')}>
-                                <TestGeneratorSelectorChip
-                                    label="Select Subjects"
-                                    data={subjects.filter((subject) => subject.folderId == configurations?.folderId && subject.type == "CHAPTER")}
-                                    onChange={(value) => {
-                                        setConfigurations((prev) => {
-                                            if (prev) {
-                                                return {
-                                                    ...prev,
-                                                    subjectIds: value
-                                                }
-                                            }
-                                        });
-                                    }}
-                                    value={configurations?.subjectIds}
-                                    allowMultiple={true}
-                                    chipProps={{
-                                        size: 'sm',
-                                        radius: 'sm',
-                                        variant: 'light',
-                                    }}
-                                />
-                                <Divider className={classes['divider']} />
-                                {
-                                    subjects.filter((subject) => subject.folderId == configurations?.folderId && subject.type == "QUESTION").length !== 0 &&
-                                    <>
-                                        <TestGeneratorSelector
-                                            value={configurations?.subjectIds}
-                                            data={subjects.filter((subject) => subject.folderId == configurations?.folderId && subject.type == "QUESTION")}
-                                            allowMultiple={true}
-                                            onChange={(value) => {
-                                                setConfigurations((prev) => {
-                                                    if (prev) return {
-                                                        ...prev,
-                                                        subjectIds: value
-                                                    }
-                                                });
-                                            }}
-                                        />
-                                        <Divider className={classes['divider']} />
-                                    </>
-                                }
-                                <TestGeneratorSelector
-                                    value={configurations?.chapterIds}
-                                    data={chapters.filter((chapter) => configurations?.subjectIds?.includes(chapter.subjectId))}
-                                    allowMultiple={true}
-                                    onChange={(value) => {
+                                <Text c='dimmed' fz="sm" mb={5} hidden={!isMobile}>{t('steps.3.description')}</Text>
+                                <TestGeneratorSelectorList
+                                    variant="card"
+                                    subjects={subjects}
+                                    chapters={chapters}
+                                    valueChapters={configurations?.chapterIds ?? []}
+                                    valueSubjects={configurations?.subjectQuestionIds ?? []}
+                                    onChaptersChange={(value) => {
                                         setConfigurations((prev) => {
                                             if (prev) return {
                                                 ...prev,
@@ -280,12 +275,22 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
                                             }
                                         });
                                     }}
-                                    loaderProps={{
-                                        mb: 30,
-                                        color: 'grey',
-                                        type: 'dots'
+                                    onSubjectsChange={(value) => {
+                                        setConfigurations((prev) => {
+                                            if (prev) return {
+                                                ...prev,
+                                                subjectQuestionIds: value
+                                            }
+                                        });
                                     }}
-                                    loader={(configurations?.subjectIds && configurations?.subjectIds?.length !== 0) && chapters.length === 0}
+                                    onChapterSubjectChange={(value) => {
+                                        setConfigurations((prev) => {
+                                            if (prev) return {
+                                                ...prev,
+                                                subjectIds: value
+                                            }
+                                        });
+                                    }}
                                 />
                             </Stepper.Step>
                             <Stepper.Step label={isMobile ? undefined : t('steps.4.label')} description={isMobile ? undefined : t('steps.4.description')}>
@@ -308,13 +313,16 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
                                 Completed, click back button to get to previous step
                             </Stepper.Completed>
                         </Stepper>
-
-                        <Group justify="center" mt="xl">
-                            <Button disabled={active == 0} variant="default" onClick={prevStep}>{t('steps.back')}</Button>
-                            <Button rightSection={<IconChevronRight />} disabled={active + 1 > allowedStep} onClick={active == 3 ? handleGenerateTest : nextStep}>{active == 3 ? t('steps.generate') : t('steps.next')}</Button>
-                        </Group>
                     </Stack>
+                    <Affix position={{ bottom: 0, left: 0, right: 0 }} className={classes['stepper-buttons']}>
+                        <Group justify="center">
+                            <Button size="lg" disabled={active == 0} variant="default" onClick={prevStep}>{t('steps.back')}</Button>
+                            <Button size="lg" rightSection={<IconChevronRight />} disabled={active + 1 > allowedStep} onClick={active == 3 ? handleGenerateTest : nextStep}>{active == 3 ? t('steps.generate') : t('steps.next')}</Button>
+                        </Group>
+                    </Affix>
+
                 </FocusTrap>
+
             }
         </Container>
     )

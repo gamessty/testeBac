@@ -26,7 +26,7 @@ export default function Tests({ session, settab, ...props }: Readonly<{ session:
 
     useEffect(() => {
         async function fetchSubjectNames() {
-            const subjectIds = session.user.activeTests?.flatMap(test => test.subjectIds) ?? [];
+            const subjectIds = session.user.activeTests?.flatMap(test => test.subjectId) ?? [];
             const fetchedSubjectNames = await getSubjectNamesByIds(subjectIds);
             if (!('message' in fetchedSubjectNames)) {
                 setSubjectNames(fetchedSubjectNames);
@@ -54,7 +54,7 @@ export default function Tests({ session, settab, ...props }: Readonly<{ session:
                             session.user.activeTests?.map((test) => {
                                 return (
                                     <Fragment key={test.id}>
-                                        <TestCard design="compact" mih="100%" category={folderNames[test.folderId]} subject={test.subjectIds.map(id => subjectNames[id]).join(" | ")} progress={test.selectedAnswers.length / test.questions.length * 100} />
+                                        <TestCard design="compact" mih="100%" category={folderNames[test.folderId]} subject={test.subjectId.map(id => subjectNames[id]).join(" | ")} progress={test.selectedAnswers.length / test.questions.length * 100} />
                                         <Divider />
                                     </Fragment>
                                 )

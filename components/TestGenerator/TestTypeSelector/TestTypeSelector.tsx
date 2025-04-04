@@ -1,3 +1,4 @@
+"use client";
 import { useEffect, useState } from 'react';
 import { Container, Divider, FloatingIndicator, SegmentedControlItem, Switch, Tabs, TabsProps, NumberInput } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';

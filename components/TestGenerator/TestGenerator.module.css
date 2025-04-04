@@ -24,7 +24,7 @@
 
 .main-stack {
     flex-grow: 1;
-    margin-bottom: 0;
+    margin-bottom: var(--mantine-spacing-xl);
 
     @mixin larger-than $mantine-breakpoint-xl {
         margin-bottom: calc(1.5*var(--mantine-spacing-xl));
@@ -34,4 +34,10 @@
 .test-type-selector {
     width: 100%;
     margin-block: var(--mantine-spacing-md);
+}
+
+.stepper-buttons {
+    padding-block: var(--mantine-spacing-md);
+    width: 100%;
+    background: linear-gradient(to top, var(--mantine-color-body), alpha(var(--mantine-color-body), 0.8), transparent);
 }

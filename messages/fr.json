@@ -242,15 +242,15 @@
       },
       "steps": {
         "1": {
-          "description": "Quel type de test?",
+          "description": "Sélectionner le type de test",
           "label": "Catégorie"
         },
         "2": {
-          "description": "Quel dossier?",
+          "description": "Sélectionner un dossier",
           "label": "Dossier"
         },
         "3": {
-          "description": "Quels sujets et chapitre?",
+          "description": "Sélectionnez les sujets et les chapitres",
           "label": "Sujets et chapitres"
         },
         "4": {

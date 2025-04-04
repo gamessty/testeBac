@@ -224,7 +224,7 @@
     "TestGenerator": {
       "Selector": {
         "TestTypeSelector": {
-          "type": "{id, select, simple {einfach} mockexam {Mock Prüfung} complex {Komplex} other {unbekannte}}"
+          "type": "{id, select, simple {einfach} mockExam {Mock Prüfung} complex {Komplex} other {unbekannte}}"
         },
         "updatedAt": "Aktualisiert bei:"
       },
@@ -242,15 +242,15 @@
       },
       "steps": {
         "1": {
-          "description": "Welche Art von Test?",
+          "description": "Wählen Sie die Testart",
           "label": "Kategorie"
         },
         "2": {
-          "description": "Welcher Ordner?",
+          "description": "Ordner auswählen",
           "label": "Ordner"
         },
         "3": {
-          "description": "Welche Themen und Kapitel?",
+          "description": "Wählen Sie die Themen und Kapitel aus",
           "label": "Themen und Kapitel"
         },
         "4": {

@@ -36,7 +36,8 @@ interface MockDataItem {
 const mockdata: MockDataItem[] = [
     { title: 'QuestionCard', icon: IconFile, href: './demo/question' },
     { title: 'TestGenerator', icon: IconFilePlus, href: './demo/generator' },
-    { title: 'Tests', icon: IconFile, href: './demo/tests' }
+    { title: 'Tests', icon: IconFile, href: './demo/tests' },
+    { title: 'TestTypeSelector', icon: IconFile, href: './demo/selector' },
 ];
 
 export default function DemoMenu({ ...props }: Readonly<CardProps>) {

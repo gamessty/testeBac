@@ -5,6 +5,10 @@
 
 .back-to-top {
     max-width: 40vw;
+    p {
+        height: 100%;
+        align-content: center;
+    }
 }
 
 .hide {

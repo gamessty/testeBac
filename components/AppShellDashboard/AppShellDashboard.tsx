@@ -264,7 +264,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                     </Group>
                 </Flex>
             </AppShell.Footer>
-            <Affix position={affixPosition}>
+            <Affix position={affixPosition} zIndex={1000}>
                 <Transition transition="slide-up" mounted={scrollPosition.y > 0}>
                     {(transitionStyles) => (
                         <Button

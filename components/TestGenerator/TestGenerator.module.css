@@ -37,7 +37,11 @@
 }
 
 .stepper-buttons {
-    padding-block: var(--mantine-spacing-md);
+    transition: all ease 0.2s;
+    * {
+        transition: all ease 0.2s;
+    }
+    padding-block: var(--mantine-spacing-xl);
     width: 100%;
     background: linear-gradient(to top, var(--mantine-color-body), alpha(var(--mantine-color-body), 0.8), transparent);
 }

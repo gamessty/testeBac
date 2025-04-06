@@ -52,11 +52,11 @@ export function TestGeneratorSelectorList({ chapters, subjects, defaultValuesCha
 
     const items = subjects
         .toSorted((a, b) => (a.type === 'QUESTION' && b.type !== 'QUESTION' ? -1 : b.type === 'QUESTION' && a.type !== 'QUESTION' ? 1 : 0))
-        .map((subject) => {
+        .map((subject, index) => {
             if (subject.type === 'QUESTION') {
                 return (
-                    <>
-                        <Accordion.Item key={subject.id} value={subject.id}>
+                    <React.Fragment key={subject.id}>
+                        <Accordion.Item value={subject.id}>
                             <Flex className={classes.flex}>
                                 <Checkbox
                                     className={classes.checkbox}
@@ -78,8 +78,8 @@ export function TestGeneratorSelectorList({ chapters, subjects, defaultValuesCha
                                 />
                             </Flex>
                         </Accordion.Item>
-                        <Divider key={randomId()} my="xs" />
-                    </>
+                        {subjects.length !== index + 1 && <Divider key={randomId()} my="xs" />}
+                    </React.Fragment>
                 );
             } else {
                 return (
@@ -155,7 +155,7 @@ export function TestGeneratorSelectorList({ chapters, subjects, defaultValuesCha
                                 })}
                             </Accordion.Panel>
                         </Accordion.Item>
-                        <Divider my="xs" />
+                        {subjects.length !== index + 1 && <Divider key={randomId()} my="xs" />}
                     </React.Fragment>
                 );
             }

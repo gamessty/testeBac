@@ -312,8 +312,8 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
                             </Stepper.Completed>
                         </Stepper>
                     </Stack>
-                    <Affix position={{ bottom: 0, left: 0, right: 0 }} className={classes['stepper-buttons']}>
-                        <Group justify="center">
+                    <Affix position={{ bottom: 0, left: 0, right: 0 }} >
+                        <Group justify="center" className={classes['stepper-buttons']}>
                             <Button size="lg" disabled={active == 0} variant="default" onClick={prevStep}>{t('steps.back')}</Button>
                             <Button size="lg" rightSection={<IconChevronRight />} disabled={active + 1 > allowedStep} onClick={active == 3 ? handleGenerateTest : nextStep}>{active == 3 ? t('steps.generate') : t('steps.next')}</Button>
                         </Group>

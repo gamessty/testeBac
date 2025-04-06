@@ -1,19 +1,19 @@
 "use client";
 
-import { Container, MantineStyleProp, SimpleGrid, Text, Title, Drawer, Group, Stack, Input, Checkbox, MultiSelect, Button, Transition, JsonInput, Blockquote, TextInput, Loader, CloseButton, ScrollArea, ContainerProps } from "@mantine/core";
+import { Blockquote, Button, Checkbox, CloseButton, Container, ContainerProps, Drawer, Grid, Group, Input, JsonInput, Loader, MultiSelect, Stack, Text, TextInput, Title, Transition } from "@mantine/core";
+import { useDebouncedCallback, useDebouncedValue, useDisclosure } from "@mantine/hooks";
+import { Role } from "@prisma/client";
+import { IconAlertTriangleFilled } from "@tabler/icons-react";
 import { type Session, type User } from "next-auth";
 import { useTranslations } from "next-intl";
-import UserCard from "../../../Cards/UserCard/UserCard";
-import getManyUser from "../../../../actions/PrismaFunctions/getManyUser";
 import { useEffect, useState } from "react";
-import { useDebouncedCallback, useDebouncedValue, useDisclosure } from "@mantine/hooks";
-import putUser from "../../../../actions/PrismaFunctions/putUser";
-import { IconAlertTriangleFilled } from "@tabler/icons-react";
 import deleteUser from "../../../../actions/PrismaFunctions/deleteUser";
-import { chkP, getPrismaRolesUpdateData, getPrismaUpdateData, getManyRoleData, getManyRoleFromArray, getManyRoleFromValues } from "../../../../utils";
 import getManyRole from "../../../../actions/PrismaFunctions/getManyRole";
-import { Role } from "@prisma/client";
+import getManyUser from "../../../../actions/PrismaFunctions/getManyUser";
+import putUser from "../../../../actions/PrismaFunctions/putUser";
+import { chkP, getManyRoleData, getManyRoleFromValues, getPrismaRolesUpdateData } from "../../../../utils";
 import AvatarFallback from "../../../AvatarFallback/AvatarFallback";
+import UserCard from "../../../Cards/UserCard/UserCard";
 
 export default function UserManager({ session, style }: Readonly<{ session: Session | null | undefined } & ContainerProps>) {
     const t = useTranslations('Dashboard.UserManager');
@@ -104,15 +104,17 @@ export default function UserManager({ session, style }: Readonly<{ session: Sess
             leftSection={loading && <Loader variant="bars" size={20} />}
             rightSection={search.length > 0 && <CloseButton onClick={() => { setSearch(""); setSearchResults(users); }} variant="link" color="red" />}
         />
-        <SimpleGrid cols={{ xs: 2, md: 3, lg: 4, xl: 5, xxl: 6 }} >
-            {searchResults.map((user) => <UserCard onClick={() => {
+        <Grid>
+            {searchResults.map((user) => <Grid.Col span={{ xs: 6, md: 4, lg: 3, xl: 2 }} key={user.id}>
+            <UserCard onClick={() => {
                 setUser(user);
                 open();
-            }} key={user.id} user={user} />)}
+            }} key={user.id} user={user} />
+                </Grid.Col> )}
             {
                 ((users.length == 0 && !error) || loading) && Array.from({ length: 18 }).map((_, index) => <UserCard key={"skeleton_users_" + index} skeleton />)
             }
-        </SimpleGrid>
+        </Grid>
         <Drawer position="right" opened={opened} onClose={close}
             onExitTransitionEnd={() => { setUser({} as User); setUserChanges({} as User); }}
             title={

@@ -1,5 +1,5 @@
-import { Prisma, PrismaClient } from "@prisma/client"
-import { getRandomUserName, alwaysRandomUsernames, getRandomUserImageURL } from "../utils";
+import { PrismaClient } from "@prisma/client";
+import { alwaysRandomUsernames, getRandomUserImageURL, getRandomUserName } from "../utils";
 
 const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
 

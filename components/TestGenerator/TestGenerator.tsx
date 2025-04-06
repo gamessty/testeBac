@@ -1,23 +1,21 @@
 "use client";
-import { Affix, Blockquote, Box, Button, Center, Container, ContainerProps, Divider, em, FocusTrap, Group, Loader, Overlay, Stack, Stepper, Text } from "@mantine/core";
-import { useDidUpdate, useDisclosure, useFocusReturn, useFocusTrap, useMediaQuery } from "@mantine/hooks";
+import { Affix, Blockquote, Button, Center, Container, ContainerProps, em, FocusTrap, Group, Loader, Stack, Stepper, Text } from "@mantine/core";
+import { useDidUpdate, useDisclosure, useMediaQuery } from "@mantine/hooks";
+import { Chapter, Folder, Subject } from "@prisma/client";
+import { IconAlertTriangleFilled, IconChevronRight } from "@tabler/icons-react";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
-import ReturnButton from "../ReturnButton/ReturnButton";
-import classes from './TestGenerator.module.css';
-import getManyFolder from "../../actions/PrismaFunctions/getManyFolder";
-import { Chapter, Folder, Subject } from "@prisma/client";
-import { IconAlertTriangleFilled, IconArrowAutofitRight, IconArrowRight, IconChevronCompactRight, IconChevronRight } from "@tabler/icons-react";
-import TestGeneratorSelector from "../TestGeneratorSelector/TestGeneratorSelector";
-import getSubjects from "../../actions/PrismaFunctions/getSubjects";
-import getChapters from "../../actions/PrismaFunctions/getChapters";
-import TestGeneratorSelectorChip from "../TestGeneratorSelector/TestGeneratorSelector.Chip";
-import findFirstFocusable from "./findFirstFocusable";
-import TestTypeSelector from "./TestTypeSelector/TestTypeSelector";
-import { useRouter } from "next/navigation";
 import { generateTest } from "../../actions/PrismaFunctions/createUserTest";
+import getChapters from "../../actions/PrismaFunctions/getChapters";
+import getManyFolder from "../../actions/PrismaFunctions/getManyFolder";
+import getSubjects from "../../actions/PrismaFunctions/getSubjects";
+import ReturnButton from "../ReturnButton/ReturnButton";
+import TestGeneratorSelector from "../TestGeneratorSelector/TestGeneratorSelector";
 import { TestGeneratorSelectorList } from "../TestGeneratorSelector/TestGeneratorSelector.List";
+import findFirstFocusable from "./findFirstFocusable";
+import classes from './TestGenerator.module.css';
+import TestTypeSelector from "./TestTypeSelector/TestTypeSelector";
 
 interface TestConfiguration {
     category?: string;

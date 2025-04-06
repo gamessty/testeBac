@@ -1,5 +1,5 @@
 "use client";
-import { Button, ButtonProps } from "@mantine/core"
+import { Button, ButtonProps } from "@mantine/core";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
 import { useTranslations } from "next-intl";

@@ -1,6 +1,6 @@
 import { Text, Title } from '@mantine/core';
-import classes from './Welcome.module.scss';
 import { useTranslations } from 'next-intl';
+import classes from './Welcome.module.scss';
 
 export function Welcome() {
   const t = useTranslations('HomePage');

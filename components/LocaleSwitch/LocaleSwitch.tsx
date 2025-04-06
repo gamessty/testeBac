@@ -1,8 +1,8 @@
 "use client";
-import { useLocale, useTranslations } from "next-intl";
-import { routing, usePathname, useRouter } from "../../i18n/routing";
 import { SegmentedControl, Stack, Text } from "@mantine/core";
+import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
+import { routing, usePathname, useRouter } from "../../i18n/routing";
 
 export default function LocaleSwitch() {
     const locale = useLocale();

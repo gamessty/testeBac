@@ -1,11 +1,11 @@
 "use client";
-import { Card, Group, Badge, Button, Image, Text, Avatar, CardProps, Box, Stack, Flex, Progress, ActionIcon, Tooltip } from "@mantine/core";
+import { ActionIcon, Badge, Box, Button, Card, CardProps, Flex, Image, Progress, Stack, Text } from "@mantine/core";
+import { IconCodeAsterisk, IconFlask2, IconMicroscope, IconPencil, IconSchool } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
-import classes from './TestCard.module.css';
-import { IconArrowBackUp, IconCodeAsterisk, IconFlask2, IconMicroscope, IconPencil, IconPlayerPlay, IconPlayerPlayFilled, IconPlayerTrackNextFilled, IconSchool } from "@tabler/icons-react";
-import AvatarFallback from "../../AvatarFallback/AvatarFallback";
 import { Link } from "../../../i18n/routing";
 import { getInitialsColor } from "../../../utils";
+import AvatarFallback from "../../AvatarFallback/AvatarFallback";
+import classes from './TestCard.module.css';
 
 interface TestCardProps {
     category?: string;

@@ -1,5 +1,4 @@
 import { Card, Center, Text } from "@mantine/core";
-import { data } from "./data.example";
 import { Link } from "../../../i18n/routing";
 
 interface StatsCardProps {

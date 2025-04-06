@@ -1,15 +1,13 @@
 
 "use client";
-import { Title, Text, MantineStyleProp, Center, Flex, SimpleGrid, rem } from "@mantine/core";
-import classes from "./Home.module.css";
-import { useTranslations } from "next-intl";
-import { Session } from "next-auth";
-import { chkP, getInitialsColor } from "../../../utils";
 import LinkCard from "@/components/Cards/LinkCard/LinkCard";
-import { usePathname } from "@/i18n/routing";
-import { useCallback } from "react";
-import { IconFile, IconGraph, IconLogout, IconSettings, IconUser, IconUserPlus } from "@tabler/icons-react";
 import { ITabModuleProps } from "@/data";
+import { usePathname } from "@/i18n/routing";
+import { Center, Flex, SimpleGrid, Text, Title, rem } from "@mantine/core";
+import { IconFile, IconGraph, IconLogout, IconSettings, IconUser, IconUserPlus } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
+import { chkP, getInitialsColor } from "../../../utils";
+import classes from "./Home.module.css";
 
 interface HomeProps extends ITabModuleProps {}
 

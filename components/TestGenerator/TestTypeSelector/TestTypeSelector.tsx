@@ -1,9 +1,9 @@
 "use client";
-import { useEffect, useState } from 'react';
-import { Container, Divider, FloatingIndicator, SegmentedControlItem, Switch, Tabs, TabsProps, NumberInput } from '@mantine/core';
+import { Container, Divider, FloatingIndicator, NumberInput, SegmentedControlItem, Switch, Tabs, TabsProps } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
-import testTypes from './testTypes.json';
 import { useTranslations } from 'next-intl';
+import { useState } from 'react';
+import testTypes from './testTypes.json';
 import classes from './TestTypeSelector.module.css';
 
 interface TestTypeSelectorProps {

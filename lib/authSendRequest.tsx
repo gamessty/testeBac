@@ -1,8 +1,8 @@
-import { getTranslations } from "next-intl/server"
-import { getPathsFromURL, getQueryParamsFromURL, isSupportedLocale } from "../utils"
-import { unescape } from "querystring"
 import { render } from '@react-email/components';
+import { getTranslations } from "next-intl/server";
+import { unescape } from "querystring";
 import { MagicLinkEmail } from '../emails/magic-link';
+import { getPathsFromURL, getQueryParamsFromURL, isSupportedLocale } from "../utils";
 
 export async function sendVerificationRequest(params: any) {
   const { identifier: to, provider, url } = params

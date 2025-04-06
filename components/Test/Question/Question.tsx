@@ -1,11 +1,11 @@
 "use client";
-import { Card, CardProps, Group, Radio, Title, Text, Stack, Image, Flex, Checkbox } from "@mantine/core";
-import { Montserrat } from "next/font/google";
-import classes from './Question.module.css';
 import { CodeHighlight } from "@mantine/code-highlight";
-import { Dispatch, SetStateAction, useEffect, useState } from "react";
+import { Card, CardProps, Checkbox, Flex, Group, Image, Radio, Stack, Text, Title } from "@mantine/core";
 import { HotkeyItem, useHotkeys } from "@mantine/hooks";
+import { Montserrat } from "next/font/google";
+import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { hashCode } from "../../../utils";
+import classes from './Question.module.css';
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 

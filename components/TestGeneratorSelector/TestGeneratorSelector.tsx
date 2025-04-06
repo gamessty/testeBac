@@ -1,9 +1,9 @@
 "use client";
 import { Center, Checkbox, Container, Group, Loader, LoaderProps, Radio, Stack, Text } from '@mantine/core';
-import classes from './TestGeneratorSelector.module.css';
+import { useUncontrolled } from '@mantine/hooks';
 import { Chapter, Folder, Subject } from '@prisma/client';
 import { useLocale, useTranslations } from 'next-intl';
-import { useUncontrolled } from '@mantine/hooks';
+import classes from './TestGeneratorSelector.module.css';
 
 type label = {
     name: string;

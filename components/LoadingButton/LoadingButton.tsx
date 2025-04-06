@@ -1,5 +1,5 @@
 "use client";
-import { Button, ButtonProps, PolymorphicComponentProps } from "@mantine/core";
+import { Button } from "@mantine/core";
 import { useShallowEffect } from "@mantine/hooks";
 import { useState } from "react";
 

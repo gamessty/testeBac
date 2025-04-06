@@ -1,7 +1,7 @@
 "use client";
-import { useState, useEffect } from 'react';
-import { Combobox, InputBase, Loader, Group, CheckIcon, useCombobox, Input, TextInput, TextInputProps } from '@mantine/core';
+import { CheckIcon, Combobox, Group, Loader, TextInput, TextInputProps, useCombobox } from '@mantine/core';
 import { useTranslations } from 'next-intl';
+import { useEffect, useState } from 'react';
 
 interface LanguageData {
   language: string;

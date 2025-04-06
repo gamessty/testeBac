@@ -1,12 +1,11 @@
-import { Box, Center, Container, ContainerProps, Divider, Flex, MantineStyleProp, SimpleGrid, Stack, Text, Title } from "@mantine/core";
-import { useTranslations } from "next-intl";
-import TestCard from "../../Cards/TestCard/TestCard";
-import CreateTestCard from "../../Cards/CreateTestCard/CreateTestCard";
+import { Center, Container, ContainerProps, Divider, Flex, Stack, Text, Title } from "@mantine/core";
 import { Session } from "next-auth";
+import { useTranslations } from "next-intl";
 import { Fragment, useEffect, useState } from "react";
-import { useShallowEffect } from "@mantine/hooks";
 import { getFolderNamesByIds } from "../../../actions/PrismaFunctions/getManyFolder";
 import { getSubjectNamesByIds } from "../../../actions/PrismaFunctions/getSubjects";
+import CreateTestCard from "../../Cards/CreateTestCard/CreateTestCard";
+import TestCard from "../../Cards/TestCard/TestCard";
 
 export default function Tests({ session, settab, ...props }: Readonly<{ session: Session, settab: ({ tab }: { tab: string }) => void } & ContainerProps>) {
     const t = useTranslations('Dashboard.Tests');

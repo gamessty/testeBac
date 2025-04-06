@@ -1,10 +1,10 @@
 "use client";
-import { useListState, randomId, useUncontrolled, useDidUpdate } from '@mantine/hooks';
-import { Accordion, AccordionProps, ActionIcon, Center, Checkbox, CheckboxCardProps, Divider, Flex, Group, Text } from '@mantine/core';
+import { Accordion, AccordionProps, Checkbox, CheckboxCardProps, Divider, Flex, Group, Text } from '@mantine/core';
+import { randomId, useDidUpdate, useUncontrolled } from '@mantine/hooks';
 import { Chapter, Subject } from '@prisma/client';
-import classes from './TestGeneratorSelector.List.module.css';
+import { IconPlus } from '@tabler/icons-react';
 import React from 'react';
-import { IconArrowDown, IconPlus } from '@tabler/icons-react';
+import classes from './TestGeneratorSelector.List.module.css';
 
 interface TestGeneratorSelectorListProps {
     subjects: Subject[];

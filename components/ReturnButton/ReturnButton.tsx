@@ -1,11 +1,11 @@
 "use client";
-import { ButtonProps, Button, ActionIcon, ActionIconProps, Loader } from "@mantine/core";
-import { useIsomorphicEffect, useMounted, useShallowEffect } from "@mantine/hooks";
+import { ActionIcon, ActionIconProps, Button, ButtonProps } from "@mantine/core";
+import { useMounted } from "@mantine/hooks";
+import { modals, openConfirmModal } from "@mantine/modals";
 import { IconArrowBackUp } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { modals, openConfirmModal } from "@mantine/modals";
 
 
 interface ReturnButtonBaseProps {

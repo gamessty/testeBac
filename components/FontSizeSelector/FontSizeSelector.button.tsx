@@ -1,6 +1,6 @@
-import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
 import { Button, ButtonGroupProps, Loader } from '@mantine/core';
-import { useCounter, usePagination, useUncontrolled } from '@mantine/hooks';
+import { usePagination, useUncontrolled } from '@mantine/hooks';
+import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
 import classes from './FontSizeSelector.button.module.css';
 
 interface DataType {

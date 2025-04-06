@@ -1,7 +1,7 @@
-import { HTMLAttributes, useState } from 'react';
-import { FloatingIndicator, UnstyledButton, UnstyledButtonProps } from '@mantine/core';
-import classes from './FontSizeSelector.module.css';
+import { FloatingIndicator, UnstyledButton } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
+import { HTMLAttributes, useState } from 'react';
+import classes from './FontSizeSelector.module.css';
 
 interface DataType {
     value: string;

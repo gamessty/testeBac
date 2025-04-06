@@ -1,5 +1,5 @@
 'use client';
-import { Card, CardProps, LoadingOverlay, Text, Title } from "@mantine/core";
+import { Card, CardProps, LoadingOverlay, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconPlus } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";

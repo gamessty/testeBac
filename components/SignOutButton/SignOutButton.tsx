@@ -1,6 +1,6 @@
-import { signOut, auth } from "../../auth"
-import { Group, GroupProps } from "@mantine/core"
+import { Group, GroupProps } from "@mantine/core";
 import { getTranslations } from "next-intl/server";
+import { auth, signOut } from "../../auth";
 import SubmitButton from "../SubmitButton/SubmitButton";
 
 export default async function SignOutButton(props: Readonly<Omit<GroupProps, 'children' | 'justify'>>) {

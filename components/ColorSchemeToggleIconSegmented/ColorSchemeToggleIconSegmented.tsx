@@ -1,4 +1,4 @@
-import { Center, Flex, Group, SegmentedControl, Stack, Text, useMantineColorScheme, VisuallyHidden } from "@mantine/core";
+import { Center, SegmentedControl, Stack, Text, useMantineColorScheme, VisuallyHidden } from "@mantine/core";
 import { IconMoon, IconSun, IconSunMoon } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import styles from './ColorSchemeToggleIconSegmented.module.css';

@@ -1,7 +1,10 @@
-export default function TestPage() {
+export default async function TestPage({
+    params
+}: Readonly<{ params: Promise<{ id: string }> }>) {
+    const { id: testId } = await params;
     return (
         <>
-            TBD
+            TBD. THE TEST ID IS: {testId}
         </>
     )
 }

@@ -34,8 +34,8 @@ export default function RoleManager({ session, ...props }: Readonly<{ session: S
     }, []);
 
     if (!chkP("role:manage", session?.user)) return (
-        <Blockquote color="red" className={styles.blockquote} cite={"– " + t('errors.fetch.title', { error })} icon={<IconAlertTriangleFilled />}>
-            {t('errors.fetch.message', { error })}
+        <Blockquote color="red" className={styles.blockquote} cite={"– " + t('errors.fetch.title', { error: error ?? ''  })} icon={<IconAlertTriangleFilled />}>
+            {t('errors.fetch.message', { error: error ?? '' })}
         </Blockquote>
     );
 

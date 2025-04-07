@@ -6,6 +6,8 @@ import { IconAlertTriangleFilled, IconChevronRight } from "@tabler/icons-react";
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
+import { useRouter } from "next/navigation";
+import { notifications } from "@mantine/notifications";
 import { generateTest } from "../../actions/PrismaFunctions/createUserTest";
 import getChapters from "../../actions/PrismaFunctions/getChapters";
 import getManyFolder from "../../actions/PrismaFunctions/getManyFolder";
@@ -29,6 +31,7 @@ interface TestConfiguration {
 
 export default function TestGenerator({ session, ...props }: Readonly<{ session: Session } & ContainerProps>) {
     const t = useTranslations('Dashboard.TestGenerator');
+    const router = useRouter();
 
     const [configurations, setConfigurations] = useState<TestConfiguration>();
     const [allowedStep, setAllowedStep] = useState<number>(0);
@@ -40,6 +43,7 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
     const stepperRef = useRef<HTMLDivElement>(null);
     const [activeFocus] = useDisclosure(true);
     const [cancelLoading, setCancelLoading] = useState(false);
+    const [questionDistribution, setQuestionDistribution] = useState<Record<string, number>>({});
 
     useEffect(() => {
         async function fetchData() {
@@ -105,16 +109,68 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
     }, [subjects]);
 
     useDidUpdate(() => {
-        if (!configurations) setAllowedStep(0);
-        if (configurations?.category) setAllowedStep(1);
-        if (configurations?.folderId) setAllowedStep(2);
-        if (configurations?.chapterIds?.length || configurations?.subjectIds?.length) setAllowedStep(3);
-    }, [configurations])
+        if (!configurations) {
+            setAllowedStep(0);
+            return;
+        }
+        let step = 0;
+        if (configurations?.category) step = 1;
+        if (configurations?.folderId) step = 2;
+        if (configurations?.chapterIds?.length || configurations?.subjectQuestionIds?.length) step = 3;
+        if (configurations?.testType && configurations?.configurations) step = 4;
+        setAllowedStep(step);
+    }, [configurations]);
 
     const [active, setActive] = useState(0);
-    const nextStep = () => { setActive((current) => (current < 4 ? current + 1 : current)); if (stepperRef.current) findFirstFocusable(stepperRef.current)?.focus(); };
+    const nextStep = () => {
+        // Before moving from step 2 (subjects/chapter selection) to step 3 (final configuration)
+        if (active === 2 && configurations?.testType === 'simple' && configurations?.configurations) {
+            const currentValue = Number(configurations.configurations.numberOfQuestions);
+            const allowedMax = 25; // fallback maximum (or derive dynamically if available)
+            if (currentValue > allowedMax) {
+                // Clamp the value and show a warning notification
+                setConfigurations(prev => ({
+                    ...prev!,
+                    configurations: {
+                        ...(prev?.configurations || {}),
+                        numberOfQuestions: allowedMax
+                    }
+                }));
+                notifications.show({
+                    color: 'yellow',
+                    title: t('warnings.configuration.title', { allowedMax }),
+                    message: t('warnings.configuration.adjusted', { allowedMax })
+                });
+                return; // Prevent moving to the next step until corrected
+            }
+        }
+        setActive((current) => (current < 4 ? current + 1 : current));
+        if (stepperRef.current) findFirstFocusable(stepperRef.current)?.focus();
+    };
     const prevStep = () => { setActive((current) => (current > 0 ? current - 1 : current)); if (stepperRef.current) findFirstFocusable(stepperRef.current)?.focus(); };
     const isMobile = useMediaQuery(`(max-width: ${em(750)})`, true);
+
+    useEffect(() => {
+        if (active >= 3) {
+            // If no test type is selected, default to "simple" (the first entry)
+            if (!configurations?.testType) {
+                setConfigurations(prev => ({ ...prev!, testType: "simple" }));
+            }
+            // For the "simple" test type, if numberOfQuestions is not set then default it to 25
+            if (configurations?.testType === "simple") {
+                const currentValue = configurations?.configurations?.numberOfQuestions;
+                if (currentValue == null || currentValue === '') {
+                    setConfigurations(prev => ({ 
+                        ...prev!, 
+                        configurations: { 
+                            ...(prev?.configurations || {}), 
+                            numberOfQuestions: 25 
+                        } 
+                    }));
+                }
+            }
+        }
+    }, [active, configurations]);
 
     const handleLoadingCancel = () => {
         setCancelLoading(true);
@@ -173,26 +229,60 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
 
     const handleGenerateTest = async () => {
         if (configurations) {
-            const result = await generateTest(configurations);
+            // Validate numeric configuration inputs before generating the test.
+            if (configurations.testType === 'simple' && configurations.configurations) {
+                const current = Number(configurations.configurations.numberOfQuestions);
+                const allowedMax = 25; // fallback maximum (ideally provided from TestTypeSelector)
+                if (current > allowedMax) {
+                    // Clamp the value to allowedMax
+                    setConfigurations(prev => ({ 
+                        ...prev!, 
+                        configurations: { 
+                            ...(prev?.configurations || {}), 
+                            numberOfQuestions: allowedMax 
+                        } 
+                    }));
+                }
+            }
+            
+            // Proceed to generate the test
+            const result = await generateTest({
+                ...configurations,
+                questionDistribution
+            });
             if (result.success) {
-                // Handle success, e.g., navigate to the generated test page
+                // Redirect to the generated test page
+                router.push(`/app/test/${result.testId}`);
             } else {
-                // Handle error
-                setError(result.message ?? null);
+                // Show error notification using separate translation keys for title and message
+                notifications.show({
+                    color: 'red',
+                    title: t('errors.generate.title', { error: result.message }),
+                    message: t('errors.generate.message', { error: result.message })
+                });
             }
         }
     };
 
     const handleConfigurationsChange = (configs: Record<string, any>) => {
         setConfigurations((prev) => {
-            if (prev) return {
-                ...prev,
-                configurations: configs
+            // Perform a deep comparison to avoid unnecessary updates
+            const currentConfigs = JSON.stringify(prev?.configurations);
+            const newConfigs = JSON.stringify(configs);
+
+            if (currentConfigs !== newConfigs) {
+                return {
+                    ...prev,
+                    configurations: configs
+                };
             }
+            return prev; // No update needed
         });
     };
 
-
+    const handleQuestionDistributionChange = (distribution: Record<string, number>) => {
+        setQuestionDistribution(distribution);
+    };
 
     return (
         <Container size="xl" p={{ base: 30, sm: 35 }} pt={{ base: 20, sm: 25 }} className={classes['main-container']} {...props}>
@@ -260,7 +350,7 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
                             <Stepper.Step label={isMobile ? undefined : t('steps.3.label')} description={isMobile ? undefined : t('steps.3.description')}>
                                 <Text c='dimmed' fz="sm" mb={5} hidden={!isMobile}>{t('steps.3.description')}</Text>
                                 <TestGeneratorSelectorList
-                                    variant="card"
+                                    variant="compact"
                                     subjects={subjects}
                                     chapters={chapters}
                                     valueChapters={configurations?.chapterIds ?? []}
@@ -305,7 +395,13 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
                                         });
                                     }}
                                     onConfigurationsChange={handleConfigurationsChange}
+                                    onQuestionDistributionChange={handleQuestionDistributionChange}
+                                    selectedSubjects={configurations?.subjectQuestionIds ?? []}
+                                    selectedChapters={configurations?.chapterIds ?? []}
+                                    subjects={subjects}
+                                    chapters={chapters}
                                 />
+                                {allowedStep} {configurations?.testType}
                             </Stepper.Step>
                             <Stepper.Completed>
                                 Completed, click back button to get to previous step
@@ -315,7 +411,11 @@ export default function TestGenerator({ session, ...props }: Readonly<{ session:
                     <Affix position={{ bottom: 0, left: 0, right: 0 }} >
                         <Group justify="center" className={classes['stepper-buttons']}>
                             <Button size="lg" disabled={active == 0} variant="default" onClick={prevStep}>{t('steps.back')}</Button>
-                            <Button size="lg" rightSection={<IconChevronRight />} disabled={active + 1 > allowedStep} onClick={active == 3 ? handleGenerateTest : nextStep}>{active == 3 ? t('steps.generate') : t('steps.next')}</Button>
+                            <Button size="lg" rightSection={<IconChevronRight />} 
+                                disabled={active + 1 > allowedStep}
+                                onClick={active == 3 ? handleGenerateTest : nextStep}>
+                                    {active == 3 ? t('steps.generate') : t('steps.next')}
+                            </Button>
                         </Group>
                     </Affix>
 

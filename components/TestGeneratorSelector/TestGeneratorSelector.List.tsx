@@ -16,7 +16,7 @@ interface TestGeneratorSelectorListProps {
     onChaptersChange: (value: string[]) => void;
     onSubjectsChange: (value: string[]) => void; // selected subjects - only question subjects can be selected
     onChapterSubjectChange?: (value: string[]) => void; // selected subjects - these are subjects with chapters that have been selected - optional callback
-    variant?: 'default' | 'card';
+    variant?: 'default' | 'card' | 'compact'; // default: checkbox, card: card with swoosh, compact: checkbox with label
 }
 
 export function TestGeneratorSelectorList({ chapters, subjects, defaultValuesChapters, defaultValuesSubjects, valueChapters, valueSubjects, variant = 'default', ...props }: Readonly<TestGeneratorSelectorListProps & AccordionProps>) {
@@ -61,6 +61,7 @@ export function TestGeneratorSelectorList({ chapters, subjects, defaultValuesCha
                                 <Checkbox
                                     className={classes.checkbox}
                                     classNames={{
+                                        root: classes['checkbox-main-root'],
                                         labelWrapper: classes['checkbox-label'],
                                     }}
                                     checked={_subjects.includes(subject.id)}
@@ -89,6 +90,7 @@ export function TestGeneratorSelectorList({ chapters, subjects, defaultValuesCha
                                 <Checkbox
                                     className={classes.checkbox}
                                     classNames={{
+                                        root: classes['checkbox-main-root'],
                                         labelWrapper: classes['checkbox-label'],
                                     }}
                                     checked={allChecked(subject.id)}
@@ -110,10 +112,11 @@ export function TestGeneratorSelectorList({ chapters, subjects, defaultValuesCha
                             </Flex>
                             <Accordion.Panel>
                                 {chapters.filter(c => c.subjectId == subject.id).map((chapter) => {
-                                    if (variant == 'card') {
+                                    if (variant == 'card' || variant == 'compact') {
                                         return (<TestGeneratorSelectorCard
                                             key={chapter.id}
                                             label={chapter.name}
+                                            variant={variant == 'compact' ? 'compact' : 'default'}
                                             checked={_chapters.includes(chapter.id)}
                                             onChange={(checked) => {
                                                 let _newChapters = _chapters;
@@ -165,7 +168,7 @@ export function TestGeneratorSelectorList({ chapters, subjects, defaultValuesCha
         <Accordion
             variant='filled'
             chevron={<IconPlus className={classes.icon} />}
-            classNames={{ chevron: classes.chevron }}
+            classNames={variant == 'compact' ? { chevron: classes.chevron, content: classes['accordion-content'] } : { chevron: classes.chevron }}
         >
             {items}
         </Accordion>
@@ -176,23 +179,41 @@ interface TestGeneratorSelectorCardProps {
     label: string;
     description?: string | null;
     cardSwoosh?: boolean;
+    variant?: 'default' | 'compact';
 }
 
 function TestGeneratorSelectorCard({
     label,
     description,
     cardSwoosh = true,
+    variant = 'default',
     ...props
-}: Readonly<TestGeneratorSelectorCardProps & CheckboxCardProps>) {
-    return (
-        <Checkbox.Card className={classes['card-root'] + (cardSwoosh ? " " + classes['card-transition'] : '')} radius="md" {...props}>
-            <Group wrap="nowrap" align="flex-start">
-                <Checkbox.Indicator />
-                <div>
-                    <Text className={classes['card-label']}>{label}</Text>
-                    {description && <Text className={classes['card-description']}>{description}</Text>}
-                </div>
-            </Group>
-        </Checkbox.Card>
-    );
+}: Readonly<TestGeneratorSelectorCardProps & Omit<CheckboxCardProps, 'variant'>>) {
+    switch (variant) {
+        case 'compact':
+            return (
+                <Checkbox.Card className={classes['card-root'] + " " + classes['compact'] + " " + (cardSwoosh ? " " + classes['card-transition'] : '')} {...props}>
+                    <Group wrap="nowrap" align="flex-start">
+                        <Checkbox.Indicator />
+                        <div>
+                            <Text className={classes['card-label']}>{label}</Text>
+                            {description && <Text className={classes['card-description']}>{description}</Text>}
+                        </div>
+                    </Group>
+                </Checkbox.Card>
+            );
+        case 'default':
+        default:
+            return (
+                <Checkbox.Card className={classes['card-root'] + (cardSwoosh ? " " + classes['card-transition'] : '')} radius="md" {...props}>
+                    <Group wrap="nowrap" align="flex-start">
+                        <Checkbox.Indicator />
+                        <div>
+                            <Text className={classes['card-label']}>{label}</Text>
+                            {description && <Text className={classes['card-description']}>{description}</Text>}
+                        </div>
+                    </Group>
+                </Checkbox.Card>
+            );
+    }
 }

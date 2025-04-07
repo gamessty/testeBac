@@ -13,7 +13,7 @@ model Question {
 
     subject  Subject?  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
     chapter  Chapter?  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
-    userTest UserTest? @relation(fields: [userTestId], references: [id], onDelete: Cascade)
+    userTests UserTestOnQuestion[]
 
     @@map("questions")
 }

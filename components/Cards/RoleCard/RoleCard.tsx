@@ -63,7 +63,7 @@ export default function RoleCard({ role, skeleton = false, ...props }: Readonly<
                                 title: t('confirm.delete.title'),
                                 children: (
                                     <Text size="sm">
-                                        {t('confirm.delete.message', { name: role?.name })}
+                                        {t('confirm.delete.message', { name: role?.name ?? t('confirm.delete.defaultName') })}
                                     </Text>
                                 ),
                                 labels: { confirm: "Delete", cancel: "Cancel" },

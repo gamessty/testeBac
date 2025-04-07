@@ -47,3 +47,21 @@ export async function getFolderNamesByIds(folderIds: string[]): Promise<{ [key: 
 
     return folderNames;
 }
+
+export async function getFolderByIds(folderIds: string[]): Promise<Folder[] | { message: string }> {
+    const session = await auth();
+    if (!session?.user) {
+        return { message: "Not authenticated" };
+    }
+    if (!chkP("general:*", session.user)) {
+        return { message: "Unauthorized" };
+    }
+    const folders = await prisma.folder.findMany({
+        where: {
+            id: {
+                in: folderIds,
+            },
+        },
+    });
+    return folders;
+}

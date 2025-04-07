@@ -204,7 +204,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
             </AppShell.Navbar>
             <AppShell.Main>
                 <ScrollArea
-                    maw={"99vw"}
+                    maw={"100vw"}
                     onScrollPositionChange={setScrollPosition}
                     h={{ base: settings.tab.disableNavigation ? size : sizeMobile, sm: size }}
                     viewportRef={viewport}

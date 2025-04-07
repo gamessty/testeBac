@@ -119,6 +119,7 @@
           "title": "Rolle erstellen"
         },
         "delete": {
+          "defaultName": "unbekannt",
           "message": "Sind Sie sicher, dass Sie die Rolle {Name} löschen möchten? \nDiese Aktion kann nicht rückgängig gemacht werden.",
           "title": "Rolle löschen"
         }
@@ -222,8 +223,28 @@
       "title": "Einstellungen"
     },
     "TestGenerator": {
+      "QuestionDistribution": {
+        "availablePool": "Verfügbarer Fragenpool",
+        "availableQuestions": "{count, plural, =0 {keine Fragen} =1 {eine Frage} other {# Fragen}}",
+        "chapters": "Kapitel",
+        "description": "Wählen Sie aus, wie viele Fragen zu jedem Thema und Kapitel gestellt werden sollen.",
+        "loading": "Laden...",
+        "maxQuestion": "Max",
+        "minQuestion": "Min",
+        "questionRange": "Frage Bereich",
+        "subjects": "Themen",
+        "title": "Frage Verteilung",
+        "totalQuestions": "Fragen insgesamt"
+      },
       "Selector": {
         "TestTypeSelector": {
+          "Configurations": {
+            "labels": {
+              "numberOfQuestions": "Anzahl der Fragen",
+              "showAnswers": "Anzeige der richtigen Antwort nach jeder Frage",
+              "timeLimit": "Zeitlimit (Minuten)"
+            }
+          },
           "type": "{id, select, simple {einfach} mockExam {Mock Prüfung} complex {Komplex} other {unbekannte}}"
         },
         "updatedAt": "Aktualisiert bei:"
@@ -232,6 +253,10 @@
         "fetch": {
           "message": "{error, select, Unauthorized {Sie sind nicht berechtigt, auf diese Administrationsseite zuzugreifen. \nWenn Sie glauben, dass dies ein Fehler ist, aktualisieren Sie die Seite und versuchen Sie es später erneut.} other {unbekannte allgemeine Fehler. \nBitte versuchen Sie es später erneut.}}",
           "title": "{error, select, Unauthorized {nicht autorisiert} other {allgemeine Fehler}}"
+        },
+        "generate": {
+          "message": "{error, select, Unauthenticated {Bitte melden Sie sich an, um einen Test zu erstellen.} Unauthorized {Ihr Konto ist für diese Testkonfiguration nicht zugelassen.} other {Ein unerwarteter Fehler ist bei der Erstellung des Tests aufgetreten. Bitte versuchen Sie es später noch einmal.}}",
+          "title": "{error, select, Unauthenticated {Anmeldung erforderlich} Unauthorized {Zugriff verweigert} other {Testgenerierungsfehler}}"
         }
       },
       "exitConfiguration": {
@@ -240,6 +265,7 @@
         "message": "Sind Sie sicher, dass Sie die Testkonfiguration verlassen möchten? \nAlle Fortschritte werden verloren gehen.",
         "title": "Testkonfiguration verlassen"
       },
+      "questionsNumber": "{count, plural, =0 {keine Fragen} =1 {eine Frage} andere {# Fragen}}",
       "steps": {
         "1": {
           "description": "Wählen Sie die Testart",

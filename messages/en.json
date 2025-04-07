@@ -119,6 +119,7 @@
           "title": "Create role"
         },
         "delete": {
+          "defaultName": "unknown",
           "message": "Are you sure you want to delete the role {name}? This action cannot be undone.",
           "title": "Delete role"
         }
@@ -222,8 +223,28 @@
       "title": "Settings"
     },
     "TestGenerator": {
+      "QuestionDistribution": {
+        "availablePool": "Available Question Pool",
+        "availableQuestions": "{count, plural, =0 {no questions} =1 {one question} other {# questions}}",
+        "chapters": "Chapters",
+        "description": "Select how many questions to include from each subject and chapter",
+        "loading": "Loading...",
+        "maxQuestion": "Max",
+        "minQuestion": "Min",
+        "questionRange": "Question Range",
+        "subjects": "Subjects",
+        "title": "Question Distribution",
+        "totalQuestions": "Total Questions"
+      },
       "Selector": {
         "TestTypeSelector": {
+          "Configurations": {
+            "labels": {
+              "numberOfQuestions": "Number of questions",
+              "showAnswers": "Show correct answer after each question",
+              "timeLimit": "Time limit (minutes)"
+            }
+          },
           "type": "{id, select, simple {Simple} mockExam {Mock Exam} complex {Complex} other {Unknown}}"
         },
         "updatedAt": "Updated at:"
@@ -232,6 +253,10 @@
         "fetch": {
           "message": "{error, select, Unauthorized {You are not authorized to access this administration page. If you believe this is an error, refresh the page and try again later.} other {Unknown general error. Please try again later.}}",
           "title": "{error, select, Unauthorized {Unauthorized} other {General error}}"
+        },
+        "generate": {
+          "message": "{error, select, Unauthenticated  {Please sign in to generate a test.} Unauthorized {Your account is not permitted for this test configuration.} other {An unexpected error occurred while generating the test. Please try again later.}}",
+          "title": "{error, select, Unauthenticated {Sign-in Required} Unauthorized {Access Denied} other {Test Generation Error}}"
         }
       },
       "exitConfiguration": {
@@ -240,6 +265,7 @@
         "message": "Are you sure you want to leave the test configuration? All the progress will be lost.",
         "title": "Leave test configuration"
       },
+      "questionsNumber": "{count, plural, =0 {no questions} =1 {one question} other {# questions}}",
       "steps": {
         "1": {
           "description": "Select the test kind",

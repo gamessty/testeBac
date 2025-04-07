@@ -119,6 +119,7 @@
           "title": "Crează rol"
         },
         "delete": {
+          "defaultName": "necunoscut",
           "message": "Ești sigur că vrei să ștergi rolul {name}? Această acțiune este ireversibilă.",
           "title": "Șterge rolul"
         }
@@ -222,8 +223,28 @@
       "title": "Setări"
     },
     "TestGenerator": {
+      "QuestionDistribution": {
+        "availablePool": "Grupul de întrebări disponibile",
+        "availableQuestions": "{count, plural, =0 {nici o întrebare} =1 {o întrebare} other {# întrebări}}",
+        "chapters": "Capitole",
+        "description": "Selectați câte întrebări să includeți din fiecare subiect și capitol",
+        "loading": "Încărcare...",
+        "maxQuestion": "Max",
+        "minQuestion": "Min",
+        "questionRange": "Gama de întrebări",
+        "subjects": "Subiecte",
+        "title": "Distribuția întrebărilor",
+        "totalQuestions": "Total întrebări"
+      },
       "Selector": {
         "TestTypeSelector": {
+          "Configurations": {
+            "labels": {
+              "numberOfQuestions": "Număr de întrebări",
+              "showAnswers": "Afișează răspunsul corect după fiecare întrebare",
+              "timeLimit": "Timp limită (minute)"
+            }
+          },
           "type": "{id, select, simple {Simplu} mockExam {Simulare} complex {Avansat} other {Necunoscut}}"
         },
         "updatedAt": "Actualizat la:"
@@ -232,6 +253,10 @@
         "fetch": {
           "message": "{error, select, neautorizat {Nu sunteți autorizat să accesați această pagină de administrare. \nDacă credeți că aceasta este o eroare, reîmprospătați pagina și încercați din nou mai târziu.} other {eroare generală necunoscută. \nVă rugăm să încercați din nou mai târziu.}}",
           "title": "{error, select, Unauthorized {neautorizat} other {eroare generală}}"
+        },
+        "generate": {
+          "message": "{error, select, Unauthenticated {Vă rugăm să vă conectați pentru a genera un test.} Unauthorized {Contul dvs. nu este permis pentru această configurație de test.} other {A apărut o eroare neașteptată în timpul generării testului. Vă rugăm să încercați din nou mai târziu.}}",
+          "title": "{error, select, Unauthenticated {Sign-in Required} Unauthorized {Acces refuzat} other {Error de generare a testului}}"
         }
       },
       "exitConfiguration": {
@@ -240,6 +265,7 @@
         "message": "Ești sigur că vrei să părăsești configurarea testului? \nTot progresul se va pierde.",
         "title": "Ieșiți"
       },
+      "questionsNumber": "{count, plural, =0 {nicio grilă} =1 {o grilă} alte {# grile}}",
       "steps": {
         "1": {
           "description": "Selectați tipul de test",

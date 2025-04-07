@@ -53,9 +53,30 @@
 
 .switch {
     display: flex;
-    gap: 10px;
+    align-items: center;
+    gap: var(--mantine-spacing-sm);
     justify-content: space-between;
     margin-bottom: var(--mantine-spacing-md);
+    padding: var(--mantine-spacing-sm);
+    border-radius: var(--mantine-radius-sm);
+    background-color: var(--mantine-color-gray-0);
+    box-shadow: var(--mantine-shadow-xs);
+
+    @mixin dark {
+        background-color: var(--mantine-color-dark-7);
+    }
+}
+
+.numberInput {
+    margin-bottom: var(--mantine-spacing-md);
+    padding: var(--mantine-spacing-sm);
+    border-radius: var(--mantine-radius-sm);
+    background-color: var(--mantine-color-gray-0);
+    box-shadow: var(--mantine-shadow-xs);
+
+    @mixin dark {
+        background-color: var(--mantine-color-dark-7);
+    }
 }
 
 .container {

@@ -119,6 +119,7 @@
           "title": "Créer un rôle"
         },
         "delete": {
+          "defaultName": "inconnue",
           "message": "Êtes-vous sûr de vouloir supprimer le rôle {name}? \nCette action ne peut pas être annulée.",
           "title": "Supprimer le rôle"
         }
@@ -222,8 +223,28 @@
       "title": "Paramètres"
     },
     "TestGenerator": {
+      "QuestionDistribution": {
+        "availablePool": "Pool de questions disponibles",
+        "availableQuestions": "{count, plural, =0 {pas de questions} =1 {une question} other {# questions}}",
+        "chapters": "Chapitres",
+        "description": "Choisissez le nombre de questions à inclure dans chaque matière et chapitre",
+        "loading": "Chargement...",
+        "maxQuestion": "Max",
+        "minQuestion": "Min",
+        "questionRange": "Gamme de questions",
+        "subjects": "Thèmes",
+        "title": "Distribution des questions",
+        "totalQuestions": "Total des questions"
+      },
       "Selector": {
         "TestTypeSelector": {
+          "Configurations": {
+            "labels": {
+              "numberOfQuestions": "Nombre de questions",
+              "showAnswers": "Afficher la bonne réponse après chaque question",
+              "timeLimit": "Délai (minutes)"
+            }
+          },
           "type": "{id, select, simple {Simple} mockExam {Examen Blanc} complex {Complexe} other {Inconnu}}"
         },
         "updatedAt": "Mise à jour à:"
@@ -232,6 +253,10 @@
         "fetch": {
           "message": "{error, select, Unauthorized {Vous n'êtes pas autorisé à accéder à cette page d'administration. \nSi vous croyez qu'il s'agit d'une erreur, actualisez la page et réessayez plus tard.} other {Erreur générale inconnue. Veuillez réessayer plus tard.}}",
           "title": "{error, select, Unauthorized {Erreur d'autorisation} other {Erreur générale}}"
+        },
+        "generate": {
+          "message": "{error, select, Unauthenticated {Veuillez vous connecter pour générer un test.} Unauthorized {Votre compte n'est pas autorisé pour cette configuration de test.} other {Une erreur inattendue s'est produite lors de la génération du test. Veuillez réessayer plus tard.}}",
+          "title": "{error, select, Unauthenticated {Sign-in requis} Unauthorized {Access Denied} other {Erreur de génération de test}}"
         }
       },
       "exitConfiguration": {
@@ -240,6 +265,7 @@
         "message": "Êtes-vous sûr de vouloir quitter la configuration du test? \nTous les progrès seront perdus.",
         "title": "Laisser la configuration du test"
       },
+      "questionsNumber": "{count, plural, =0 {pas de questions} =1 {une question} autre {# questions}}",
       "steps": {
         "1": {
           "description": "Sélectionner le type de test",

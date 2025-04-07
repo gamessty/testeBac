@@ -6,7 +6,7 @@ const globalForPrisma = globalThis as unknown as { prisma: PrismaClient }
 export const prisma = globalForPrisma.prisma || new PrismaClient().$extends({
     query: {
         user: {
-            async create({ args, query }) {
+            async create({ args, query }: { args: { data: any }, query: (args: any) => Promise<any> }) {
                 const email = args.data.email;
 
                 let username = "";

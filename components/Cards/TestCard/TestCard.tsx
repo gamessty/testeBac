@@ -1,5 +1,5 @@
 "use client";
-import { ActionIcon, Badge, Box, Button, Card, CardProps, Flex, Image, Progress, Stack, Text } from "@mantine/core";
+import { ActionIcon, Badge, Box, Button, Card, CardProps, Flex, Image, Overlay, Progress, Skeleton, Stack, Text } from "@mantine/core";
 import { IconCodeAsterisk, IconFlask2, IconMicroscope, IconPencil, IconSchool } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import { Link } from "../../../i18n/routing";
@@ -8,8 +8,9 @@ import AvatarFallback from "../../AvatarFallback/AvatarFallback";
 import classes from './TestCard.module.css';
 
 interface TestCardProps {
+    loading?: boolean;
     category?: string;
-    subject?: string;
+    subject?: string | string[];
     lastQuestion?: string;
     coverImage?: string;
     href?: string;
@@ -18,10 +19,17 @@ interface TestCardProps {
     tooltipText?: boolean;
 }
 
-export default function TestCard({ category, subject, coverImage, lastQuestion, progress, design, tooltipText, href, ...rest }: Readonly<TestCardProps & CardProps>) {
+export default function TestCard({ loading = false, category, subject, coverImage, lastQuestion, progress, design, tooltipText, href, ...rest }: Readonly<TestCardProps & CardProps>) {
     const t = useTranslations('Tests');
 
-    function getAvatarIcon(subject: string) {
+    function capitalizeFirstLetter(val: string) {
+        return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+    }
+
+    function getAvatarIcon(value: string | string[]): React.ReactNode {
+        if (Array.isArray(value)) {
+            return <IconSchool />;
+        }
         switch (subject) {
             case 'biology':
                 return <IconMicroscope />;
@@ -33,10 +41,19 @@ export default function TestCard({ category, subject, coverImage, lastQuestion, 
                 return <IconSchool />;
         }
     }
+
+    function getSujectName(value: string | string[]) {
+        if (Array.isArray(value)) {
+            return value.map((val) => val != undefined ? t(`Subjects.${val}`) ?? capitalizeFirstLetter(val) : '...').join(" | ");
+        }
+        return t(`Subjects.${value}`);
+    }
+
     switch (design) {
         case 'compact':
             return (
                 <Card {...rest} className={`${classes["test-card"]} ${classes["compact"]}`} component={Link} href={href ?? ''} w={"100%"} shadow="lg" radius="sm" >
+                   {loading && <Overlay color="#000" backgroundOpacity={0.35} blur={15} />}
                     <Stack justify="space-between" h="100%" w="100%">
                         <Box w="100%">
                             {coverImage && coverImage !== 'none' && <Card.Section>
@@ -45,25 +62,24 @@ export default function TestCard({ category, subject, coverImage, lastQuestion, 
                                     height={70}
                                     alt={"Cover image test " + subject}
                                 />
-                                {category && <Badge radius="sm" className={classes["card-badge"]} color={getInitialsColor(category)}>{t("category", { category })}</Badge>}
+                               <Badge radius="xs" size="sm" variant="light" className={classes["card-badge"]} color={getInitialsColor(category)}>{!category || t("category", { category }) == "Unknown" ? (category ?? '...') : t("category", { category })}</Badge>
                             </Card.Section>}
 
                             <Card.Section inheritPadding py="md" w="100%">
                                 {subject && <Flex justify="left" align="center" mb="xs" gap={10} w="100%">
-                                    {!coverImage && <AvatarFallback name={subject} color="initials">{getAvatarIcon(subject)}</AvatarFallback>}
+                                    {!coverImage && <AvatarFallback name={getSujectName(subject)} color="initials">{getAvatarIcon(subject)}</AvatarFallback>}
                                     <Stack gap={7} w="100%">
-                                        <Text truncate="end" w="100%" mb='-6' fw={500}>{t(`Subjects.${subject}`)}</Text>
-                                        {!coverImage && category && <Badge radius="xs" size="sm" variant="light" mr={5} color="cyan">{t("category", { category })}</Badge>}
-                                        {progress && <Progress value={progress} radius="xs" />}
+                                        <Text truncate="end" w="100%" mb='-6' fw={500}>{getSujectName(subject)}</Text>
+                                        {!coverImage && <Badge radius="xs" size="sm" variant="light" mr={5} color={getInitialsColor(category)}>{!category || t("category", { category }) == "Unknown" ? (category ?? '...') : t("category", { category })}</Badge>}
+                                        {typeof progress !== 'undefined' && <Progress value={progress} radius="xs" />}
                                     </Stack>
                                 </Flex>}
-
 
                                 {lastQuestion && <Box>
                                     <Text size="sm" fw="500" aria-label="Last Question" c="dimmed">
                                         {t('lastQuestion')}
                                     </Text>
-                                    <Text size="sm" fw="500" aria-label="Last Question">
+                                    <Text size="sm" fw="500" aria-label="Last Question" truncate="end">
                                         {lastQuestion}
                                     </Text>
                                 </Box>
@@ -92,7 +108,7 @@ export default function TestCard({ category, subject, coverImage, lastQuestion, 
 
                             <Card.Section inheritPadding py="md" w="100%">
                                 {subject && <Flex justify="left" align="center" mb="xs" gap={10} w="100%">
-                                    {!coverImage && <AvatarFallback name={subject} color="initials">{getAvatarIcon(subject)}</AvatarFallback>}
+                                    {!coverImage && <AvatarFallback name={getSujectName(subject)} color="initials">{getAvatarIcon(subject)}</AvatarFallback>}
                                     <Stack gap={1} w="100%">
                                         <Box w="100%">
                                             <Text truncate="end" w="100%" fw={500}>{t(`Subjects.${subject}`)}</Text>

@@ -30,7 +30,7 @@
 .accordion-control {
     padding-left: 0;
     width: inherit !important;
-    flex-grow: 1;
+    flex-grow: 0.7;
 
     svg {
         width: calc(2rem * var(--mantine-scale)) !important;
@@ -42,8 +42,12 @@
     margin-bottom: var(--mantine-spacing-xs);
 }
 
+.accordion-content {
+    padding-inline: 0 !important;
+}
+
 .checkbox-label {
-    >* {
+    > * {
         padding-right: calc(var(--mantine-spacing-xl) * 1.5);
     }
 
@@ -64,15 +68,35 @@
 
     &[data-checked] {
         border-color: var(--mantine-primary-color-filled);
+
+        @mixin light {
+            background-color: var(--mantine-color-gray-1);
+        }
+
+        @mixin dark {
+            background-color: var(--mantine-color-dark-5);
+        }
     }
 
     @mixin hover {
         @mixin light {
-            background-color: var(--mantine-color-gray-0);
+            background-color: var(--mantine-color-gray-1);
         }
 
         @mixin dark {
-            background-color: var(--mantine-color-dark-6);
+            background-color: var(--mantine-color-dark-5);
+        }
+    }
+
+    &.compact {
+        border-color: transparent !important;
+        border-radius: 0 !important;
+        border-width: 1px !important;
+        margin-block: 0 !important;
+        padding: calc(var(--mantine-scale) * 1.2rem) !important;
+        border-bottom-color: inherit !important;
+        &:last-child {
+            border-bottom-color: transparent !important;
         }
     }
 }
@@ -100,4 +124,8 @@
     &[data-rotate] {
         transform: rotate(45deg);
     }
+}
+
+.checkbox-main-root {
+    flex-grow: 0.3;
 }

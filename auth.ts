@@ -4,7 +4,7 @@ import Google from "next-auth/providers/google"
 import { sendVerificationRequest } from "./lib/authSendRequest"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "./lib/prisma"
-import { Folder, PrismaClient, Question, Role, Subject, UserPreferences, UserTest } from "@prisma/client"
+import { Chapter, Folder, PrismaClient, Question, Role, Subject, UserPreferences, UserTest } from "@prisma/client"
 import type { Provider } from "next-auth/providers"
 import { type Adapter } from "next-auth/adapters";
 
@@ -12,6 +12,7 @@ export interface UserActiveTest extends UserTest {
   questions: Question[],
   folder: Folder | null,
   subjects: Subject[] | null,
+  chapters: Chapter[] | null,
 }
 
 function CustomPrismaAdapter(p: PrismaClient): Adapter {
@@ -80,8 +81,9 @@ export const authOptions: NextAuthConfig = {
         userTests.map(async (test) => {
           const folder = test.folderId ? await prisma.folder.findUnique({ where: { id: test.folderId } }) : null; // Include folder if folderId is present
           const subjects = test.subjectId ? await prisma.subject.findMany({ where: { id: { in: test.subjectId } } }) : null; // Include subjects if subjectId is present
+          const chapters = test.chapterId ? await prisma.chapter.findMany({ where: { id: { in: test.chapterId } } }) : null;
           const questions = test.questions.map((utq) => utq.question); // Extract questions
-          return { ...test, folder, subjects, questions };
+          return { ...test, folder, subjects, questions, chapters };
         })
       );
 

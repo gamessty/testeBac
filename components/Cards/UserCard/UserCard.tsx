@@ -28,7 +28,7 @@ interface SkeletonUserCardProps extends DefaultUserCardProps {
     onClick?: MouseEventHandler<HTMLButtonElement | HTMLDivElement>;
 }
 
-export default function UserCard({ user, variant = 'compact', actionIcon, withBorder, skeleton = false, ...rest }: Readonly<UserCardProps | SkeletonUserCardProps>) {
+export function UserCard({ user, variant = 'compact', actionIcon, withBorder, skeleton = false, ...rest }: Readonly<UserCardProps | SkeletonUserCardProps>) {
     const t = useTranslations('Dashboard.UserManager');
 
     function getCardStyle() {
@@ -106,7 +106,7 @@ export default function UserCard({ user, variant = 'compact', actionIcon, withBo
                             <Grid gutter={3} w="100%" pb="lg" mt={-4}>
                                 {
                                     !(user?.roles?.length == 1 && user?.roles[0].priority == 0) && user?.roles?.map((role) => (
-                                        <Grid.Col pt={0}  span="content" key={role.id}>
+                                        <Grid.Col pt={0} span="content" key={role.id}>
                                             <Tooltip tt="capitalize" label={role.name} color={getInitialsColor(role.name)} withArrow>
                                                 <Badge size="sm" variant="dot" color={getInitialsColor(role.name)} radius="xs" tt="capitalize">{role.name}</Badge>
                                             </Tooltip>
@@ -129,4 +129,50 @@ export default function UserCard({ user, variant = 'compact', actionIcon, withBo
             }
         </Skeleton>
     );
+}
+
+
+export default function UserCardSkeleton({ user, actionIcon, withBorder, ...rest }: Readonly<UserCardProps | Omit<SkeletonUserCardProps, 'skeleton'>>) {
+    const t = useTranslations('Dashboard.UserManager');
+
+    return <Card shadow="lg" className={`${classes["user-card"]} ${classes["compact"]}`} padding="lg" radius="sm" withBorder={withBorder} {...rest}>
+        {user ? <Badge className={classes["card-badge"]} color={user?.userAuthorized ? "teal" : "red"}>{user?.userAuthorized ? t('authorized') : t('unauthorized')}</Badge> : <Skeleton animate><Badge className={classes["card-badge"]} color="red">{t('unauthorized')}</Badge></Skeleton>}
+        <Card.Section inheritPadding mb="xs">
+            <Group justify="flex-start" mt="md">
+                <Skeleton visible={!user} animate><AvatarFallback name={user?.username ?? user?.email ?? undefined} src={user?.image ?? undefined} color="initials" /></Skeleton>
+                <Stack
+                    gap={0}
+                    align="flex-start"
+                    justify="center"
+                    w="100%"
+                >
+                    <Box w="100%">
+                        <Skeleton visible={!user} animate><Text fw={500} mb={-5}>{user?.username ?? user?.email}</Text></Skeleton>
+                    </Box>
+                    <Box w="100%">
+                        <Skeleton visible={!user} animate><Text truncate="end" c="dimmed" size='sm' display={{ base: user?.username ? "inherit" : "none" }}>{user?.email}</Text></Skeleton>
+                    </Box>
+                </Stack>
+            </Group>
+        </Card.Section>
+
+        <Card.Section inheritPadding>
+            <Grid gutter={3} w="100%" pb="lg" mt={-4}>
+                {
+                    !(user?.roles?.length == 1 && user?.roles[0].priority == 0) && user?.roles?.map((role) => (
+
+                        <Grid.Col pt={0} span="content" key={role.id}>
+                            <Skeleton animate visible={!user}>
+                                <Tooltip tt="capitalize" label={role.name} color={getInitialsColor(role.name)} withArrow>
+                                    <Badge size="sm" variant="dot" color={getInitialsColor(role.name)} radius="xs" tt="capitalize">{role.name}</Badge>
+                                </Tooltip>
+                            </Skeleton>
+                        </Grid.Col>
+
+                    ))
+                }
+            </Grid>
+        </Card.Section>
+        <ActionIcon className={classes["action-button"]} variant="transparent" color="gray">{actionIcon ?? <IconUser />}</ActionIcon>
+    </Card>;
 }

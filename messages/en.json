@@ -233,7 +233,7 @@
         "minQuestion": "Min",
         "questionRange": "Question Range",
         "subjects": "Subjects",
-        "title": "Question Distribution",
+        "title": "Number of questions",
         "totalQuestions": "Total Questions"
       },
       "Selector": {
@@ -245,6 +245,7 @@
               "timeLimit": "Time limit (minutes)"
             }
           },
+          "distributionInfoMessage": "You can select the individual number of questions below",
           "type": "{id, select, simple {Simple} mockExam {Mock Exam} complex {Complex} other {Unknown}}"
         },
         "updatedAt": "Updated at:"
@@ -257,6 +258,17 @@
         "generate": {
           "message": "{error, select, Unauthenticated  {Please sign in to generate a test.} Unauthorized {Your account is not permitted for this test configuration.} other {An unexpected error occurred while generating the test. Please try again later.}}",
           "title": "{error, select, Unauthenticated {Sign-in Required} Unauthorized {Access Denied} other {Test Generation Error}}"
+        },
+        "noQuestions": {
+          "title": "No Questions Selected",
+          "message": "You need to select at least one question from the available sources."
+        }
+      },
+      "warnings": {
+        "configuration": {
+          "title": "Question Count Adjusted",
+          "message": "The number of questions has been automatically adjusted to {allowedMax} based on available questions.",
+          "adjusted": "Maximum available questions: {allowedMax}"
         }
       },
       "exitConfiguration": {
@@ -384,6 +396,17 @@
       "colorScheme": "{colorScheme, select, light {Light} dark {Dark} auto {Auto} other {Unknown}}",
       "label": "Toggle color scheme"
     },
+    "Errors": {
+      "NOT_FOUND": {
+        "message": "This resource has not been found. Please try again later or check your request.",
+        "title": "Not found"
+      },
+      "UNKNOWN": {
+        "message": "An unknown error has occured. Please try again later or make sure your request is valid.",
+        "title": "Unknown error"
+      },
+      "goBack": "Go back"
+    },
     "LocaleSwitcher": {
       "label": "Change language",
       "locale": "{locale, select, ro {🇷🇴 Romanian} en {🇬🇧 English} fr {🇫🇷 French} de {🇩🇪 German} other {Unknown}}",
@@ -421,6 +444,10 @@
     }
   },
   "Tests": {
+    "Categories": {
+      "admission": "University Admission",
+      "bac": "Baccalaureate"
+    },
     "Subjects": {
       "biology": "Biology",
       "chemistry": "Chemistry",
@@ -435,9 +462,12 @@
       "romanian": "Romanian",
       "spanish": "Spanish"
     },
+    "availableQuestions": "{count, plural, =0 {no questions} =1 {one question} other {# questions}}",
     "category": "{category, select, admission {University Admission} bac {Baccalaureate} other {Unknown}}",
+    "continueTest": "Continue",
     "lastQuestion": "Last question",
-    "resumeTest": "Resume test"
+    "resumeTest": "Resume test",
+    "startTest": "Start"
   },
   "createSampleData": "Create sample data",
   "demo-components": "Demo components",

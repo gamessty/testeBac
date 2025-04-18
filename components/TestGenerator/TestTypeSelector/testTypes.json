@@ -15,8 +15,7 @@
                 "type": "number",
                 "label": "Number of questions",
                 "min": 1,
-                "max": "*{maximumQuestionsNumber}*",
-                "default": 1
+                "max": "*{maximumQuestionsNumber}*"
             }
         ]
     },
@@ -41,8 +40,7 @@
                 "type": "number",
                 "label": "Number of questions",
                 "min": 1,
-                "max": "*{maximumQuestionsNumber}*",
-                "default": 1
+                "max": "*{maximumQuestionsNumber}*"
             }
         ]
     }

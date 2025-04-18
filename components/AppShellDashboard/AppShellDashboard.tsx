@@ -1,6 +1,6 @@
 'use client';
 import { ActionIcon, Affix, AppShell, Badge, Button, Divider, Flex, Grid, Group, Menu, ScrollArea, Stack, Text, Tooltip, Transition, useMatches } from "@mantine/core";
-import { useDidUpdate, useDocumentTitle, useSetState } from "@mantine/hooks";
+import { useDidUpdate, useDocumentTitle, useMediaQuery, useSetState } from "@mantine/hooks";
 import { IconArrowUp, IconChecklist, IconFile, IconGraph, IconHome, IconLogout, IconSettingsCog, IconUserPlus, IconUsers } from "@tabler/icons-react";
 import { Session } from "next-auth";
 import { signOut } from "next-auth/react";
@@ -56,7 +56,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
     const viewport = useRef<HTMLDivElement>(null);
 
 
-
+    const isMobile = useMediaQuery('(max-width: 768px)');
 
     useDidUpdate(() => {
         const tabName = searchParams.get('tab') ?? 'home';
@@ -70,7 +70,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
     });
 
     function handleTabChange({ tab, disableNavigation }: { tab: string, disableNavigation?: boolean }) {
-        if (!disableNavigation) { disableNavigation = tabsData.find((tabData) => tabData.tab == tab)?.disableNavigation; }
+        disableNavigation ??= tabsData.find((tabData) => tabData.tab == tab)?.disableNavigation;
         setSettings({ tab: { tab, disableNavigation }, title: 'testeBac | ' + t('Navbar.' + tab) });
         const params = new URLSearchParams(searchParams.toString());
         params.set('tab', tab);
@@ -217,7 +217,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                             <Transition key={tab.tab + "_tabComponent"} transition="fade-right" timingFunction="ease" enterDelay={tab.disableNavigation ? 100 : 0} duration={tab.disableNavigation ? 800 : 300} mounted={settings.tab.tab == tab.tab} >
                                 {(transitionStyles) => (
                                     <>
-                                        {settings.tab.tab == tab.tab && tab.component && <tab.component session={session} settab={handleTabChange} triggerloading={(loadingStatus: boolean) => setSettings({ tabLoading: loadingStatus })} style={transitionStyles} />}
+                                        {settings.tab.tab == tab.tab && tab.component && <tab.component session={session} settab={handleTabChange} triggerloading={(loadingStatus: boolean) => setSettings({ tabLoading: loadingStatus })} style={{ ...transitionStyles, ...{ maxWidth: settings.tab.disableNavigation || isMobile ? '100vw' : 'calc(100vw - var(--app-shell-navbar-width))' } } as React.CSSProperties} />}
                                     </>
                                 )}
                             </Transition>
@@ -227,7 +227,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
             </AppShell.Main>
             <AppShell.Footer display={{ sm: "none" }} className={(settings.tab.disableNavigation ? classes.hide : undefined) + " " + classes["footer"]}>
                 <Flex className={classes["flex-footer"]}>
-                    <AvatarMenu shadow="md" position="top-start" offset={20} classNames={{  }}  transitionProps={{ transition: 'pop-bottom-left', duration: 200 }} AvatarProps={{ src: session?.user?.image ?? undefined, name: session?.user?.username ?? session?.user?.email ?? undefined, color: 'initials'}}>
+                    <AvatarMenu shadow="md" position="top-start" offset={20} classNames={{}} transitionProps={{ transition: 'pop-bottom-left', duration: 200 }} AvatarProps={{ src: session?.user?.image ?? undefined, name: session?.user?.username ?? session?.user?.email ?? undefined, color: 'initials' }}>
                         {tabsData.filter(t => !t.mobile && (t.visible || typeof (t.visible) == 'undefined') && chkP(enumToString(t.permissionNeeded), session?.user)).toSorted((a, b) => b.category.order - a.category.order).map((tab, index, array) => (
                             <React.Fragment key={tab.tab + "_menu"}>
                                 {((index > 0 && array[index - 1].category.name != tab.category.name) || index == 0) && (!tab.category.permissionNeeded || chkP(enumToString(tab.category.permissionNeeded), session?.user)) &&
@@ -265,7 +265,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                 </Flex>
             </AppShell.Footer>
             <Affix position={affixPosition} zIndex={1000}>
-                <Transition transition="slide-up" mounted={scrollPosition.y > 0}>
+                <Transition transition="slide-up" mounted={scrollPosition.y > 15}>
                     {(transitionStyles) => (
                         <Button
                             className={classes["back-to-top"]}

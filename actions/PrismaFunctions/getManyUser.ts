@@ -12,10 +12,10 @@ interface UserRoles extends User {
 export default async function getManyUser(where?: Prisma.UserWhereInput): Promise<UserRoles[] | { message: string }> {
     let session = await auth();
     if (!session?.user) {
-        return { message: "Not authenticated" };
+        return { message: "UNAUTHENTICATED" };
     }
     if (!chkP("user:readAll", session.user)) {
-        return { message: "Unauthorized" };
+        return { message: "UNAUTHORIZED" };
     }
     let roles = await prisma.role.findMany();
     let users = await prisma.user.findMany({

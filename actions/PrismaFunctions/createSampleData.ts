@@ -18,10 +18,10 @@ const configChapter: Config = {
 export default async function createSampleData(): Promise<{ message: string }> {
     const session = await auth();
     if (!session?.user) {
-        return { message: "Not authenticated" };
+        return { message: "UNAUTHENTICATED" };
     }
     if (!chkP("developer:database", session.user)) {
-        return { message: "Unauthorized" };
+        return { message: "UNAUTHORIZED" };
     }
     try {
         await seedDatabase();

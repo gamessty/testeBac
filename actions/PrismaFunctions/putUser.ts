@@ -9,10 +9,10 @@ import { type User } from "@prisma/client";
 export default async function putUser({ id, data }: { id: any, data: any }): Promise<User | { message: string }> {
     const session = await auth();
     if (!session?.user) {
-        return { message: "Not authenticated" };  
+        return { message: "UNAUTHENTICATED" };  
     }
     if (!chkP("user:readAll", session.user) && session?.user?.id != id && data.roles) {
-        return { message: "Unauthorized" };
+        return { message: "UNAUTHORIZED" };
     }
     if (!chkP("user:manageRoles", session.user)) data.roles = undefined;
     const user = await prisma.user.update({

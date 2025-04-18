@@ -1,0 +1,54 @@
+.testDisplay {
+    padding-top: calc(var(--mantine-scale) * 1.8rem);
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.title {
+    color: var(--mantine-color-dimmed);
+    margin-bottom: calc(var(--mantine-scale) * 0.5rem);
+}
+
+.testTitle {
+    margin-bottom: calc(var(--mantine-scale) * 0.5rem);
+}
+
+.testTitleText {
+    display: inline;
+}
+
+.testTypeBadge {
+    display: inline-block;
+    margin-left: calc(var(--mantine-scale) * 0.5rem);
+}
+
+.buttonGroup {
+    padding: calc(var(--mantine-scale) * 0.7rem);
+    padding-bottom: calc(var(--mantine-scale) * 1.5rem);
+    height: 100%;
+    width: 100%;
+    & > * {
+        flex-grow: 1;
+    }
+}
+
+.distribution {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.testDetails {
+    flex-grow: 1;
+}
+
+.returnButton {
+    margin-bottom: calc(var(--mantine-scale) * 0.5rem);
+}
+
+.skeleton {
+    display: inline;
+}

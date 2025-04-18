@@ -9,10 +9,10 @@ import { chkP } from "../../utils";
 export default async function getChapters({ subjectId }: { subjectId: string }): Promise<Chapter[] | { message: string }> {
     const session = await auth();
     if (!session?.user) {
-        return { message: "Not authenticated" };
+        return { message: "UNAUTHENTICATED" };
     }
     if (!chkP("general:*", session.user)) {
-        return { message: "Unauthorized" };
+        return { message: "UNAUTHORIZED" };
     }
     let chapters = await prisma.chapter.findMany({
         where: {

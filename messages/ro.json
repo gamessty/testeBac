@@ -421,6 +421,10 @@
     }
   },
   "Tests": {
+    "Categories": {
+      "admission": "Admitere universitară",
+      "bac": "Bacalaureat"
+    },
     "Subjects": {
       "biology": "Biologie",
       "chemistry": "Chimie",

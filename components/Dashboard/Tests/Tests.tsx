@@ -5,8 +5,9 @@ import { useTranslations } from "next-intl";
 import { Fragment } from "react";
 import CreateTestCard from "../../Cards/CreateTestCard/CreateTestCard";
 import TestCard from "../../Cards/TestCard/TestCard";
+import { ITabModuleProps } from "@/data";
 
-export default function Tests({ session, settab, ...props }: Readonly<{ session: Session, settab: ({ tab }: { tab: string }) => void } & ContainerProps>) {
+export default function Tests({ session, settab, style }: Readonly<ITabModuleProps>) {
     const t = useTranslations('Dashboard.Tests');
 
     function getLastQuestionText(test: UserActiveTest) {
@@ -18,7 +19,7 @@ export default function Tests({ session, settab, ...props }: Readonly<{ session:
     }
 
     return (
-        <Container fluid p={{ base: 30, sm: 35 }} pt={{ base: 20, sm: 25 }} {...props}>
+        <Container fluid p={{ base: 30, sm: 35 }} pt={{ base: 20, sm: 25 }} style={style}>
             <Title order={1} w="100%" ta="left" mb={20}>
                 {t('title')}
                 <Text c="dimmed" ml={5} ta="left">
@@ -37,16 +38,12 @@ export default function Tests({ session, settab, ...props }: Readonly<{ session:
                                 return (
                                     <Fragment key={test.id}>
                                         <TestCard design="compact" mih="100%" category={test.folder?.category} subject={test.subjects?.map(sj => sj.name?.toLowerCase())} progress={test.selectedAnswers.length / test.questions.length * 100} href={`/app/test/${test.id}`} lastQuestion={getLastQuestionText(test)} />
-                                        <Divider variant="dashed"/>
+                                        <Divider variant="dashed" />
                                     </Fragment>
                                 )
                             })
+                            
                         }
-                        <TestCard design="compact" mih="100%" progress={50} category="bac" subject="biology" href="#" lastQuestion="Ce este biologia?" />
-                        <Divider variant="dashed" />
-                        <TestCard design="compact" mih="100%" category="admission" subject="chemistry" href="#" />
-                        <Divider variant="dashed" />
-                        <TestCard design="compact" mih="100%" category="admission" subject="informatics" href="#" />
                     </Stack>
                 </Center>
             </Flex>

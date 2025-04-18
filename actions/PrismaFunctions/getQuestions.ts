@@ -19,10 +19,10 @@ export default async function getQuestions(params: Readonly<ChapterQuestion | Su
     const session = await auth();
     const { subjectId, chapterId } = 'chapterId' in params ? { subjectId: undefined, ...params} : { subjectId: params.subjectId, chapterId: undefined };
     if (!session?.user) {
-        return { message: "Not authenticated" };
+        return { message: "UNAUTHENTICATED" };
     }
     if (!chkP("general:*", session.user)) {
-        return { message: "Unauthorized" };
+        return { message: "UNAUTHORIZED" };
     }
     let questions = await prisma.question.findMany({
         where: {

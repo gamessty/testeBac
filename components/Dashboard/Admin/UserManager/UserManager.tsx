@@ -1,6 +1,6 @@
 "use client";
 
-import { Blockquote, Button, Checkbox, CloseButton, Container, ContainerProps, Drawer, Grid, Group, Input, JsonInput, Loader, MultiSelect, Stack, Text, TextInput, Title, Transition } from "@mantine/core";
+import { Blockquote, Button, Checkbox, CloseButton, Container, ContainerProps, Drawer, Grid, Group, Input, JsonInput, Loader, MultiSelect, SimpleGrid, Stack, Text, TextInput, Title, Transition } from "@mantine/core";
 import { useDebouncedCallback, useDebouncedValue, useDisclosure } from "@mantine/hooks";
 import { Role } from "@prisma/client";
 import { IconAlertTriangleFilled } from "@tabler/icons-react";
@@ -14,11 +14,12 @@ import putUser from "../../../../actions/PrismaFunctions/putUser";
 import { chkP, getManyRoleData, getManyRoleFromValues, getPrismaRolesUpdateData } from "../../../../utils";
 import AvatarFallback from "../../../AvatarFallback/AvatarFallback";
 import UserCard from "../../../Cards/UserCard/UserCard";
+import UserCardList from "@/components/UserCardList/UserCardList";
 
 export default function UserManager({ session, style }: Readonly<{ session: Session | null | undefined } & ContainerProps>) {
     const t = useTranslations('Dashboard.UserManager');
     const [search, setSearch] = useState("");
-    const [searchResults, setSearchResults] = useState([] as User[]);
+    const [searchResults, setSearchResults] = useState<User[]>([] as User[]);
     const [users, setUsers] = useState([] as User[]);
     const [roles, setRoles] = useState([] as Role[]);
     const [user, setUser] = useState({} as User);
@@ -104,17 +105,7 @@ export default function UserManager({ session, style }: Readonly<{ session: Sess
             leftSection={loading && <Loader variant="bars" size={20} />}
             rightSection={search.length > 0 && <CloseButton onClick={() => { setSearch(""); setSearchResults(users); }} variant="link" color="red" />}
         />
-        <Grid>
-            {searchResults.map((user) => <Grid.Col span={{ xs: 6, md: 4, lg: 3, xl: 2 }} key={user.id}>
-            <UserCard onClick={() => {
-                setUser(user);
-                open();
-            }} key={user.id} user={user} />
-                </Grid.Col> )}
-            {
-                ((users.length == 0 && !error) || loading) && Array.from({ length: 18 }).map((_, index) => <UserCard key={"skeleton_users_" + index} skeleton />)
-            }
-        </Grid>
+        <UserCardList users={searchResults} onUserClick={(user) => { setUser(user); open(); }} skeleton={users.length == 0 && !error} numberOfCards={18} />
         <Drawer position="right" opened={opened} onClose={close}
             onExitTransitionEnd={() => { setUser({} as User); setUserChanges({} as User); }}
             title={
@@ -159,7 +150,7 @@ export default function UserManager({ session, style }: Readonly<{ session: Sess
                 w='100%'
                 mt={20}
                 defaultValue={user?.roles?.map((role) => role.name)}
-                onChange={(value) => { putUser({ id: user?.id, data: getPrismaRolesUpdateData(value, user.roles?.map(r => r.name))}); setUser({ ...user, roles: getManyRoleFromValues(value, roles) }); updateUsersAfterChange({ ...user, roles: getManyRoleFromValues(value, roles) }); }}
+                onChange={(value) => { putUser({ id: user?.id, data: getPrismaRolesUpdateData(value, user.roles?.map(r => r.name)) }); setUser({ ...user, roles: getManyRoleFromValues(value, roles) }); updateUsersAfterChange({ ...user, roles: getManyRoleFromValues(value, roles) }); }}
                 data={getManyRoleData(roles)}
                 disabled={!chkP("user:manageRoles", session?.user)}
             />

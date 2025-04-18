@@ -10,10 +10,10 @@ import { revalidatePath } from "next/cache";
 export default async function deleteRole({ id }: { id: string }): Promise<Role | { message: string }> {
     const session = await auth();
     if (!session?.user) {
-        return { message: "Not authenticated" };
+        return { message: "UNAUTHENTICATED" };
     }
     if (!chkP("role:delete", session.user)) {
-        return { message: "Unauthorized" };
+        return { message: "UNAUTHORIZED" };
     }
     let role = await prisma.role.delete({
         where: {

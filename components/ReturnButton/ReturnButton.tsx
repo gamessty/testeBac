@@ -14,6 +14,7 @@ interface ReturnButtonBaseProps {
     timeout?: number;
     cancelLoading?: boolean;
     confirmModal?: Omit<Parameters<typeof openConfirmModal>[0], 'onConfirm'>;
+    href?: string;
 }
 
 interface ReturnButtonProps extends ReturnButtonBaseProps, ButtonProps {
@@ -26,7 +27,7 @@ interface ReturnButtonPropsJustIcon extends ReturnButtonBaseProps, ActionIconPro
 
 type ReturnButtonType = ReturnButtonProps | ReturnButtonPropsJustIcon;
 
-export default function ReturnButton({ justIcon, cancelLoading, confirmModal, hideFrom, timeout = 100, ...props }: Readonly<ReturnButtonType>) {
+export default function ReturnButton({ justIcon, cancelLoading, confirmModal, hideFrom, href, timeout = 100, ...props }: Readonly<ReturnButtonType>) {
     const router = useRouter();
     const path = usePathname();
     const [loading, setLoading] = useState(false);
@@ -35,7 +36,12 @@ export default function ReturnButton({ justIcon, cancelLoading, confirmModal, hi
     function handleRouterBack() {
         setLoading(true);
         setTimeout(() => {
-            router.back();
+            if(href) {
+                router.push(href);
+            }
+            else {
+                router.back();
+            }
         }, timeout);
     }
 

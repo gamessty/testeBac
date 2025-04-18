@@ -7,10 +7,10 @@ import { chkP } from '../../../../utils'
 export const GET = async function GET(req: NextRequest) {
     let session = await auth()
     if (!session || !session.user) {
-        return NextResponse.json({ message: "Not authenticated" }, { status: 401 })
+        return NextResponse.json({ message: "UNAUTHENTICATED" }, { status: 401 })
     }
     if (!chkP("user:readAll", session.user)) {
-        return NextResponse.json({ message: "Unauthorized" }, { status: 403 })
+        return NextResponse.json({ message: "UNAUTHORIZED" }, { status: 403 })
     }
     let users = await prisma.user.findMany({
         where: Object.fromEntries(req.nextUrl.searchParams.entries()) ?? undefined

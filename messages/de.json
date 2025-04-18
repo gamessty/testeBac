@@ -421,6 +421,10 @@
     }
   },
   "Tests": {
+    "Categories": {
+      "admission": "Hochschulzulassung",
+      "bac": "Abitur"
+    },
     "Subjects": {
       "biology": "Biologie",
       "chemistry": "Chemie",

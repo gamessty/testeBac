@@ -31,10 +31,10 @@ const LETTERS = ['a', 'b', 'c', 'd', 'e'];
 export async function importQuestionsFromJson() {
     const session = await auth();
     if (!session?.user) {
-        return { message: "Not authenticated" };
+        return { message: "UNAUTHENTICATED" };
     }
     if (!chkP("developer:database", session.user)) {
-        return { message: "Unauthorized" };
+        return { message: "UNAUTHORIZED" };
     }
     const folder = await prisma.folder.create({
         data: {

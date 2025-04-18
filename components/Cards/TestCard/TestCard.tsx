@@ -42,11 +42,20 @@ export default function TestCard({ loading = false, category, subject, coverImag
         }
     }
 
-    function getSujectName(value: string | string[]) {
+    function getSubjectName(value: string | string[]) {
         if (Array.isArray(value)) {
-            return value.map((val) => val != undefined ? t(`Subjects.${val}`) ?? capitalizeFirstLetter(val) : '...').join(" | ");
+            return value.map((val) => {
+                if (val === undefined) {
+                    return '...';
+                }
+                return t.has(`Subjects.${val.toLowerCase()}`) ? t(`Subjects.${val.toLowerCase()}`) : capitalizeFirstLetter(val);
+            }).join(" | ");
         }
-        return t(`Subjects.${value}`);
+        return t(`Subjects.${value.toLowerCase()}`);
+    }
+
+    function getCategoryName(value: string) {
+        return t.has(`Categories.${value}`) ? t(`Categories.${value}`) : capitalizeFirstLetter(value);
     }
 
     switch (design) {
@@ -62,15 +71,15 @@ export default function TestCard({ loading = false, category, subject, coverImag
                                     height={70}
                                     alt={"Cover image test " + subject}
                                 />
-                               <Badge radius="xs" size="sm" variant="light" className={classes["card-badge"]} color={getInitialsColor(category)}>{!category || t("category", { category }) == "Unknown" ? (category ?? '...') : t("category", { category })}</Badge>
+                               <Badge radius="xs" size="sm" variant="light" className={classes["card-badge"]} color={getInitialsColor(category)}>{!category ? '...' : getCategoryName(category)}</Badge>
                             </Card.Section>}
 
                             <Card.Section inheritPadding py="md" w="100%">
                                 {subject && <Flex justify="left" align="center" mb="xs" gap={10} w="100%">
-                                    {!coverImage && <AvatarFallback name={getSujectName(subject)} color="initials">{getAvatarIcon(subject)}</AvatarFallback>}
+                                    {!coverImage && <AvatarFallback name={getSubjectName(subject)} color="initials">{getAvatarIcon(subject)}</AvatarFallback>}
                                     <Stack gap={7} w="100%">
-                                        <Text truncate="end" w="100%" mb='-6' fw={500}>{getSujectName(subject)}</Text>
-                                        {!coverImage && <Badge radius="xs" size="sm" variant="light" mr={5} color={getInitialsColor(category)}>{!category || t("category", { category }) == "Unknown" ? (category ?? '...') : t("category", { category })}</Badge>}
+                                        <Text truncate="end" w="100%" mb='-6' fw={500}>{getSubjectName(subject)}</Text>
+                                        {!coverImage && <Badge radius="xs" size="sm" variant="light" mr={5} color={getInitialsColor(category)}>{!category ? '...' : getCategoryName(category)}</Badge>}
                                         {typeof progress !== 'undefined' && <Progress value={progress} radius="xs" />}
                                     </Stack>
                                 </Flex>}
@@ -108,7 +117,7 @@ export default function TestCard({ loading = false, category, subject, coverImag
 
                             <Card.Section inheritPadding py="md" w="100%">
                                 {subject && <Flex justify="left" align="center" mb="xs" gap={10} w="100%">
-                                    {!coverImage && <AvatarFallback name={getSujectName(subject)} color="initials">{getAvatarIcon(subject)}</AvatarFallback>}
+                                    {!coverImage && <AvatarFallback name={getSubjectName(subject)} color="initials">{getAvatarIcon(subject)}</AvatarFallback>}
                                     <Stack gap={1} w="100%">
                                         <Box w="100%">
                                             <Text truncate="end" w="100%" fw={500}>{t(`Subjects.${subject}`)}</Text>

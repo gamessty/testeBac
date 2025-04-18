@@ -59,6 +59,7 @@ model UserTest {
     category        String?
     folderId        String
     subjectId       String[]
+    chapterId       String[]
     questions       UserTestOnQuestion[]
     selectedAnswers SelectedAnswer[]
     testType        TestType             @default(SIMPLE)

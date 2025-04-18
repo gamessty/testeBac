@@ -421,6 +421,10 @@
     }
   },
   "Tests": {
+    "Categories": {
+      "admission": "Admission à l'université",
+      "bac": "Baccalauréat"
+    },
     "Subjects": {
       "biology": "Biologie",
       "chemistry": "Chimie",

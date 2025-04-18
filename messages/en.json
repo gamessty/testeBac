@@ -200,13 +200,15 @@
         "email": "Email",
         "name": {
           "label": "Name",
-          "placeholder": "Enter your name"
+          "placeholder": "Enter your name",
+          "error": "The name is not valid. Try again."
         },
         "personalInfo": "Personal information and preferences",
         "title": "Account",
         "username": {
           "label": "Username",
-          "placeholder": "Enter your username"
+          "placeholder": "Enter your username",
+          "error": "The username is not valid. Try again."
         }
       },
       "account": "Account",

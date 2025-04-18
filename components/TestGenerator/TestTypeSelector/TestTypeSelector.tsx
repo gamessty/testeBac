@@ -77,8 +77,8 @@ export default function TestTypeSelector({
     const handleConfigChange = useCallback((configId: string, newValue: any) => {
         if (!onConfigurationsChange) return;
         
-        onConfigurationsChange((currentConfigs) => {
-            const updatedConfigs = { ...(currentConfigs || {}) };
+        onConfigurationsChange((currentConfigs: any) => {
+            const updatedConfigs = { ...(currentConfigs ?? {}) };
             updatedConfigs[configId] = newValue;
             return updatedConfigs;
         });
@@ -202,7 +202,7 @@ export default function TestTypeSelector({
                                                         if (value === '' || value === null) {
                                                             if (config.id === 'numberOfQuestions' && onConfigurationsChange) {
                                                                 onConfigurationsChange((currentConfigs: any) => {
-                                                                    const newConfigs = { ...(currentConfigs || {}) };
+                                                                    const newConfigs = { ...(currentConfigs ?? {}) };
                                                                     delete newConfigs[config.id];
                                                                     return newConfigs;
                                                                 });

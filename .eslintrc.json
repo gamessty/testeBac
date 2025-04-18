@@ -1,8 +1,4 @@
 {
   "extends": "next/core-web-vitals",
-  "ignorePatterns": ["*.js", "*.cjs", "*.mjs"],
-  "plugins": ["unusedImports"],
-  "rules": {
-    "unused-imports/no-unused-imports": "warn"
-  }
+  "ignorePatterns": ["*.js", "*.cjs", "*.mjs"]
 }

@@ -32,16 +32,6 @@ import ColorSchemeToggleIconSegmented from '../../ColorSchemeToggleIconSegmented
 import LocaleSelect from '../../LocaleSelect/LocaleSelect';
 import classes from './Settings.module.css';
 
-// Dynamically import heavy Prisma action modules to keep client bundle lean
-const createSampleData = dynamic(
-  () => import('../../../actions/PrismaFunctions/createSampleData').then((m) => m.default),
-  { ssr: false }
-);
-const importQuestionsFromJson = dynamic(
-  () => import('@/actions/PrismaFunctions/createSampleData2').then((m) => m.importQuestionsFromJson),
-  { ssr: false }
-);
-
 // Use a server action for user updates
 import { putUser } from '../../../actions/PrismaFunctions/putUser';
 import { Link } from '@/i18n/routing';
@@ -75,8 +65,8 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
       preferences: { codingLanguage: session?.user?.preferences.codingLanguage },
     },
     validate: {
-      name: (val) => (val.trim() === '' ? t('Account.name.error') : null),
-      username: (val) => (val.trim() === '' ? t('Account.username.error') : null),
+      name: (val) => (!val || val.trim() === '' ? t('Account.name.error') : null),
+      username: (val) => (!val || val.trim() === '' ? t('Account.username.error') : null),
     },
   });
 
@@ -189,16 +179,6 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
             <Button component={Link} href="./app/demo/" variant="outline">
               {t('demoComponents')}
             </Button>
-            {chkP('developer:*', session.user) && (
-              <>
-                <Button variant="outline" onClick={() => createSampleData()}>
-                  {t('createSampleData')}
-                </Button>
-                <Button variant="outline" onClick={() => importQuestionsFromJson()}>
-                  {t('createSampleData') + ' 2'}
-                </Button>
-              </>
-            )}
           </ButtonGroup>
         </Grid.Col>
       )}
@@ -211,7 +191,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
               leftSection={loading ? <Loader size="xs" /> : <IconDeviceFloppy />}
               style={styles}
               className={classes['save-button']}
-              onClick={form.onSubmit(handleSubmit)}
+              onClick={() => form.onSubmit(handleSubmit)()}
               disabled={!hasChanges || loading}
             >
               <Text truncate inherit>

@@ -11,7 +11,7 @@
     },
     "allowJs": true,
     "skipLibCheck": true,
-    "strict": false, // temporary
+    "strict": true,
     "forceConsistentCasingInFileNames": true,
     "noEmit": true,
     "esModuleInterop": true,

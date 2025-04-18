@@ -85,7 +85,7 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
   };
 
   return (
-    <Grid p={{ base: 30, sm: 35 }} pt={{ base: 20, sm: 25 }} pb={95} style={style}>
+    <Grid p={{ base: 30, sm: 35 }} pt={{ base: 20, sm: 25 }} pb={15} style={style}>
       {/* Page Title */}
       <Grid.Col span={12}>
         <Title order={1} ta="left">

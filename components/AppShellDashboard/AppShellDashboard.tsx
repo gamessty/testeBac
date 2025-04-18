@@ -227,7 +227,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
             </AppShell.Main>
             <AppShell.Footer display={{ sm: "none" }} className={(settings.tab.disableNavigation ? classes.hide : undefined) + " " + classes["footer"]}>
                 <Flex className={classes["flex-footer"]}>
-                    <AvatarMenu shadow="md" position="top-start" offset={20} classNames={{}} transitionProps={{ transition: 'pop-bottom-left', duration: 200 }} AvatarProps={{ src: session?.user?.image ?? undefined, name: session?.user?.username ?? session?.user?.email ?? undefined, color: 'initials' }}>
+                    <AvatarMenu shadow="md" position="top-start" offset={20} classNames={{}} transitionProps={{ transition: 'pop-bottom-left', duration: 200 }} AvatarProps={{ src: session?.user?.image ?? undefined, name: session?.user?.username ?? session?.user?.email ?? undefined, color: 'initials', classNames: { root: classes.avatarRoot } }}>
                         {tabsData.filter(t => !t.mobile && (t.visible || typeof (t.visible) == 'undefined') && chkP(enumToString(t.permissionNeeded), session?.user)).toSorted((a, b) => b.category.order - a.category.order).map((tab, index, array) => (
                             <React.Fragment key={tab.tab + "_menu"}>
                                 {((index > 0 && array[index - 1].category.name != tab.category.name) || index == 0) && (!tab.category.permissionNeeded || chkP(enumToString(tab.category.permissionNeeded), session?.user)) &&

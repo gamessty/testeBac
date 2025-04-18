@@ -1,3 +1,4 @@
+import './global.css'
 import "@mantine/core/styles.css";
 import '@mantine/notifications/styles.css';
 import '@mantine/code-highlight/styles.css';

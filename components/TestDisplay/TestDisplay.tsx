@@ -1,18 +1,19 @@
 //TBD TRANSLATIONS NEEDED
 'use client';
 import classes from "./TestDisplay.module.css";
-import { Badge, Box, Button, Card, Container, Progress, Skeleton, Title, Text, Stack, Group, ScrollArea } from "@mantine/core";
+import { Badge, Box, Button, Card, Container, Progress, Skeleton, Title, Text, Stack, Group, ScrollArea, ActionIcon } from "@mantine/core";
 import { UserActiveTest } from "@/auth";
 import { notifications } from "@mantine/notifications";
 import { useEffect } from "react";
-import { useShallowEffect } from "@mantine/hooks";
+import { useIsFirstRender, useShallowEffect } from "@mantine/hooks";
 import TestProgressBar from "../TestProgressBar/TestProgressBar";
 import { useTranslations } from "next-intl";
 import { getInitialsColor } from "@/utils";
 import ReturnButton from "../ReturnButton/ReturnButton";
 import { useLineClamp } from "@/hooks/useLineClamp";
 import { redirect } from "next/navigation";
-import { usePathname } from "@/i18n/routing";
+import { usePathname, useRouter } from "@/i18n/routing";
+import { IconTrash } from "@tabler/icons-react";
 
 
 interface TestDisplayProps {
@@ -21,12 +22,17 @@ interface TestDisplayProps {
 
 export default function TestDisplay({ testDetails }: Readonly<TestDisplayProps>) {
     const t = useTranslations('Tests');
+    const router = useRouter();
     const pathname = usePathname();
     const { ref, clampedText } = useLineClamp(2);
 
     function capitalizeFirstLetter(val: string) {
         return String(val).charAt(0).toUpperCase() + String(val).slice(1).toLowerCase();
     }
+
+    useEffect(() => {
+        router.prefetch(pathname + '/start');
+    }, []);
 
     function getSubjectName(value: string | string[]) {
         if (Array.isArray(value)) {
@@ -47,9 +53,14 @@ export default function TestDisplay({ testDetails }: Readonly<TestDisplayProps>)
                     h={"100%"}
                 >
                     <ReturnButton size="xs" className={classes.returnButton} href="/app?tab=tests" />
-                    <Title size="h4" className={classes.title}>
-                        test details
-                    </Title>
+                    <div className={classes.header}>
+                        <Title size="h4" className={classes.title}>
+                            test details
+                        </Title>
+                        <ActionIcon variant="subtle" classNames={{ icon: classes.deleteIcon }}>
+                            <IconTrash size={24} />
+                        </ActionIcon>
+                    </div>
                     <Title size="h1" order={2} className={classes.testTitle} >
                         {(!testDetails || (testDetails && !clampedText)) && <Skeleton className={classes.skeleton} height="100%" width="40%">.................</Skeleton>}
                         <Text span lineClamp={2} inherit className={classes.testTitleText} ref={ref} display={clampedText ? undefined : 'none'}>

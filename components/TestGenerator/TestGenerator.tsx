@@ -35,7 +35,8 @@ interface QuestionRange {
     count: number;
 }
 
-export default function TestGenerator({ style }: Readonly<ITabModuleProps>) {
+export default function TestGenerator({ style, triggerloading }: Readonly<ITabModuleProps>) {
+    const tError = useTranslations('General.Errors');
     const t = useTranslations('Dashboard.TestGenerator');
     const router = useRouter();
 
@@ -234,6 +235,7 @@ export default function TestGenerator({ style }: Readonly<ITabModuleProps>) {
 
     const handleGenerateTest = async () => {
         if (configurations) {
+            triggerloading(true);
             // Calculate total selected questions
             const totalSelectedQuestions = Object.values(questionDistribution).reduce((sum, count) => sum + count, 0);
             
@@ -261,10 +263,11 @@ export default function TestGenerator({ style }: Readonly<ITabModuleProps>) {
                 if (result.success) {
                     router.push(`/app/test/${result.testId}`);
                 } else {
+                    triggerloading(false);
                     notifications.show({
                         color: 'red',
-                        title: t('errors.generate.title', { error: result.message }),
-                        message: t('errors.generate.message', { error: result.message })
+                        title: tError.has(`${result.message}.title`) ? tError(`${result.message}.title`) : tError('UNKNOWN.title'),
+                        message: tError.has(`${result.message}.title`) ? tError(`${result.message}.title`) : tError('UNKNOWN.messageCode', { code: result.message })
                     });
                 }
                 return;
@@ -293,8 +296,8 @@ export default function TestGenerator({ style }: Readonly<ITabModuleProps>) {
                 // Show error notification using separate translation keys for title and message
                 notifications.show({
                     color: 'red',
-                    title: t('errors.generate.title', { error: result.message }),
-                    message: t('errors.generate.message', { error: result.message })
+                    title: tError.has(`${result.message}.title`) ? tError(`${result.message}.title`) : tError('UNKNOWN.title'),
+                    message: tError.has(`${result.message}.title`) ? tError(`${result.message}.title`) : tError('UNKNOWN.messageCode', { code: result.message })
                 });
             }
         }

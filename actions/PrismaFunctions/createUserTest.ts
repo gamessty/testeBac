@@ -51,27 +51,27 @@ async function sampleQuestions(where: object, limit: number): Promise<Question[]
 async function selectByDistribution(config: TestConfiguration) {
     const dist = config.questionDistribution ?? {};
     if (!Object.keys(dist).length) return null;
-    
+
     const picks: Question[] = [];
-    
+
     // Get questions from subject question IDs
     for (const subjectId of config.subjectQuestionIds || []) {
         const count = dist[subjectId] || 0;
         if (count <= 0) continue;
-        
+
         const questions = await sampleQuestions({ subjectId }, count);
         picks.push(...questions);
     }
-    
+
     // Get questions from chapter IDs
     for (const chapterId of config.chapterIds || []) {
         const count = dist[chapterId] || 0;
         if (count <= 0) continue;
-        
+
         const questions = await sampleQuestions({ chapterId }, count);
         picks.push(...questions);
     }
-    
+
     return picks;
 }
 
@@ -79,21 +79,21 @@ async function selectByDistribution(config: TestConfiguration) {
 async function selectByTotal(config: TestConfiguration) {
     const raw = config.configurations?.numberOfQuestions;
     const total = Number.isInteger(raw) ? Number(raw) : NaN;
-    
+
     if (isNaN(total)) return null;
-    
+
     // If we have a distribution, we should use it instead
     if (config.questionDistribution && Object.keys(config.questionDistribution).length > 0) {
         return null;
     }
-    
+
     const where = {
         OR: [
             { subjectId: { in: config.subjectQuestionIds } },
             { chapterId: { in: config.chapterIds } }
         ]
     };
-    
+
     const pool = await prisma.question.count({ where });
     return sampleQuestions(where, Math.min(total, pool));
 }
@@ -116,21 +116,21 @@ export async function generateTest(config: TestConfiguration): Promise<UnitedTes
 
     try {
         // Check if we have question distribution and at least one selection
-        const hasDistribution = config.questionDistribution && 
-                               Object.keys(config.questionDistribution).length > 0 &&
-                               Object.values(config.questionDistribution).some(count => count > 0);
-        
+        const hasDistribution = config.questionDistribution &&
+            Object.keys(config.questionDistribution).length > 0 &&
+            Object.values(config.questionDistribution).some(count => count > 0);
+
         // Try distribution strategy first, then fall back to total, then fallback
         let selected = (hasDistribution ? await selectByDistribution(config) : null)
             ?? await selectByTotal(config)
             ?? await selectFallback(config);
 
         if (!selected || selected.length === 0) {
-            return { success: false, message: "No questions found for the selected criteria" };
+            return { success: false, message: "NO_QUESTIONS" };
         }
 
         // If numberOfQuestions is specified and less than selected, trim the selection
-        if (config.configurations?.numberOfQuestions && 
+        if (config.configurations?.numberOfQuestions &&
             Number(config.configurations.numberOfQuestions) < selected.length) {
             // Fisher-Yates shuffle the selected questions
             for (let i = selected.length - 1; i > 0; i--) {

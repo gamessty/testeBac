@@ -6,6 +6,22 @@
     justify-content: space-between;
 }
 
+.header {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+}
+
+.deleteIcon { 
+    color: var(--mantine-color-red-6);
+    transition: top ease 0.2s;
+    top: 0px;
+    &:hover {
+        color: var(--mantine-color-red-7);
+        top: 10px;
+    }
+}
+
 .title {
     color: var(--mantine-color-dimmed);
     margin-bottom: calc(var(--mantine-scale) * 0.5rem);

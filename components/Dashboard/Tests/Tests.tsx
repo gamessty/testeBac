@@ -37,12 +37,11 @@ export default function Tests({ session, settab, style }: Readonly<ITabModulePro
                             session.user.activeTests?.map((test) => {
                                 return (
                                     <Fragment key={test.id}>
-                                        <TestCard design="compact" mih="100%" category={test.folder?.category} subject={test.subjects?.map(sj => sj.name?.toLowerCase())} progress={test.selectedAnswers.length / test.questions.length * 100} href={`/app/test/${test.id}`} lastQuestion={getLastQuestionText(test)} />
+                                        <TestCard design="compact" mih="100%" category={test.folder?.category} subject={test.subjects?.map(sj => sj.name?.toLowerCase())} progress={test.selectedAnswers.length / test.questions.length * 100} href={`/app/test/${test.id}`} lastQuestion={getLastQuestionText(test)}/>
                                         <Divider variant="dashed" />
                                     </Fragment>
                                 )
                             })
-                            
                         }
                     </Stack>
                 </Center>

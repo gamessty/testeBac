@@ -1,11 +1,12 @@
 "use client";
-import { ActionIcon, Badge, Box, Button, Card, CardProps, Flex, Image, Overlay, Progress, Skeleton, Stack, Text } from "@mantine/core";
+import { ActionIcon, Badge, Box, Button, Card, CardProps, Flex, Image, LoadingOverlay, Overlay, Progress, Skeleton, Stack, Text } from "@mantine/core";
 import { IconCodeAsterisk, IconFlask2, IconMicroscope, IconPencil, IconSchool } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
-import { Link } from "../../../i18n/routing";
+import { Link, useRouter } from "../../../i18n/routing";
 import { getInitialsColor } from "../../../utils";
 import AvatarFallback from "../../AvatarFallback/AvatarFallback";
 import classes from './TestCard.module.css';
+import { useDidUpdate, useDisclosure, useHover } from "@mantine/hooks";
 
 interface TestCardProps {
     loading?: boolean;
@@ -21,6 +22,9 @@ interface TestCardProps {
 
 export default function TestCard({ loading = false, category, subject, coverImage, lastQuestion, progress, design, tooltipText, href, ...rest }: Readonly<TestCardProps & CardProps>) {
     const t = useTranslations('Tests');
+    const router = useRouter();
+    const [visibleLoading, { open, close }] = useDisclosure(false);
+    const { hovered, ref } = useHover()
 
     function capitalizeFirstLetter(val: string) {
         return String(val).charAt(0).toUpperCase() + String(val).slice(1);
@@ -58,11 +62,28 @@ export default function TestCard({ loading = false, category, subject, coverImag
         return t.has(`Categories.${value}`) ? t(`Categories.${value}`) : capitalizeFirstLetter(value);
     }
 
+    function handleClick() {
+        if(href) {
+            open();
+            setTimeout(() => {
+                close();
+            }, 10000);
+        }
+
+    }
+
+    useDidUpdate(() => {
+        if(hovered && href) {
+            console.log('prefetching', href);
+            router.prefetch(href);
+        }
+    })
+
     switch (design) {
         case 'compact':
             return (
-                <Card {...rest} className={`${classes["test-card"]} ${classes["compact"]}`} component={Link} href={href ?? ''} w={"100%"} shadow="lg" radius="sm" >
-                   {loading && <Overlay color="#000" backgroundOpacity={0.35} blur={15} />}
+                <Card ref={ref} {...rest} onClick={handleClick} className={`${classes["test-card"]} ${classes["compact"]}`} component={Link} href={href ?? ''} w={"100%"} shadow="lg" radius="sm" >
+                  <LoadingOverlay visible={loading || visibleLoading} zIndex={1000} loaderProps={{ color: 'grey', type: 'dots' }} overlayProps={{ radius: "sm", blur: 2 }} />
                     <Stack justify="space-between" h="100%" w="100%">
                         <Box w="100%">
                             {coverImage && coverImage !== 'none' && <Card.Section>

@@ -29,8 +29,6 @@ export default async function TestPage({
         error = 'NOT_FOUND';
     }
 
-    console.log(testDetails);
-
     return (
         <Container className={classes.container}>
             <ScrollArea classNames={{

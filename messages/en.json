@@ -199,16 +199,16 @@
         "deleteSuccess": "Your account has been deleted successfully.",
         "email": "Email",
         "name": {
+          "error": "The name is not valid. Try again.",
           "label": "Name",
-          "placeholder": "Enter your name",
-          "error": "The name is not valid. Try again."
+          "placeholder": "Enter your name"
         },
         "personalInfo": "Personal information and preferences",
         "title": "Account",
         "username": {
+          "error": "The username is not valid. Try again.",
           "label": "Username",
-          "placeholder": "Enter your username",
-          "error": "The username is not valid. Try again."
+          "placeholder": "Enter your username"
         }
       },
       "account": "Account",
@@ -262,15 +262,8 @@
           "title": "{error, select, Unauthenticated {Sign-in Required} Unauthorized {Access Denied} other {Test Generation Error}}"
         },
         "noQuestions": {
-          "title": "No Questions Selected",
-          "message": "You need to select at least one question from the available sources."
-        }
-      },
-      "warnings": {
-        "configuration": {
-          "title": "Question Count Adjusted",
-          "message": "The number of questions has been automatically adjusted to {allowedMax} based on available questions.",
-          "adjusted": "Maximum available questions: {allowedMax}"
+          "message": "You need to select at least one question from the available sources.",
+          "title": "No Questions Selected"
         }
       },
       "exitConfiguration": {
@@ -300,6 +293,13 @@
         "back": "Back",
         "generate": "Generate test",
         "next": "Next"
+      },
+      "warnings": {
+        "configuration": {
+          "adjusted": "Maximum available questions: {allowedMax}",
+          "message": "The number of questions has been automatically adjusted to {allowedMax} based on available questions.",
+          "title": "Question Count Adjusted"
+        }
       }
     },
     "Tests": {
@@ -403,8 +403,21 @@
         "message": "This resource has not been found. Please try again later or check your request.",
         "title": "Not found"
       },
+      "NO_QUESTIONS": {
+        "message": "No questions found for the selected criteria. Please try again after changing your test generation filters and options.",
+        "title": "No questions"
+      },
+      "UNAUTHENTICATED": {
+        "message": "You are currently unauthenticated. You need to be signed into your account to continue.",
+        "title": "Unauthenticated"
+      },
+      "UNAUTHORIZED": {
+        "message": "Your account is not allowed to access this resource or execute this action. Please try again later.",
+        "title": "Access Denied"
+      },
       "UNKNOWN": {
         "message": "An unknown error has occured. Please try again later or make sure your request is valid.",
+        "messageCode": "An unknown error has occured. Please try again later or make sure your request is valid. Error code: {code}.",
         "title": "Unknown error"
       },
       "goBack": "Go back"

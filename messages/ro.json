@@ -199,12 +199,14 @@
         "deleteSuccess": "Contul a fost șters cu succes.",
         "email": "Email",
         "name": {
+          "error": "Numele nu este valid. Încercați din nou.",
           "label": "Nume",
           "placeholder": "Nume Prenume"
         },
         "personalInfo": "Informații și preferințe personale",
         "title": "Cont",
         "username": {
+          "error": "Numele de utilizator nu este valid. Încercați din nou.",
           "label": "Nume de utilizator",
           "placeholder": "Numele de utilizator"
         }
@@ -245,6 +247,7 @@
               "timeLimit": "Timp limită (minute)"
             }
           },
+          "distributionInfoMessage": "Puteți selecta numărul individual de întrebări de mai jos",
           "type": "{id, select, simple {Simplu} mockExam {Simulare} complex {Avansat} other {Necunoscut}}"
         },
         "updatedAt": "Actualizat la:"
@@ -257,6 +260,10 @@
         "generate": {
           "message": "{error, select, Unauthenticated {Vă rugăm să vă conectați pentru a genera un test.} Unauthorized {Contul dvs. nu este permis pentru această configurație de test.} other {A apărut o eroare neașteptată în timpul generării testului. Vă rugăm să încercați din nou mai târziu.}}",
           "title": "{error, select, Unauthenticated {Sign-in Required} Unauthorized {Acces refuzat} other {Error de generare a testului}}"
+        },
+        "noQuestions": {
+          "message": "Trebuie să selectați cel puțin o întrebare din sursele disponibile.",
+          "title": "Nicio întrebare selectată"
         }
       },
       "exitConfiguration": {
@@ -286,11 +293,57 @@
         "back": "Înapoi",
         "generate": "Generați test",
         "next": "Următorul"
+      },
+      "warnings": {
+        "configuration": {
+          "adjusted": "Întrebări maxime disponibile: {allowedMax}",
+          "message": "Numărul de întrebări a fost ajustat automat la {allowedMax} pe baza întrebărilor disponibile.",
+          "title": "Număr de întrebări ajustat"
+        }
       }
     },
     "Tests": {
+      "Categories": {
+        "admission": "Admitere universitară",
+        "bac": "Bacalaureat"
+      },
+      "Subjects": {
+        "biology": "Biologie",
+        "chemistry": "Chimie",
+        "english": "Engleză",
+        "french": "franceză",
+        "geography": "Geografie",
+        "german": "Germania",
+        "history": "Istoric",
+        "informatics": "Informatică",
+        "mathematics": "Matematică",
+        "physics": "Fizică",
+        "romanian": "română",
+        "spanish": "spaniolă"
+      },
+      "availableQuestions": "{număr, plural, =0 {nici o întrebare} =1 {o întrebare} alte {# întrebări}}",
+      "cancel": "Anulează",
+      "category": "{categorie, selectați, admitere {Admitere universitară} bac {Bacalaureat} altele {Nu cunoscute}}",
+      "confirm": "Confirmați",
+      "confirmDeleteTest": {
+        "message": "Sunteți sigur că doriți să ștergeți acest test: <b>{testName}</b>? Această acțiune nu poate fi anulată.",
+        "title": "Ștergeți testul"
+      },
+      "continueTest": "Continuați",
+      "delete": "Ștergeți",
+      "deleteError": {
+        "message": "Eșec la ștergerea testului. Vă rugăm să încercați din nou mai târziu.",
+        "title": "Ștergere eșuată"
+      },
       "description": "Aici puteți vedea progresul dumneavoastră și testele pe care le-ați susținut. Puteți vedea, de asemenea, rezultatele dumneavoastră și materiile pe care le-ați studiat. Continuați munca bună și succes la învățat!",
+      "details": "Detalii de testare",
+      "finishedTest": "Terminat",
       "generateTestTitle": "Generează test",
+      "lastQuestion": "Ultima întrebare",
+      "resumeTest": "Test de CV",
+      "startTest": "Start",
+      "testDeleted": "Test eliminat",
+      "testDeletedMessage": "Testul <b>{testName}</b> a fost șters cu succes.",
       "tests": "{count, plural, =0 {Niciun test} =1 {# test} other {# teste}}",
       "title": "Teste"
     },
@@ -384,6 +437,62 @@
       "colorScheme": "{colorScheme, select, light {Luminos} dark {Întunecat} auto {Automat} other {Necunoscut}}",
       "label": "Schimbă schema de culori"
     },
+    "Errors": {
+      "ALREADY_ANSWERED": {
+        "message": "Ați trimis deja un răspuns pentru această întrebare. Nu vă puteți schimba răspunsul odată ce l-ați trimis.",
+        "title": "Deja răspuns"
+      },
+      "ALREADY_ENDED": {
+        "message": "Acest test a fost deja finalizat. Nu puteți face modificări la un test finalizat.",
+        "title": "Test deja finalizat"
+      },
+      "ALREADY_STARTED": {
+        "message": "Acest test a fost deja început. Puteți continua cu testul în curs.",
+        "title": "Testul a început deja"
+      },
+      "INVALID_ANSWER_IDS": {
+        "message": "Unul sau mai multe dintre răspunsurile selectate nu sunt valide pentru această întrebare. Vă rugăm să selectați numai răspunsuri valide.",
+        "title": "Răspunsuri nevalide"
+      },
+      "INVALID_INPUT": {
+        "message": "Datele furnizate nu sunt valide. Vă rugăm să verificați datele și să încercați din nou.",
+        "title": "Introducere invalidă"
+      },
+      "NOT_FOUND": {
+        "message": "Această resursă nu a fost găsită. Vă rugăm să încercați din nou mai târziu sau să vă verificați solicitarea.",
+        "title": "Nu a fost găsit"
+      },
+      "NOT_STARTED": {
+        "message": "Testul nu a fost încă inițiat. Trebuie să începeți testul înainte de a putea finaliza această acțiune.",
+        "title": "Testul nu a început"
+      },
+      "NO_QUESTIONS": {
+        "message": "Nu s-au găsit întrebări pentru criteriile selectate. Vă rugăm să încercați din nou după ce ați modificat filtrele și opțiunile de generare a testelor.",
+        "title": "Nicio întrebare"
+      },
+      "QUESTION_NOT_FOUND": {
+        "message": "Întrebarea solicitată nu a putut fi găsită în acest test. Vă rugăm să încercați din nou sau să contactați asistența.",
+        "title": "Întrebarea nu a fost găsită"
+      },
+      "TIME_LIMIT_EXCEEDED": {
+        "message": "Limita de timp pentru acest test a fost depășită. Testul dvs. a fost trimis automat.",
+        "title": "Timp limită depășit"
+      },
+      "UNAUTHENTICATED": {
+        "message": "Momentan nu sunteți autentificat. Trebuie să fiți autentificat în contul dvs. pentru a continua.",
+        "title": "neautentificat"
+      },
+      "UNAUTHORIZED": {
+        "message": "Contul dvs. nu este autorizat să acceseze această resursă sau să execute această acțiune. Vă rugăm să încercați din nou mai târziu.",
+        "title": "Acces refuzat"
+      },
+      "UNKNOWN": {
+        "message": "A apărut o eroare necunoscută. Vă rugăm să încercați din nou mai târziu sau asigurați-vă că solicitarea dvs. este validă.",
+        "messageCode": "A apărut o eroare necunoscută. Vă rugăm să încercați din nou mai târziu sau asigurați-vă că solicitarea dvs. este validă. Codul de eroare: {code}.",
+        "title": "Eroare necunoscută"
+      },
+      "goBack": "Înapoi"
+    },
     "LocaleSwitcher": {
       "label": "Schimbă limba",
       "locale": "{locale, select, ro {🇷🇴 Română} en {🇬🇧 Engleză} fr {🇫🇷 Franceză} de {🇩🇪 Germană} other {Necunoscută}}",
@@ -439,9 +548,23 @@
       "romanian": "Română",
       "spanish": "Spaniolă"
     },
+    "availableQuestions": "{număr, plural, =0 {nici o întrebare} =1 {o întrebare} alte {# întrebări}}",
+    "cancel": "Anulează",
     "category": "{category, select, admission {Admitere} bac {Bac} other {Categorie necunoscută}}",
+    "confirm": "Confirmați",
+    "confirmDeleteTest": {
+      "message": "Sunteți sigur că doriți să ștergeți acest test: <b>{testName}</b>? Această acțiune nu poate fi anulată.",
+      "title": "Ștergeți testul"
+    },
+    "continueTest": "Continuați",
+    "delete": "Ștergeți",
+    "details": "detaliile testului",
+    "finishedTest": "Terminat",
     "lastQuestion": "Ultima întrebare",
-    "resumeTest": "Continuă testul"
+    "resumeTest": "Continuă testul",
+    "startTest": "Start",
+    "testDeleted": "Test eliminat",
+    "testDeletedMessage": "Testul <b>{testName}</b> a fost șters cu succes."
   },
   "createSampleData": "Creați date de probă",
   "demo-components": "Componente demo",

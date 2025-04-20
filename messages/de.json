@@ -559,8 +559,12 @@
     "continueTest": "Weiter",
     "delete": "Löschen",
     "details": "Testdetails",
+    "finishedTest": "Fertige",
     "lastQuestion": "Letzte Frage",
-    "resumeTest": "Test fortsetzen"
+    "resumeTest": "Test fortsetzen",
+    "startTest": "Start",
+    "testDeleted": "Test Gelöscht",
+    "testDeletedMessage": "Der Test <b>{testName}</b> wurde erfolgreich gelöscht."
   },
   "createSampleData": "Beispieldaten erstellen",
   "demo-components": "Demo -Komponenten",

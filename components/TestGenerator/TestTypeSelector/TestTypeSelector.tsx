@@ -70,10 +70,6 @@ export default function TestTypeSelector({
     const [totalQuestions, setTotalQuestions] = useState(-1);
     const [usingDistribution, setUsingDistribution] = useState(false);
 
-    useEffect(() => {
-        console.log('TestTypeSelector configs:', configs);
-    }, [configs]);
-
     const handleConfigChange = useCallback((configId: string, newValue: any) => {
         if (!onConfigurationsChange) return;
         
@@ -197,6 +193,7 @@ export default function TestTypeSelector({
                                                         undefined}
                                                     label={t(`Configurations.labels.${config.id}`) ?? config.label}
                                                     min={config.min}
+                                                    suffix=" min"
                                                     max={maxQuestions}
                                                     onChange={(value) => {
                                                         if (value === '' || value === null) {

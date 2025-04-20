@@ -313,8 +313,6 @@ export default function TestGenerator({ style, triggerloading }: Readonly<ITabMo
                 const currentConfigs = prev?.configurations || {};
                 const newConfigs = configs(currentConfigs);
                 
-                console.log('Updated configs via callback:', newConfigs);
-                
                 return {
                     ...prev,
                     configurations: newConfigs
@@ -325,8 +323,6 @@ export default function TestGenerator({ style, triggerloading }: Readonly<ITabMo
         
         // Avoid triggering setState if configs is undefined or null
         if (!configs) return;
-        
-        console.log('Direct configs update:', configs);
         
         setConfigurations((prev) => {
             // If prev doesn't exist, initialize with the new configs

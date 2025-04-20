@@ -118,37 +118,25 @@ export default function TestGeneratorSelector({
 
     if (allowMultiple)
         return (
-            <>
-                <Checkbox.Group
-                    value={_value as string[]}
-                    onChange={handleChange}
-                >
-                    <Stack pt="md" gap="xs">
-                        {cards}
-                    </Stack>
-                </Checkbox.Group>
-
-                <Text fz="xs" mt="md">
-                    CurrentValue: {(value as string[])?.join(', ') || '–'}
-                </Text>
-            </>
+            <Checkbox.Group
+                value={_value as string[]}
+                onChange={handleChange}
+            >
+                <Stack pt="md" gap="xs">
+                    {cards}
+                </Stack>
+            </Checkbox.Group>
         );
     else
         return (
-            <>
-                <Radio.Group
-                    value={_value as string}
-                    onChange={handleChange}
-                >
-                    <Stack pt="md" gap="xs">
-                        {cards}
-                    </Stack>
-                </Radio.Group>
-
-                <Text fz="xs" mt="md">
-                    CurrentValue: {value}
-                </Text>
-            </>
+            <Radio.Group
+                value={_value as string}
+                onChange={handleChange}
+            >
+                <Stack pt="md" gap="xs">
+                    {cards}
+                </Stack>
+            </Radio.Group>
         );
 }
 

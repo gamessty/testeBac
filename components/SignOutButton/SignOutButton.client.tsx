@@ -8,9 +8,7 @@ import { useState } from "react";
 export default function SignOutButtonClient({ session, ...props }: Readonly<ButtonProps & { session?: Session | null }>) {
     const t = useTranslations('Authentication');
     const [loading, setLoading] = useState(false);
-    console.log('stpsddsrt')
-    if (!session?.user) return null
-    console.log('stpid')
+    if (!session?.user) return null;
     return (
         <Button {...props} loading={loading} onClick={() => { setLoading(true); signOut() }}>{t('signOut')}</Button>
     )

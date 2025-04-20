@@ -321,9 +321,9 @@
         "romanian": "Rumänisch",
         "spanish": "Spanisch"
       },
-      "availableQuestions": "{Zahl, Plural, =0 {keine Fragen} =1 {eine Frage} andere {# Fragen}}",
+      "availableQuestions": "{Zahl, Plural, =0 {keine Fragen} =1 {eine Frage} other {# Fragen}}",
       "cancel": "Abbrechen",
-      "category": "{Kategorie, Auswahl, Zulassung {Hochschulzulassung} bac {Baccalaureat} andere {Unbekannt}}",
+      "category": "{Kategorie, Auswahl, Zulassung {Hochschulzulassung} bac {Baccalaureat} other {Unbekannt}}",
       "confirm": "Bestätigen Sie",
       "confirmDeleteTest": {
         "message": "Sind Sie sicher, dass Sie diesen Test löschen wollen: <b>{testName}</b>? Diese Aktion kann nicht rückgängig gemacht werden.",
@@ -548,7 +548,7 @@
       "romanian": "Rumänisch",
       "spanish": "Spanisch"
     },
-    "availableQuestions": "{Zahl, Plural, =0 {keine Fragen} =1 {eine Frage} andere {# Fragen}}",
+    "availableQuestions": "{count, plural, =0 {keine Fragen} =1 {eine Frage} other {# Fragen}}",
     "cancel": "Abbrechen",
     "category": "{category, select, admission {Universitätsaufnahme} bac {Abitur} other {Unbekannt}}",
     "confirm": "Bestätigen Sie",

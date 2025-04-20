@@ -73,7 +73,6 @@ export default function TestCard({ loading = false, category, subject, coverImag
 
     useDidUpdate(() => {
         if(hovered && href) {
-            console.log('prefetching', href);
             router.prefetch(href);
         }
     })

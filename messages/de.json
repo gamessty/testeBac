@@ -199,12 +199,14 @@
         "deleteSuccess": "Ihr Konto wurde erfolgreich gelöscht.",
         "email": "E-Mail",
         "name": {
+          "error": "Der Name ist ungültig. Versuchen Sie es erneut.",
           "label": "Name",
           "placeholder": "Geben Sie Ihren Namen ein"
         },
         "personalInfo": "Persönliche Informationen und Vorlieben",
         "title": "Konto",
         "username": {
+          "error": "Der Benutzername ist ungültig. Versuchen Sie es erneut.",
           "label": "Benutzername",
           "placeholder": "Geben Sie Ihren Benutzernamen ein"
         }
@@ -245,6 +247,7 @@
               "timeLimit": "Zeitlimit (Minuten)"
             }
           },
+          "distributionInfoMessage": "Sie können die individuelle Anzahl der Fragen unten auswählen",
           "type": "{id, select, simple {einfach} mockExam {Mock Prüfung} complex {Komplex} other {unbekannte}}"
         },
         "updatedAt": "Aktualisiert bei:"
@@ -257,6 +260,10 @@
         "generate": {
           "message": "{error, select, Unauthenticated {Bitte melden Sie sich an, um einen Test zu erstellen.} Unauthorized {Ihr Konto ist für diese Testkonfiguration nicht zugelassen.} other {Ein unerwarteter Fehler ist bei der Erstellung des Tests aufgetreten. Bitte versuchen Sie es später noch einmal.}}",
           "title": "{error, select, Unauthenticated {Anmeldung erforderlich} Unauthorized {Zugriff verweigert} other {Testgenerierungsfehler}}"
+        },
+        "noQuestions": {
+          "message": "Sie müssen mindestens eine Frage aus den verfügbaren Quellen auswählen.",
+          "title": "Keine Fragen ausgewählt"
         }
       },
       "exitConfiguration": {
@@ -286,11 +293,57 @@
         "back": "Zurück",
         "generate": "Test erstellen",
         "next": "Nächste"
+      },
+      "warnings": {
+        "configuration": {
+          "adjusted": "Maximal verfügbare Fragen: {allowedMax}",
+          "message": "Die Anzahl der Fragen wurde auf der Grundlage der verfügbaren Fragen automatisch auf {allowedMax} angepasst.",
+          "title": "Anzahl der Fragen bereinigt"
+        }
       }
     },
     "Tests": {
+      "Categories": {
+        "admission": "Hochschulzulassung",
+        "bac": "Baccalaureat"
+      },
+      "Subjects": {
+        "biology": "Biologie",
+        "chemistry": "Chemie",
+        "english": "Englisch",
+        "french": "Französisch",
+        "geography": "Geographie",
+        "german": "Deutschland",
+        "history": "Geschichte",
+        "informatics": "Informatik",
+        "mathematics": "Mathematik",
+        "physics": "Physik",
+        "romanian": "Rumänisch",
+        "spanish": "Spanisch"
+      },
+      "availableQuestions": "{Zahl, Plural, =0 {keine Fragen} =1 {eine Frage} andere {# Fragen}}",
+      "cancel": "Abbrechen",
+      "category": "{Kategorie, Auswahl, Zulassung {Hochschulzulassung} bac {Baccalaureat} andere {Unbekannt}}",
+      "confirm": "Bestätigen Sie",
+      "confirmDeleteTest": {
+        "message": "Sind Sie sicher, dass Sie diesen Test löschen wollen: <b>{Testname}</b>? Diese Aktion kann nicht rückgängig gemacht werden.",
+        "title": "Test löschen"
+      },
+      "continueTest": "Weiter",
+      "delete": "Löschen",
+      "deleteError": {
+        "message": "Der Test konnte nicht gelöscht werden. Bitte versuchen Sie es später noch einmal.",
+        "title": "Löschung fehlgeschlagen"
+      },
       "description": "Hier können Sie Ihre Fortschritte und die von Ihnen durchgeführten Tests sehen. \nSie können auch Ihre Ergebnisse und die von Ihnen studierten Themen sehen. \nMachen Sie weiter so und viel Glück mit Ihrem Studium!",
+      "details": "Details zum Test",
+      "finishedTest": "Fertige",
       "generateTestTitle": "Test generieren",
+      "lastQuestion": "Letzte Frage",
+      "resumeTest": "Lebenslauf-Test",
+      "startTest": "Start",
+      "testDeleted": "Test Gelöscht",
+      "testDeletedMessage": "Der Test <b>{testName}</b> wurde erfolgreich gelöscht.",
       "tests": "{count, plural, =0 {Keine Tests} =1 {# Test} other {# Tests}}",
       "title": "Tests"
     },
@@ -384,6 +437,62 @@
       "colorScheme": "{colorScheme, select, light {Hell} dark {Dunkel} auto {Auto} other {Unbekannte}}",
       "label": "Farbschema umschalten"
     },
+    "Errors": {
+      "ALREADY_ANSWERED": {
+        "message": "Sie haben bereits eine Antwort auf diese Frage eingereicht. Sie können Ihre einmal abgegebene Antwort nicht mehr ändern.",
+        "title": "Bereits beantwortet"
+      },
+      "ALREADY_ENDED": {
+        "message": "Dieser Test wurde bereits abgeschlossen. Sie können keine Änderungen an einem abgeschlossenen Test vornehmen.",
+        "title": "Bereits abgeschlossener Test"
+      },
+      "ALREADY_STARTED": {
+        "message": "Dieser Test wurde bereits gestartet. Sie können mit dem laufenden Test fortfahren.",
+        "title": "Der Test hat bereits begonnen"
+      },
+      "INVALID_ANSWER_IDS": {
+        "message": "Eine oder mehrere der ausgewählten Antworten sind für diese Frage ungültig. Bitte wählen Sie nur gültige Antworten aus.",
+        "title": "Ungültige Antworten"
+      },
+      "INVALID_INPUT": {
+        "message": "Die eingegebenen Daten sind ungültig. Bitte überprüfen Sie Ihre Daten und versuchen Sie es erneut.",
+        "title": "Ungültige Eingabe"
+      },
+      "NOT_FOUND": {
+        "message": "Diese Ressource wurde nicht gefunden. Bitte versuchen Sie es später noch einmal oder überprüfen Sie Ihre Anfrage.",
+        "title": "Nicht gefunden"
+      },
+      "NOT_STARTED": {
+        "message": "Der Test wurde noch nicht gestartet. Sie müssen den Test erst starten, bevor Sie diese Aktion abschließen können.",
+        "title": "Test nicht gestartet"
+      },
+      "NO_QUESTIONS": {
+        "message": "Es wurden keine Fragen zu den ausgewählten Kriterien gefunden. Bitte versuchen Sie es erneut, nachdem Sie die Filter und Optionen für die Testerstellung geändert haben.",
+        "title": "Keine Fragen"
+      },
+      "QUESTION_NOT_FOUND": {
+        "message": "Die gewünschte Frage konnte in diesem Test nicht gefunden werden. Bitte versuchen Sie es erneut oder kontaktieren Sie den Support.",
+        "title": "Frage nicht gefunden"
+      },
+      "TIME_LIMIT_EXCEEDED": {
+        "message": "Das Zeitlimit für diesen Test wurde überschritten. Ihr Test wurde automatisch abgeschickt.",
+        "title": "Fristüberschreitung"
+      },
+      "UNAUTHENTICATED": {
+        "message": "Sie sind derzeit nicht authentifiziert. Um fortzufahren, müssen Sie in Ihrem Konto angemeldet sein.",
+        "title": "Unbestätigte"
+      },
+      "UNAUTHORIZED": {
+        "message": "Ihr Konto ist nicht berechtigt, auf diese Ressource zuzugreifen oder diese Aktion auszuführen. Bitte versuchen Sie es später noch einmal.",
+        "title": "Zugang verweigert"
+      },
+      "UNKNOWN": {
+        "message": "Es ist ein unbekannter Fehler aufgetreten. Bitte versuchen Sie es später noch einmal oder stellen Sie sicher, dass Ihre Anfrage gültig ist.",
+        "messageCode": "Es ist ein unbekannter Fehler aufgetreten. Bitte versuchen Sie es später noch einmal oder stellen Sie sicher, dass Ihre Anfrage gültig ist. Fehlercode: {code}.",
+        "title": "Unbekannter Fehler"
+      },
+      "goBack": "Zurückgehen"
+    },
     "LocaleSwitcher": {
       "label": "Sprache ändern",
       "locale": "{locale, select, ro {🇷🇴 Rumänisch} en {🇬🇧 Englisch} fr {🇫🇷 Französisch} de {🇩🇪 Deutsch} other {Unbekannte}}",
@@ -439,7 +548,17 @@
       "romanian": "Rumänisch",
       "spanish": "Spanisch"
     },
+    "availableQuestions": "{Zahl, Plural, =0 {keine Fragen} =1 {eine Frage} andere {# Fragen}}",
+    "cancel": "Abbrechen",
     "category": "{category, select, admission {Universitätsaufnahme} bac {Abitur} other {Unbekannt}}",
+    "confirm": "Bestätigen Sie",
+    "confirmDeleteTest": {
+      "message": "Sind Sie sicher, dass Sie diesen Test löschen wollen: <b>{Testname}</b>? Diese Aktion kann nicht rückgängig gemacht werden.",
+      "title": "Test löschen"
+    },
+    "continueTest": "Weiter",
+    "delete": "Löschen",
+    "details": "Testdetails",
     "lastQuestion": "Letzte Frage",
     "resumeTest": "Test fortsetzen"
   },

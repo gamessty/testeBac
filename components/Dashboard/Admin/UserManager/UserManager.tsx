@@ -13,7 +13,6 @@ import getManyUser from "../../../../actions/PrismaFunctions/getManyUser";
 import putUser from "../../../../actions/PrismaFunctions/putUser";
 import { chkP, getManyRoleData, getManyRoleFromValues, getPrismaRolesUpdateData } from "../../../../utils";
 import AvatarFallback from "../../../AvatarFallback/AvatarFallback";
-import UserCard from "../../../Cards/UserCard/UserCard";
 import UserCardList from "@/components/UserCardList/UserCardList";
 
 export default function UserManager({ session, style }: Readonly<{ session: Session | null | undefined } & ContainerProps>) {
@@ -54,7 +53,6 @@ export default function UserManager({ session, style }: Readonly<{ session: Sess
                 setRoles(fetchedRoles);
                 setSearchResults(fetchedUsers);
             }
-
         }
         fetchData();
     }, []);

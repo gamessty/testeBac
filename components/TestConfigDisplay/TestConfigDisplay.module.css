@@ -1,0 +1,56 @@
+.container {
+  margin-bottom: var(--mantine-spacing-md);
+}
+
+.configItems {
+  display: flex;
+  flex-direction: column;
+  gap: var(--mantine-spacing-sm);
+}
+
+.switch {
+  display: flex;
+  align-items: center;
+  gap: var(--mantine-spacing-sm);
+  justify-content: space-between;
+  padding: var(--mantine-spacing-sm);
+  border-radius: var(--mantine-radius-sm);
+  background-color: var(--mantine-color-gray-0);
+  opacity: 0.8;
+
+  @mixin dark {
+    background-color: var(--mantine-color-dark-7);
+  }
+}
+
+.numberInput {
+  padding: var(--mantine-spacing-sm);
+  border-radius: var(--mantine-radius-sm);
+  background-color: var(--mantine-color-gray-0);
+  opacity: 0.8;
+
+  @mixin dark {
+    background-color: var(--mantine-color-dark-7);
+  }
+}
+
+.chevron {
+    rotate: 0deg;
+    transition: rotate 0.2s ease-in-out;
+}
+
+.header {
+    margin-bottom: 0px;
+    transition: margin-bottom 0.2s ease-in-out;
+}
+
+.container[data-rotate="true"] {
+
+    .header {
+        margin-bottom: var(--mantine-spacing-sm);
+    }
+
+    .chevron {
+        rotate: 180deg;
+    }
+} 

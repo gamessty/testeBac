@@ -248,6 +248,7 @@
             }
           },
           "distributionInfoMessage": "Puteți selecta numărul individual de întrebări de mai jos",
+          "testConfigTitle": "Configurație test",
           "type": "{id, select, simple {Simplu} mockExam {Simulare} complex {Avansat} other {Necunoscut}}"
         },
         "updatedAt": "Actualizat la:"

@@ -16,6 +16,8 @@ import { usePathname, useRouter } from "@/i18n/routing";
 import { IconTrash } from "@tabler/icons-react";
 import { modals } from "@mantine/modals";
 import deleteUserTest from "@/actions/PrismaFunctions/test/deleteUserTest";
+import TestConfigDisplay from "../TestConfigDisplay/TestConfigDisplay";
+import { JsonValue } from "next-auth/adapters";
 
 interface TestDisplayProps {
     testDetails?: UserActiveTest;
@@ -120,7 +122,7 @@ export default function TestDisplay({ testDetails }: Readonly<TestDisplayProps>)
 
     return (
         <Container className={classes.testDisplay}>
-            <LoadingOverlay visible={loading || deleting} loaderProps={{ type: "dots", color: 'teal' }} zIndex={1000}/>
+            <LoadingOverlay visible={loading || deleting} loaderProps={{ type: "dots", color: 'teal' }} overlayProps={{ color: 'var(--mantine-color-body)' }} zIndex={1000}/>
             <Box className={classes.testDetails}>
                 <ScrollArea
                     h={"100%"}
@@ -147,6 +149,15 @@ export default function TestDisplay({ testDetails }: Readonly<TestDisplayProps>)
                         labels={{ filled: { tooltip: 'Solved' }, rest: { root: testDetails ? testDetails.questions.length - testDetails.selectedAnswers.length + " left" : undefined } }}
                         value={testDetails ? testDetails.selectedAnswers.length / testDetails.questions.length * 100 : undefined}
                     />
+                    
+                    {/* Add the test configuration display component */}
+                    {testDetails && (
+                        <TestConfigDisplay 
+                            testType={testDetails.testType} 
+                            configurations={testDetails.configurations as JsonValue} 
+                        />
+                    )}
+                    
                     <Card shadow="sm" className={classes.container} withBorder p="md" mt="md">
                         {(testDetails?.subjects ?? []).filter(s => s.type == 'QUESTION').length > 0 && (
                             <Stack>

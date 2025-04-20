@@ -248,6 +248,7 @@
             }
           },
           "distributionInfoMessage": "Vous pouvez sélectionner le nombre individuel de questions ci-dessous",
+          "testConfigTitle": "Configuration du Test",
           "type": "{id, select, simple {Simple} mockExam {Examen Blanc} complex {Complexe} other {Inconnu}}"
         },
         "updatedAt": "Mise à jour à:"

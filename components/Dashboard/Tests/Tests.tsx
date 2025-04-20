@@ -1,6 +1,6 @@
+import classes from './Tests.module.css';
 import { UserActiveTest } from "@/auth";
-import { Center, Container, ContainerProps, Divider, Flex, Stack, Text, Title } from "@mantine/core";
-import { Session } from "next-auth";
+import { Center, Container, Divider, Flex, Stack, Text, Title } from "@mantine/core";
 import { useTranslations } from "next-intl";
 import { Fragment } from "react";
 import CreateTestCard from "../../Cards/CreateTestCard/CreateTestCard";
@@ -34,11 +34,11 @@ export default function Tests({ session, settab, style }: Readonly<ITabModulePro
                         } />
                         <Divider />
                         {
-                            session.user.activeTests?.map((test) => {
+                            session.user.activeTests?.toSorted((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()).map((test) => {
                                 return (
                                     <Fragment key={test.id}>
                                         <TestCard design="compact" mih="100%" category={test.folder?.category} subject={test.subjects?.map(sj => sj.name?.toLowerCase())} progress={test.selectedAnswers.length / test.questions.length * 100} href={`/app/test/${test.id}`} lastQuestion={getLastQuestionText(test)}/>
-                                        <Divider variant="dashed" />
+                                        <Divider variant="dashed" className={classes['divider']} />
                                     </Fragment>
                                 )
                             })

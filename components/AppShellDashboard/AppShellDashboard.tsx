@@ -89,7 +89,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
             padding={0}
             data-disable-navigation={settings.tab.disableNavigation ?? false}
         >
-            <LoadingOverlay visible={settings.tabLoading} zIndex={1101} loaderProps={{ color: 'teal', type: 'dots' }}/>
+            <LoadingOverlay visible={settings.tabLoading} zIndex={1101} loaderProps={{ color: 'teal', type: 'dots' }} />
             <AppShell.Header>
                 <Group h="100%" px="md" justify="space-between">
                     <Text variant="gradient" fw={700} size="xl" gradient={{ from: 'pink', to: 'yellow' }}>
@@ -264,7 +264,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                 </Flex>
             </AppShell.Footer>
             <Affix position={affixPosition} zIndex={1000}>
-                <Transition transition="slide-up" mounted={scrollPosition.y > 50}>
+                <Transition transition="slide-up" mounted={scrollPosition.y > 200}>
                     {(transitionStyles) => (
                         <Button
                             className={classes["back-to-top"]}

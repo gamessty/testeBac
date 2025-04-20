@@ -12,8 +12,6 @@ const userTestWithQuestions = Prisma.validator<Prisma.UserTestDefaultArgs>()({
 
 type UserTestWithQuestions = Prisma.UserTestGetPayload<typeof userTestWithQuestions>
 
-
-
 export default async function sendAnswer({ userTestId, questionId, answerIds }: { userTestId: string, questionId: string, answerIds: string[] }): Promise<UserTestWithQuestions | { message: string, userTest?: UserTest }> {
     const session = await auth();
     if (!session?.user) {
@@ -82,6 +80,13 @@ export default async function sendAnswer({ userTestId, questionId, answerIds }: 
         }
     }
 
+    // Calculate the score for the question based on the selected answers
+    const score = calculateQuestionScore(question, answerIds);
+
+    // Get current score or initialize it
+    const currentScore = userTest.score || 0;
+    const newScore = currentScore + score;
+
     let updatedUserTest = await prisma.userTest.update({
         where: {
             id: String(userTestId)
@@ -93,13 +98,74 @@ export default async function sendAnswer({ userTestId, questionId, answerIds }: 
                     answerIds: answerIds
                 }
             },
-            finishedAt: new Date()
+            score: newScore,
         },
         include: userTestWithQuestions.include
     })
 
     // Return the updated user test
     return updatedUserTest ?? { message: "NOT_FOUND" };
+}
+
+/**
+ * Calculate the score for a question based on user's answers
+ * Scoring is based on the number of concordances between correct answers and user selections
+ * 
+ * @param question The question object
+ * @param selectedAnswerIds The answer IDs selected by the user
+ * @returns The calculated score
+ */
+function calculateQuestionScore(question: any, selectedAnswerIds: string[]): number {
+    // Total possible points is equal to the number of options
+    const totalOptions = question.options.length;
+    
+    // Get correct answer IDs from the question
+    const correctAnswerIds = question.options
+        .filter((option: any) => option.isCorrect)
+        .map((option: any) => option.id);
+    
+    // Single answer question
+    if (correctAnswerIds.length === 1) {
+        // If user selected the correct answer, award full points
+        return selectedAnswerIds.includes(correctAnswerIds[0]) ? totalOptions : 0;
+    }
+    
+    // Multiple answer question
+    let concordances = 0;
+    
+    // Count correct selections (user selected a correct answer)
+    for (const answerId of selectedAnswerIds) {
+        if (correctAnswerIds.includes(answerId)) {
+            concordances++;
+        }
+    }
+    
+    // Count correct non-selections (user correctly did not select a wrong answer)
+    for (const option of question.options) {
+        if (!option.isCorrect && !selectedAnswerIds.includes(option.id)) {
+            concordances++;
+        }
+    }
+    
+    return concordances;
+}
+
+/**
+ * Check if all questions in the test have been answered
+ * 
+ * @param userTest The user test object
+ * @param currentQuestionId The ID of the question being answered
+ * @returns Boolean indicating if all questions have been answered
+ */
+function isAllQuestionsAnswered(userTest: UserTestWithQuestions, currentQuestionId: string): boolean {
+    // Count existing answers
+    const answeredCount = userTest.selectedAnswers ? userTest.selectedAnswers.length : 0;
+    
+    // Add 1 for the current answer being submitted
+    const totalAnswered = answeredCount + 1;
+    
+    // Check if this equals the total number of questions
+    return totalAnswered >= userTest.questions.length;
 }
 
 function isValidDate(date: Date | null): boolean {

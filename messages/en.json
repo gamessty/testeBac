@@ -248,6 +248,7 @@
             }
           },
           "distributionInfoMessage": "You can select the individual number of questions below",
+          "testConfigTitle": "Test Configuration",
           "type": "{id, select, simple {Simple} mockExam {Mock Exam} complex {Complex} other {Unknown}}"
         },
         "updatedAt": "Updated at:"

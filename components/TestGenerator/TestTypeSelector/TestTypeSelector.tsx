@@ -193,7 +193,7 @@ export default function TestTypeSelector({
                                                         undefined}
                                                     label={t(`Configurations.labels.${config.id}`) ?? config.label}
                                                     min={config.min}
-                                                    suffix=" min"
+                                                    suffix={config.suffix}
                                                     max={maxQuestions}
                                                     onChange={(value) => {
                                                         if (value === '' || value === null) {

@@ -115,12 +115,12 @@
       "close": "Schließen",
       "confirm": {
         "create": {
-          "message": "Sind Sie sicher, dass Sie die Rolle {Name} erstellen möchten?",
+          "message": "Sind Sie sicher, dass Sie die Rolle {name} erstellen möchten?",
           "title": "Rolle erstellen"
         },
         "delete": {
           "defaultName": "unbekannt",
-          "message": "Sind Sie sicher, dass Sie die Rolle {Name} löschen möchten? \nDiese Aktion kann nicht rückgängig gemacht werden.",
+          "message": "Sind Sie sicher, dass Sie die Rolle {name} löschen möchten? \nDiese Aktion kann nicht rückgängig gemacht werden.",
           "title": "Rolle löschen"
         }
       },
@@ -248,7 +248,7 @@
             }
           },
           "distributionInfoMessage": "Sie können die individuelle Anzahl der Fragen unten auswählen",
-          "type": "{id, select, simple {einfach} mockExam {Mock Prüfung} complex {Komplex} other {unbekannte}}"
+          "type": "{id, select, simple {Einfach} mockExam {Mock Prüfung} complex {Komplex} other {Unbekannte}}"
         },
         "updatedAt": "Aktualisiert bei:"
       },
@@ -272,7 +272,7 @@
         "message": "Sind Sie sicher, dass Sie die Testkonfiguration verlassen möchten? \nAlle Fortschritte werden verloren gehen.",
         "title": "Testkonfiguration verlassen"
       },
-      "questionsNumber": "{count, plural, =0 {keine Fragen} =1 {eine Frage} andere {# Fragen}}",
+      "questionsNumber": "{count, plural, =0 {keine Fragen} =1 {eine Frage} other {# Fragen}}",
       "steps": {
         "1": {
           "description": "Wählen Sie die Testart",
@@ -326,7 +326,7 @@
       "category": "{Kategorie, Auswahl, Zulassung {Hochschulzulassung} bac {Baccalaureat} andere {Unbekannt}}",
       "confirm": "Bestätigen Sie",
       "confirmDeleteTest": {
-        "message": "Sind Sie sicher, dass Sie diesen Test löschen wollen: <b>{Testname}</b>? Diese Aktion kann nicht rückgängig gemacht werden.",
+        "message": "Sind Sie sicher, dass Sie diesen Test löschen wollen: <b>{testName}</b>? Diese Aktion kann nicht rückgängig gemacht werden.",
         "title": "Test löschen"
       },
       "continueTest": "Weiter",
@@ -553,7 +553,7 @@
     "category": "{category, select, admission {Universitätsaufnahme} bac {Abitur} other {Unbekannt}}",
     "confirm": "Bestätigen Sie",
     "confirmDeleteTest": {
-      "message": "Sind Sie sicher, dass Sie diesen Test löschen wollen: <b>{Testname}</b>? Diese Aktion kann nicht rückgängig gemacht werden.",
+      "message": "Sind Sie sicher, dass Sie diesen Test löschen wollen: <b>{testName}</b>? Diese Aktion kann nicht rückgängig gemacht werden.",
       "title": "Test löschen"
     },
     "continueTest": "Weiter",

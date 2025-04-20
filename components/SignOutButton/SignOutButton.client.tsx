@@ -6,10 +6,12 @@ import { useTranslations } from "next-intl";
 import { useState } from "react";
 
 export default function SignOutButtonClient({ session, ...props }: Readonly<ButtonProps & { session?: Session | null }>) {
-    const t =  useTranslations('Authentication');
+    const t = useTranslations('Authentication');
     const [loading, setLoading] = useState(false);
+    console.log('stpsddsrt')
     if (!session?.user) return null
+    console.log('stpid')
     return (
-            <Button {...props} loading={loading} onClick={() => { setLoading(true); signOut() } }>{t('signOut')}</Button>
+        <Button {...props} loading={loading} onClick={() => { setLoading(true); signOut() }}>{t('signOut')}</Button>
     )
 }

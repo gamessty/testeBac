@@ -321,12 +321,12 @@
         "romanian": "Roumain",
         "spanish": "Espagnol"
       },
-      "availableQuestions": "{compte, pluriel, =0 {pas de questions} =1 {une question} autre {# questions}}",
+      "availableQuestions": "{count, plural, =0 {pas de questions} =1 {une question} other {# questions}}",
       "cancel": "Annuler",
       "category": "{catégorie, choisir, admission {Admission à l'université} bac {Baccalauréat} autre {Inconnu}}}",
       "confirm": "Confirmer",
       "confirmDeleteTest": {
-        "message": "Êtes-vous sûr de vouloir supprimer ce test : <b>{nom du test}</b> ? Cette action ne peut pas être annulée.",
+        "message": "Êtes-vous sûr de vouloir supprimer ce test : <b>{testName}</b> ? Cette action ne peut pas être annulée.",
         "title": "Supprimer le test"
       },
       "continueTest": "Continuer",
@@ -343,7 +343,7 @@
       "resumeTest": "Test de CV",
       "startTest": "Démarrage",
       "testDeleted": "Test supprimé",
-      "testDeletedMessage": "Le test <b>{nom du test}</b> a été supprimé avec succès.",
+      "testDeletedMessage": "Le test <b>{testName}</b> a été supprimé avec succès.",
       "tests": "{count, plural, =0 {Pas de tests} =1 {# tests} other {# tests}}",
       "title": "Tests"
     },
@@ -548,12 +548,12 @@
       "romanian": "Roumain",
       "spanish": "Espagnol"
     },
-    "availableQuestions": "{compte, pluriel, =0 {pas de questions} =1 {une question} autre {# questions}}",
+    "availableQuestions": "{count, plural, =0 {pas de questions} =1 {une question} other {# questions}}",
     "cancel": "Annuler",
     "category": "{category, select, admission {Admission à l'université} bac {Baccalauréat} other {Inconnu}}",
     "confirm": "Confirmer",
     "confirmDeleteTest": {
-      "message": "Êtes-vous sûr de vouloir supprimer ce test : <b>{nom du test}</b> ? Cette action ne peut pas être annulée.",
+      "message": "Êtes-vous sûr de vouloir supprimer ce test : <b>{testName}</b> ? Cette action ne peut pas être annulée.",
       "title": "Supprimer le test"
     },
     "continueTest": "Continuer",
@@ -564,7 +564,7 @@
     "resumeTest": "Reprendre le test",
     "startTest": "Démarrage",
     "testDeleted": "Test supprimé",
-    "testDeletedMessage": "Le test <b>{nom du test}</b> a été supprimé avec succès."
+    "testDeletedMessage": "Le test <b>{testName}</b> a été supprimé avec succès."
   },
   "createSampleData": "Créer des exemples de données",
   "demo-components": "Composants de démonstration",

@@ -65,8 +65,10 @@ export default function ReturnButton({ justIcon, cancelLoading, confirmModal, hi
                 onClick={handleRouterBack}
                 display={path.split("/").at(-1) == hideFrom ? "none" : undefined}
                 title={t('return')}
+                variant="light"
                 loading={loading}
             >
+                <IconArrowBackUp />
             </ActionIcon>
         )
     }

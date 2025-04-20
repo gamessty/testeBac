@@ -68,6 +68,7 @@ export const authOptions: NextAuthConfig = {
   providers,
   pages: {
     signIn: "/signin",
+    signOut: "/signout",
     verifyRequest: "/verify-request",
   },
   callbacks: {

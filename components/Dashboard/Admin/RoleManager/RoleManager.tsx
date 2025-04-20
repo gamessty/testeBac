@@ -1,8 +1,7 @@
-import { Accordion, Affix, Badge, Blockquote, Button, Container, ContainerProps, Group, SimpleGrid, Text, Title } from "@mantine/core";
+import { Accordion, Affix, Badge, Blockquote, Button, Container, Group, SimpleGrid, Text, Title } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Role } from "@prisma/client";
 import { IconAlertTriangleFilled, IconUserPlus } from "@tabler/icons-react";
-import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import getManyRole from "../../../../actions/PrismaFunctions/getManyRole";
@@ -10,8 +9,9 @@ import { chkP, getInitialsColor } from "../../../../utils";
 import RoleCard from "../../../Cards/RoleCard/RoleCard";
 import NewRoleModal from "../../../NewRoleModal/NewRoleModal";
 import styles from './RoleManager.module.scss';
+import { ITabModuleProps } from "@/data";
 
-export default function RoleManager({ session, ...props }: Readonly<{ session: Session } & ContainerProps>) {
+export default function RoleManager({ session, style }: Readonly<ITabModuleProps>) {
     const t = useTranslations('Dashboard.RoleManager');
     const [opened, { open, close }] = useDisclosure(false);
     const [roles, setRoles] = useState<Role[]>([]);
@@ -40,7 +40,7 @@ export default function RoleManager({ session, ...props }: Readonly<{ session: S
     );
 
     return (
-        <Container fluid p={{ base: 30, sm: 35 }} pt={{ base: 20, sm: 25 }} {...props}>
+        <Container fluid p={{ base: 30, sm: 35 }} pt={{ base: 20, sm: 25 }} style={style}>
             <Title order={1} className={styles.title}>
                 {t('title')}
                 <Text className={styles.text}>

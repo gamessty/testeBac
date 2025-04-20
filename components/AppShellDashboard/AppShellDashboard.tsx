@@ -55,9 +55,6 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
     const [scrollPosition, setScrollPosition] = useState({ x: 0, y: 0 });
     const viewport = useRef<HTMLDivElement>(null);
 
-
-    const isMobile = useMediaQuery('(max-width: 768px)');
-
     useDidUpdate(() => {
         const tabName = searchParams.get('tab') ?? 'home';
         setSettings({ title: 'testeBac | ' + t('Navbar.' + tabName), tab: { tab: tabName, disableNavigation: tabsData.find((tab) => tab.tab == tabName)?.disableNavigation } });
@@ -90,6 +87,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
             header={{ height: 60 }}
             navbar={{ width: settings.tab.disableNavigation ? 0 : 300, breakpoint: 'sm', collapsed: { mobile: true } }}
             padding={0}
+            data-disable-navigation={settings.tab.disableNavigation ?? false}
         >
             <LoadingOverlay visible={settings.tabLoading} zIndex={1101} loaderProps={{ color: 'teal', type: 'dots' }}/>
             <AppShell.Header>
@@ -218,7 +216,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                             <Transition key={tab.tab + "_tabComponent"} transition="fade-right" timingFunction="ease" enterDelay={tab.disableNavigation ? 100 : 0} duration={tab.disableNavigation ? 800 : 300} mounted={settings.tab.tab == tab.tab} >
                                 {(transitionStyles) => (
                                     <>
-                                        {settings.tab.tab == tab.tab && tab.component && <tab.component session={session} settab={handleTabChange} triggerloading={(loadingStatus: boolean) => setSettings({ tabLoading: loadingStatus })} style={{ ...transitionStyles, ...{ maxWidth: settings.tab.disableNavigation || isMobile ? '100vw' : 'calc(100vw - var(--app-shell-navbar-width))' } } as React.CSSProperties} />}
+                                        {settings.tab.tab == tab.tab && tab.component && <tab.component session={session} settab={handleTabChange} triggerloading={(loadingStatus: boolean) => setSettings({ tabLoading: loadingStatus })} style={{ ...transitionStyles } as React.CSSProperties} />}
                                     </>
                                 )}
                             </Transition>
@@ -266,7 +264,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                 </Flex>
             </AppShell.Footer>
             <Affix position={affixPosition} zIndex={1000}>
-                <Transition transition="slide-up" mounted={scrollPosition.y > 15}>
+                <Transition transition="slide-up" mounted={scrollPosition.y > 50}>
                     {(transitionStyles) => (
                         <Button
                             className={classes["back-to-top"]}

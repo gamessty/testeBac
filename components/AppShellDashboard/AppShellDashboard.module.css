@@ -1,6 +1,18 @@
-.appShellScrollArea > div {
+.appShellScrollArea > div{
     height: 100%;
 }
+
+*[data-disable-navigation=true] .appShellScrollArea > div > * {
+    max-width: 100vw;
+}
+
+@media screen and (min-width: 768px) {
+    .appShellScrollArea > div > *{
+        max-width: calc(100vw - var(--app-shell-navbar-width));
+    }
+}
+
+
 .appShellScrollArea * {
     max-width: 100vw;
 }

@@ -69,7 +69,6 @@ export default function TestCard({ loading = false, category, subject, coverImag
                 close();
             }, 10000);
         }
-
     }
 
     useDidUpdate(() => {
@@ -83,7 +82,7 @@ export default function TestCard({ loading = false, category, subject, coverImag
         case 'compact':
             return (
                 <Card ref={ref} {...rest} onClick={handleClick} className={`${classes["test-card"]} ${classes["compact"]}`} component={Link} href={href ?? ''} w={"100%"} shadow="lg" radius="sm" >
-                  <LoadingOverlay visible={loading || visibleLoading} zIndex={1000} loaderProps={{ color: 'grey', type: 'dots' }} overlayProps={{ radius: "sm", blur: 2 }} />
+                  <LoadingOverlay visible={loading || visibleLoading} zIndex={1000} loaderProps={{ color: 'teal', type: 'dots' }} />
                     <Stack justify="space-between" h="100%" w="100%">
                         <Box w="100%">
                             {coverImage && coverImage !== 'none' && <Card.Section>

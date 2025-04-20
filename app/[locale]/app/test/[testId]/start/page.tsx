@@ -36,8 +36,6 @@ export default async function TestStart({
         <Container className={classes.container}>
             <ErrorOverlay error={error} />
             <Text>Test Start</Text>
-            <Text>Test ID: {testId}</Text>
-            <Text>Test Details: {JSON.stringify(testDetails, null, 2)}</Text>
         </Container>
     );
 }

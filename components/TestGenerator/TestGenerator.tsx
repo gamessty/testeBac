@@ -1,5 +1,5 @@
 "use client";
-import { Affix, Blockquote, Button, Center, Container, em, FocusTrap, Group, Loader, Stack, Stepper, Text } from "@mantine/core";
+import { Affix, Blockquote, Button, Center, Container, em, FocusTrap, Group, Loader, LoadingOverlay, Stack, Stepper, Text } from "@mantine/core";
 import { useDidUpdate, useDisclosure, useMediaQuery } from "@mantine/hooks";
 import { Chapter, Folder, Subject } from "@prisma/client";
 import { IconAlertTriangleFilled, IconChevronRight } from "@tabler/icons-react";
@@ -42,6 +42,7 @@ export default function TestGenerator({ style, triggerloading }: Readonly<ITabMo
 
     const [configurations, setConfigurations] = useState<TestConfiguration>();
     const [allowedStep, setAllowedStep] = useState<number>(0);
+    const [loading, setLoading] = useState(false);
     const [categories, setCategories] = useState<string[]>([]);
     const [folder, setFolder] = useState<Folder[]>([]);
     const [subjects, setSubjects] = useState<Subject[]>([]);
@@ -236,6 +237,7 @@ export default function TestGenerator({ style, triggerloading }: Readonly<ITabMo
     const handleGenerateTest = async () => {
         if (configurations) {
             triggerloading(true);
+            setLoading(true);
             // Calculate total selected questions
             const totalSelectedQuestions = Object.values(questionDistribution).reduce((sum, count) => sum + count, 0);
             
@@ -264,6 +266,7 @@ export default function TestGenerator({ style, triggerloading }: Readonly<ITabMo
                     router.push(`/app/test/${result.testId}`);
                 } else {
                     triggerloading(false);
+                    setLoading(false);
                     notifications.show({
                         color: 'red',
                         title: tError.has(`${result.message}.title`) ? tError(`${result.message}.title`) : tError('UNKNOWN.title'),
@@ -432,6 +435,7 @@ export default function TestGenerator({ style, triggerloading }: Readonly<ITabMo
                 size="xs"
                 className={classes["return-button"]}
             />
+            <LoadingOverlay visible={loading} zIndex={1100} loaderProps={{ type: 'dots', color: "teal" }}/>
             {
                 error && (
                     <Blockquote className={classes.blockquote} color="red" cite={"– " + t('errors.fetch.title', { error })} icon={<IconAlertTriangleFilled />}>
@@ -467,7 +471,7 @@ export default function TestGenerator({ style, triggerloading }: Readonly<ITabMo
                                     !categories || categories.length === 0 &&
                                     <Container fluid>
                                         <Center className={classes["loader"]}>
-                                            <Loader color="grey" type="dots" />
+                                            <Loader color="teal" type="dots" />
                                         </Center>
                                     </Container>
                                 }

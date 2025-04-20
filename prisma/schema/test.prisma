@@ -63,10 +63,8 @@ model UserTest {
     questions       UserTestOnQuestion[]
     selectedAnswers SelectedAnswer[]
     testType        TestType             @default(SIMPLE)
-    finished        Boolean              @default(false)
-    startedAt       DateTime             @default(now())
+    startedAt       DateTime?
     finishedAt      DateTime?
-    timeLeft        Int?
     configurations  Json                 @db.Json
 
     user User @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -81,8 +79,8 @@ model UserTestOnQuestion {
     id         String   @id @default(auto()) @map("_id") @db.ObjectId
     userTestId String   @db.ObjectId
     questionId String   @db.ObjectId
-    userTest   UserTest @relation(fields: [userTestId], references: [id])
-    question   Question @relation(fields: [questionId], references: [id])
+    userTest   UserTest @relation(fields: [userTestId], references: [id], onDelete: Cascade)
+    question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
 
     @@unique([userTestId, questionId], name: "userTest_question_unique")
     @@map("userTestOnQuestion")
@@ -100,6 +98,7 @@ enum SubjectType {
 
 type SelectedAnswer {
     // NOT YET IMPLEMENTED TBD
-    answer     String[] // the uuid or uuids of the option(s) selected by the user
+    answerIds  String[] // the uuid or uuids of the option(s) selected by the user
     questionId String   @db.ObjectId
+    selectedAt DateTime @default(now())
 }

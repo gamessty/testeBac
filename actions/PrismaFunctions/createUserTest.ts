@@ -145,8 +145,8 @@ export async function generateTest(config: TestConfiguration): Promise<UnitedTes
             data: {
                 userId: session.user.id,
                 folderId: config.folderId ?? "",
-                subjectId: [...(config.subjectIds ?? []), ...(config.subjectQuestionIds ?? [])],
-                chapterId: config.chapterIds ?? [],
+                subjectId: Array.from(new Set([...(config.subjectIds ?? []), ...(config.subjectQuestionIds ?? [])])),
+                chapterId: Array.from(new Set(config.chapterIds ?? [])),
                 testType: TestType[config.testType?.toUpperCase() as TestType] ?? TestType.SIMPLE,
                 configurations: config.configurations ?? {},
                 questions: { create: selected.map(q => ({ question: { connect: { id: q.id } } })) }

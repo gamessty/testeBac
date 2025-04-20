@@ -18,7 +18,7 @@
     "@mantine/modals": "^7.17.3",
     "@mantine/notifications": "^7.17.3",
     "@next/bundle-analyzer": "^15.2.4",
-    "@prisma/client": "^6.5.0",
+    "@prisma/client": "^6.6.0",
     "@react-email/components": "0.0.36",
     "@tabler/icons-react": "^3.31.0",
     "cookies-next": "^5.1.0",
@@ -48,7 +48,7 @@
     "postcss": "^8.5.3",
     "postcss-preset-mantine": "^1.17.0",
     "postcss-simple-vars": "^7.0.1",
-    "prisma": "^6.5.0",
+    "prisma": "^6.6.0",
     "react-email": "^4.0.4",
     "sass-embedded": "^1.86.3",
     "typescript": "5.8.3"

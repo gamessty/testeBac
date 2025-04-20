@@ -1,5 +1,5 @@
 'use client';
-import { ActionIcon, Affix, AppShell, Badge, Button, Divider, Flex, Grid, Group, Menu, ScrollArea, Stack, Text, Tooltip, Transition, useMatches } from "@mantine/core";
+import { ActionIcon, Affix, AppShell, Badge, Button, Divider, Flex, Grid, Group, LoadingOverlay, Menu, ScrollArea, Stack, Text, Tooltip, Transition, useMatches } from "@mantine/core";
 import { useDidUpdate, useDocumentTitle, useMediaQuery, useSetState } from "@mantine/hooks";
 import { IconArrowUp, IconChecklist, IconFile, IconGraph, IconHome, IconLogout, IconSettingsCog, IconUserPlus, IconUsers } from "@tabler/icons-react";
 import { Session } from "next-auth";
@@ -91,6 +91,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
             navbar={{ width: settings.tab.disableNavigation ? 0 : 300, breakpoint: 'sm', collapsed: { mobile: true } }}
             padding={0}
         >
+            <LoadingOverlay visible={settings.tabLoading} zIndex={1101} loaderProps={{ color: 'teal', type: 'dots' }}/>
             <AppShell.Header>
                 <Group h="100%" px="md" justify="space-between">
                     <Text variant="gradient" fw={700} size="xl" gradient={{ from: 'pink', to: 'yellow' }}>

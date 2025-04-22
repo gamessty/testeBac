@@ -2,15 +2,11 @@
 
 import { auth, UserActiveTest } from "../../../../auth";
 import { prisma } from "../../../../lib/prisma";
-import { Prisma, UserTest } from "@prisma/client";
+import { Prisma, Question, UserTest } from "@prisma/client";
 import { chkP } from "../../../../utils";
 import { JsonObject } from "next-auth/adapters";
 
-const userTestWithQuestions = Prisma.validator<Prisma.UserTestDefaultArgs>()({
-    include: { questions: { include: { question: true } } }
-})
-
-type UserTestWithQuestions = Prisma.UserTestGetPayload<typeof userTestWithQuestions>
+interface UserTestWithQuestions extends Omit<UserActiveTest, "folder" | "chapters" | "subjects"> {}
 
 export default async function sendAnswer({ userTestId, questionId, answerIds }: { userTestId: string, questionId: string, answerIds: string[] }): Promise<UserTestWithQuestions | { message: string, userTest?: UserTest }> {
     const session = await auth();
@@ -100,11 +96,16 @@ export default async function sendAnswer({ userTestId, questionId, answerIds }: 
             },
             score: newScore,
         },
-        include: userTestWithQuestions.include
+        include: { questions: { include: { question: true } } }
     })
 
     // Return the updated user test
-    return updatedUserTest ?? { message: "NOT_FOUND" };
+
+    if(!updatedUserTest) {
+        return { message: "NOT_FOUND" };
+    }
+    
+    return { ...updatedUserTest, questions: updatedUserTest.questions.map(q => q.question) };
 }
 
 /**
@@ -115,7 +116,7 @@ export default async function sendAnswer({ userTestId, questionId, answerIds }: 
  * @param selectedAnswerIds The answer IDs selected by the user
  * @returns The calculated score
  */
-function calculateQuestionScore(question: any, selectedAnswerIds: string[]): number {
+function calculateQuestionScore(question: Question, selectedAnswerIds: string[]): number {
     // Total possible points is equal to the number of options
     const totalOptions = question.options.length;
     
@@ -140,7 +141,8 @@ function calculateQuestionScore(question: any, selectedAnswerIds: string[]): num
         }
     }
     
-    // Count correct non-selections (user correctly did not select a wrong answer)
+    // Count correct non-selections (user correctly did not select an incorrect option)
+    // Note: Correct answers that weren't selected would be "missed" - opportunities the user missed
     for (const option of question.options) {
         if (!option.isCorrect && !selectedAnswerIds.includes(option.id)) {
             concordances++;

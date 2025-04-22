@@ -346,7 +346,21 @@
       "testDeleted": "Test eliminat",
       "testDeletedMessage": "Testul <b>{testName}</b> a fost șters cu succes.",
       "tests": "{count, plural, =0 {Niciun test} =1 {# test} other {# teste}}",
-      "title": "Teste"
+      "title": "Teste",
+      "question": "Întrebare",
+      "answered": "Răspuns",
+      "previous": "Înapoi",
+      "next": "Înainte",
+      "finishTest": "Finalizează testul",
+      "firstUnanswered": "Prima întrebare fără răspuns",
+      "submitAnswer": "Trimite răspunsul",
+      "noQuestions": "Nu s-au găsit întrebări în acest test",
+      "submitConfirmation": {
+        "title": "Trimite testul",
+        "message": "Nu ai răspuns la toate întrebările. Ești sigur că vrei să trimiți testul?",
+        "goToUnanswered": "Mergi la întrebările fără răspuns",
+        "submit": "Trimite testul oricum"
+      }
     },
     "UserManager": {
       "authorized": "Autorizat",

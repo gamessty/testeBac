@@ -346,7 +346,21 @@
       "testDeleted": "Test Gelöscht",
       "testDeletedMessage": "Der Test <b>{testName}</b> wurde erfolgreich gelöscht.",
       "tests": "{count, plural, =0 {Keine Tests} =1 {# Test} other {# Tests}}",
-      "title": "Tests"
+      "title": "Tests",
+      "question": "Frage",
+      "answered": "Beantwortet",
+      "previous": "Zurück",
+      "next": "Weiter",
+      "finishTest": "Test beenden",
+      "firstUnanswered": "Erste unbeantwortete Frage",
+      "submitAnswer": "Antwort einreichen",
+      "noQuestions": "Keine Fragen in diesem Test gefunden",
+      "submitConfirmation": {
+        "title": "Test einreichen",
+        "message": "Sie haben noch nicht alle Fragen beantwortet. Sind Sie sicher, dass Sie den Test einreichen möchten?",
+        "goToUnanswered": "Zu unbeantworteten Fragen gehen",
+        "submit": "Test trotzdem einreichen"
+      }
     },
     "UserManager": {
       "authorized": "Autorisiert",

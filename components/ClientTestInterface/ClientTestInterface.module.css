@@ -1,0 +1,37 @@
+.container {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: calc(var(--mantine-spacing-xl) * 1.5);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.header {
+  padding: var(--mantine-spacing-md);
+}
+
+.questionCard {
+  min-height: 300px;
+  flex-grow: 1;
+}
+
+.controls {
+  position: sticky;
+  bottom: 0;
+  padding: var(--mantine-spacing-md);
+  background-color: var(--mantine-color-body);
+  border-top: 1px solid var(--mantine-color-gray-2);
+  z-index: 10;
+  margin-top: auto;
+
+  @mixin dark {
+    background-color: var(--mantine-color-dark-7);
+    border-top-color: var(--mantine-color-dark-4);
+  }
+}
+
+.timerWarning {
+  color: var(--mantine-color-red-6);
+  font-weight: 600;
+}

@@ -133,7 +133,7 @@ export default function TestDisplay({ testDetails }: Readonly<TestDisplayProps>)
                             {t('details')}
                         </Title>
                         <ActionIcon variant="subtle" size="lg" classNames={{ icon: classes.deleteIcon }} onClick={openModal}>
-                            <IconTrash size={24} />
+                            <IconTrash size={28} />
                         </ActionIcon>
                     </div>
                     <Title size="h1" order={2} className={classes.testTitle} >

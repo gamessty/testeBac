@@ -6,23 +6,52 @@ import startUserTest from "@/actions/PrismaFunctions/test/start/startUserTest";
 import endUserTest from "@/actions/PrismaFunctions/test/start/endUserTest";
 import resumeUserTest from "@/actions/PrismaFunctions/test/start/resumeUserTest";
 import sendAnswer from "@/actions/PrismaFunctions/test/start/sendAnswer";
-import { JsonObject } from "next-auth/adapters";
+import { JsonObject, JsonValue } from "next-auth/adapters";
+
+// Full implementation of Question model with all properties
+interface Code {
+  language: string[];
+  code: string;
+}
+
+interface Localization {
+  locale: string;
+  text: string;
+}
+
+interface AnswerIndicator {
+  code: Code[];
+  markdown?: string | null;
+}
+
+interface AdditionalData {
+  image?: string | null;
+  code: Code[];
+  explanation?: AnswerIndicator | null;
+  localization: Localization[];
+}
+
+interface Option {
+  id: string;
+  option: string;
+  image?: string | null;
+  code: Code[];
+  isCorrect: boolean;
+  localization: Localization[];
+}
 
 interface Question {
   id: string;
-  text: string;
-  options: Array<{
-    id: string;
-    text: string;
-    isCorrect?: boolean;
-  }>;
-  // Add other question fields as needed
-}
-
-interface UserTestQuestion {
-  questionId: string;
-  question: Question;
-  // Add other fields as needed
+  subjectId?: string | null;
+  chapterId?: string | null;
+  userTestId?: string | null;
+  type: 'singleChoice' | 'multipleChoice';
+  answer?: string | null;
+  question: string;
+  options: Option[];
+  additionalData: AdditionalData;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 interface SelectedAnswer {
@@ -34,17 +63,19 @@ interface UserTest {
   id: string;
   startedAt: Date | null;
   finishedAt: Date | null;
-  questions: UserTestQuestion[];
+  questions: Question[];
   selectedAnswers: SelectedAnswer[] | null;
-  configurations: JsonObject | null;
+  configurations: JsonValue | null;
 }
 
 interface AnswerFeedback {
-  correct: string[];    // Options correctly chosen
-  incorrect: string[];  // Options incorrectly chosen
-  missed: string[];     // Correct options not chosen
-  unanswered: string[]; // Options not chosen (includes both incorrect and missed)
+  correct: string[];    // Options correctly chosen by user
+  incorrect: string[];  // Options incorrectly chosen by user
+  missed: string[];     // Correct options that user failed to select (missed opportunities)
 }
+
+// export all interfaces
+export type { UserTest, Question, Option, SelectedAnswer, AnswerFeedback, AdditionalData, AnswerIndicator };
 
 export default function useUserTest(testId: string) {
   const router = useRouter();
@@ -63,8 +94,8 @@ export default function useUserTest(testId: string) {
   // Check if test time is expired
   useEffect(() => {
     if (userTest?.startedAt && userTest.configurations) {
-      const timeLimit = userTest.configurations.timeLimit as number | undefined;
-      
+      const timeLimit = (userTest.configurations as JsonObject | undefined)?.timeLimit as number | undefined;
+      console.log(timeLimit)
       if (timeLimit) {
         const checkInterval = setInterval(() => {
           if (isTestTimeExpired(userTest.startedAt!, timeLimit)) {
@@ -92,23 +123,39 @@ export default function useUserTest(testId: string) {
           await startTest();
         } else if (resumeResponse.message === "ALREADY_ENDED") {
           // Redirect to results page if test already ended
-          router.push(`/app/test/${testId}/results`);
+          router.push(`/app/test/${testId}/start`);
           return;
         } else if (resumeResponse.message === "NOT_FOUND" || resumeResponse.message === "UNAUTHORIZED") {
           setError(resumeResponse.message);
         }
       } else {
-        // Successfully resumed an existing test
-        setUserTest(resumeResponse as unknown as UserTest);
-        const lastAnsweredIndex = findLastAnsweredQuestionIndex(resumeResponse as unknown as UserTest);
-        setCurrentQuestionIndex(lastAnsweredIndex + 1);
+        setUserTest(resumeResponse);
+        const firstUnansweredQuestion = findFirstUnansweredQuestionIndex(resumeResponse);
+        setCurrentQuestionIndex(firstUnansweredQuestion);
       }
     } catch (err) {
-      setError("Failed to initialize test");
       console.error("Test initialization error:", err);
+      setError("Failed to initialize test");
     } finally {
       setLoading(false);
     }
+  };
+
+  // Add a helper function to fetch questions if they're not included
+  const fetchQuestionsForTest = async (test: UserTest): Promise<UserTest> => {
+    if (!test.questions || test.questions.length === 0) {
+      // If there are no questions, we need to fetch them
+      try {
+        const response = await resumeUserTest({ userTestId: testId });
+        // Make sure we're not getting a message response
+        if (!('message' in response)) {
+          return response as unknown as UserTest;
+        }
+      } catch (error) {
+        console.error("Error fetching questions:", error);
+      }
+    }
+    return test;
   };
 
   const startTest = async () => {
@@ -120,7 +167,7 @@ export default function useUserTest(testId: string) {
         setError(response.message);
         return null;
       } else {
-        setUserTest(response as unknown as UserTest);
+        setUserTest(response);
         setCurrentQuestionIndex(0);
         return response;
       }
@@ -135,7 +182,7 @@ export default function useUserTest(testId: string) {
 
   const endTest = async () => {
     await handleEndTest();
-    router.push(`/app/test/${testId}/results`);
+    router.push(`/app/test/${testId}/start`);
   };
 
   const handleEndTest = async () => {
@@ -169,7 +216,7 @@ export default function useUserTest(testId: string) {
       
       if ('message' in response) {
         if (response.message === "TIME_LIMIT_EXCEEDED") {
-          router.push(`/app/test/${testId}/results`);
+          router.push(`/app/test/${testId}/start`);
           return null;
         }
         setError(response.message);
@@ -178,7 +225,7 @@ export default function useUserTest(testId: string) {
         setUserTest(response as unknown as UserTest);
         
         // If showAnswers is true in the configuration, generate answer feedback
-        const showAnswers = userTest?.configurations?.showAnswers as boolean | undefined;
+        const showAnswers = ((userTest?.configurations as JsonObject | undefined)?.showAnswers) as boolean | undefined;
         if (showAnswers) {
           const question = getQuestionById(questionId);
           if (question) {
@@ -223,7 +270,7 @@ export default function useUserTest(testId: string) {
     const questionIndex = index ?? currentQuestionIndex;
     if (questionIndex < 0 || questionIndex >= userTest.questions.length) return null;
     
-    return userTest.questions[questionIndex].question;
+    return userTest.questions[questionIndex];
   };
 
   const getCurrentQuestion = () => getQuestion(currentQuestionIndex);
@@ -239,14 +286,14 @@ export default function useUserTest(testId: string) {
     if (!userTest?.questions?.length) return null;
     
     const firstUnansweredIndex = findFirstUnansweredQuestionIndex(userTest);
-    return firstUnansweredIndex >= 0 ? userTest.questions[firstUnansweredIndex].question : null;
+    return firstUnansweredIndex >= 0 ? userTest.questions[firstUnansweredIndex] : null;
   };
 
   const getQuestionById = (questionId: string): Question | null => {
     if (!userTest?.questions?.length) return null;
     
-    const questionObj = userTest.questions.find(q => q.questionId === questionId);
-    return questionObj ? questionObj.question : null;
+    const questionObj = userTest.questions.find(q => q.id === questionId);
+    return questionObj ?? null;
   };
 
   const getAnswerFeedback = (questionId: string): AnswerFeedback | null => {
@@ -268,7 +315,7 @@ export default function useUserTest(testId: string) {
   };
 
   const getTimeLimit = () => {
-    return userTest?.configurations?.timeLimit as number | undefined;
+    return (userTest?.configurations as JsonObject | undefined)?.timeLimit as number | undefined;
   };
 
   const getRemainingTime = () => {
@@ -287,14 +334,13 @@ export default function useUserTest(testId: string) {
    * Calculate feedback for a question based on user's answers
    * @param question The question object
    * @param userAnswerIds The IDs of the options selected by the user
-   * @returns Object with arrays of correct, incorrect, missed, and unanswered option IDs
+   * @returns Object with arrays of correct, incorrect, and missed option IDs
    */
   function calculateAnswerFeedback(question: Question, userAnswerIds: string[]): AnswerFeedback {
     const feedback: AnswerFeedback = {
       correct: [],
       incorrect: [],
-      missed: [],
-      unanswered: []
+      missed: []
     };
     
     // Process each option
@@ -310,14 +356,9 @@ export default function useUserTest(testId: string) {
         } else {
           feedback.incorrect.push(optionId);
         }
-      } else {
-        // User did not select this option
-        feedback.unanswered.push(optionId);
-        
-        // If it was correct, it's also "missed"
-        if (isCorrect) {
-          feedback.missed.push(optionId);
-        }
+      } else if (isCorrect) {
+        // If option is correct but not selected, it's "missed" (a missed opportunity)
+        feedback.missed.push(optionId);
       }
     });
     
@@ -329,7 +370,7 @@ export default function useUserTest(testId: string) {
     if (!test.selectedAnswers || test.selectedAnswers.length === 0) return -1;
     
     const lastAnsweredQuestionId = test.selectedAnswers[test.selectedAnswers.length - 1].questionId;
-    return test.questions.findIndex(q => q.questionId === lastAnsweredQuestionId);
+    return test.questions.findIndex(q => q.id === lastAnsweredQuestionId);
   }
 
   function findFirstUnansweredQuestionIndex(test: UserTest): number {
@@ -342,11 +383,11 @@ export default function useUserTest(testId: string) {
     
     // Find the first question that isn't in the answered set
     const firstUnansweredIndex = test.questions.findIndex(
-      question => !answeredQuestionIds.has(question.questionId)
+      question => !answeredQuestionIds.has(question.id)
     );
     
     // If all questions are answered, return -1, otherwise return the index
-    return firstUnansweredIndex !== -1 ? firstUnansweredIndex : -1;
+    return firstUnansweredIndex !== -1 ? firstUnansweredIndex : 0;
   }
 
   function isTestTimeExpired(startedAt: Date, timeLimit: number): boolean {

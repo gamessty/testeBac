@@ -85,7 +85,7 @@ function calculateMaximumPossibleScore(userTest: any): number {
     // The maximum score for each question is equal to the number of options
     return userTest.questions.reduce((total: number, userTestQuestion: any) => {
         const question = userTestQuestion.question;
-        if (question && question.options) {
+        if (question?.options) {
             return total + question.options.length;
         }
         return total;

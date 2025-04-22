@@ -330,8 +330,12 @@
         "message": "Are you sure you want to delete this test: <b>{testName}</b>? This action cannot be undone.",
         "title": "Delete Test"
       },
-      "delete": "Delete",
       "continueTest": "Continue",
+      "delete": "Delete",
+      "deleteError": {
+        "message": "Failed to delete the test. Please try again later.",
+        "title": "Deletion Failed"
+      },
       "description": "Here you can see your progress and the tests you have taken. You can also see your results and the subjects you have studied. Keep up the good work and good luck with your studies!",
       "details": "Test details",
       "finishedTest": "Finished",
@@ -341,12 +345,23 @@
       "startTest": "Start",
       "testDeleted": "Test Deleted",
       "testDeletedMessage": "The test <b>{testName}</b> has been successfully deleted.",
-      "deleteError": {
-        "title": "Deletion Failed",
-        "message": "Failed to delete the test. Please try again later."
-      },
       "tests": "{count, plural, =0 {No tests} =1 {# test} other {# tests}}",
-      "title": "Tests"
+      "title": "Tests",
+      "question": "Question",
+      "answered": "Answered",
+      "previous": "Previous",
+      "next": "Next",
+      "finishTest": "Finish Test",
+      "firstUnanswered": "First Unanswered",
+      "submitAnswer": "Submit Answer",
+      "noQuestions": "No questions found in this test",
+      "noQuestionsMessage": "Test was created successfully but contains no questions. Return to the test page and check the configuration.",
+      "submitConfirmation": {
+        "title": "Submit Test",
+        "message": "You haven't answered all questions yet. Are you sure you want to submit the test?",
+        "goToUnanswered": "Go to unanswered",
+        "submit": "Submit test anyway"
+      }
     },
     "UserManager": {
       "authorized": "Authorized",
@@ -505,7 +520,10 @@
       },
       "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} de {DE} other {?}}"
     },
+    "copiedLabel": "Copied!",
+    "copyLabel": "Copy code",
     "error": "Error",
+    "explanation": "Explanation",
     "launch": "Go to!",
     "loading": "Loading...",
     "noResults": "No results",
@@ -557,15 +575,30 @@
       "message": "Are you sure you want to delete this test: <b>{testName}</b>? This action cannot be undone.",
       "title": "Delete Test"
     },
-    "delete": "Delete",
     "continueTest": "Continue",
+    "delete": "Delete",
     "details": "test details",
     "finishedTest": "Finished",
     "lastQuestion": "Last question",
     "resumeTest": "Resume test",
     "startTest": "Start",
     "testDeleted": "Test Deleted",
-    "testDeletedMessage": "The test <b>{testName}</b> has been successfully deleted."
+    "testDeletedMessage": "The test <b>{testName}</b> has been successfully deleted.",
+    "question": "Question",
+    "answered": "Answered",
+    "previous": "Previous",
+    "next": "Next",
+    "finishTest": "Finish Test",
+    "firstUnanswered": "First Unanswered",
+    "submitAnswer": "Submit Answer",
+    "noQuestions": "No questions found in this test",
+    "noQuestionsMessage": "Test was created successfully but contains no questions. Return to the test page and check the configuration.",
+    "submitConfirmation": {
+      "title": "Submit Test",
+      "message": "You haven't answered all questions yet. Are you sure you want to submit the test?",
+      "goToUnanswered": "Go to unanswered",
+      "submit": "Submit test anyway"
+    }
   },
   "createSampleData": "Create sample data",
   "demo-components": "Demo components",

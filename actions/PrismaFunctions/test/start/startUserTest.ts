@@ -1,12 +1,12 @@
 "use server";
 
-import { auth } from "../../../../auth";
+import { auth, UserActiveTest } from "@/auth";
 import { prisma } from "../../../../lib/prisma";
-import { UserTest } from "@prisma/client";
 import { chkP } from "../../../../utils";
 
+interface UserTestWithQuestions extends Omit<UserActiveTest, "folder" | "chapters" | "subjects"> {}
 
-export default async function startUserTest({ userTestId }: { userTestId: string }): Promise<UserTest | { message: string }> {
+export default async function startUserTest({ userTestId }: { userTestId: string }): Promise<UserTestWithQuestions | { message: string }> {
     const session = await auth();
     if (!session?.user) {
         return { message: "UNAUTHENTICATED" };
@@ -32,17 +32,18 @@ export default async function startUserTest({ userTestId }: { userTestId: string
     }
 
     // Update the test to set the startedAt timestamp
-    userTest = await prisma.userTest.update({
+    let updatedUserTest = await prisma.userTest.update({
         where: {
             id: String(userTestId)
         },
         data: {
             startedAt: new Date()
-        }
+        },
+        include: { questions: { include: { question: true } } } // Include related questions
     });
 
     // Return the updated user test
-    return userTest;
+    return {...updatedUserTest, questions: updatedUserTest.questions.map(q => q.question) };
 }
 
 export { startUserTest };

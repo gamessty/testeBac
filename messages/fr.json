@@ -346,7 +346,21 @@
       "testDeleted": "Test supprimé",
       "testDeletedMessage": "Le test <b>{testName}</b> a été supprimé avec succès.",
       "tests": "{count, plural, =0 {Pas de tests} =1 {# tests} other {# tests}}",
-      "title": "Tests"
+      "title": "Tests",
+      "question": "Question",
+      "answered": "Répondu",
+      "previous": "Précédent",
+      "next": "Suivant",
+      "finishTest": "Terminer le test",
+      "firstUnanswered": "Première question sans réponse",
+      "submitAnswer": "Soumettre la réponse",
+      "noQuestions": "Aucune question trouvée dans ce test",
+      "submitConfirmation": {
+        "title": "Soumettre le test",
+        "message": "Vous n'avez pas répondu à toutes les questions. Êtes-vous sûr de vouloir soumettre le test?",
+        "goToUnanswered": "Aller aux questions sans réponse",
+        "submit": "Soumettre le test quand même"
+      }
     },
     "UserManager": {
       "authorized": "Autorisé",

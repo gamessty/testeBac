@@ -2,19 +2,23 @@
 
 import { auth } from "../../../../auth";
 import { prisma } from "../../../../lib/prisma";
-import { UserTest } from "@prisma/client";
+import { UserActiveTest } from "@/auth";
 import { chkP } from "../../../../utils";
 
+interface UserTestWithQuestions extends Omit<UserActiveTest, "folder" | "chapters" | "subjects"> {}
 
-export default async function resumeUserTest({ userTestId }: { userTestId: string }): Promise<UserTest | { message: string }> {
+export default async function resumeUserTest({ userTestId }: { userTestId: string }): Promise<UserTestWithQuestions | { message: string }> {
     const session = await auth();
     if (!session?.user) {
         return { message: "UNAUTHENTICATED" };
     }
+    
+    // Modify the query to include questions
     let userTest = await prisma.userTest.findUnique({
         where: {
             id: String(userTestId)
-        }
+        },
+        include: { questions: { include: { question: true } } }
     });
 
     if (!chkP("test:updateAll", session.user) && userTest?.userId !== session.user.id) {
@@ -33,8 +37,13 @@ export default async function resumeUserTest({ userTestId }: { userTestId: strin
         return { message: "ALREADY_ENDED" };
     }
     
+    // Log the questions count to debug
+    console.log(`Returning test with ${userTest.questions ? userTest.questions.length : 0} questions`);
+    
     // Return the updated user test
-    return userTest;
+    const questions = userTest?.questions.map(q => q.question);
+
+    return {...userTest, questions };
 }
 
 export { resumeUserTest };

@@ -1,7 +1,7 @@
 "use server";
-import { Button, Group, TextInput } from "@mantine/core"
-import { signIn, auth } from "../../auth"
+import { Button, Group, TextInput } from "@mantine/core";
 import { getTranslations } from "next-intl/server";
+import { auth, signIn } from "../../auth";
 
 export default async function SignIn() {
     const { fullWidth } = { fullWidth: false };

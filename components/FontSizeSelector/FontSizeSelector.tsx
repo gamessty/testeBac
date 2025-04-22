@@ -1,7 +1,7 @@
-import { HTMLAttributes, useState } from 'react';
-import { FloatingIndicator, UnstyledButton, UnstyledButtonProps } from '@mantine/core';
-import classes from './FontSizeSelector.module.css';
+import { FloatingIndicator, UnstyledButton } from '@mantine/core';
 import { useUncontrolled } from '@mantine/hooks';
+import { HTMLAttributes, useState, useCallback, useMemo, useRef } from 'react';
+import classes from './FontSizeSelector.module.css';
 
 interface DataType {
     value: string;
@@ -18,41 +18,47 @@ interface FontSizeSelectorProps {
 
 export default function FontSizeSelector({ value, defaultValue, data, onChange, disabled, ...props }: Readonly<FontSizeSelectorProps & Omit<HTMLAttributes<HTMLDivElement>, 'onChange'>>) {
   const { className: classNameProp, ...others } = props;
-  const [rootRef, setRootRef] = useState<HTMLDivElement | null>(null);
-  const [controlsRefs, setControlsRefs] = useState<Record<string, HTMLButtonElement | null>>({});
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  const controlsRefs = useRef<Record<string, HTMLButtonElement | null>>({});
   const [_value, handleChange] = useUncontrolled({
     value,
     defaultValue,
     onChange
   });
 
-  const setControlRef = (index: string) => (node: HTMLButtonElement) => {
-    controlsRefs[index] = node;
-    setControlsRefs(controlsRefs);
-  };
+  const setControlRef = useCallback((index: string) => (node: HTMLButtonElement) => {
+    controlsRefs.current[index] = node;
+  }, []);
 
-  const controls = data.map((item, index) => (
+  const handleButtonClick = useCallback((value: string) => {
+    handleChange(value);
+  }, [handleChange]);
+
+  const controls = useMemo(() => data.map((item) => (
     <UnstyledButton
       disabled={disabled}
       key={item.value}
       className={classes.control}
       ref={setControlRef(item.value)}
-      onClick={() => handleChange(item.value)}
+      onClick={() => handleButtonClick(item.value)}
       mod={{ active: _value === item.value }}
     >
       <span className={classes.controlLabel}>{item.label}</span>
     </UnstyledButton>
-  ));
+  )), [data, disabled, _value, setControlRef, handleButtonClick]);
+
+  const memoizedIndicator = useMemo(() => (
+    <FloatingIndicator
+      target={controlsRefs.current[_value]}
+      parent={rootRef.current}
+      className={classes.indicator}
+    />
+  ), [_value]);
 
   return (
-    <div {...others} className={classes.root + " " + classNameProp} ref={setRootRef}>
+    <div {...others} className={`${classes.root} ${classNameProp}`} ref={rootRef}>
       {controls}
-
-      <FloatingIndicator
-        target={controlsRefs[_value]}
-        parent={rootRef}
-        className={classes.indicator}
-      />
+      {memoizedIndicator}
     </div>
   );
 }

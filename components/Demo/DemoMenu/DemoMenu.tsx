@@ -1,18 +1,5 @@
 "use client";
 import {
-    IconBuildingBank,
-    IconCashBanknote,
-    IconCoin,
-    IconCreditCard,
-    IconFile,
-    IconFilePlus,
-    IconReceipt,
-    IconReceiptRefund,
-    IconReceiptTax,
-    IconRepeat,
-    IconReport,
-} from '@tabler/icons-react';
-import {
     Anchor,
     Card,
     CardProps,
@@ -22,9 +9,13 @@ import {
     UnstyledButton,
     useMantineTheme,
 } from '@mantine/core';
-import classes from './DemoMenu.module.css';
-import { getInitialsColor } from '../../../utils';
+import {
+    IconFile,
+    IconFilePlus
+} from '@tabler/icons-react';
 import { Link } from '../../../i18n/routing';
+import { getInitialsColor } from '../../../utils';
+import classes from './DemoMenu.module.css';
 
 interface MockDataItem {
     title: string;

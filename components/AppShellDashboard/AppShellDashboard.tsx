@@ -1,27 +1,26 @@
 'use client';
-import { AppShell, Group, Button, ActionIcon, Text, Divider, Stack, Grid, Affix, Transition, Badge, Flex, Tooltip, useMatches, Menu, ScrollArea, LoadingOverlay } from "@mantine/core";
-import { useDidUpdate, useDocumentTitle, useSetState } from "@mantine/hooks";
-import { IconHome, IconSettingsCog, IconChecklist, IconChartInfographic, IconArrowUp, IconUsers, IconLogout, IconUserPlus, IconFile, IconGraph } from "@tabler/icons-react";
+import { ActionIcon, Affix, AppShell, Badge, Button, Divider, Flex, Grid, Group, LoadingOverlay, Menu, ScrollArea, Stack, Text, Tooltip, Transition, useMatches } from "@mantine/core";
+import { useDidUpdate, useDocumentTitle, useMediaQuery, useSetState } from "@mantine/hooks";
+import { IconArrowUp, IconChecklist, IconFile, IconGraph, IconHome, IconLogout, IconSettingsCog, IconUserPlus, IconUsers } from "@tabler/icons-react";
 import { Session } from "next-auth";
-import { useTranslations } from "next-intl";
-import ColorSchemeToggleIcon from "../ColorSchemeToggleIcon/ColorSchemeToggleIcon";
 import { signOut } from "next-auth/react";
-import Home from "../Dashboard/Home/Home";
+import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import Settings from "../Dashboard/Settings/Settings";
-import Stats from "../Dashboard/Stats/Stats";
-import Tests from "../Dashboard/Tests/Tests";
-import { chkP, enumToString, getInitialsColor } from "../../utils";
 import React, { Fragment, useEffect, useRef, useState } from "react";
-import UserManager from "../Dashboard/Admin/UserManager/UserManager";
 import { ITabData, Permissions } from "../../data";
+import { Link } from "../../i18n/routing";
+import { chkP, enumToString, getInitialsColor } from "../../utils";
 import AvatarFallback from "../AvatarFallback/AvatarFallback";
 import AvatarMenu from "../AvatarMenu/AvatarMenu";
-import { Link } from "../../i18n/routing";
+import ColorSchemeToggleIcon from "../ColorSchemeToggleIcon/ColorSchemeToggleIcon";
 import RoleManager from "../Dashboard/Admin/RoleManager/RoleManager";
+import UserManager from "../Dashboard/Admin/UserManager/UserManager";
+import Home from "../Dashboard/Home/Home";
+import Settings from "../Dashboard/Settings/Settings";
+import Tests from "../Dashboard/Tests/Tests";
 import SignOutButtonClient from "../SignOutButton/SignOutButton.client";
-import classes from './AppShellDashboard.module.css';
 import TestGenerator from "../TestGenerator/TestGenerator";
+import classes from './AppShellDashboard.module.css';
 
 interface AppShellDashboardProps {
     session: Session | null | undefined;
@@ -55,9 +54,6 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
     const [scrollPosition, setScrollPosition] = useState({ x: 0, y: 0 });
     const viewport = useRef<HTMLDivElement>(null);
 
-
-
-
     useDidUpdate(() => {
         const tabName = searchParams.get('tab') ?? 'home';
         setSettings({ title: 'testeBac | ' + t('Navbar.' + tabName), tab: { tab: tabName, disableNavigation: tabsData.find((tab) => tab.tab == tabName)?.disableNavigation } });
@@ -70,7 +66,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
     });
 
     function handleTabChange({ tab, disableNavigation }: { tab: string, disableNavigation?: boolean }) {
-        if (!disableNavigation) { disableNavigation = tabsData.find((tabData) => tabData.tab == tab)?.disableNavigation; }
+        disableNavigation ??= tabsData.find((tabData) => tabData.tab == tab)?.disableNavigation;
         setSettings({ tab: { tab, disableNavigation }, title: 'testeBac | ' + t('Navbar.' + tab) });
         const params = new URLSearchParams(searchParams.toString());
         params.set('tab', tab);
@@ -90,7 +86,9 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
             header={{ height: 60 }}
             navbar={{ width: settings.tab.disableNavigation ? 0 : 300, breakpoint: 'sm', collapsed: { mobile: true } }}
             padding={0}
+            data-disable-navigation={settings.tab.disableNavigation ?? false}
         >
+            <LoadingOverlay visible={settings.tabLoading} zIndex={1101} loaderProps={{ color: 'teal', type: 'dots' }} />
             <AppShell.Header>
                 <Group h="100%" px="md" justify="space-between">
                     <Text variant="gradient" fw={700} size="xl" gradient={{ from: 'pink', to: 'yellow' }}>
@@ -204,7 +202,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
             </AppShell.Navbar>
             <AppShell.Main>
                 <ScrollArea
-                    maw={"99vw"}
+                    maw={"100vw"}
                     onScrollPositionChange={setScrollPosition}
                     h={{ base: settings.tab.disableNavigation ? size : sizeMobile, sm: size }}
                     viewportRef={viewport}
@@ -217,7 +215,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                             <Transition key={tab.tab + "_tabComponent"} transition="fade-right" timingFunction="ease" enterDelay={tab.disableNavigation ? 100 : 0} duration={tab.disableNavigation ? 800 : 300} mounted={settings.tab.tab == tab.tab} >
                                 {(transitionStyles) => (
                                     <>
-                                        {settings.tab.tab == tab.tab && tab.component && <tab.component session={session} settab={handleTabChange} triggerloading={(loadingStatus: boolean) => setSettings({ tabLoading: loadingStatus })} style={transitionStyles} />}
+                                        {settings.tab.tab == tab.tab && tab.component && <tab.component session={session} settab={handleTabChange} triggerloading={(loadingStatus: boolean) => setSettings({ tabLoading: loadingStatus })} style={{ ...transitionStyles } as React.CSSProperties} />}
                                     </>
                                 )}
                             </Transition>
@@ -227,7 +225,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
             </AppShell.Main>
             <AppShell.Footer display={{ sm: "none" }} className={(settings.tab.disableNavigation ? classes.hide : undefined) + " " + classes["footer"]}>
                 <Flex className={classes["flex-footer"]}>
-                    <AvatarMenu shadow="md" position="top-start" offset={20} classNames={{  }}  transitionProps={{ transition: 'pop-bottom-left', duration: 200 }} AvatarProps={{ src: session?.user?.image ?? undefined, name: session?.user?.username ?? session?.user?.email ?? undefined, color: 'initials'}}>
+                    <AvatarMenu shadow="md" position="top-start" offset={20} classNames={{}} transitionProps={{ transition: 'pop-bottom-left', duration: 200 }} AvatarProps={{ src: session?.user?.image ?? undefined, name: session?.user?.username ?? session?.user?.email ?? undefined, color: 'initials', classNames: { root: classes.avatarRoot } }}>
                         {tabsData.filter(t => !t.mobile && (t.visible || typeof (t.visible) == 'undefined') && chkP(enumToString(t.permissionNeeded), session?.user)).toSorted((a, b) => b.category.order - a.category.order).map((tab, index, array) => (
                             <React.Fragment key={tab.tab + "_menu"}>
                                 {((index > 0 && array[index - 1].category.name != tab.category.name) || index == 0) && (!tab.category.permissionNeeded || chkP(enumToString(tab.category.permissionNeeded), session?.user)) &&
@@ -264,8 +262,8 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                     </Group>
                 </Flex>
             </AppShell.Footer>
-            <Affix position={affixPosition}>
-                <Transition transition="slide-up" mounted={scrollPosition.y > 0}>
+            <Affix position={affixPosition} zIndex={1000}>
+                <Transition transition="slide-up" mounted={scrollPosition.y > 200}>
                     {(transitionStyles) => (
                         <Button
                             className={classes["back-to-top"]}
@@ -314,18 +312,6 @@ export const tabsData: ITabData[] = [
             "showLabel": false
         },
         "mobile": true,
-        "permissionNeeded": Permissions["general:*"]
-    },
-    {
-        "tab": "stats",
-        "icon": IconGraph,
-        "component": Stats,
-        "category": {
-            "name": "general",
-            "order": 0,
-            "namespaced": false,
-            "showLabel": false
-        },
         "permissionNeeded": Permissions["general:*"]
     },
     {

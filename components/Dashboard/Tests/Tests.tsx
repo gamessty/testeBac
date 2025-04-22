@@ -1,42 +1,25 @@
-import { Box, Center, Container, ContainerProps, Divider, Flex, MantineStyleProp, SimpleGrid, Stack, Text, Title } from "@mantine/core";
+import classes from './Tests.module.css';
+import { UserActiveTest } from "@/auth";
+import { Center, Container, Divider, Flex, JsonInput, Stack, Text, Title } from "@mantine/core";
 import { useTranslations } from "next-intl";
-import TestCard from "../../Cards/TestCard/TestCard";
-import CreateTestCard from "../../Cards/CreateTestCard/CreateTestCard";
-import { Session } from "next-auth";
 import { Fragment, useEffect, useState } from "react";
-import { useShallowEffect } from "@mantine/hooks";
-import { getFolderNamesByIds } from "../../../actions/PrismaFunctions/getManyFolder";
-import { getSubjectNamesByIds } from "../../../actions/PrismaFunctions/getSubjects";
+import CreateTestCard from "../../Cards/CreateTestCard/CreateTestCard";
+import TestCard from "../../Cards/TestCard/TestCard";
+import { ITabModuleProps } from "@/data";
 
-export default function Tests({ session, settab, ...props }: Readonly<{ session: Session, settab: ({ tab }: { tab: string }) => void } & ContainerProps>) {
+export default function Tests({ session, settab, style }: Readonly<ITabModuleProps>) {
     const t = useTranslations('Dashboard.Tests');
-    const [folderNames, setFolderNames] = useState<{ [key: string]: string }>({});
-    const [subjectNames, setSubjectNames] = useState<{ [key: string]: string }>({});
 
-    useEffect(() => {
-        async function fetchFolderNames() {
-            const folderIds = session.user.activeTests?.map(test => test.folderId) ?? [];
-            const fetchedFolderNames = await getFolderNamesByIds(folderIds);
-            if (!('message' in fetchedFolderNames)) {
-                setFolderNames(fetchedFolderNames);
-            }
-        }
-        fetchFolderNames();
-    }, [session.user.activeTests]);
-
-    useEffect(() => {
-        async function fetchSubjectNames() {
-            const subjectIds = session.user.activeTests?.flatMap(test => test.subjectId) ?? [];
-            const fetchedSubjectNames = await getSubjectNamesByIds(subjectIds);
-            if (!('message' in fetchedSubjectNames)) {
-                setSubjectNames(fetchedSubjectNames);
-            }
-        }
-        fetchSubjectNames();
-    }, [session.user.activeTests]);
+    function getLastQuestionText(test: UserActiveTest) {
+        return test.questions.filter(q => test.selectedAnswers.findIndex(s => s.questionId == q.id) != -1).sort((a, b) => {
+            const aIndex = test.selectedAnswers.findIndex(s => s.questionId == a.id);
+            const bIndex = test.selectedAnswers.findIndex(s => s.questionId == b.id);
+            return bIndex - aIndex;
+        })[0]?.question ?? test.questions[0]?.question
+    }
 
     return (
-        <Container fluid p={{ base: 30, sm: 35 }} pt={{ base: 20, sm: 25 }} {...props}>
+        <Container fluid p={{ base: 30, sm: 35 }} pt={{ base: 20, sm: 25 }} style={style}>
             <Title order={1} w="100%" ta="left" mb={20}>
                 {t('title')}
                 <Text c="dimmed" ml={5} ta="left">
@@ -51,20 +34,15 @@ export default function Tests({ session, settab, ...props }: Readonly<{ session:
                         } />
                         <Divider />
                         {
-                            session.user.activeTests?.map((test) => {
+                            session.user.activeTests?.toSorted((a, b) => new Date(b.updatedAt).getTime() - new Date(a.updatedAt).getTime()).map((test) => {
                                 return (
                                     <Fragment key={test.id}>
-                                        <TestCard design="compact" mih="100%" category={folderNames[test.folderId]} subject={test.subjectId.map(id => subjectNames[id]).join(" | ")} progress={test.selectedAnswers.length / test.questions.length * 100} />
-                                        <Divider />
+                                        <TestCard design="compact" mih="100%" category={test.folder?.category} finishedAt={typeof test.finishedAt == "string" ? test.finishedAt : undefined} subject={test.subjects?.map(sj => sj.name?.toLowerCase())} progress={test.selectedAnswers.length / test.questions.length * 100} href={`/app/test/${test.id}`} lastQuestion={getLastQuestionText(test)}/>
+                                        <Divider variant="dashed" className={classes['divider']} />
                                     </Fragment>
                                 )
                             })
                         }
-                        <TestCard design="compact" mih="100%" progress={50} category="bac" subject="biology" href="#" lastQuestion="Ce este biologia?" />
-                        <Divider variant="dashed" />
-                        <TestCard design="compact" mih="100%" category="admission" subject="chemistry" href="#" />
-                        <Divider variant="dashed" />
-                        <TestCard design="compact" mih="100%" category="admission" subject="informatics" href="#" />
                     </Stack>
                 </Center>
             </Flex>

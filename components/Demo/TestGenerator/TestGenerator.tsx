@@ -1,5 +1,5 @@
 "use client";
-import { Stepper, Group, Button, Box, Paper, em, Stack, LoadingOverlay } from "@mantine/core";
+import { Button, em, Group, LoadingOverlay, Paper, Stack, Stepper } from "@mantine/core";
 import { useMediaQuery } from "@mantine/hooks";
 import { useTranslations } from "next-intl";
 import { useState } from "react";

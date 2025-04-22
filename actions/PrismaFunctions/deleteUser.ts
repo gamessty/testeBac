@@ -9,10 +9,10 @@ import { type User } from "@prisma/client";
 export default async function deleteUser({ id }: { id: any }): Promise<User | { message: string }> {
     const session = await auth();
     if (!session?.user) {
-        return { message: "Not authenticated" };
+        return { message: "UNAUTHENTICATED" };
     }
     if (!chkP("user:delete", session.user) && session?.user?.id != id) {
-        return { message: "Unauthorized" };
+        return { message: "UNAUTHORIZED" };
     }
     const user = await prisma.user.delete({
         where: { id }

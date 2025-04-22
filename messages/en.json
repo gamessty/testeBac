@@ -119,6 +119,7 @@
           "title": "Create role"
         },
         "delete": {
+          "defaultName": "unknown",
           "message": "Are you sure you want to delete the role {name}? This action cannot be undone.",
           "title": "Delete role"
         }
@@ -198,12 +199,14 @@
         "deleteSuccess": "Your account has been deleted successfully.",
         "email": "Email",
         "name": {
+          "error": "The name is not valid. Try again.",
           "label": "Name",
           "placeholder": "Enter your name"
         },
         "personalInfo": "Personal information and preferences",
         "title": "Account",
         "username": {
+          "error": "The username is not valid. Try again.",
           "label": "Username",
           "placeholder": "Enter your username"
         }
@@ -222,8 +225,30 @@
       "title": "Settings"
     },
     "TestGenerator": {
+      "QuestionDistribution": {
+        "availablePool": "Available Question Pool",
+        "availableQuestions": "{count, plural, =0 {no questions} =1 {one question} other {# questions}}",
+        "chapters": "Chapters",
+        "description": "Select how many questions to include from each subject and chapter",
+        "loading": "Loading...",
+        "maxQuestion": "Max",
+        "minQuestion": "Min",
+        "questionRange": "Question Range",
+        "subjects": "Subjects",
+        "title": "Number of questions",
+        "totalQuestions": "Total Questions"
+      },
       "Selector": {
         "TestTypeSelector": {
+          "Configurations": {
+            "labels": {
+              "numberOfQuestions": "Number of questions",
+              "showAnswers": "Show correct answer after each question",
+              "timeLimit": "Time limit (minutes)"
+            }
+          },
+          "distributionInfoMessage": "You can select the individual number of questions below",
+          "testConfigTitle": "Test Configuration",
           "type": "{id, select, simple {Simple} mockExam {Mock Exam} complex {Complex} other {Unknown}}"
         },
         "updatedAt": "Updated at:"
@@ -232,6 +257,14 @@
         "fetch": {
           "message": "{error, select, Unauthorized {You are not authorized to access this administration page. If you believe this is an error, refresh the page and try again later.} other {Unknown general error. Please try again later.}}",
           "title": "{error, select, Unauthorized {Unauthorized} other {General error}}"
+        },
+        "generate": {
+          "message": "{error, select, Unauthenticated  {Please sign in to generate a test.} Unauthorized {Your account is not permitted for this test configuration.} other {An unexpected error occurred while generating the test. Please try again later.}}",
+          "title": "{error, select, Unauthenticated {Sign-in Required} Unauthorized {Access Denied} other {Test Generation Error}}"
+        },
+        "noQuestions": {
+          "message": "You need to select at least one question from the available sources.",
+          "title": "No Questions Selected"
         }
       },
       "exitConfiguration": {
@@ -240,6 +273,7 @@
         "message": "Are you sure you want to leave the test configuration? All the progress will be lost.",
         "title": "Leave test configuration"
       },
+      "questionsNumber": "{count, plural, =0 {no questions} =1 {one question} other {# questions}}",
       "steps": {
         "1": {
           "description": "Select the test kind",
@@ -260,11 +294,72 @@
         "back": "Back",
         "generate": "Generate test",
         "next": "Next"
+      },
+      "warnings": {
+        "configuration": {
+          "adjusted": "Maximum available questions: {allowedMax}",
+          "message": "The number of questions has been automatically adjusted to {allowedMax} based on available questions.",
+          "title": "Question Count Adjusted"
+        }
       }
     },
     "Tests": {
+      "Categories": {
+        "admission": "University Admission",
+        "bac": "Baccalaureate"
+      },
+      "Subjects": {
+        "biology": "Biology",
+        "chemistry": "Chemistry",
+        "english": "English",
+        "french": "French",
+        "geography": "Geography",
+        "german": "Germany",
+        "history": "History",
+        "informatics": "Informatics",
+        "mathematics": "Mathematics",
+        "physics": "Physics",
+        "romanian": "Romanian",
+        "spanish": "Spanish"
+      },
+      "answered": "Answered",
+      "availableQuestions": "{count, plural, =0 {no questions} =1 {one question} other {# questions}}",
+      "cancel": "Cancel",
+      "category": "{category, select, admission {University Admission} bac {Baccalaureate} other {Unknown}}",
+      "confirm": "Confirm",
+      "confirmDeleteTest": {
+        "message": "Are you sure you want to delete this test: <b>{testName}</b>? This action cannot be undone.",
+        "title": "Delete Test"
+      },
+      "continueTest": "Continue",
+      "delete": "Delete",
+      "deleteError": {
+        "message": "Failed to delete the test. Please try again later.",
+        "title": "Deletion Failed"
+      },
       "description": "Here you can see your progress and the tests you have taken. You can also see your results and the subjects you have studied. Keep up the good work and good luck with your studies!",
+      "details": "Test details",
+      "finishTest": "Finish Test",
+      "finishedTest": "Finished",
+      "firstUnanswered": "First Unanswered",
       "generateTestTitle": "Generate test",
+      "lastQuestion": "Last question",
+      "next": "Next",
+      "noQuestions": "No questions found in this test",
+      "noQuestionsMessage": "Test was created successfully but contains no questions. Return to the test page and check the configuration.",
+      "previous": "Previous",
+      "question": "Question",
+      "resumeTest": "Resume test",
+      "startTest": "Start",
+      "submitAnswer": "Submit Answer",
+      "submitConfirmation": {
+        "goToUnanswered": "Go to unanswered",
+        "message": "You haven't answered all questions yet. Are you sure you want to submit the test?",
+        "submit": "Submit test anyway",
+        "title": "Submit Test"
+      },
+      "testDeleted": "Test Deleted",
+      "testDeletedMessage": "The test <b>{testName}</b> has been successfully deleted.",
       "tests": "{count, plural, =0 {No tests} =1 {# test} other {# tests}}",
       "title": "Tests"
     },
@@ -358,6 +453,62 @@
       "colorScheme": "{colorScheme, select, light {Light} dark {Dark} auto {Auto} other {Unknown}}",
       "label": "Toggle color scheme"
     },
+    "Errors": {
+      "ALREADY_ANSWERED": {
+        "message": "You've already submitted an answer for this question. You cannot change your answer once submitted.",
+        "title": "Already Answered"
+      },
+      "ALREADY_ENDED": {
+        "message": "This test has already been completed. You cannot make changes to a finished test.",
+        "title": "Test Already Completed"
+      },
+      "ALREADY_STARTED": {
+        "message": "This test has already been started. You can continue with the test in progress.",
+        "title": "Test Already Started"
+      },
+      "INVALID_ANSWER_IDS": {
+        "message": "One or more of the selected answers are invalid for this question. Please select only valid answers.",
+        "title": "Invalid Answers"
+      },
+      "INVALID_INPUT": {
+        "message": "The provided input is invalid. Please check your data and try again.",
+        "title": "Invalid Input"
+      },
+      "NOT_FOUND": {
+        "message": "This resource has not been found. Please try again later or check your request.",
+        "title": "Not found"
+      },
+      "NOT_STARTED": {
+        "message": "The test has not been started yet. You need to start the test before you can complete this action.",
+        "title": "Test Not Started"
+      },
+      "NO_QUESTIONS": {
+        "message": "No questions found for the selected criteria. Please try again after changing your test generation filters and options.",
+        "title": "No questions"
+      },
+      "QUESTION_NOT_FOUND": {
+        "message": "The requested question couldn't be found in this test. Please try again or contact support.",
+        "title": "Question Not Found"
+      },
+      "TIME_LIMIT_EXCEEDED": {
+        "message": "The time limit for this test has been exceeded. Your test has been automatically submitted.",
+        "title": "Time Limit Exceeded"
+      },
+      "UNAUTHENTICATED": {
+        "message": "You are currently unauthenticated. You need to be signed into your account to continue.",
+        "title": "Unauthenticated"
+      },
+      "UNAUTHORIZED": {
+        "message": "Your account is not allowed to access this resource or execute this action. Please try again later.",
+        "title": "Access Denied"
+      },
+      "UNKNOWN": {
+        "message": "An unknown error has occured. Please try again later or make sure your request is valid.",
+        "messageCode": "An unknown error has occured. Please try again later or make sure your request is valid. Error code: {code}.",
+        "title": "Unknown error"
+      },
+      "goBack": "Go back"
+    },
     "LocaleSwitcher": {
       "label": "Change language",
       "locale": "{locale, select, ro {🇷🇴 Romanian} en {🇬🇧 English} fr {🇫🇷 French} de {🇩🇪 German} other {Unknown}}",
@@ -369,7 +520,10 @@
       },
       "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} de {DE} other {?}}"
     },
+    "copiedLabel": "Copied!",
+    "copyLabel": "Copy code",
     "error": "Error",
+    "explanation": "Explanation",
     "launch": "Go to!",
     "loading": "Loading...",
     "noResults": "No results",
@@ -395,6 +549,10 @@
     }
   },
   "Tests": {
+    "Categories": {
+      "admission": "University Admission",
+      "bac": "Baccalaureate"
+    },
     "Subjects": {
       "biology": "Biology",
       "chemistry": "Chemistry",
@@ -409,9 +567,40 @@
       "romanian": "Romanian",
       "spanish": "Spanish"
     },
+    "answered": "Answered",
+    "availableQuestions": "{count, plural, =0 {no questions} =1 {one question} other {# questions}}",
+    "cancel": "Cancel",
     "category": "{category, select, admission {University Admission} bac {Baccalaureate} other {Unknown}}",
+    "confirm": "Confirm",
+    "confirmDeleteTest": {
+      "message": "Are you sure you want to delete this test: <b>{testName}</b>? This action cannot be undone.",
+      "title": "Delete Test"
+    },
+    "continueTest": "Continue",
+    "delete": "Delete",
+    "details": "test details",
+    "finishTest": "Finish Test",
+    "finishedTest": "Finished",
+    "firstUnanswered": "First Unanswered",
     "lastQuestion": "Last question",
-    "resumeTest": "Resume test"
+    "mark": "mark",
+    "next": "Next",
+    "noQuestions": "No questions found in this test",
+    "noQuestionsMessage": "Test was created successfully but contains no questions. Return to the test page and check the configuration.",
+    "previous": "Previous",
+    "question": "Question",
+    "resumeTest": "Resume test",
+    "startTest": "Start",
+    "submitAnswer": "Submit Answer",
+    "submitConfirmation": {
+      "goToUnanswered": "Go to unanswered",
+      "message": "You haven't answered all questions yet. Are you sure you want to submit the test?",
+      "submit": "Submit test anyway",
+      "title": "Submit Test"
+    },
+    "testDeleted": "Test Deleted",
+    "testDeletedMessage": "The test <b>{testName}</b> has been successfully deleted.",
+    "timeTaken": "time taken"
   },
   "createSampleData": "Create sample data",
   "demo-components": "Demo components",

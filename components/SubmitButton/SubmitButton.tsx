@@ -1,6 +1,6 @@
 'use client';
-import { Button, ButtonProps, Loader } from '@mantine/core'
-import { useFormStatus } from 'react-dom'
+import { Button, ButtonProps, Loader } from '@mantine/core';
+import { useFormStatus } from 'react-dom';
 
 export default function SubmitButton({ type = 'section', ...props }: Readonly<{ type?: 'full' | 'default' | 'section' } & ButtonProps>) {
     const { leftSection, ...rest } = props

@@ -119,6 +119,7 @@
           "title": "Créer un rôle"
         },
         "delete": {
+          "defaultName": "inconnue",
           "message": "Êtes-vous sûr de vouloir supprimer le rôle {name}? \nCette action ne peut pas être annulée.",
           "title": "Supprimer le rôle"
         }
@@ -198,12 +199,14 @@
         "deleteSuccess": "Votre compte a été supprimé avec succès.",
         "email": "E-mail",
         "name": {
+          "error": "Le nom n'est pas valide. Réessayez.",
           "label": "Nom",
           "placeholder": "Entrez votre nom"
         },
         "personalInfo": "Informations et préférences personnelles",
         "title": "Compte",
         "username": {
+          "error": "Le nom d'utilisateur n'est pas valide. Réessayez.",
           "label": "Nom d'utilisateur",
           "placeholder": "Entrez votre nom d'utilisateur"
         }
@@ -222,8 +225,30 @@
       "title": "Paramètres"
     },
     "TestGenerator": {
+      "QuestionDistribution": {
+        "availablePool": "Pool de questions disponibles",
+        "availableQuestions": "{count, plural, =0 {pas de questions} =1 {une question} other {# questions}}",
+        "chapters": "Chapitres",
+        "description": "Choisissez le nombre de questions à inclure dans chaque matière et chapitre",
+        "loading": "Chargement...",
+        "maxQuestion": "Max",
+        "minQuestion": "Min",
+        "questionRange": "Gamme de questions",
+        "subjects": "Thèmes",
+        "title": "Distribution des questions",
+        "totalQuestions": "Total des questions"
+      },
       "Selector": {
         "TestTypeSelector": {
+          "Configurations": {
+            "labels": {
+              "numberOfQuestions": "Nombre de questions",
+              "showAnswers": "Afficher la bonne réponse après chaque question",
+              "timeLimit": "Délai (minutes)"
+            }
+          },
+          "distributionInfoMessage": "Vous pouvez sélectionner le nombre individuel de questions ci-dessous",
+          "testConfigTitle": "Configuration du Test",
           "type": "{id, select, simple {Simple} mockExam {Examen Blanc} complex {Complexe} other {Inconnu}}"
         },
         "updatedAt": "Mise à jour à:"
@@ -232,6 +257,14 @@
         "fetch": {
           "message": "{error, select, Unauthorized {Vous n'êtes pas autorisé à accéder à cette page d'administration. \nSi vous croyez qu'il s'agit d'une erreur, actualisez la page et réessayez plus tard.} other {Erreur générale inconnue. Veuillez réessayer plus tard.}}",
           "title": "{error, select, Unauthorized {Erreur d'autorisation} other {Erreur générale}}"
+        },
+        "generate": {
+          "message": "{error, select, Unauthenticated {Veuillez vous connecter pour générer un test.} Unauthorized {Votre compte n'est pas autorisé pour cette configuration de test.} other {Une erreur inattendue s'est produite lors de la génération du test. Veuillez réessayer plus tard.}}",
+          "title": "{error, select, Unauthenticated {Sign-in requis} Unauthorized {Access Denied} other {Erreur de génération de test}}"
+        },
+        "noQuestions": {
+          "message": "Vous devez sélectionner au moins une question parmi les sources disponibles.",
+          "title": "Pas de questions sélectionnées"
         }
       },
       "exitConfiguration": {
@@ -240,6 +273,7 @@
         "message": "Êtes-vous sûr de vouloir quitter la configuration du test? \nTous les progrès seront perdus.",
         "title": "Laisser la configuration du test"
       },
+      "questionsNumber": "{count, plural, =0 {pas de questions} =1 {une question} autre {# questions}}",
       "steps": {
         "1": {
           "description": "Sélectionner le type de test",
@@ -260,11 +294,72 @@
         "back": "Retourner",
         "generate": "Générer un test",
         "next": "Suivant"
+      },
+      "warnings": {
+        "configuration": {
+          "adjusted": "Nombre maximum de questions disponibles : {allowedMax}",
+          "message": "Le nombre de questions a été automatiquement ajusté à {maximum autorisé} en fonction des questions disponibles.",
+          "title": "Nombre de questions ajusté"
+        }
       }
     },
     "Tests": {
+      "Categories": {
+        "admission": "Admission à l'université",
+        "bac": "Baccalauréat"
+      },
+      "Subjects": {
+        "biology": "Biologie",
+        "chemistry": "Chimie",
+        "english": "Anglais",
+        "french": "Français",
+        "geography": "Géographie",
+        "german": "Allemagne",
+        "history": "L'histoire",
+        "informatics": "Informatique",
+        "mathematics": "Mathématiques",
+        "physics": "Physique",
+        "romanian": "Roumain",
+        "spanish": "Espagnol"
+      },
+      "answered": "Répondu",
+      "availableQuestions": "{count, plural, =0 {pas de questions} =1 {une question} other {# questions}}",
+      "cancel": "Annuler",
+      "category": "{catégorie, choisir, admission {Admission à l'université} bac {Baccalauréat} autre {Inconnu}}}",
+      "confirm": "Confirmer",
+      "confirmDeleteTest": {
+        "message": "Êtes-vous sûr de vouloir supprimer ce test : <b>{testName}</b> ? Cette action ne peut pas être annulée.",
+        "title": "Supprimer le test"
+      },
+      "continueTest": "Continuer",
+      "delete": "Supprimer",
+      "deleteError": {
+        "message": "Échec de la suppression du test. Veuillez réessayer plus tard.",
+        "title": "Échec de la suppression"
+      },
       "description": "Ici, vous pouvez voir vos progrès et les tests que vous avez passés. \nVous pouvez également voir vos résultats et les sujets que vous avez étudiés. \nContinuez votre bon travail et bonne chance avec vos études!",
+      "details": "Détails du test",
+      "finishTest": "Terminer le test",
+      "finishedTest": "Fini",
+      "firstUnanswered": "Première question sans réponse",
       "generateTestTitle": "Générer un test",
+      "lastQuestion": "Dernière question",
+      "next": "Suivant",
+      "noQuestions": "Aucune question trouvée dans ce test",
+      "noQuestionsMessage": "Le test a été créé avec succès mais ne contient pas de questions. Retournez à la page du test et vérifiez la configuration.",
+      "previous": "Précédent",
+      "question": "Question",
+      "resumeTest": "Test de CV",
+      "startTest": "Démarrage",
+      "submitAnswer": "Soumettre la réponse",
+      "submitConfirmation": {
+        "goToUnanswered": "Aller aux questions sans réponse",
+        "message": "Vous n'avez pas répondu à toutes les questions. Êtes-vous sûr de vouloir soumettre le test?",
+        "submit": "Soumettre le test quand même",
+        "title": "Soumettre le test"
+      },
+      "testDeleted": "Test supprimé",
+      "testDeletedMessage": "Le test <b>{testName}</b> a été supprimé avec succès.",
       "tests": "{count, plural, =0 {Pas de tests} =1 {# tests} other {# tests}}",
       "title": "Tests"
     },
@@ -358,6 +453,62 @@
       "colorScheme": "{colorScheme, select, light {Clair} dark {Sombre} auto {Auto} other {Inconnu}}",
       "label": "Changer le thème"
     },
+    "Errors": {
+      "ALREADY_ANSWERED": {
+        "message": "Vous avez déjà répondu à cette question. Vous ne pouvez pas modifier votre réponse une fois qu'elle a été soumise.",
+        "title": "Déjà répondu"
+      },
+      "ALREADY_ENDED": {
+        "message": "Ce test est déjà terminé. Vous ne pouvez pas apporter de modifications à un test terminé.",
+        "title": "Test déjà effectué"
+      },
+      "ALREADY_STARTED": {
+        "message": "Ce test a déjà été lancé. Vous pouvez poursuivre le test en cours.",
+        "title": "Test déjà commencé"
+      },
+      "INVALID_ANSWER_IDS": {
+        "message": "Une ou plusieurs des réponses sélectionnées ne sont pas valides pour cette question. Veuillez ne sélectionner que des réponses valides.",
+        "title": "Réponses non valides"
+      },
+      "INVALID_INPUT": {
+        "message": "Les données fournies ne sont pas valides. Veuillez vérifier vos données et réessayer.",
+        "title": "Entrée invalide"
+      },
+      "NOT_FOUND": {
+        "message": "Cette ressource n'a pas été trouvée. Veuillez réessayer plus tard ou vérifier votre demande.",
+        "title": "Non trouvé"
+      },
+      "NOT_STARTED": {
+        "message": "Le test n'a pas encore été lancé. Vous devez démarrer le test avant de pouvoir effectuer cette action.",
+        "title": "Le test n'a pas commencé"
+      },
+      "NO_QUESTIONS": {
+        "message": "Aucune question n'a été trouvée pour les critères sélectionnés. Veuillez réessayer après avoir modifié vos filtres et options de génération de tests.",
+        "title": "Pas de questions"
+      },
+      "QUESTION_NOT_FOUND": {
+        "message": "La question demandée n'a pas été trouvée dans ce test. Veuillez réessayer ou contacter le support.",
+        "title": "Question non trouvée"
+      },
+      "TIME_LIMIT_EXCEEDED": {
+        "message": "Le temps imparti pour ce test a été dépassé. Votre test a été automatiquement soumis.",
+        "title": "Dépassement du délai"
+      },
+      "UNAUTHENTICATED": {
+        "message": "Vous n'êtes pas authentifié. Vous devez être connecté à votre compte pour continuer.",
+        "title": "Non authentifié"
+      },
+      "UNAUTHORIZED": {
+        "message": "Votre compte n'est pas autorisé à accéder à cette ressource ou à exécuter cette action. Veuillez réessayer plus tard.",
+        "title": "Accès refusé"
+      },
+      "UNKNOWN": {
+        "message": "Une erreur inconnue s'est produite. Veuillez réessayer plus tard ou assurez-vous que votre demande est valide.",
+        "messageCode": "Une erreur inconnue s'est produite. Veuillez réessayer plus tard ou assurez-vous que votre demande est valide. Code d'erreur : {code}.",
+        "title": "Erreur inconnue"
+      },
+      "goBack": "Retourner"
+    },
     "LocaleSwitcher": {
       "label": "Changer de langue",
       "locale": "{locale, select, ro {🇷🇴 Roumain} en {🇬🇧 Anglais} fr {🇫🇷 Français} de {🇩🇪 Allemand} other {Inconnu}}",
@@ -369,7 +520,10 @@
       },
       "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} de {DE} other {?}}"
     },
+    "copiedLabel": "Copié !",
+    "copyLabel": "Copier le code",
     "error": "Erreur",
+    "explanation": "Explication",
     "launch": "Aller à !",
     "loading": "Chargement...",
     "noResults": "Aucun résultat",
@@ -395,6 +549,10 @@
     }
   },
   "Tests": {
+    "Categories": {
+      "admission": "Admission à l'université",
+      "bac": "Baccalauréat"
+    },
     "Subjects": {
       "biology": "Biologie",
       "chemistry": "Chimie",
@@ -409,9 +567,40 @@
       "romanian": "Roumain",
       "spanish": "Espagnol"
     },
+    "answered": "Répondu",
+    "availableQuestions": "{count, plural, =0 {pas de questions} =1 {une question} other {# questions}}",
+    "cancel": "Annuler",
     "category": "{category, select, admission {Admission à l'université} bac {Baccalauréat} other {Inconnu}}",
+    "confirm": "Confirmer",
+    "confirmDeleteTest": {
+      "message": "Êtes-vous sûr de vouloir supprimer ce test : <b>{testName}</b> ? Cette action ne peut pas être annulée.",
+      "title": "Supprimer le test"
+    },
+    "continueTest": "Continuer",
+    "delete": "Supprimer",
+    "details": "détails du test",
+    "finishTest": "Test de finition",
+    "finishedTest": "Fini",
+    "firstUnanswered": "Première sans réponse",
     "lastQuestion": "Dernière question",
-    "resumeTest": "Reprendre le test"
+    "mark": "marque",
+    "next": "Suivant",
+    "noQuestions": "Aucune question n'a été trouvée dans ce test",
+    "noQuestionsMessage": "Le test a été créé avec succès mais ne contient pas de questions. Retournez à la page du test et vérifiez la configuration.",
+    "previous": "Précédent",
+    "question": "Question",
+    "resumeTest": "Reprendre le test",
+    "startTest": "Démarrage",
+    "submitAnswer": "Soumettre la réponse",
+    "submitConfirmation": {
+      "goToUnanswered": "Aller à sans réponse",
+      "message": "Vous n'avez pas encore répondu à toutes les questions. Êtes-vous sûr de vouloir soumettre le test ?",
+      "submit": "Soumettre le test quand même",
+      "title": "Soumettre un test"
+    },
+    "testDeleted": "Test supprimé",
+    "testDeletedMessage": "Le test <b>{testName}</b> a été supprimé avec succès.",
+    "timeTaken": "le temps passé"
   },
   "createSampleData": "Créer des exemples de données",
   "demo-components": "Composants de démonstration",

@@ -15,7 +15,8 @@
                 "type": "number",
                 "label": "Number of questions",
                 "min": 1,
-                "max": 100
+                "max": "*{maximumQuestionsNumber}*",
+                "suffix": ""
             }
         ]
     },
@@ -33,35 +34,16 @@
                 "type": "number",
                 "label": "Time limit (minutes)",
                 "min": 1,
-                "max": 1440
+                "max": 1440,
+                "suffix": " min"
             },
             {
                 "id": "numberOfQuestions",
                 "type": "number",
                 "label": "Number of questions",
                 "min": 1,
-                "max": 100
-            }
-        ]
-    },
-    {
-        "name": "Complex",
-        "id": "complex",
-        "description": "Complex test with lots of configuration options",
-        "configurations": [
-            {
-                "id": "showAnswers",
-                "default": true,
-                "type": "boolean",
-                "label": "Show correct answer after each question"
-            },
-            {
-                "id": "numberOfQuestions",
-                "type": "number",
-                "label": "Number of questions",
-                "min": 1,
-                "max": 100,
-                "individualEditor": true
+                "max": "*{maximumQuestionsNumber}*",
+                "suffix": ""
             }
         ]
     }

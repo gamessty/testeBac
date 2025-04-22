@@ -13,17 +13,14 @@ model Question {
 
     subject  Subject?  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
     chapter  Chapter?  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
-    userTest UserTest? @relation(fields: [userTestId], references: [id], onDelete: Cascade)
+    userTests UserTestOnQuestion[]
 
     @@map("questions")
 }
 
 enum QuestionType {
     singleChoice
-    simpleMultipleChoice
-    composedMultipleChoice // multiple choice with multiple correct answers, bucuresti umfcv, cu 1,2,3,4
-    trueFalse
-    fillInTheBlank
+    multipleChoice
 }
 
 type Option {
@@ -49,13 +46,12 @@ type Localization {
 
 type AnswerIndicator {
     code     Code[]
-    markdown String
+    markdown String?
 }
 
 type Code {
     language String[]
     code     String
-    default  Boolean  @default(false)
 }
 
 type SchemaConfigurator {

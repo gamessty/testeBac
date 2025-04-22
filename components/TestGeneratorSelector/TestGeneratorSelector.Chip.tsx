@@ -1,8 +1,7 @@
 import { Chip, ChipProps, Group, InputLabel } from "@mantine/core";
-import { Folder, Subject, Chapter } from "@prisma/client";
-import { useState } from "react";
-import styles from './TestGeneratorSelector.Chip.module.css';
 import { useUncontrolled } from "@mantine/hooks";
+import { Chapter, Folder, Subject } from "@prisma/client";
+import styles from './TestGeneratorSelector.Chip.module.css';
 
 type label = {
     name: string;

@@ -1,12 +1,12 @@
 "use client";
-import { Card, Group, Badge, Button, Image, Text, Avatar, CardProps, Box, Stack, Flex, Progress, ActionIcon, Tooltip } from "@mantine/core";
-import { useLocale, useTranslations } from "next-intl";
-import classes from './LinkCard.module.css';
-import { IconHandFinger, IconLink, IconPlayerPlayFilled } from "@tabler/icons-react";
-import AvatarFallback from "../../AvatarFallback/AvatarFallback";
-import { getInitialsColor } from "../../../utils";
+import { ActionIcon, Badge, Box, Button, Card, CardProps, Flex, Image, Stack, Text } from "@mantine/core";
+import { IconLink } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { MouseEventHandler } from "react";
+import { getInitialsColor } from "../../../utils";
+import AvatarFallback from "../../AvatarFallback/AvatarFallback";
+import classes from './LinkCard.module.css';
 
 interface LinkCardProps {
     name?: string;

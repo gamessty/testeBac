@@ -1,6 +1,6 @@
 import createMiddleware from 'next-intl/middleware';
 import { routing } from './i18n/routing';
-import { NextRequest } from 'next/server';
+import { NextRequest, NextResponse } from 'next/server';
 
 export const config = {
   // Match only internationalized pathnames
@@ -15,7 +15,7 @@ export default async function middleware(request: NextRequest) {
   const [, locale, ...segments] = request.nextUrl.pathname.split('/');
  
   if (locale != null && segments.join('/') === 'app/test') {
-      request.nextUrl.pathname = `/${locale}/app`;
+    return NextResponse.redirect(new URL(`/${locale}/app?tab=tests`, request.url));
   }
  
   const handleI18nRouting = createMiddleware(routing);

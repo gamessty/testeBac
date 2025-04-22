@@ -1,0 +1,36 @@
+.container {
+    margin-top: var(--mantine-spacing-md);
+    margin-bottom: var(--mantine-spacing-lg);
+}
+
+.item {
+    padding: var(--mantine-spacing-xs);
+    border-radius: var(--mantine-radius-sm);
+}
+
+.itemContainer {
+    border-radius: var(--mantine-radius-sm);
+    margin-bottom: var(--mantine-spacing-xs);
+    
+    @mixin light {
+        background-color: var(--mantine-color-gray-0);
+    }
+
+    @mixin dark {
+        background-color: var(--mantine-color-dark-7);
+    }
+}
+
+.input {
+    width: 100px;
+}
+
+.rangeInput {
+    width: 70px;
+}
+
+.rangeControls {
+    padding-inline: var(--mantine-spacing-md);
+    padding-bottom: var(--mantine-spacing-xs);
+    align-items: center;
+}

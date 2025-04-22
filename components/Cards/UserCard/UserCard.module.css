@@ -21,3 +21,34 @@
     bottom: var(--mantine-spacing-lg);
     width: 100%;
 }
+
+.user-card.compact:not(:has(:global(.mantine-Badge-root))) .title {
+    font-size: var(--text-fz, var(--mantine-font-size-lg));
+}   
+
+.user-card:hover {
+    background-color: light-dark(var(--mantine-color-gray-1), lighten(var(--mantine-color-dark-6), 0.02));
+    top: -5px;
+}
+
+.user-card .action-button {
+    position: absolute;
+    bottom: var(--mantine-spacing-xs);
+    right: var(--mantine-spacing-xs);
+    svg {
+        width: 80%;
+        height: 80%;
+        stroke-width: 2;
+    }
+}
+
+*:where([style*="display: flex"], [class*="flex"], [class*="mantine-Grid-col"]) .user-card.compact {
+    height: 100%;
+}
+
+*:where([style*="display: flex"], [class*="flex"], [class*="mantine-Grid-col"]):has(.user-card.compact)  {
+    align-items: stretch !important;
+    & > * {
+        height: 100%;
+    }
+}

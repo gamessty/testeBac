@@ -1,6 +1,6 @@
-import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
 import { Button, ButtonGroupProps, Loader } from '@mantine/core';
-import { useCounter, usePagination, useUncontrolled } from '@mantine/hooks';
+import { usePagination, useUncontrolled } from '@mantine/hooks';
+import { IconChevronDown, IconChevronUp } from '@tabler/icons-react';
 import classes from './FontSizeSelector.button.module.css';
 
 interface DataType {
@@ -39,7 +39,7 @@ export default function FontSizeSelectorButton({
                 <IconChevronDown color="var(--mantine-color-red-text)" />
             </Button>
             <Button.GroupSection variant="default" bg="var(--mantine-color-body)" className={classes['middle-section']} data-disabled={disabled} miw={80}>
-                {disabled ? <Loader type='dots' color='gray' /> : data[pagination.active]?.label}
+                {disabled ? <Loader type='dots' color='teal' /> : data[pagination.active]?.label}
             </Button.GroupSection>
             <Button variant="default" radius="md" className={classes['button']} onClick={pagination.next} disabled={disabled}>
                 <IconChevronUp color="var(--mantine-color-teal-text)" />

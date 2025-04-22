@@ -4,12 +4,15 @@ import Google from "next-auth/providers/google"
 import { sendVerificationRequest } from "./lib/authSendRequest"
 import { PrismaAdapter } from "@auth/prisma-adapter"
 import { prisma } from "./lib/prisma"
-import { PrismaClient, Question, Role, UserPreferences, UserTest } from "@prisma/client"
+import { Chapter, Folder, PrismaClient, Question, Role, Subject, UserPreferences, UserTest } from "@prisma/client"
 import type { Provider } from "next-auth/providers"
 import { type Adapter } from "next-auth/adapters";
 
-interface UserActiveTest extends UserTest {
-  questions: Question[]
+export interface UserActiveTest extends UserTest {
+  questions: Question[],
+  folder: Folder | null,
+  subjects: Subject[] | null,
+  chapters: Chapter[] | null,
 }
 
 function CustomPrismaAdapter(p: PrismaClient): Adapter {
@@ -65,27 +68,25 @@ export const authOptions: NextAuthConfig = {
   providers,
   pages: {
     signIn: "/signin",
+    signOut: "/signout",
     verifyRequest: "/verify-request",
   },
   callbacks: {
     async session({ session, user }) {
-      // `session.user.roles` is now a valid property, and will be type-checked
-      // in places like `useSession().data.user` or `auth().user`
       const userTests = await prisma.userTest.findMany({
-        where: {
-          userId: user.id
-        }
+        where: { userId: user.id },
+        include: { questions: { include: { question: true } } } // Include related questions
       });
 
-      let userActiveTests = userTests.map(async (test) => {
-        let userActiveTest = test as UserActiveTest;
-        userActiveTest.questions = await prisma.question.findMany({
-          where: {
-            userTestId: test.id
-          }
-        }) ?? [];
-        return userActiveTest;
-      });
+      const userActiveTests = await Promise.all(
+        userTests.map(async (test) => {
+          const folder = test.folderId ? await prisma.folder.findUnique({ where: { id: test.folderId } }) : null; // Include folder if folderId is present
+          const subjects = test.subjectId ? await prisma.subject.findMany({ where: { id: { in: test.subjectId } } }) : null; // Include subjects if subjectId is present
+          const chapters = test.chapterId ? await prisma.chapter.findMany({ where: { id: { in: test.chapterId } } }) : null;
+          const questions = test.questions.map((utq) => utq.question); // Extract questions
+          return { ...test, folder, subjects, questions, chapters };
+        })
+      );
 
       const roles = await prisma.role.findMany({
         where: {
@@ -100,11 +101,11 @@ export const authOptions: NextAuthConfig = {
           ...session.user,
           roles,
           preferences: user.preferences,
-          userActiveTests,
+          activeTests: userActiveTests,
           username: user.username,
           userAuthorized: user.userAuthorized
         },
-      }
+      };
     },
   },
 }

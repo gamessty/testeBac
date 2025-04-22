@@ -9,7 +9,6 @@ export const theme = createTheme({
     darkModeImageFilter2: 'invert(0.823)'
     
   },
-  scale: 0.9,
   /* Put your mantine theme override here */
   breakpoints: {
     xs: '30em',

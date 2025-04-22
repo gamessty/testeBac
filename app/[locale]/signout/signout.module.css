@@ -10,6 +10,18 @@
     }
 }
 
+.center {
+    flex-direction: column;
+    & > *:last-child {
+        flex-grow: 1;
+    }
+}
+
+.return-button {
+    align-self: flex-start;
+    margin-top: var(--mantine-spacing-md);
+}
+
 .signout-title {
     margin-bottom: var(--mantine-spacing-xs);
     display: flex;

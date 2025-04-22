@@ -1,8 +1,8 @@
-import { getTranslations } from "next-intl/server"
-import { getPathsFromURL, getQueryParamsFromURL, isSupportedLocale } from "../utils"
-import { unescape } from "querystring"
 import { render } from '@react-email/components';
+import { getTranslations } from "next-intl/server";
+import { unescape } from "querystring";
 import { MagicLinkEmail } from '../emails/magic-link';
+import { getPathsFromURL, getQueryParamsFromURL, isSupportedLocale } from "../utils";
 
 export async function sendVerificationRequest(params: any) {
   const { identifier: to, provider, url } = params
@@ -43,14 +43,14 @@ function html(params: { url: string; host: string; theme: any, t: any }) {
 
   const escapedHost = host.replace(/\./g, "&#8203;.")
 
-  const brandColor = theme.brandColor || "#346df1"
+  const brandColor = theme.brandColor ?? "#346df1"
   const color = {
     background: "#f9f9f9",
     text: "#444",
     mainBackground: "#fff",
     buttonBackground: brandColor,
     buttonBorder: brandColor,
-    buttonText: theme.buttonText || "#fff",
+    buttonText: theme.buttonText ?? "#fff",
   }
 
   return `

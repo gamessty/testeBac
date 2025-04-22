@@ -1,5 +1,5 @@
 'use client';
-import { Card, CardProps, LoadingOverlay, Text, Title } from "@mantine/core";
+import { Card, CardProps, LoadingOverlay, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconPlus } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
@@ -18,7 +18,7 @@ export default function CreateTestCard({ href, toggleLoading, onClick }: Readonl
     return (
         <Card component={Link} href={href ?? '#'} pos="relative" w={"100%"} pb="lg" onClick={() => { toggleLoading ? toggle() : open(); if (onClick) onClick(); }} withBorder>
             <Card.Section inheritPadding py="xs">
-                <LoadingOverlay visible={visible} zIndex={1000} loaderProps={{ color: 'grey', type: 'dots' }} overlayProps={{ radius: "sm", blur: 2 }} />
+                <LoadingOverlay visible={visible} zIndex={1000} loaderProps={{ color: 'teal', type: 'dots' }} overlayProps={{ radius: "sm", blur: 2 }} />
                 <IconPlus />
                 <Text variant="gradient"
                     gradient={{ from: 'green', to: 'grape', deg: 75 }} fw={800} size="xl">{t('generateTestTitle')}</Text>

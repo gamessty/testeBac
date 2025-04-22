@@ -1,15 +1,13 @@
 
 "use client";
-import { Title, Text, MantineStyleProp, Center, Flex, SimpleGrid, rem } from "@mantine/core";
-import classes from "./Home.module.css";
-import { useTranslations } from "next-intl";
-import { Session } from "next-auth";
-import { chkP, getInitialsColor } from "../../../utils";
 import LinkCard from "@/components/Cards/LinkCard/LinkCard";
-import { usePathname } from "@/i18n/routing";
-import { useCallback } from "react";
-import { IconFile, IconGraph, IconLogout, IconSettings, IconUser, IconUserPlus } from "@tabler/icons-react";
 import { ITabModuleProps } from "@/data";
+import { usePathname } from "@/i18n/routing";
+import { Center, Flex, SimpleGrid, Text, Title, rem } from "@mantine/core";
+import { IconFile, IconGraph, IconLogout, IconSettings, IconUser, IconUserPlus } from "@tabler/icons-react";
+import { useTranslations } from "next-intl";
+import { chkP, getInitialsColor } from "../../../utils";
+import classes from "./Home.module.css";
 
 interface HomeProps extends ITabModuleProps {}
 
@@ -38,9 +36,7 @@ export default function Home({ style, session, settab }: Readonly<HomeProps>) {
             <Center style={{ flexGrow: 1 }}>
                 <SimpleGrid maw="100vw" verticalSpacing="xs" cols={2} w={{ base: "90%", xs: '80%', md: "60%", lg: '50%', xxl: '35%' }}>
                     <LinkCard design="compact" pb="50px" actionIcon={<IconFile />} name={t("Navbar.tests")} onClick={() => { settab({ tab: 'tests' }) }} />
-
                     <LinkCard design="compact" pb="50px" actionIcon={<IconSettings />} name={t('Navbar.settings')} onClick={() => { settab({ tab: 'settings' }) }} />
-                    <LinkCard design="compact" pb="50px" actionIcon={<IconGraph />} name={t("Navbar.stats")} onClick={() => { settab({ tab: 'stats' }) }} />
                     <LinkCard design="compact" pb="50px" actionIcon={<IconLogout color="var(--mantine-color-red-5)" />} name={t('Navbar.signout')} href="/api/auth/signout" />
                     {
                         chkP("user:manage", session.user) &&

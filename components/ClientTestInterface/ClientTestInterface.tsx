@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import useUserTest, { Option, AdditionalData, AnswerIndicator } from "@/hooks/useUserTest";
 import { Button, Card, Container, Group, LoadingOverlay, Modal, Paper, Progress, ScrollArea, Stack, Text, Title } from "@mantine/core";
@@ -36,12 +36,12 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
     // Properly determine if there's a valid choice selected
     const isValidChoice = (): boolean => {
         if (!choice) return false;
-        
+
         // Handle array choices (multiple choice questions)
         if (Array.isArray(choice)) {
             return choice.length > 0;
         }
-        
+
         // Handle single choice
         return choice !== undefined && choice !== '';
     };
@@ -159,7 +159,7 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
         try {
             // Create properly formatted answerIds array based on question type
             let answerIds: string[];
-            
+
             if (currentQuestion.type === 'singleChoice') {
                 // For single choice, wrap the choice in an array if it's a string
                 answerIds = typeof choice === 'string' ? [choice] : (Array.isArray(choice) && choice.length > 0 ? [choice[0]] : []);
@@ -167,18 +167,18 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
                 // For multiple choice, ensure we have an array of strings (not characters)
                 answerIds = Array.isArray(choice) ? choice : (typeof choice === 'string' ? [choice] : []);
             }
-            
+
             // Additional validation to prevent undefined or invalid values
             answerIds = answerIds.filter(id => typeof id === 'string' && id.trim() !== '');
-            
+
             console.log("Submitting answer IDs for question type", currentQuestion.type, ":", answerIds);
-            
+
             // Don't proceed if we don't have valid answer IDs
             if (answerIds.length === 0) {
                 setLoading(false);
                 return;
             }
-            
+
             const result = await test.submitAnswer(currentQuestion.id, answerIds);
 
             if (result) {
@@ -264,7 +264,7 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
         ['Space', (event) => {
             // Prevent default space behavior (scrolling)
             event.preventDefault();
-            
+
             // Submit answer when submit button is active
             if (!questionAnswered && isValidChoice() && !loading) {
                 handleAnswerSubmit();
@@ -285,7 +285,7 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
         ['ctrl+Space', (event) => {
             // Prevent default space behavior
             event.preventDefault();
-            
+
             // Alternative hotkey combination for submitting answers
             if (!questionAnswered && isValidChoice() && !loading) {
                 handleAnswerSubmit();
@@ -359,8 +359,8 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
                         // For multiple choice questions, ensure we're working with arrays properly
                         if (currentQuestion.type === 'multipleChoice') {
                             // Ensure newChoice is always an array for multiple choice questions
-                            const adjustedChoice = Array.isArray(newChoice) 
-                                ? newChoice 
+                            const adjustedChoice = Array.isArray(newChoice)
+                                ? newChoice
                                 : (newChoice ? [newChoice] : []);
                             setChoice(adjustedChoice);
                         } else {
@@ -400,9 +400,9 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
                     >
                         {isLastQuestion ? t('finishTest') : t('next')}
                     </Button>
-                ) : (
-                    <Group>
-                        {questionAnswered ? (
+                ) :
+                    (<Fragment>
+                        {questionAnswered && (
                             <Button
                                 color="blue"
                                 rightSection={<IconArrowRight />}
@@ -411,7 +411,8 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
                             >
                                 {isLastQuestion ? t('finishTest') : t('next')}
                             </Button>
-                        ) : (
+                        )}
+                        {!questionAnswered &&
                             <Button
                                 color="green"
                                 onClick={handleAnswerSubmit}
@@ -419,9 +420,8 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
                             >
                                 {t('submitAnswer')}
                             </Button>
-                        )}
-                    </Group>
-                )}
+                        }
+                    </Fragment>)}
             </Group>
 
             {/* Confirmation modal for submitting test with unanswered questions */}

@@ -216,7 +216,7 @@ export default function QuestionCard({
             data-answered={answered ? "true" : "false"}
             className={classes.questionCard}
         >
-            <Title order={4} style={{ marginBottom: 10 }}>
+            <Title order={4} style={{ marginBottom: 10 }} className={classes['title']}>
                 {questionNumber ? questionNumber + ". " : ''}{question}
             </Title>
             {additionalData?.image && (
@@ -238,7 +238,7 @@ export default function QuestionCard({
                         copyLabel={t('copyLabel')} 
                         copiedLabel={t('copiedLabel')} 
                         code={codeToDisplay.code} 
-                        classNames={{ copy: classes['copy-code'] }}
+                        classNames={{ root: classes["copy-root"], copy: classes['copy-code'] }}
                     />
                 )}
                 
@@ -266,7 +266,7 @@ export default function QuestionCard({
             </Flex>
             
             {feedback && (additionalData?.explanation?.markdown || additionalData.explanation?.code) && (
-                <Card mt="md" withBorder p="sm" radius="sm" bg="rgba(0,0,0,0.03)">
+                <Card mt="md" withBorder p="sm" radius="sm" bg="rgba(0,0,0,0.03)" className={classes['explanation']}>
                     <Title order={5} mb="xs">{t('explanation')}</Title>
                     <Text size="sm">{additionalData.explanation.markdown}</Text>
                     {additionalData.explanation.code && (

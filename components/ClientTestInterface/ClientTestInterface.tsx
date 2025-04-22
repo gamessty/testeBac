@@ -81,6 +81,10 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
         setChoice(undefined);
         setFeedback(undefined);
         setQuestionAnswered(false);
+        if(test.isQuestionAnswered(currentQuestion?.id ?? '')) {
+            setQuestionAnswered(true);
+            setFeedback(test.getAnswerFeedback(currentQuestion?.id ?? '') ?? undefined);
+        }
     }, [test.currentQuestionIndex]);
 
     // Calculate progress percentage safely

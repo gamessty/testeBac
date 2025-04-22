@@ -6,11 +6,9 @@ import { Fragment, useEffect, useState } from "react";
 import CreateTestCard from "../../Cards/CreateTestCard/CreateTestCard";
 import TestCard from "../../Cards/TestCard/TestCard";
 import { ITabModuleProps } from "@/data";
-import resumeUserTest from '@/actions/PrismaFunctions/test/start/resumeUserTest';
 
 export default function Tests({ session, settab, style }: Readonly<ITabModuleProps>) {
     const t = useTranslations('Dashboard.Tests');
-    const [tt, setTt] = useState('testjson')
 
     function getLastQuestionText(test: UserActiveTest) {
         return test.questions.filter(q => test.selectedAnswers.findIndex(s => s.questionId == q.id) != -1).sort((a, b) => {
@@ -19,20 +17,6 @@ export default function Tests({ session, settab, style }: Readonly<ITabModulePro
             return bIndex - aIndex;
         })[0]?.question ?? test.questions[0]?.question
     }
-
-    useEffect(() => {
-        async function fetchTest() {
-            if(!session.user.activeTests?.length) return;
-            const response = await resumeUserTest({ userTestId: session.user.activeTests[0].id });
-            if (response && typeof response !== 'string') {
-                const test = response;
-                setTt(JSON.stringify(test, null, 2));
-            } else {
-                console.error('Error fetching test:', response);
-            }
-        }
-        fetchTest();
-    }, [session.user.activeTests?.length]);
 
     return (
         <Container fluid p={{ base: 30, sm: 35 }} pt={{ base: 20, sm: 25 }} style={style}>
@@ -55,13 +39,6 @@ export default function Tests({ session, settab, style }: Readonly<ITabModulePro
                                     <Fragment key={test.id}>
                                         <TestCard design="compact" mih="100%" category={test.folder?.category} subject={test.subjects?.map(sj => sj.name?.toLowerCase())} progress={test.selectedAnswers.length / test.questions.length * 100} href={`/app/test/${test.id}`} lastQuestion={getLastQuestionText(test)}/>
                                         <Divider variant="dashed" className={classes['divider']} />
-                                        {
-                                            <JsonInput
-                                            autosize
-                                            lang='json'
-                                                value={tt}
-                                            />
-                                        }
                                     </Fragment>
                                 )
                             })

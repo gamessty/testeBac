@@ -366,6 +366,37 @@ export default function useUserTest(testId: string) {
     return feedback;
   }
 
+  // Add utility functions directly in the hook
+  const isQuestionAnswered = (questionId: string): boolean => {
+    if (!userTest?.selectedAnswers) return false;
+    return userTest.selectedAnswers.some(answer => answer.questionId === questionId);
+  };
+
+  const getAnsweredQuestionsSet = (): Set<string> => {
+    const answeredQuestionIds = new Set<string>();
+    
+    if (userTest?.selectedAnswers) {
+      userTest.selectedAnswers.forEach(answer => {
+        answeredQuestionIds.add(answer.questionId);
+      });
+    }
+    
+    return answeredQuestionIds;
+  };
+
+  const getQuestionStatus = (questionId: string): { 
+    isAnswered: boolean; 
+    feedback: AnswerFeedback | null;
+  } => {
+    const isAnswered = isQuestionAnswered(questionId);
+    const feedback = isAnswered ? getAnswerFeedback(questionId) : null;
+    
+    return {
+      isAnswered,
+      feedback
+    };
+  };
+
   // Helper functions
   function findLastAnsweredQuestionIndex(test: UserTest): number {
     if (!test.selectedAnswers || test.selectedAnswers.length === 0) return -1;
@@ -416,5 +447,9 @@ export default function useUserTest(testId: string) {
     getAnswerFeedback,
     getTimeLimit,
     getRemainingTime,
+    // Add new utility functions to the returned object
+    isQuestionAnswered,
+    getAnsweredQuestionsSet,
+    getQuestionStatus,
   };
 }

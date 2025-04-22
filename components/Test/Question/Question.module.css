@@ -1,6 +1,7 @@
 .root {
     position: relative;
-    padding: var(--mantine-spacing-md);
+    padding: var(--mantine-spacing-lg);
+    padding-inline: calc(var(--mantine-spacing-md) + var(--mantine-spacing-lg));
     transition: background-color 150ms ease;
     border-color: alpha(var(--mantine-color-gray-2), 0.3);
     border-width: 0.1rem;
@@ -89,5 +90,21 @@
         width: 95%;
         margin-right: 1px;
         margin-top: 1px;
+    }
+}
+
+.questionCard {
+    padding-inline: 0px;
+    .title {
+        padding-inline: var(--mantine-spacing-lg);
+    }
+    .explanation {
+        margin-inline: var(--mantine-spacing-lg);
+    }
+    .copy-root {
+        margin-left: var(--mantine-spacing-lg);
+        @media screen and (max-width: 992px) {
+            margin-right: var(--mantine-spacing-lg);
+        }
     }
 }

@@ -51,7 +51,6 @@ export default function QuestionDemo() {
                         feedback={feedback}
                         answered={answered}
                         value={choice}
-                        defaultValue={undefined}
                         onChange={setChoice}
                     />
                     

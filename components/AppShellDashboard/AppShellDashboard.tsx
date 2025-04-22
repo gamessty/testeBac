@@ -17,7 +17,6 @@ import RoleManager from "../Dashboard/Admin/RoleManager/RoleManager";
 import UserManager from "../Dashboard/Admin/UserManager/UserManager";
 import Home from "../Dashboard/Home/Home";
 import Settings from "../Dashboard/Settings/Settings";
-import Stats from "../Dashboard/Stats/Stats";
 import Tests from "../Dashboard/Tests/Tests";
 import SignOutButtonClient from "../SignOutButton/SignOutButton.client";
 import TestGenerator from "../TestGenerator/TestGenerator";
@@ -313,18 +312,6 @@ export const tabsData: ITabData[] = [
             "showLabel": false
         },
         "mobile": true,
-        "permissionNeeded": Permissions["general:*"]
-    },
-    {
-        "tab": "stats",
-        "icon": IconGraph,
-        "component": Stats,
-        "category": {
-            "name": "general",
-            "order": 0,
-            "namespaced": false,
-            "showLabel": false
-        },
         "permissionNeeded": Permissions["general:*"]
     },
     {

@@ -83,7 +83,7 @@ export default function useUserTest(testId: string) {
   const [userTest, setUserTest] = useState<UserTest | null>(null);
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState<number>(0);
+  const [currentQuestionIndex, setCurrentQuestionIndexState] = useState<number>(0);
 
   // Initialize the test on component mount
   useEffect(() => {
@@ -126,13 +126,25 @@ export default function useUserTest(testId: string) {
           // Redirect to results page if test already ended
           router.push(`/app/test/${testId}/start`);
           return;
+        } else if (resumeResponse.message === "ALREADY_STARTED") {
+          // If we get ALREADY_STARTED, try to resume again
+          // This handles the race condition where the client tries to start a test
+          // that was just started
+          const retryResponse = await resumeUserTest({ userTestId: testId });
+          if ('message' in retryResponse) {
+            setError(retryResponse.message);
+          } else {
+            setUserTest(retryResponse);
+            const firstUnansweredQuestion = findFirstUnansweredQuestionIndex(retryResponse);
+            setCurrentQuestionIndexState(firstUnansweredQuestion);
+          }
         } else if (resumeResponse.message === "NOT_FOUND" || resumeResponse.message === "UNAUTHORIZED") {
           setError(resumeResponse.message);
         }
       } else {
         setUserTest(resumeResponse);
         const firstUnansweredQuestion = findFirstUnansweredQuestionIndex(resumeResponse);
-        setCurrentQuestionIndex(firstUnansweredQuestion);
+        setCurrentQuestionIndexState(firstUnansweredQuestion);
       }
     } catch (err) {
       console.error("Test initialization error:", err);
@@ -169,7 +181,7 @@ export default function useUserTest(testId: string) {
         return null;
       } else {
         setUserTest(response);
-        setCurrentQuestionIndex(0);
+        setCurrentQuestionIndexState(0);
         return response;
       }
     } catch (err) {
@@ -251,7 +263,7 @@ export default function useUserTest(testId: string) {
 
   const nextQuestion = () => {
     if (userTest && currentQuestionIndex < userTest.questions.length - 1) {
-      setCurrentQuestionIndex(prev => prev + 1);
+      setCurrentQuestionIndexState(prev => prev + 1);
       return true;
     }
     return false;
@@ -259,7 +271,7 @@ export default function useUserTest(testId: string) {
 
   const previousQuestion = () => {
     if (currentQuestionIndex > 0) {
-      setCurrentQuestionIndex(prev => prev - 1);
+      setCurrentQuestionIndexState(prev => prev - 1);
       return true;
     }
     return false;
@@ -397,6 +409,19 @@ export default function useUserTest(testId: string) {
     };
   };
 
+  // Add a direct setter for the current question index
+  const setCurrentQuestionIndex = (index: number) => {
+    if (!userTest?.questions) return false;
+    
+    // Ensure the index is within valid range
+    if (index >= 0 && index < userTest.questions.length) {
+      setCurrentQuestionIndexState(index);
+      return true;
+    }
+    
+    return false;
+  };
+
   // Helper functions
   function findLastAnsweredQuestionIndex(test: UserTest): number {
     if (!test.selectedAnswers || test.selectedAnswers.length === 0) return -1;
@@ -447,9 +472,10 @@ export default function useUserTest(testId: string) {
     getAnswerFeedback,
     getTimeLimit,
     getRemainingTime,
-    // Add new utility functions to the returned object
     isQuestionAnswered,
     getAnsweredQuestionsSet,
     getQuestionStatus,
+    // Add the direct setter to the returned object
+    setCurrentQuestionIndex,
   };
 }

@@ -48,7 +48,7 @@ export default async function endUserTest({ userTestId }: { userTestId: string }
     
     // Calculate the mark using the formula: score/maximum_score * 9 + 1
     // Ensure we don't divide by zero
-    let mark = 1.0; // Default minimum mark if no questions or max score is 0
+    let mark = 1; // Default minimum mark if no questions or max score is 0
     if (maxPossibleScore > 0) {
         mark = (userTest.score / maxPossibleScore) * 9 + 1;
         // Truncate to 2 decimal places without rounding

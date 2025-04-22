@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import useUserTest, { Option, AdditionalData, AnswerIndicator } from "@/hooks/useUserTest";
-import { Button, Card, Container, Group, LoadingOverlay, Modal, Paper, Progress, Stack, Text, Title } from "@mantine/core";
+import { Button, Card, Container, Group, LoadingOverlay, Modal, Paper, Progress, ScrollArea, Stack, Text, Title } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import QuestionCard from "@/components/Test/Question/Question";
 import { useTranslations } from "next-intl";
@@ -11,6 +11,7 @@ import { IconArrowLeft, IconArrowRight, IconCheck, IconClock } from "@tabler/ico
 import TestProgressBar from "@/components/TestProgressBar/TestProgressBar";
 import classes from "./ClientTestInterface.module.css";
 import { JsonObject } from "next-auth/adapters";
+import { useDidUpdate, useHotkeys } from "@mantine/hooks";
 
 export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Readonly<{ testId: string, codeLanguage?: string }>) {
     const tErrors = useTranslations('General.Errors');
@@ -31,7 +32,20 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
 
     // Initialize the test hook
     const test = useUserTest(testId);
-    
+
+    // Properly determine if there's a valid choice selected
+    const isValidChoice = (): boolean => {
+        if (!choice) return false;
+        
+        // Handle array choices (multiple choice questions)
+        if (Array.isArray(choice)) {
+            return choice.length > 0;
+        }
+        
+        // Handle single choice
+        return choice !== undefined && choice !== '';
+    };
+
     useEffect(() => {
         // Add debug logging to help diagnose the issue
         console.log("Current test state:", {
@@ -42,9 +56,9 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
             userTest: test.userTest
         });
     }, [test.loading, test.error, test.currentQuestionIndex, test.userTest]);
-    
+
     const currentQuestion = test.getCurrentQuestion();
-    
+
     // Ensure we handle the case when questions array might be empty or undefined
     const questionsLength = test.userTest?.questions?.length ?? 0;
     const isLastQuestion = questionsLength > 0 && test.currentQuestionIndex === questionsLength - 1;
@@ -81,11 +95,11 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
         setChoice(undefined);
         setFeedback(undefined);
         setQuestionAnswered(false);
-        if(test.isQuestionAnswered(currentQuestion?.id ?? '')) {
+        if (test.isQuestionAnswered(currentQuestion?.id ?? '')) {
             setQuestionAnswered(true);
             setFeedback(test.getAnswerFeedback(currentQuestion?.id ?? '') ?? undefined);
         }
-    }, [test.currentQuestionIndex]);
+    }, [test.currentQuestionIndex, currentQuestion?.id]);
 
     // Calculate progress percentage safely
     const progressPercentage =
@@ -96,18 +110,14 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
     // Handle navigation
     const handleNext = () => {
         test.nextQuestion();
+        // Clear choice when navigating
+        setChoice(undefined);
     };
 
     const handlePrevious = () => {
         test.previousQuestion();
-    };
-
-    const handleGoToFirstUnanswered = () => {
-        const firstUnansweredIndex = findFirstUnansweredIndex();
-        if (firstUnansweredIndex >= 0) {
-            setCurrentQuestionIndex(firstUnansweredIndex);
-            setSubmitConfirmOpen(false);
-        }
+        // Clear choice when navigating
+        setChoice(undefined);
     };
 
     // Find the index of the first unanswered question
@@ -125,26 +135,50 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
         return firstUnansweredIndex === -1 ? 0 : firstUnansweredIndex;
     };
 
-    // Set current question index directly
-    const setCurrentQuestionIndex = (index: number) => {
-        if (index >= 0 && index < (test.userTest?.questions.length ?? 0)) {
-            // This is a way to manually control the index since useUserTest doesn't expose a direct setter
-            while (test.currentQuestionIndex < index) {
-                test.nextQuestion();
-            }
-            while (test.currentQuestionIndex > index) {
-                test.previousQuestion();
-            }
+    // Handle going to the first unanswered question
+    const handleGoToFirstUnanswered = () => {
+        const firstUnansweredIndex = findFirstUnansweredIndex();
+        if (firstUnansweredIndex >= 0) {
+            // Use the new direct setter method
+            test.setCurrentQuestionIndex(firstUnansweredIndex);
+            setSubmitConfirmOpen(false);
         }
     };
 
+    useDidUpdate(() => {
+        console.log("Current choice changed:", choice);
+
+    }, [choice]);
+
     // Handle submitting an answer
     const handleAnswerSubmit = async () => {
-        if (!currentQuestion || !choice) return;
+        // Only allow submission if there's a valid choice selected
+        if (!currentQuestion || !isValidChoice()) return;
 
         setLoading(true);
         try {
-            const answerIds = Array.isArray(choice) ? choice : [choice];
+            // Create properly formatted answerIds array based on question type
+            let answerIds: string[];
+            
+            if (currentQuestion.type === 'singleChoice') {
+                // For single choice, wrap the choice in an array if it's a string
+                answerIds = typeof choice === 'string' ? [choice] : (Array.isArray(choice) && choice.length > 0 ? [choice[0]] : []);
+            } else {
+                // For multiple choice, ensure we have an array of strings (not characters)
+                answerIds = Array.isArray(choice) ? choice : (typeof choice === 'string' ? [choice] : []);
+            }
+            
+            // Additional validation to prevent undefined or invalid values
+            answerIds = answerIds.filter(id => typeof id === 'string' && id.trim() !== '');
+            
+            console.log("Submitting answer IDs for question type", currentQuestion.type, ":", answerIds);
+            
+            // Don't proceed if we don't have valid answer IDs
+            if (answerIds.length === 0) {
+                setLoading(false);
+                return;
+            }
+            
             const result = await test.submitAnswer(currentQuestion.id, answerIds);
 
             if (result) {
@@ -225,13 +259,39 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
         }
     };
 
-    if (test.loading) {
-        return (
-            <Container className={classes.container}>
-                <LoadingOverlay visible={true} loaderProps={{ color: 'teal', type: 'dots' }} zIndex={1100}/>
-            </Container>
-        );
-    }
+    // Add hotkey for submitting answers with spacebar key instead of Enter
+    useHotkeys([
+        ['Space', (event) => {
+            // Prevent default space behavior (scrolling)
+            event.preventDefault();
+            
+            // Submit answer when submit button is active
+            if (!questionAnswered && isValidChoice() && !loading) {
+                handleAnswerSubmit();
+            }
+            // Navigate to next question when "Next" button is active
+            else if (questionAnswered && !isLastQuestion && !loading) {
+                handleNext();
+            }
+            // Show submit confirmation when on last question
+            else if (questionAnswered && isLastQuestion && !loading) {
+                setSubmitConfirmOpen(true);
+            }
+            // Handle feedback flow
+            else if (feedback) {
+                handleNextAfterFeedback();
+            }
+        }],
+        ['ctrl+Space', (event) => {
+            // Prevent default space behavior
+            event.preventDefault();
+            
+            // Alternative hotkey combination for submitting answers
+            if (!questionAnswered && isValidChoice() && !loading) {
+                handleAnswerSubmit();
+            }
+        }],
+    ]);
 
     if (test.error) {
         return (
@@ -248,33 +308,17 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
     }
 
     // Check if we have a valid question to display
-    if (!currentQuestion || questionsLength === 0) {
+    if ((!currentQuestion || questionsLength === 0)) {
         return (
             <Container className={classes.container}>
-                <Card withBorder shadow="sm" p="xl">
-                    <Title order={3} mb="md">{t('noQuestions')}</Title>
-                    <Text>
-                        {t('noQuestionsMessage')}
-                        {test.loading && " Loading test data..."}
-                        {test.error && ` Error: ${test.error}`}
-                        <p style={{ whiteSpace: 'pre-wrap', fontSize: '12px', color: 'gray' }}>
-                            Debug Info: 
-                            Questions: {test.userTest?.questions?.length || 0}
-                            Current Index: {test.currentQuestionIndex}
-                            Has userTest: {test.userTest ? 'Yes' : 'No'}
-                        </p>
-                    </Text>
-                    <Button mt="lg" onClick={() => router.push(`/app/test/${testId}`)}>
-                        {tGeneral('return')}
-                    </Button>
-                </Card>
+                <LoadingOverlay visible={true} loaderProps={{ color: 'teal', type: 'dots' }} zIndex={1100} />
             </Container>
-        );
+        )
     }
 
     return (
         <Container className={classes.container}>
-            <LoadingOverlay visible={loading} loaderProps={{ color: 'teal', type: 'dots' }} zIndex={1100}/>
+            <LoadingOverlay visible={loading} loaderProps={{ color: 'teal', type: 'dots' }} zIndex={1100} />
 
             <Card withBorder shadow="sm" className={classes.header}>
                 <Group justify="space-between" wrap="nowrap">
@@ -292,7 +336,7 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
 
                 <TestProgressBar
                     value={progressPercentage}
-                    size={10}
+                    size={25}
                     labels={{
                         filled: { tooltip: t('answered') },
                         rest: { root: "" }
@@ -300,7 +344,7 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
                 />
             </Card>
 
-            <Paper className={classes.questionCard} mt="md">
+            <ScrollArea className={classes.questionCard} mt="md">
                 <QuestionCard
                     question={currentQuestion.question}
                     options={manipulateOptions(currentQuestion.options, codeLanguage)}
@@ -310,12 +354,25 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
                     feedback={feedback}
                     answered={questionAnswered}
                     value={choice}
-                    onChange={setChoice}
+                    onChange={(newChoice) => {
+                        console.log("Choice changed:", newChoice);
+                        // For multiple choice questions, ensure we're working with arrays properly
+                        if (currentQuestion.type === 'multipleChoice') {
+                            // Ensure newChoice is always an array for multiple choice questions
+                            const adjustedChoice = Array.isArray(newChoice) 
+                                ? newChoice 
+                                : (newChoice ? [newChoice] : []);
+                            setChoice(adjustedChoice);
+                        } else {
+                            // For single choice, keep as is
+                            setChoice(newChoice);
+                        }
+                    }}
                 />
-            </Paper>
+            </ScrollArea>
 
             <Group justify="space-between" mt="lg" className={classes.controls}>
-                <Group>
+                <Group gap="xs" className={classes.navigationButtons}>
                     <Button
                         variant="subtle"
                         leftSection={<IconArrowLeft />}
@@ -329,6 +386,7 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
                         variant="subtle"
                         leftSection={<IconCheck />}
                         onClick={handleGoToFirstUnanswered}
+                        disabled={hasAllQuestionsAnswered() || test.currentQuestionIndex === findFirstUnansweredIndex()}
                     >
                         {t('firstUnanswered')}
                     </Button>
@@ -357,7 +415,7 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
                             <Button
                                 color="green"
                                 onClick={handleAnswerSubmit}
-                                disabled={!choice || loading}
+                                disabled={!isValidChoice() || loading}
                             >
                                 {t('submitAnswer')}
                             </Button>

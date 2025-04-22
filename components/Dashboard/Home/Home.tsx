@@ -37,7 +37,6 @@ export default function Home({ style, session, settab }: Readonly<HomeProps>) {
                 <SimpleGrid maw="100vw" verticalSpacing="xs" cols={2} w={{ base: "90%", xs: '80%', md: "60%", lg: '50%', xxl: '35%' }}>
                     <LinkCard design="compact" pb="50px" actionIcon={<IconFile />} name={t("Navbar.tests")} onClick={() => { settab({ tab: 'tests' }) }} />
                     <LinkCard design="compact" pb="50px" actionIcon={<IconSettings />} name={t('Navbar.settings')} onClick={() => { settab({ tab: 'settings' }) }} />
-                    <LinkCard design="compact" pb="50px" actionIcon={<IconGraph />} name={t("Navbar.stats")} onClick={() => { settab({ tab: 'stats' }) }} />
                     <LinkCard design="compact" pb="50px" actionIcon={<IconLogout color="var(--mantine-color-red-5)" />} name={t('Navbar.signout')} href="/api/auth/signout" />
                     {
                         chkP("user:manage", session.user) &&

@@ -28,6 +28,24 @@ export default async function startUserTest({ userTestId }: { userTestId: string
 
     // Check if the test is already started
     if (userTest.startedAt) {
+        try {
+            // Just return the test with questions if it's already started instead of an error
+            const fullUserTest = await prisma.userTest.findUnique({
+                where: {
+                    id: String(userTestId)
+                },
+                include: { questions: { include: { question: true } } }
+            });
+            
+            if (fullUserTest) {
+                return {
+                    ...fullUserTest, 
+                    questions: fullUserTest.questions.map(q => q.question)
+                };
+            }
+        } catch (error) {
+            console.error("Error fetching full test after ALREADY_STARTED:", error);
+        }
         return { message: "ALREADY_STARTED" };
     }
 

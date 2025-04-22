@@ -237,7 +237,6 @@ export default function TestGenerator({ style, triggerloading }: Readonly<ITabMo
     const handleGenerateTest = async () => {
         if (configurations) {
             triggerloading(true);
-            setLoading(true);
             // Calculate total selected questions
             const totalSelectedQuestions = Object.values(questionDistribution).reduce((sum, count) => sum + count, 0);
             

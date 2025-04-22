@@ -1,5 +1,5 @@
 "use client";
-import { ActionIcon, Badge, Box, Button, Card, CardProps, Flex, Image, LoadingOverlay, Overlay, Progress, Skeleton, Stack, Text } from "@mantine/core";
+import { ActionIcon, Badge, Box, Button, Card, CardProps, Flex, Group, Image, LoadingOverlay, Overlay, Progress, Skeleton, Stack, Text } from "@mantine/core";
 import { IconCodeAsterisk, IconFlask2, IconMicroscope, IconPencil, IconSchool } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import { Link, useRouter } from "../../../i18n/routing";
@@ -14,13 +14,14 @@ interface TestCardProps {
     subject?: string | string[];
     lastQuestion?: string;
     coverImage?: string;
+    finishedAt?: string;
     href?: string;
     design?: 'default' | 'compact';
     progress?: number;
     tooltipText?: boolean;
 }
 
-export default function TestCard({ loading = false, category, subject, coverImage, lastQuestion, progress, design, tooltipText, href, ...rest }: Readonly<TestCardProps & CardProps>) {
+export default function TestCard({ loading = false, category, subject, coverImage, lastQuestion, finishedAt, progress, design, tooltipText, href, ...rest }: Readonly<TestCardProps & CardProps>) {
     const t = useTranslations('Tests');
     const router = useRouter();
     const [visibleLoading, { open, close }] = useDisclosure(false);
@@ -63,7 +64,7 @@ export default function TestCard({ loading = false, category, subject, coverImag
     }
 
     function handleClick() {
-        if(href) {
+        if (href) {
             open();
             setTimeout(() => {
                 close();
@@ -72,7 +73,7 @@ export default function TestCard({ loading = false, category, subject, coverImag
     }
 
     useDidUpdate(() => {
-        if(hovered && href) {
+        if (hovered && href) {
             router.prefetch(href);
         }
     })
@@ -81,7 +82,8 @@ export default function TestCard({ loading = false, category, subject, coverImag
         case 'compact':
             return (
                 <Card ref={ref} {...rest} onClick={handleClick} className={`${classes["test-card"]} ${classes["compact"]}`} component={Link} href={href ?? ''} w={"100%"} shadow="lg" radius="sm" >
-                  <LoadingOverlay visible={loading || visibleLoading} zIndex={1000} loaderProps={{ color: 'teal', type: 'dots' }} />
+                    <LoadingOverlay visible={loading || visibleLoading} zIndex={1000} loaderProps={{ color: 'teal', type: 'dots' }} />
+                    {finishedAt && <Overlay opacity={0.3} color="dark" zIndex={1}/> }
                     <Stack justify="space-between" h="100%" w="100%">
                         <Box w="100%">
                             {coverImage && coverImage !== 'none' && <Card.Section>
@@ -90,15 +92,18 @@ export default function TestCard({ loading = false, category, subject, coverImag
                                     height={70}
                                     alt={"Cover image test " + subject}
                                 />
-                               <Badge radius="xs" size="sm" variant="light" className={classes["card-badge"]} color={getInitialsColor(category)}>{!category ? '...' : getCategoryName(category)}</Badge>
+                                <Badge radius="xs" size="sm" variant="light" className={classes["card-badge"]} color={getInitialsColor(category)}>{!category ? '...' : getCategoryName(category)}</Badge>
                             </Card.Section>}
 
                             <Card.Section inheritPadding py="md" w="100%">
                                 {subject && <Flex justify="left" align="center" mb="xs" gap={10} w="100%">
-                                    {!coverImage && <AvatarFallback name={getSubjectName(subject)} color="initials">{getAvatarIcon(subject)}</AvatarFallback>}
+                                    {!coverImage && <AvatarFallback name={getSubjectName(subject)} style={{ opacity: finishedAt ? 0.3 : 1 }} color={finishedAt ? "var(--mantine-color-dark" : "initials"}>{getAvatarIcon(subject)}</AvatarFallback>}
                                     <Stack gap={7} w="100%">
                                         <Text truncate="end" w="100%" mb='-6' fw={500}>{getSubjectName(subject)}</Text>
-                                        {!coverImage && <Badge radius="xs" size="sm" variant="light" mr={5} color={getInitialsColor(category)}>{!category ? '...' : getCategoryName(category)}</Badge>}
+                                        <Group gap={0}>
+                                            {!coverImage && <Badge radius="xs" size="sm" variant="light" mr={5} color={getInitialsColor(category)}>{!category ? '...' : getCategoryName(category)}</Badge>}
+                                            {finishedAt && <Badge radius="xs" size="sm" variant="light" mr={5} color={getInitialsColor(finishedAt)}>{t('finishedTest').toUpperCase()}</Badge>}
+                                        </Group>
                                         {typeof progress !== 'undefined' && <Progress value={progress} radius="xs" />}
                                     </Stack>
                                 </Flex>}

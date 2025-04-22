@@ -68,3 +68,18 @@
 .skeleton {
     display: inline;
 }
+
+.finishedContainer {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    & > * {
+        flex-grow: 1;
+    }
+}
+
+.mark, .timeTaken {
+    font-weight: 650;
+    text-align: right;
+    font-size: calc(2 * var(--mantine-font-size-xl));
+}

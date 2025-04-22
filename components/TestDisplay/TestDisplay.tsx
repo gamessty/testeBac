@@ -18,6 +18,7 @@ import { modals } from "@mantine/modals";
 import deleteUserTest from "@/actions/PrismaFunctions/test/deleteUserTest";
 import TestConfigDisplay from "../TestConfigDisplay/TestConfigDisplay";
 import { JsonValue } from "next-auth/adapters";
+import prettyMilliseconds from "pretty-ms";
 
 interface TestDisplayProps {
     testDetails?: UserActiveTest;
@@ -54,6 +55,9 @@ export default function TestDisplay({ testDetails }: Readonly<TestDisplayProps>)
     }
 
     function isValidDate(startedAt: Date | null | undefined) {
+        if (typeof startedAt === 'string') {
+            startedAt = new Date(startedAt);
+        }
         return startedAt instanceof Date && !isNaN(startedAt.getTime());
     }
 
@@ -150,7 +154,28 @@ export default function TestDisplay({ testDetails }: Readonly<TestDisplayProps>)
                         value={testDetails ? testDetails.selectedAnswers.length / testDetails.questions.length * 100 : undefined}
                     />
                     
-                    {/* Add the test configuration display component */}
+                    {
+                        testDetails?.finishedAt && isValidDate(testDetails?.finishedAt) && (
+                            <Group mt="md" className={classes.finishedContainer}>
+                                <Card className={classes.markContainer} withBorder p="md" radius="md" shadow="sm">
+                                    <Text size="md" c='dimmed' className={classes['mark-title']}>
+                                        {t('mark')}
+                                    </Text>
+                                    <Text className={classes['mark']}>
+                                        {testDetails.mark}
+                                    </Text>
+                                </Card>
+                                <Card className={classes.markContainer} withBorder p="md" radius="md" shadow="sm">
+                                    <Text size="md" c='dimmed' className={classes['timeTaken-title']}>
+                                        {t('timeTaken')}
+                                    </Text>
+                                    <Text className={classes['timeTaken']}>
+                                        {prettyMilliseconds((new Date(testDetails.finishedAt)).getTime() - (new Date(testDetails.startedAt ?? '')).getTime(), { secondsDecimalDigits: 0, unitCount: 2 })}
+                                    </Text>
+                                </Card>
+                            </Group>
+                        )  
+                    }
                     {testDetails && (
                         <TestConfigDisplay 
                             testType={testDetails.testType} 
@@ -204,11 +229,10 @@ export default function TestDisplay({ testDetails }: Readonly<TestDisplayProps>)
                     <Button size="lg" onClick={handleStartTest} loading={loading} disabled={!!(testDetails?.finishedAt && isValidDate(testDetails?.finishedAt)) || deleting}>
                         {
                             (() => {
-                                if (testDetails?.startedAt && isValidDate(testDetails?.startedAt)) {
-                                    return t('continueTest')
-                                }
                                 if (testDetails?.finishedAt && isValidDate(testDetails?.finishedAt)) {
                                     return t('finishedTest')
+                                } else if (testDetails?.startedAt && isValidDate(testDetails?.startedAt)) {
+                                    return t('continueTest')
                                 }
                                 else {
                                     return t('startTest')

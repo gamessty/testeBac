@@ -1,13 +1,15 @@
 .container {
   max-width: 900px;
   margin: 0 auto;
-  padding: calc(var(--mantine-spacing-xl) * 1.5);
-  min-height: 100vh;
+  height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
 .header {
+  border-top: 0px;
+  border-top-left-radius: 0px;
+  border-top-right-radius: 0px;
   padding: var(--mantine-spacing-md);
 }
 
@@ -25,9 +27,22 @@
   z-index: 10;
   margin-top: auto;
 
+  @media screen and (max-width: 768px) {
+    &>* {
+      width: 100%;
+    }
+  }
+
+
   @mixin dark {
     background-color: var(--mantine-color-dark-7);
     border-top-color: var(--mantine-color-dark-4);
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .navigationButtons > * {
+    flex-grow: 1;
   }
 }
 

@@ -1,0 +1,105 @@
+model Folder {
+    id             String               @id @default(auto()) @map("_id") @db.ObjectId
+    category       String               @default("BAC")
+    name           String               @unique
+    additionalData AdditionalFolderData
+    subjects       Subject[]
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("folders")
+}
+
+model Subject {
+    id        String      @id @default(auto()) @map("_id") @db.ObjectId
+    folderId  String      @db.ObjectId
+    name      String      @unique
+    type      SubjectType @default(CHAPTER)
+    questions Question[]
+    chapters  Chapter[]
+
+    folder Folder @relation(fields: [folderId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("subjects")
+}
+
+model Chapter {
+    id        String     @id @default(auto()) @map("_id") @db.ObjectId
+    subjectId String     @db.ObjectId
+    name      String     @unique
+    questions Question[]
+
+    subject Subject @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+
+    createdBy   User?   @relation(fields: [createdById], references: [id])
+    createdById String? @db.ObjectId
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("chapters")
+}
+
+type AdditionalFolderData {
+    country     String?
+    year        Int?
+    description String?
+    image       String?
+    color       String?
+}
+
+model UserTest {
+    id              String               @id @default(auto()) @map("_id") @db.ObjectId
+    userId          String               @db.ObjectId
+    score           Int                  @default(0)
+    mark            Float?              @default(0.0)
+    category        String?
+    folderId        String
+    subjectId       String[]
+    chapterId       String[]
+    questions       UserTestOnQuestion[]
+    selectedAnswers SelectedAnswer[]
+    testType        TestType             @default(SIMPLE)
+    startedAt       DateTime?
+    finishedAt      DateTime?
+    configurations  Json                 @db.Json
+
+    user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+    createdAt DateTime @default(now())
+    updatedAt DateTime @updatedAt
+
+    @@map("userTests")
+}
+
+model UserTestOnQuestion {
+    id         String   @id @default(auto()) @map("_id") @db.ObjectId
+    userTestId String   @db.ObjectId
+    questionId String   @db.ObjectId
+    userTest   UserTest @relation(fields: [userTestId], references: [id], onDelete: Cascade)
+    question   Question @relation(fields: [questionId], references: [id], onDelete: Cascade)
+
+    @@unique([userTestId, questionId], name: "userTest_question_unique")
+    @@map("userTestOnQuestion")
+}
+
+enum TestType {
+    SIMPLE
+    MOCKEXAM
+}
+
+enum SubjectType {
+    QUESTION
+    CHAPTER
+}
+
+type SelectedAnswer {
+    // NOT YET IMPLEMENTED TBD
+    answerIds  String[] // the uuid or uuids of the option(s) selected by the user
+    questionId String   @db.ObjectId
+    selectedAt DateTime @default(now())
+}

@@ -167,13 +167,14 @@ export function getPrismaRolesUpdateData(newRoles: string[] | undefined, oldRole
  * @param {string[]} [ignoredKeys=[]] - An array of keys to ignore when checking for differences.
  * @returns {any} - An object containing the differences, or undefined if there are none.
  */
-export function getDifferences(newObj: any, oldObj: any, ignoredKeys: string[] = []): any {
+export function getDifferences(newObj: any, oldObj: any, options: { ignoredKeys: string[] } = { ignoredKeys: [] }): any {
+  const { ignoredKeys } = options;
   if (typeof newObj !== 'object' || typeof oldObj !== 'object' || newObj === null || oldObj === null) {
     return newObj !== oldObj ? newObj : undefined;
   }
 
   if (Array.isArray(newObj) && Array.isArray(oldObj)) {
-    return newObj.length !== oldObj.length || newObj.some((val, i) => getDifferences(val, oldObj[i], ignoredKeys) !== undefined)
+    return newObj.length !== oldObj.length || newObj.some((val, i) => getDifferences(val, oldObj[i], options) !== undefined)
       ? newObj
       : undefined;
   }
@@ -185,7 +186,7 @@ export function getDifferences(newObj: any, oldObj: any, ignoredKeys: string[] =
     if (ignoredKeys.includes(key)) {
       continue;
     }
-    const difference = getDifferences(newObj[key], oldObj[key], ignoredKeys);
+    const difference = getDifferences(newObj[key], oldObj[key], options);
     if (difference !== undefined) {
       diffs[key] = difference;
     }

@@ -1,0 +1,47 @@
+.return-button {
+    margin-bottom: var(--mantine-spacing-md);
+    width: fit-content;
+}
+
+.blockquote {
+    width: 100%;
+    margin-block: var(--mantine-spacing-xl);
+}
+
+.loader {
+    margin-block: var(--mantine-spacing-xl);
+}
+
+.divider {
+    margin-block: var(--mantine-spacing-md);
+}
+
+.main-container {
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.main-stack {
+    flex-grow: 1;
+    margin-bottom: var(--mantine-spacing-xl);
+
+    @mixin larger-than $mantine-breakpoint-xl {
+        margin-bottom: calc(1.5*var(--mantine-spacing-xl));
+    }
+}
+
+.test-type-selector {
+    width: 100%;
+    margin-block: var(--mantine-spacing-md);
+}
+
+.stepper-buttons {
+    transition: all ease 0.2s;
+    * {
+        transition: all ease 0.2s;
+    }
+    padding-block: var(--mantine-spacing-xl);
+    width: 100%;
+    background: linear-gradient(to top, var(--mantine-color-body), alpha(var(--mantine-color-body), 0.8), transparent);
+}

@@ -1,0 +1,31 @@
+.modalContent::before {
+    content: '';
+    display: block;
+    position: absolute;
+    width: calc(0.375rem * var(--mantine-scale));
+    top: 0.5rem;
+    bottom: 0.5rem;
+    left: 0.5rem;
+    inset-inline-start: calc(0.25rem * var(--mantine-scale));
+    border-radius: 0.25rem;
+    background-color: var(--mantine-color-red-8);
+    z-index: 870;
+}
+
+.modalTitle {
+    font-weight: 600;
+    font-size: calc(1.3rem * var(--mantine-scale));
+}
+
+.modalButtons {
+    flex-direction: row-reverse;
+    margin-top: calc(var(--mantine-scale) * 0.5rem);
+}
+
+.modalContainer {
+    padding: 0;
+}
+
+.modalContent {
+    padding: calc(var(--mantine-scale) * 1.5rem);
+}

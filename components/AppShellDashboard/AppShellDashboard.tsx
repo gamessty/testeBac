@@ -1,36 +1,37 @@
 'use client';
-import { AppShell, Group, Button, ActionIcon, Text, Divider, Stack, Grid, Affix, Transition, Badge, Flex, Tooltip, useMatches, Menu, ScrollArea } from "@mantine/core";
-import { useDidUpdate, useDocumentTitle, useLocalStorage, useSetState, useWindowScroll } from "@mantine/hooks";
-import { IconHome, IconSettingsCog, IconChecklist, IconChartInfographic, IconArrowUp, IconUsers, IconLogout, IconUserPlus } from "@tabler/icons-react";
+import { ActionIcon, Affix, AppShell, Badge, Button, Divider, Flex, Grid, Group, LoadingOverlay, Menu, ScrollArea, Stack, Text, Tooltip, Transition, useMatches } from "@mantine/core";
+import { useDidUpdate, useDocumentTitle, useMediaQuery, useSetState } from "@mantine/hooks";
+import { IconArrowUp, IconChecklist, IconFile, IconGraph, IconHome, IconLogout, IconSettingsCog, IconUserPlus, IconUsers } from "@tabler/icons-react";
 import { Session } from "next-auth";
-import { useTranslations } from "next-intl";
-import ColorSchemeToggleIcon from "../ColorSchemeToggleIcon/ColorSchemeToggleIcon";
 import { signOut } from "next-auth/react";
-import Home from "../Dashboard/Home/Home";
+import { useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
-import Settings from "../Dashboard/Settings/Settings";
-import Stats from "../Dashboard/Stats/Stats";
-import Tests from "../Dashboard/Tests/Tests";
-import { chkP, enumToString, getInitialsColor } from "../../utils";
-import React, { useEffect } from "react";
-import UserManager from "../Dashboard/Admin/UserManager/UserManager";
+import React, { Fragment, useEffect, useRef, useState } from "react";
 import { ITabData, Permissions } from "../../data";
+import { Link } from "../../i18n/routing";
+import { chkP, enumToString, getInitialsColor } from "../../utils";
 import AvatarFallback from "../AvatarFallback/AvatarFallback";
 import AvatarMenu from "../AvatarMenu/AvatarMenu";
-import { Link } from "../../i18n/routing";
+import ColorSchemeToggleIcon from "../ColorSchemeToggleIcon/ColorSchemeToggleIcon";
 import RoleManager from "../Dashboard/Admin/RoleManager/RoleManager";
+import UserManager from "../Dashboard/Admin/UserManager/UserManager";
+import Home from "../Dashboard/Home/Home";
+import Settings from "../Dashboard/Settings/Settings";
+import Tests from "../Dashboard/Tests/Tests";
 import SignOutButtonClient from "../SignOutButton/SignOutButton.client";
+import TestGenerator from "../TestGenerator/TestGenerator";
 import classes from './AppShellDashboard.module.css';
 
 interface AppShellDashboardProps {
     session: Session | null | undefined;
 }
 interface SettingsSetState {
-    tab: string;
+    tab: { tab: string, disableNavigation?: boolean };
     title: string;
     hour: number;
     minute: number;
     year: number;
+    tabLoading?: boolean;
 }
 
 export default function AppShellDashboard({ session }: Readonly<AppShellDashboardProps>) {
@@ -40,28 +41,22 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
     const ta = useTranslations('Authentication');
 
     const [settings, setSettings] = useSetState<SettingsSetState>({
-        tab: searchParams.get('tab') ?? 'home',
+        tab: { tab: searchParams.get('tab') ?? 'home', disableNavigation: tabsData.find((tab) => tab.tab == (searchParams.get('tab') ?? 'home'))?.disableNavigation },
         title: 'testeBac | ' + t('Navbar.' + (searchParams.get('tab') ?? 'home')),
         hour: (new Date()).getHours(),
         minute: (new Date()).getMinutes(),
-        year: (new Date()).getUTCFullYear()
+        year: (new Date()).getUTCFullYear(),
+        tabLoading: false
     });
 
     useDocumentTitle(settings.title);
 
-    const [scroll, scrollTo] = useWindowScroll();
-
-    const [fontSize] = useLocalStorage({
-        key: 'fontSize',
-        defaultValue: 100,
-    });
+    const [scrollPosition, setScrollPosition] = useState({ x: 0, y: 0 });
+    const viewport = useRef<HTMLDivElement>(null);
 
     useDidUpdate(() => {
-        document.documentElement.style.fontSize = `${fontSize}%`
-    }, [fontSize]);
-
-    useDidUpdate(() => {
-        setSettings({ title: 'testeBac | ' + t('Navbar.' + (searchParams.get('tab') ?? 'home')), tab: searchParams.get('tab') ?? 'home' });
+        const tabName = searchParams.get('tab') ?? 'home';
+        setSettings({ title: 'testeBac | ' + t('Navbar.' + tabName), tab: { tab: tabName, disableNavigation: tabsData.find((tab) => tab.tab == tabName)?.disableNavigation } });
     }, [searchParams.get('tab')]);
 
     useEffect(() => {
@@ -70,15 +65,16 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
         }, 60000);
     });
 
-    function handleTabChange({ tab }: { tab: string }) {
-        setSettings({ tab, title: 'testeBac | ' + t('Navbar.' + tab) });
+    function handleTabChange({ tab, disableNavigation }: { tab: string, disableNavigation?: boolean }) {
+        disableNavigation ??= tabsData.find((tabData) => tabData.tab == tab)?.disableNavigation;
+        setSettings({ tab: { tab, disableNavigation }, title: 'testeBac | ' + t('Navbar.' + tab) });
         const params = new URLSearchParams(searchParams.toString());
         params.set('tab', tab);
         if (typeof window !== 'undefined') window.history.pushState(null, '', `?${params.toString()}`);
     }
 
     const affixPosition = useMatches({
-        base: { bottom: 95, right: 20 },
+        base: { bottom: 100, right: 20 },
         sm: { bottom: 20, right: 20 }
     })
 
@@ -88,13 +84,15 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
     return (
         <AppShell
             header={{ height: 60 }}
-            navbar={{ width: 300, breakpoint: 'sm', collapsed: { mobile: true } }}
+            navbar={{ width: settings.tab.disableNavigation ? 0 : 300, breakpoint: 'sm', collapsed: { mobile: true } }}
             padding={0}
+            data-disable-navigation={settings.tab.disableNavigation ?? false}
         >
+            <LoadingOverlay visible={settings.tabLoading} zIndex={1101} loaderProps={{ color: 'teal', type: 'dots' }} />
             <AppShell.Header>
                 <Group h="100%" px="md" justify="space-between">
                     <Text variant="gradient" fw={700} size="xl" gradient={{ from: 'pink', to: 'yellow' }}>
-                        <Link href="/">
+                        <Link href="/app">
                             testeBac
                         </Link>
                     </Text>
@@ -103,33 +101,54 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                     </Text>
                 </Group>
             </AppShell.Header>
-            <AppShell.Navbar p="md">
+            <AppShell.Navbar p="md" className={settings.tab.disableNavigation ? classes.hide : undefined}>
                 <AppShell.Section grow mt="md" component={ScrollArea}>
                     <Stack
                         align="stretch"
                         justify="space-around"
                         gap="md"
-                        pb={25}
+                        pb={10}
                     >
                         {
                             // sort the tabsData by category order and by category and add a divider and the title of the category before the first tab of the category if the category has the showLabel property set to true
-                            tabsData.toSorted((a, b) => a.category.order - b.category.order).map((tab, index, array) => {
-                                if ((tab.category.showLabel && index == 0) || (tab.category.showLabel && index > 0 && array[index - 1].category.name != tab.category.name)) {
-                                    return (
-                                        <React.Fragment key={tab.category.name + index}>
-                                            {tab.category.permissionNeeded && chkP(enumToString(tab.category.permissionNeeded), session?.user) &&
+                            tabsData
+                                .toSorted((a, b) => a.category.order - b.category.order)
+                                .map((tab, index, array) => {
+                                    const prevCategory = array[index - 1]?.category.name;
+                                    const showCategoryLabel =
+                                        tab.category.showLabel &&
+                                        (index === 0 || prevCategory !== tab.category.name);
+
+                                    const hasCategoryPermission = !tab.category.permissionNeeded
+                                        || chkP(enumToString(tab.category.permissionNeeded), session?.user);
+
+                                    const hasTabPermission = chkP(enumToString(tab.permissionNeeded), session?.user);
+
+                                    return hasTabPermission ? (
+                                        <Fragment key={tab.category.name + index}>
+                                            {showCategoryLabel && hasCategoryPermission && (
                                                 <>
                                                     {index !== 0 && <Divider />}
-                                                    <Text c="dimmed" ta="left">{t(`Navbar.${tab.category.name}.title`)}</Text>
+                                                    <Text c="dimmed" ta="left">
+                                                        {t(`Navbar.${tab.category.name}.title`)}
+                                                    </Text>
                                                 </>
-                                            }
-                                            {chkP(enumToString(tab.permissionNeeded), session?.user) && <Button style={{ boxShadow: "var(--mantine-shadow-xl)" }} key={tab.tab} color={tab.color ?? getInitialsColor(tab.tab)} onClick={() => handleTabChange({ tab: tab.tab })} variant={settings.tab == tab.tab ? 'light' : 'outline'} justify="left" h={35} leftSection={<tab.icon size={17} />}>{t(`Navbar.${tab.tab}`)}</Button>}
-                                        </React.Fragment>
-                                    )
-                                } else {
-                                    return (chkP(enumToString(tab.permissionNeeded), session?.user) && <Button style={{ boxShadow: "var(--mantine-shadow-xl)" }} key={tab.tab} color={tab.color ?? getInitialsColor(tab.tab)} onClick={() => handleTabChange({ tab: tab.tab })} variant={settings.tab == tab.tab ? 'light' : 'outline'} justify="left" h={35} leftSection={<tab.icon size={17} />}>{t(`Navbar.${tab.tab}`)}</Button>)
-                                }
-                            })
+                                            )}
+                                            {(tab.visible || typeof (tab.visible) == 'undefined') && <Button
+                                                className={classes["navbar-tab"]}
+                                                key={tab.tab}
+                                                size="sm"
+                                                color={tab.color ?? getInitialsColor(tab.tab)}
+                                                onClick={() => handleTabChange({ tab: tab.tab, disableNavigation: tab.disableNavigation })}
+                                                variant={tab.tab === settings.tab.tab ? "light" : "outline"}
+                                                justify="left"
+                                                leftSection={<tab.icon size={20} />}
+                                            >
+                                                {t(`Navbar.${tab.tab}`)}
+                                            </Button>}
+                                        </Fragment>
+                                    ) : null;
+                                })
                         }
                     </Stack>
                 </AppShell.Section>
@@ -160,7 +179,7 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                                 {session?.user?.email}
                             </Text>
                             <Grid gutter={3} w="100%">
-                                {
+                                {(session?.user?.roles?.length ?? 0) > 1 &&
                                     session?.user?.roles?.map((role) => (
                                         <Grid.Col pt={0} mt={-6} span="content" key={role.id}>
                                             <Tooltip tt="capitalize" label={role.name} color={getInitialsColor(role.name)} withArrow>
@@ -177,20 +196,26 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                 <AppShell.Section>
                     <Group justify="space-between" mt={10}>
                         <Text ta="center" size="sm">Ⓒ {settings.year}</Text>
-                        <Text ta="center" size="sm" component="a" href="/privacy-policy">{t('privacyPolicy')}</Text>
+                        <Text ta="center" size="sm" component={Link} href="/privacy-policy">{t('privacyPolicy')}</Text>
                     </Group>
                 </AppShell.Section>
             </AppShell.Navbar>
             <AppShell.Main>
-                <ScrollArea h={{ base: sizeMobile, sm: size }} classNames={{
-                    viewport: classes.appShellScrollArea
-                }}>
+                <ScrollArea
+                    maw={"100vw"}
+                    onScrollPositionChange={setScrollPosition}
+                    h={{ base: settings.tab.disableNavigation ? size : sizeMobile, sm: size }}
+                    viewportRef={viewport}
+                    scrollbars="y"
+                    classNames={{
+                        viewport: classes.appShellScrollArea
+                    }}>
                     {
                         tabsData.map((tab) => (
-                            <Transition key={tab.tab + "_tabComponent"} transition="fade-right" timingFunction="ease" duration={500} mounted={settings.tab == tab.tab} >
+                            <Transition key={tab.tab + "_tabComponent"} transition="fade-right" timingFunction="ease" enterDelay={tab.disableNavigation ? 100 : 0} duration={tab.disableNavigation ? 800 : 300} mounted={settings.tab.tab == tab.tab} >
                                 {(transitionStyles) => (
                                     <>
-                                        {settings.tab == tab.tab && tab.component && <tab.component session={session} style={transitionStyles} />}
+                                        {settings.tab.tab == tab.tab && tab.component && <tab.component session={session} settab={handleTabChange} triggerloading={(loadingStatus: boolean) => setSettings({ tabLoading: loadingStatus })} style={{ ...transitionStyles } as React.CSSProperties} />}
                                     </>
                                 )}
                             </Transition>
@@ -198,61 +223,62 @@ export default function AppShellDashboard({ session }: Readonly<AppShellDashboar
                     }
                 </ScrollArea>
             </AppShell.Main>
-            <AppShell.Footer p={15} display={{ sm: "none" }}>
-                <Grid grow>
-                    <Grid.Col span={1}>
-                        <AvatarMenu shadow="md" position="top-start" offset={20} transitionProps={{ transition: 'pop-bottom-left', duration: 200 }} AvatarProps={{ src: session?.user?.image ?? undefined, name: session?.user?.username ?? session?.user?.email ?? undefined, color: 'initials' }}>
-                            {tabsData.filter(t => !t.mobile && chkP(enumToString(t.permissionNeeded), session?.user)).toSorted((a, b) => b.category.order - a.category.order).map((tab, index, array) => (
-                                <React.Fragment key={tab.tab + "_menu"}>
-                                    {((index > 0 && array[index - 1].category.name != tab.category.name) || index == 0) && (!tab.category.permissionNeeded || chkP(enumToString(tab.category.permissionNeeded), session?.user)) &&
-                                        <>
-                                            {tab.category.showLabel && <Menu.Label tt="capitalize">{t(`Navbar.${tab.category.name}.title`)}</Menu.Label>}
-                                            {index > 0 && <Menu.Divider />}
-                                        </>
-                                    }
-                                    <Menu.Item onClick={() => handleTabChange({ tab: tab.tab })} leftSection={<tab.icon size={14} />}>
-                                        {t(`Navbar.${tab.tab}`)}
-                                    </Menu.Item>
-                                </React.Fragment>
-                            ))}
+            <AppShell.Footer display={{ sm: "none" }} className={(settings.tab.disableNavigation ? classes.hide : undefined) + " " + classes["footer"]}>
+                <Flex className={classes["flex-footer"]}>
+                    <AvatarMenu shadow="md" position="top-start" offset={20} classNames={{}} transitionProps={{ transition: 'pop-bottom-left', duration: 200 }} AvatarProps={{ src: session?.user?.image ?? undefined, name: session?.user?.username ?? session?.user?.email ?? undefined, color: 'initials', classNames: { root: classes.avatarRoot } }}>
+                        {tabsData.filter(t => !t.mobile && (t.visible || typeof (t.visible) == 'undefined') && chkP(enumToString(t.permissionNeeded), session?.user)).toSorted((a, b) => b.category.order - a.category.order).map((tab, index, array) => (
+                            <React.Fragment key={tab.tab + "_menu"}>
+                                {((index > 0 && array[index - 1].category.name != tab.category.name) || index == 0) && (!tab.category.permissionNeeded || chkP(enumToString(tab.category.permissionNeeded), session?.user)) &&
+                                    <>
+                                        {tab.category.showLabel && <Menu.Label tt="capitalize">{t(`Navbar.${tab.category.name}.title`)}</Menu.Label>}
+                                        {index > 0 && <Menu.Divider />}
+                                    </>
+                                }
+                                <Menu.Item onClick={() => handleTabChange({ tab: tab.tab })} leftSection={<tab.icon size={14} />}>
+                                    {t(`Navbar.${tab.tab}`)}
+                                </Menu.Item>
+                            </React.Fragment>
+                        ))}
 
-                            <Menu.Divider />
+                        <Menu.Divider />
 
-                            <Menu.Item color="red" onClick={() => signOut()} leftSection={<IconLogout size={14} />}>
-                                {ta('signOut')}
-                            </Menu.Item>
-                        </AvatarMenu>
-                    </Grid.Col>
-                    <Grid.Col span={10}>
-                        <Group justify="space-between" grow>
-                            {tabsData.filter(t => t.mobile && chkP(enumToString(t.permissionNeeded), session?.user)).map((tab) => (
-                                <ActionIcon
-                                    key={tab.tab}
-                                    variant='transparent'
-                                    aria-label={tab.tab}
-                                    size="lg"
-                                    onClick={() => handleTabChange({ tab: tab.tab })}
-                                    color={settings.tab == tab.tab ? undefined : 'gray'}
-                                >
-                                    <tab.icon />
-                                </ActionIcon>
-                            ))}
-                        </Group>
-                    </Grid.Col>
-                </Grid>
-
+                        <Menu.Item color="red" onClick={() => signOut()} leftSection={<IconLogout size={14} />}>
+                            {ta('signOut')}
+                        </Menu.Item>
+                    </AvatarMenu>
+                    <Group justify="space-between" grow className={classes["footer-group"]}>
+                        {tabsData.filter(t => t.mobile && chkP(enumToString(t.permissionNeeded), session?.user)).map((tab) => (
+                            <ActionIcon
+                                key={tab.tab}
+                                variant='transparent'
+                                aria-label={tab.tab}
+                                size="lg"
+                                onClick={() => handleTabChange({ tab: tab.tab })}
+                                color={settings.tab.tab == tab.tab ? undefined : 'gray'}
+                            >
+                                <tab.icon />
+                            </ActionIcon>
+                        ))}
+                    </Group>
+                </Flex>
             </AppShell.Footer>
-            <Affix position={affixPosition}>
-                <Transition transition="slide-up" mounted={scroll.y > 0}>
+            <Affix position={affixPosition} zIndex={1000}>
+                <Transition transition="slide-up" mounted={scrollPosition.y > 200}>
                     {(transitionStyles) => (
                         <Button
+                            className={classes["back-to-top"]}
                             leftSection={<IconArrowUp size={16} />}
                             style={{ boxShadow: "var(--mantine-shadow-xl)", ...transitionStyles }}
-                            onClick={() => scrollTo({ y: 0 })}
+                            onClick={
+                                () =>
+                                    viewport.current?.scrollTo({ top: 0, behavior: 'smooth' })
+                            }
                             variant="gradient"
                             gradient={{ from: 'purple', to: 'pink' }}
                         >
-                            {t('backToTop')}
+                            <Text truncate inherit>
+                                {t('backToTop')}
+                            </Text>
                         </Button>
                     )}
                 </Transition>
@@ -286,18 +312,6 @@ export const tabsData: ITabData[] = [
             "showLabel": false
         },
         "mobile": true,
-        "permissionNeeded": Permissions["general:*"]
-    },
-    {
-        "tab": "stats",
-        "icon": IconChartInfographic,
-        "component": Stats,
-        "category": {
-            "name": "general",
-            "order": 0,
-            "namespaced": false,
-            "showLabel": false
-        },
         "permissionNeeded": Permissions["general:*"]
     },
     {
@@ -338,5 +352,33 @@ export const tabsData: ITabData[] = [
             "permissionNeeded": [Permissions["user:*"], Permissions["role:*"]]
         },
         "permissionNeeded": Permissions["role:manage"]
+    },
+    {
+        "tab": "test.generator",
+        "icon": IconFile,
+        "component": TestGenerator,
+        "visible": false,
+        "disableNavigation": true,
+        "category": {
+            "name": "test",
+            "order": 2,
+            "namespaced": false,
+            "showLabel": false
+        },
+        "permissionNeeded": Permissions["general:*"]
     }
+    /*,
+    {
+        "tab": "demo.questionCard",
+        "icon": IconFile,
+        "component": undefined,//DemoQuestion
+        "category": {
+            "name": "demo",
+            "order": 2,
+            "namespaced": false,
+            "showLabel": true,
+            "permissionNeeded": Permissions["developer:debug"]
+        },
+        permissionNeeded: Permissions["developer:debug"]
+    }*/
 ]

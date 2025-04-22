@@ -1,0 +1,30 @@
+:root{
+    font-size: 90%;
+    --mantine-scale: 0.9;
+}
+
+.mantine-CodeHighlight-copy {
+    position: absolute !important;
+
+    @mixin dark {
+        background-color: transparent !important;
+    }
+
+    &:hover {
+        @mixin dark {
+            background-color: alpha(var(--mantine-color-gray-2), 0.3) !important;
+        }
+        @mixin light {
+            background-color: alpha(var(--mantine-color-gray-9), 0.3) !important;
+        }
+    }
+}
+
+.mantine-CodeHighlight-root {
+    @mixin light {
+        background-color: var(--mantine-color-gray-2) !important;
+    }
+    .mantine-ScrollArea-root {
+        height: 100%;
+    }
+}

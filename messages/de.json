@@ -1,0 +1,608 @@
+{
+  "Authentication": {
+    "customPages": {
+      "error": {
+        "Callback": {
+          "description": "Bei der Verarbeitung Ihrer Anmeldeanfrage wurde etwas schief gelaufen. \nBitte versuchen Sie es erneut.",
+          "title": "Login-Rückruffehler"
+        },
+        "CredentialsSignin": {
+          "description": "Ihre Anmeldedaten sind falsch. \nBitte überprüfen Sie sie und versuchen Sie es erneut.",
+          "title": "Fehler bei der Anmeldung"
+        },
+        "Default": {
+          "description": "Ein unbekannter Fehler ist aufgetreten. \nBitte aktualisieren Sie die Seite oder versuchen Sie es später erneut.",
+          "title": "Unerwarteter Fehler"
+        },
+        "EmailCreateAccount": {
+          "description": "Wir konnten Ihr Konto mit dieser E-Mail nicht erstellen. \nBitte versuchen Sie es später erneut.",
+          "title": "E-Mail -Registrierung fehlgeschlagen"
+        },
+        "EmailSignin": {
+          "description": "Wir konnten die Überprüfungs -E-Mail nicht senden. \nBitte überprüfen Sie Ihre E-Mail -Adresse und versuchen Sie es erneut.",
+          "title": "E-Mail-Anmeldung fehlgeschlagen"
+        },
+        "MissingCSRF": {
+          "description": "Das CSRF-Token fehlt. Bitte aktualisieren Sie die Seite und versuchen Sie es erneut.",
+          "title": "Fehlendes CSRF-Token"
+        },
+        "OAuthAccountNotLinked": {
+          "description": "Diese E-Mail ist mit einer anderen Anmeldemethode verknüpft. \nBitte verwenden Sie die ursprüngliche Methode, um sich anzumelden.",
+          "title": "Konto nicht verknüpft"
+        },
+        "OAuthCallback": {
+          "description": "Es gab ein Problem mit der Verarbeitung der Antwort des Anmeldemittels. \nBitte versuchen Sie es erneut.",
+          "title": "Anmeldefehler"
+        },
+        "OAuthCreateAccount": {
+          "description": "Wir konnten Ihr Konto nicht mit diesem Login -Anbieter erstellen. \nBitte versuchen Sie es erneut oder verwenden Sie eine andere Methode.",
+          "title": "Kontoerstellung fehlgeschlagen"
+        },
+        "OAuthSignin": {
+          "description": "Wir konnten die Autorisierungs -URL nicht erstellen. \nBitte versuchen Sie es später erneut.",
+          "title": "Autorisierung fehlgeschlagen"
+        },
+        "SessionRequired": {
+          "description": "Sie müssen angemeldet werden, um auf diese Seite zuzugreifen. \nBitte melden Sie sich an, um fortzufahren.",
+          "title": "Anmelden erforderlich"
+        }
+      },
+      "signIn": {
+        "disclaimer": "Durch Anmelden stimmen Sie unserem zu",
+        "invalidEmail": "Die E-Mail ist ungültig.",
+        "or": "Oder fahren Sie mit E-Mail fort",
+        "privacyPolicy": "Datenschutzrichtlinie",
+        "signIn": "Melden Sie sich an",
+        "welcome": "Willkommen zu"
+      },
+      "signOut": {
+        "confirm": "Sind Sie sicher, dass Sie sich abmelden wollen?",
+        "signOut": "Abmelden",
+        "title": "Abmelden"
+      },
+      "verifyRequest": {
+        "backToHome": "Geh zurück",
+        "message": "Wir haben Ihnen eine E-Mail mit einem Link gesendet, um Ihre E-Mail -Adresse zu überprüfen. \nBitte überprüfen Sie Ihren Posteingang und klicken Sie in der E-Mail auf den Link, um auf die App zuzugreifen.",
+        "title": "Überprüfen Sie Ihre E-Mail -Adresse"
+      }
+    },
+    "refresh": "Versuchen Sie es erneut",
+    "signIn": "Anmelden",
+    "signInMail": "Melden Sie sich mit E-Mail an",
+    "signOut": "Abmelden",
+    "signUp": "Melden Sie sich an",
+    "userNotAuthorized": {
+      "message": "Bitte warten Sie, bis Ihre Registrierung von einem Moderator validiert wird. \nDies kann bis zu 24 Stunden dauern. \n\n\nWenn Sie Fragen haben, kontaktieren Sie uns bitte unter {email}.",
+      "title": "Registrierung noch nicht akzeptiert"
+    },
+    "userSignedOut": {
+      "message": "Sie haben erfolgreich von Testebac unterschrieben! \nWir hoffen, Sie bald zu sehen!",
+      "title": "Unterschrieben"
+    }
+  },
+  "Dashboard": {
+    "Home": {
+      "lastTest": "Test fortsetzen",
+      "nameFormatting": ", {name}",
+      "quickStats": "Schnelle Statistiken",
+      "recentTests": "Neuere Tests",
+      "welcome": "Hallo<renderName></renderName>!"
+    },
+    "Navbar": {
+      "admin": {
+        "roles": "Rollen",
+        "title": "Administrator",
+        "users": "Benutzer"
+      },
+      "demo": {
+        "questionCard": "Fragekarte",
+        "testGenerator": "Testgenerator",
+        "title": "Demo"
+      },
+      "home": "Heim",
+      "profile": "Profil",
+      "results": "Ergebnisse",
+      "settings": "Einstellungen",
+      "signout": "Abmelden",
+      "stats": "Statistiken",
+      "subjects": "Themen",
+      "test": {
+        "generator": "Testgenerator"
+      },
+      "tests": "Tests"
+    },
+    "RoleManager": {
+      "close": "Schließen",
+      "confirm": {
+        "create": {
+          "message": "Sind Sie sicher, dass Sie die Rolle {name} erstellen möchten?",
+          "title": "Rolle erstellen"
+        },
+        "delete": {
+          "defaultName": "unbekannt",
+          "message": "Sind Sie sicher, dass Sie die Rolle {name} löschen möchten? \nDiese Aktion kann nicht rückgängig gemacht werden.",
+          "title": "Rolle löschen"
+        }
+      },
+      "create": "Erstellen",
+      "drawer": {
+        "category": {
+          "error": "Die Rollenkategorie ist erforderlich.",
+          "label": "Kategorie",
+          "placeholder": "Wählen Sie die Rollenkategorie aus"
+        },
+        "delete": "Rolle löschen",
+        "description": {
+          "label": "Beschreibung",
+          "placeholder": "Geben Sie die Rollenbeschreibung ein"
+        },
+        "name": {
+          "description": "Der Rollenname muss eindeutig sein.",
+          "error": "Der Rollenname ist erforderlich und muss mindestens 3 Zeichen lang sein.",
+          "label": "Name",
+          "placeholder": "Geben Sie den Rollennamen ein"
+        },
+        "permissions": {
+          "error": "Berechtigungen sind erforderlich.",
+          "label": "Berechtigungen",
+          "placeholder": "Wählen Sie Berechtigungen aus"
+        },
+        "priority": {
+          "error": "Die Priorität ist erforderlich.",
+          "label": "Priorität",
+          "placeholder": "Geben Sie die Rollenpriorität ein"
+        },
+        "save": "Speichern"
+      },
+      "errors": {
+        "fetch": {
+          "message": "{error, select, Unauthorized {Sie sind nicht berechtigt, auf diese Administrationsseite zuzugreifen. \nWenn Sie glauben, dass dies ein Fehler ist, aktualisieren Sie die Seite und versuchen Sie es später erneut.} other {Unbekannter allgemeiner Fehler. \nBitte versuchen Sie es später erneut.}}",
+          "title": "{error, select, Unauthorized {Nicht autorisiert} other {Allgemeiner Fehler}}"
+        },
+        "role": {
+          "message": "Ein Fehler, der bei der Verarbeitung der Rolle {name} einging. \nBitte versuchen Sie es später erneut."
+        }
+      },
+      "newRole": "Neue Rolle",
+      "nothingFound": "Keine Rollen gefunden.",
+      "roleCard": {
+        "createdAt": "Erstellt at",
+        "updatedAt": "Aktualisiert at"
+      },
+      "roles": "{count, plural, =1 {# Rolle} other {# Rollen}}",
+      "success": {
+        "create": {
+          "message": "Die Rolle {name} wurde erfolgreich erstellt.",
+          "title": "Rolle erstellt"
+        },
+        "delete": {
+          "message": "Die Rolle {name} wurde erfolgreich gelöscht.",
+          "title": "Rolle gelöscht"
+        },
+        "update": {
+          "message": "Die Rolle {name} wurde erfolgreich aktualisiert.",
+          "title": "Rolle aktualisiert"
+        }
+      },
+      "title": "Rollenmanager",
+      "viewRole": "Rolle anzeigen"
+    },
+    "Settings": {
+      "Account": {
+        "codingLanguage": {
+          "label": "Codierungssprache"
+        },
+        "deleteAccount": "Konto löschen",
+        "deleteCancel": "Stornieren",
+        "deleteConfirmation": "Sind Sie sicher, dass Sie Ihr Konto löschen möchten? \nDiese Aktion kann nicht rückgängig gemacht werden.",
+        "deleteError": "Beim Löschen Ihres Kontos trat ein Fehler auf. \nBitte versuchen Sie es später erneut.",
+        "deleteSuccess": "Ihr Konto wurde erfolgreich gelöscht.",
+        "email": "E-Mail",
+        "name": {
+          "error": "Der Name ist ungültig. Versuchen Sie es erneut.",
+          "label": "Name",
+          "placeholder": "Geben Sie Ihren Namen ein"
+        },
+        "personalInfo": "Persönliche Informationen und Vorlieben",
+        "title": "Konto",
+        "username": {
+          "error": "Der Benutzername ist ungültig. Versuchen Sie es erneut.",
+          "label": "Benutzername",
+          "placeholder": "Geben Sie Ihren Benutzernamen ein"
+        }
+      },
+      "account": "Konto",
+      "createSampleData": "Beispieldaten erstellen",
+      "debug": "Debuggen",
+      "demoComponents": "Demo -Komponenten",
+      "display": "Anzeige",
+      "fontSize": {
+        "label": "Schriftgröße"
+      },
+      "language": "Sprache",
+      "notifications": "Benachrichtigungen",
+      "saveChanges": "Änderungen speichern",
+      "title": "Einstellungen"
+    },
+    "TestGenerator": {
+      "QuestionDistribution": {
+        "availablePool": "Verfügbarer Fragenpool",
+        "availableQuestions": "{count, plural, =0 {keine Fragen} =1 {eine Frage} other {# Fragen}}",
+        "chapters": "Kapitel",
+        "description": "Wählen Sie aus, wie viele Fragen zu jedem Thema und Kapitel gestellt werden sollen.",
+        "loading": "Laden...",
+        "maxQuestion": "Max",
+        "minQuestion": "Min",
+        "questionRange": "Frage Bereich",
+        "subjects": "Themen",
+        "title": "Frage Verteilung",
+        "totalQuestions": "Fragen insgesamt"
+      },
+      "Selector": {
+        "TestTypeSelector": {
+          "Configurations": {
+            "labels": {
+              "numberOfQuestions": "Anzahl der Fragen",
+              "showAnswers": "Anzeige der richtigen Antwort nach jeder Frage",
+              "timeLimit": "Zeitlimit (Minuten)"
+            }
+          },
+          "distributionInfoMessage": "Sie können die individuelle Anzahl der Fragen unten auswählen",
+          "testConfigTitle": "Test-Konfiguration",
+          "type": "{id, select, simple {Einfach} mockExam {Mock Prüfung} complex {Komplex} other {Unbekannte}}"
+        },
+        "updatedAt": "Aktualisiert bei:"
+      },
+      "errors": {
+        "fetch": {
+          "message": "{error, select, Unauthorized {Sie sind nicht berechtigt, auf diese Administrationsseite zuzugreifen. \nWenn Sie glauben, dass dies ein Fehler ist, aktualisieren Sie die Seite und versuchen Sie es später erneut.} other {unbekannte allgemeine Fehler. \nBitte versuchen Sie es später erneut.}}",
+          "title": "{error, select, Unauthorized {nicht autorisiert} other {allgemeine Fehler}}"
+        },
+        "generate": {
+          "message": "{error, select, Unauthenticated {Bitte melden Sie sich an, um einen Test zu erstellen.} Unauthorized {Ihr Konto ist für diese Testkonfiguration nicht zugelassen.} other {Ein unerwarteter Fehler ist bei der Erstellung des Tests aufgetreten. Bitte versuchen Sie es später noch einmal.}}",
+          "title": "{error, select, Unauthenticated {Anmeldung erforderlich} Unauthorized {Zugriff verweigert} other {Testgenerierungsfehler}}"
+        },
+        "noQuestions": {
+          "message": "Sie müssen mindestens eine Frage aus den verfügbaren Quellen auswählen.",
+          "title": "Keine Fragen ausgewählt"
+        }
+      },
+      "exitConfiguration": {
+        "cancel": "Stornieren",
+        "confirm": "Verlassen",
+        "message": "Sind Sie sicher, dass Sie die Testkonfiguration verlassen möchten? \nAlle Fortschritte werden verloren gehen.",
+        "title": "Testkonfiguration verlassen"
+      },
+      "questionsNumber": "{count, plural, =0 {keine Fragen} =1 {eine Frage} other {# Fragen}}",
+      "steps": {
+        "1": {
+          "description": "Wählen Sie die Testart",
+          "label": "Kategorie"
+        },
+        "2": {
+          "description": "Ordner auswählen",
+          "label": "Ordner"
+        },
+        "3": {
+          "description": "Wählen Sie die Themen und Kapitel aus",
+          "label": "Themen und Kapitel"
+        },
+        "4": {
+          "description": "Schalten Sie es nach Ihren Wünschen",
+          "label": "Endgültige Konfiguration"
+        },
+        "back": "Zurück",
+        "generate": "Test erstellen",
+        "next": "Nächste"
+      },
+      "warnings": {
+        "configuration": {
+          "adjusted": "Maximal verfügbare Fragen: {allowedMax}",
+          "message": "Die Anzahl der Fragen wurde auf der Grundlage der verfügbaren Fragen automatisch auf {allowedMax} angepasst.",
+          "title": "Anzahl der Fragen bereinigt"
+        }
+      }
+    },
+    "Tests": {
+      "Categories": {
+        "admission": "Hochschulzulassung",
+        "bac": "Baccalaureat"
+      },
+      "Subjects": {
+        "biology": "Biologie",
+        "chemistry": "Chemie",
+        "english": "Englisch",
+        "french": "Französisch",
+        "geography": "Geographie",
+        "german": "Deutschland",
+        "history": "Geschichte",
+        "informatics": "Informatik",
+        "mathematics": "Mathematik",
+        "physics": "Physik",
+        "romanian": "Rumänisch",
+        "spanish": "Spanisch"
+      },
+      "answered": "Beantwortet",
+      "availableQuestions": "{Zahl, Plural, =0 {keine Fragen} =1 {eine Frage} other {# Fragen}}",
+      "cancel": "Abbrechen",
+      "category": "{Kategorie, Auswahl, Zulassung {Hochschulzulassung} bac {Baccalaureat} other {Unbekannt}}",
+      "confirm": "Bestätigen Sie",
+      "confirmDeleteTest": {
+        "message": "Sind Sie sicher, dass Sie diesen Test löschen wollen: <b>{testName}</b>? Diese Aktion kann nicht rückgängig gemacht werden.",
+        "title": "Test löschen"
+      },
+      "continueTest": "Weiter",
+      "delete": "Löschen",
+      "deleteError": {
+        "message": "Der Test konnte nicht gelöscht werden. Bitte versuchen Sie es später noch einmal.",
+        "title": "Löschung fehlgeschlagen"
+      },
+      "description": "Hier können Sie Ihre Fortschritte und die von Ihnen durchgeführten Tests sehen. \nSie können auch Ihre Ergebnisse und die von Ihnen studierten Themen sehen. \nMachen Sie weiter so und viel Glück mit Ihrem Studium!",
+      "details": "Details zum Test",
+      "finishTest": "Test beenden",
+      "finishedTest": "Fertige",
+      "firstUnanswered": "Erste unbeantwortete Frage",
+      "generateTestTitle": "Test generieren",
+      "lastQuestion": "Letzte Frage",
+      "next": "Weiter",
+      "noQuestions": "Keine Fragen in diesem Test gefunden",
+      "noQuestionsMessage": "Der Test wurde erfolgreich erstellt, enthält aber keine Fragen. Kehren Sie zur Testseite zurück und überprüfen Sie die Konfiguration.",
+      "previous": "Zurück",
+      "question": "Frage",
+      "resumeTest": "Lebenslauf-Test",
+      "startTest": "Start",
+      "submitAnswer": "Antwort einreichen",
+      "submitConfirmation": {
+        "goToUnanswered": "Zu unbeantworteten Fragen gehen",
+        "message": "Sie haben noch nicht alle Fragen beantwortet. Sind Sie sicher, dass Sie den Test einreichen möchten?",
+        "submit": "Test trotzdem einreichen",
+        "title": "Test einreichen"
+      },
+      "testDeleted": "Test Gelöscht",
+      "testDeletedMessage": "Der Test <b>{testName}</b> wurde erfolgreich gelöscht.",
+      "tests": "{count, plural, =0 {Keine Tests} =1 {# Test} other {# Tests}}",
+      "title": "Tests"
+    },
+    "UserManager": {
+      "authorized": "Autorisiert",
+      "drawer": {
+        "authorized": {
+          "description": "Der Benutzer wurde autorisiert, die App zu verwenden.",
+          "label": "Genehmigung"
+        },
+        "avatar": {
+          "label": "Avatar",
+          "placeholder": "Fügen Sie eine URL in ein Bild ein"
+        },
+        "delete": "Konto löschen",
+        "email": {
+          "description": "Die E-Mail muss einzigartig sein.",
+          "error": "Die E-Mail ist erforderlich und muss eine gültige E-Mail -Adresse sein.",
+          "label": "E-Mail",
+          "placeholder": "Geben Sie die E-Mail ein"
+        },
+        "roles": {
+          "error": "Rollen sind erforderlich.",
+          "label": "Rollen",
+          "placeholder": "Rollen auswählen"
+        },
+        "save": "Speichern",
+        "username": {
+          "description": "Der Benutzername muss einzigartig sein.",
+          "error": "Der Benutzername ist erforderlich und muss mindestens 3 Zeichen lang sein.",
+          "label": "Benutzername",
+          "placeholder": "Geben Sie den Benutzernamen ein"
+        }
+      },
+      "errors": {
+        "fetch": {
+          "message": "{error, select, Unauthorized {Sie sind nicht berechtigt, auf diese Administrationsseite zuzugreifen. \nWenn Sie glauben, dass dies ein Fehler ist, aktualisieren Sie die Seite und versuchen Sie es später erneut.} other {Unbekannter allgemeiner Fehler. \nBitte versuchen Sie es später erneut.}}",
+          "title": "{error, select, Unauthorized {Nicht autorisiert} other {Allgemeiner Fehler}}"
+        }
+      },
+      "title": "Benutzermanager",
+      "unauthorized": "Nicht autorisiert",
+      "users": "{count, plural, =1 {# Benutzer} other {# Benutzer}}",
+      "viewProfile": "Profil anzeigen"
+    },
+    "backToTop": "Scrollen Sie nach oben",
+    "privacyPolicy": "Datenschutzrichtlinie",
+    "title": "Armaturenbrett"
+  },
+  "Demo": {
+    "TestGenerator": {
+      "steps": {
+        "1": {
+          "description": "Welche Art von Test?",
+          "label": "Kategorie"
+        },
+        "2": {
+          "description": "Welcher Ordner und welches Thema?",
+          "label": "Ordner"
+        },
+        "3": {
+          "description": "Welche Kapitel?",
+          "label": "Kapitel"
+        },
+        "back": "Zurück",
+        "next": "Nächste"
+      }
+    }
+  },
+  "Email": {
+    "MagicLink": {
+      "Old": {
+        "disclaimer": "Wenn Sie diese E-Mail nicht angefordert haben, können Sie sie sicher ignorieren. \nSie können versuchen, sich anzumelden, erhalten jedoch jetzt einen Fehler. \nSie können sich nach der Genehmigung Ihrer Registrierung von einem Moderator anmelden.",
+        "message": "Vielen Dank für die Registrierung bei Testebac. \nIhre Registrierung ist eine Genehmigung durch einen Moderator aus. \nDieser Vorgang kann bis zu 24 Stunden dauern. \n\n\nWenn Sie Fragen haben, kontaktieren Sie uns bitte unter {email}.",
+        "signIn": "Anmelden",
+        "subject": "Melden Sie sich bei testebac an",
+        "text": "Melden Sie sich an:",
+        "text_alt": "Wenn Sie Probleme haben, auf die Schaltfläche \"{signIn}\" zu klicken, kopieren Sie die URL unten in Ihren Webbrowser: {signInLink}",
+        "title": "Melden Sie sich bei testebac <strong> ({host}) </strong> an"
+      },
+      "disclaimer": "Wenn Sie diese E-Mail nicht angefordert haben, können Sie sie sicher ignorieren. \nWenden Sie sich an Support, wenn Sie Fragen unter {email} haben.",
+      "message": "Dieser Link ist nur für die nächsten 24 Stunden gültig.",
+      "signIn": "Anmelden",
+      "subject": "Melden Sie sich bei testebac an",
+      "text": "Melden Sie sich an:",
+      "title": "Melden Sie sich bei testebac <strong>({host})</strong> an"
+    }
+  },
+  "General": {
+    "ColorSchemeToggle": {
+      "colorScheme": "{colorScheme, select, light {Hell} dark {Dunkel} auto {Auto} other {Unbekannte}}",
+      "label": "Farbschema umschalten"
+    },
+    "Errors": {
+      "ALREADY_ANSWERED": {
+        "message": "Sie haben bereits eine Antwort auf diese Frage eingereicht. Sie können Ihre einmal abgegebene Antwort nicht mehr ändern.",
+        "title": "Bereits beantwortet"
+      },
+      "ALREADY_ENDED": {
+        "message": "Dieser Test wurde bereits abgeschlossen. Sie können keine Änderungen an einem abgeschlossenen Test vornehmen.",
+        "title": "Bereits abgeschlossener Test"
+      },
+      "ALREADY_STARTED": {
+        "message": "Dieser Test wurde bereits gestartet. Sie können mit dem laufenden Test fortfahren.",
+        "title": "Der Test hat bereits begonnen"
+      },
+      "INVALID_ANSWER_IDS": {
+        "message": "Eine oder mehrere der ausgewählten Antworten sind für diese Frage ungültig. Bitte wählen Sie nur gültige Antworten aus.",
+        "title": "Ungültige Antworten"
+      },
+      "INVALID_INPUT": {
+        "message": "Die eingegebenen Daten sind ungültig. Bitte überprüfen Sie Ihre Daten und versuchen Sie es erneut.",
+        "title": "Ungültige Eingabe"
+      },
+      "NOT_FOUND": {
+        "message": "Diese Ressource wurde nicht gefunden. Bitte versuchen Sie es später noch einmal oder überprüfen Sie Ihre Anfrage.",
+        "title": "Nicht gefunden"
+      },
+      "NOT_STARTED": {
+        "message": "Der Test wurde noch nicht gestartet. Sie müssen den Test erst starten, bevor Sie diese Aktion abschließen können.",
+        "title": "Test nicht gestartet"
+      },
+      "NO_QUESTIONS": {
+        "message": "Es wurden keine Fragen zu den ausgewählten Kriterien gefunden. Bitte versuchen Sie es erneut, nachdem Sie die Filter und Optionen für die Testerstellung geändert haben.",
+        "title": "Keine Fragen"
+      },
+      "QUESTION_NOT_FOUND": {
+        "message": "Die gewünschte Frage konnte in diesem Test nicht gefunden werden. Bitte versuchen Sie es erneut oder kontaktieren Sie den Support.",
+        "title": "Frage nicht gefunden"
+      },
+      "TIME_LIMIT_EXCEEDED": {
+        "message": "Das Zeitlimit für diesen Test wurde überschritten. Ihr Test wurde automatisch abgeschickt.",
+        "title": "Fristüberschreitung"
+      },
+      "UNAUTHENTICATED": {
+        "message": "Sie sind derzeit nicht authentifiziert. Um fortzufahren, müssen Sie in Ihrem Konto angemeldet sein.",
+        "title": "Unbestätigte"
+      },
+      "UNAUTHORIZED": {
+        "message": "Ihr Konto ist nicht berechtigt, auf diese Ressource zuzugreifen oder diese Aktion auszuführen. Bitte versuchen Sie es später noch einmal.",
+        "title": "Zugang verweigert"
+      },
+      "UNKNOWN": {
+        "message": "Es ist ein unbekannter Fehler aufgetreten. Bitte versuchen Sie es später noch einmal oder stellen Sie sicher, dass Ihre Anfrage gültig ist.",
+        "messageCode": "Es ist ein unbekannter Fehler aufgetreten. Bitte versuchen Sie es später noch einmal oder stellen Sie sicher, dass Ihre Anfrage gültig ist. Fehlercode: {code}.",
+        "title": "Unbekannter Fehler"
+      },
+      "goBack": "Zurückgehen"
+    },
+    "LocaleSwitcher": {
+      "label": "Sprache ändern",
+      "locale": "{locale, select, ro {🇷🇴 Rumänisch} en {🇬🇧 Englisch} fr {🇫🇷 Französisch} de {🇩🇪 Deutsch} other {Unbekannte}}",
+      "locales": {
+        "de": "Deutsch",
+        "en": "Englisch",
+        "fr": "Französisch",
+        "ro": "Rumänisch"
+      },
+      "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} de {DE} other {?}}"
+    },
+    "copiedLabel": "Kopiert!",
+    "copyLabel": "Code kopieren",
+    "error": "Fehler",
+    "explanation": "Erläuterung",
+    "launch": "Gehe zu!",
+    "loading": "Laden...",
+    "noResults": "Keine Ergebnisse",
+    "nothingFound": "Nichts gefunden",
+    "refresh": "Versuchen Sie es erneut",
+    "return": "Zurückkehren",
+    "search": "Suchen...",
+    "searchLanguageOrAlias": "Suche nach Sprache oder Alias"
+  },
+  "HomePage": {
+    "about": "TesteBac bereitet Studenten auf die Baccalaureate-oder Universitätsaufnahmeprüfung vor. \nDiese Plattform widmet sich Studenten, die ihr Wissen testen und sich auf die wichtigen Prüfungen ihres Lebens vorbereiten möchten. \nDie Plattform verwendet ein Grid -Testsystem, das sofortiges Feedback bietet und den Schülern hilft, ihr Wissen zu verbessern. \nDie Tests werden von Themen und Kapiteln strukturiert, um die effizienteste und personalisierte Vorbereitung zu ermöglichen. \nWählen Sie, um zu starten, das gewünschte Thema und das Kapitel und drücken Sie die Start -Taste. \nViel Glück mit deinem Studium!",
+    "redirectApp": "Gehen Sie zur App",
+    "title": "Willkommen zu",
+    "userNotAuthorized": {
+      "message": "Bitte warten Sie, bis Ihre Registrierung von einem Moderator validiert wird. \nDies kann bis zu 24 Stunden dauern. \n\n\nWenn Sie Fragen haben, kontaktieren Sie uns bitte unter {E-Mail}.",
+      "short": "Sie müssen berechtigt sein, auf die App zuzugreifen.",
+      "title": "Registrierung noch nicht akzeptiert"
+    }
+  },
+  "TestType": {
+    "Types": {
+      "simple": "Standard"
+    }
+  },
+  "Tests": {
+    "Categories": {
+      "admission": "Hochschulzulassung",
+      "bac": "Abitur"
+    },
+    "Subjects": {
+      "biology": "Biologie",
+      "chemistry": "Chemie",
+      "english": "Englisch",
+      "french": "Französisch",
+      "geography": "Geographie",
+      "german": "Deutsch",
+      "history": "Geschichte",
+      "informatics": "Informatik",
+      "mathematics": "Mathematik",
+      "physics": "Physik",
+      "romanian": "Rumänisch",
+      "spanish": "Spanisch"
+    },
+    "answered": "Antwortet",
+    "availableQuestions": "{count, plural, =0 {keine Fragen} =1 {eine Frage} other {# Fragen}}",
+    "cancel": "Abbrechen",
+    "category": "{category, select, admission {Universitätsaufnahme} bac {Abitur} other {Unbekannt}}",
+    "confirm": "Bestätigen Sie",
+    "confirmDeleteTest": {
+      "message": "Sind Sie sicher, dass Sie diesen Test löschen wollen: <b>{testName}</b>? Diese Aktion kann nicht rückgängig gemacht werden.",
+      "title": "Test löschen"
+    },
+    "continueTest": "Weiter",
+    "delete": "Löschen",
+    "details": "Testdetails",
+    "finishTest": "Test beenden",
+    "finishedTest": "Fertige",
+    "firstUnanswered": "Erste unbeantwortete",
+    "lastQuestion": "Letzte Frage",
+    "mark": "mark",
+    "next": "Weiter",
+    "noQuestions": "Keine Fragen in diesem Test gefunden",
+    "noQuestionsMessage": "Der Test wurde erfolgreich erstellt, enthält aber keine Fragen. Kehren Sie zur Testseite zurück und überprüfen Sie die Konfiguration.",
+    "previous": "Vorherige",
+    "question": "Frage",
+    "resumeTest": "Test fortsetzen",
+    "startTest": "Start",
+    "submitAnswer": "Antwort abschicken",
+    "submitConfirmation": {
+      "goToUnanswered": "Gehe zu unbeantwortet",
+      "message": "Sie haben noch nicht alle Fragen beantwortet. Sind Sie sicher, dass Sie den Test abschicken wollen?",
+      "submit": "Test trotzdem einreichen",
+      "title": "Test einreichen"
+    },
+    "testDeleted": "Test Gelöscht",
+    "testDeletedMessage": "Der Test <b>{testName}</b> wurde erfolgreich gelöscht.",
+    "timeTaken": "benötigte Zeit"
+  },
+  "createSampleData": "Beispieldaten erstellen",
+  "demo-components": "Demo -Komponenten",
+  "exitConfiguration": "Sind Sie sicher, dass Sie die Testkonfiguration verlassen wollen? Der gesamte Fortschritt geht dann verloren."
+}

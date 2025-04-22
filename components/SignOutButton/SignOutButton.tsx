@@ -1,16 +1,16 @@
-import { signOut, auth } from "../../auth"
-import { Group, GroupProps } from "@mantine/core"
+import { ButtonProps, Group, GroupProps } from "@mantine/core";
 import { getTranslations } from "next-intl/server";
+import { auth, signOut } from "../../auth";
 import SubmitButton from "../SubmitButton/SubmitButton";
 
-export default async function SignOutButton(props: Readonly<Omit<GroupProps, 'children' | 'justify'>>) {
+export default async function SignOutButton({ groupProps, buttonProps }: Readonly<{ groupProps?: Omit<GroupProps, 'children' | 'justify'>, buttonProps?: ButtonProps}>) {
     const t = await getTranslations('Authentication');
 
     const session = await auth()
  
     if (!session?.user) return null
     return (
-        <Group justify="center" {...props}>
+        <Group justify="center" {...groupProps}>
             <form
                 action={
                     async () => {
@@ -18,7 +18,7 @@ export default async function SignOutButton(props: Readonly<Omit<GroupProps, 'ch
                     await signOut()
                 }}
             >
-                <SubmitButton type="full">{t('signOut')}</SubmitButton>
+                <SubmitButton type="full" {...buttonProps}>{t('signOut')}</SubmitButton>
             </form>
         </Group>
     )

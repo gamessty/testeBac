@@ -1,0 +1,50 @@
+[
+    {
+        "name": "Simple",
+        "id": "simple",
+        "description": "Simple test with multiple choice questions",
+        "configurations": [
+            {
+                "id": "showAnswers",
+                "default": true,
+                "type": "boolean",
+                "label": "Show correct answer after each question"
+            },
+            {
+                "id": "numberOfQuestions",
+                "type": "number",
+                "label": "Number of questions",
+                "min": 1,
+                "max": "*{maximumQuestionsNumber}*",
+                "suffix": ""
+            }
+        ]
+    },
+    {
+        "id": "mockExam",
+        "name": "Mock Exam",
+        "description": "Mock exam with multiple choice questions",
+        "options": {
+            "showAnswers": false
+        },
+        "configurations": [
+            {
+                "id": "timeLimit",
+                "default": 60,
+                "type": "number",
+                "label": "Time limit (minutes)",
+                "min": 1,
+                "max": 1440,
+                "suffix": " min"
+            },
+            {
+                "id": "numberOfQuestions",
+                "type": "number",
+                "label": "Number of questions",
+                "min": 1,
+                "max": "*{maximumQuestionsNumber}*",
+                "suffix": ""
+            }
+        ]
+    }
+]

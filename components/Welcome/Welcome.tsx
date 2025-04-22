@@ -1,6 +1,6 @@
 import { Text, Title } from '@mantine/core';
-import classes from './Welcome.module.scss';
 import { useTranslations } from 'next-intl';
+import classes from './Welcome.module.css';
 
 export function Welcome() {
   const t = useTranslations('HomePage');
@@ -13,7 +13,7 @@ export function Welcome() {
           testeBac
         </Text>
       </Title>
-      <Text c="dimmed" style={{ textIndent: 60 }} ta="justify" size="lg" maw={750} mx="auto" mt="xl">
+      <Text c="dimmed" style={{ textIndent: 60 }} ta="justify" size="md" maw={770} mx="auto" mt="lg">
         {t('about')}
       </Text>
     </>

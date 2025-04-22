@@ -1,0 +1,50 @@
+.blockquote {
+  width: 100%;
+  margin-top: var(--mantine-spacing-xl);
+  margin-inline: var(--mantine-spacing-xl);
+}
+
+.title {
+  width: 100%;
+  text-align: left;
+  margin-bottom: 20px;
+}
+
+.text {
+  color: var(--mantine-color-dimmed);
+  margin-left: 5px;
+  text-align: left;
+}
+
+.accordionItem {
+  text-transform: capitalize;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.badge {
+  cursor: pointer;
+}
+
+.accordionControl {
+  justify-content: space-between;
+  align-items: center;
+}
+
+.accordionPanel {
+  width: 100%;
+}
+
+.simpleGrid {
+  width: 100%;
+}
+
+.affix {
+  bottom: 145px;
+  right: 20px;
+
+  @mixin larger-than 768px {
+    bottom: 65px;
+    right: 20px;
+  }
+}

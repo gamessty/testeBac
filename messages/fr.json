@@ -1,76 +1,6 @@
 {
-  "HomePage": {
-    "title": "Bienvenue sur",
-    "about": "TesteBac prépare les élèves au baccalauréat ou aux examens d'entrée à l'université. Cette plateforme est dédiée aux étudiants qui souhaitent tester leurs connaissances et se préparer aux examens importants de leur vie. La plateforme utilise un système de tests à choix multiples, offrant un retour instantané et aidant les élèves à améliorer leurs connaissances. Les tests sont structurés par matières et chapitres, afin de proposer une préparation efficace et personnalisée. Pour commencer, choisissez la matière et le chapitre souhaités, puis appuyez sur le bouton de démarrage. Bonne chance dans vos études !",
-    "redirectApp": "Aller à l'application",
-    "userNotAuthorized": {
-      "title": "Inscription non encore acceptée",
-      "message": "Veuillez attendre la validation de votre inscription par un modérateur. Cela peut prendre jusqu'à 24 heures.\n\nSi vous avez des questions, veuillez nous contacter à {email}.",
-      "short": "Vous devez être autorisé pour accéder à l'application."
-    }
-  },
-  "Email": {
-    "MagicLink": {
-      "Old": {
-        "subject": "Connexion à TesteBac",
-        "title": "Connexion à TesteBac <strong>({host})</strong>",
-        "message": "Merci de vous être inscrit sur TesteBac. Votre inscription est en attente de validation par un modérateur. Ce processus peut prendre jusqu'à 24 heures.\n\nSi vous avez des questions, veuillez nous contacter à {email}.",
-        "disclaimer": "Si vous n'avez pas demandé cet e-mail, vous pouvez l'ignorer en toute sécurité. Vous pouvez essayer de vous connecter, mais vous recevrez une erreur pour l'instant. Vous pourrez vous connecter une fois votre inscription approuvée par un modérateur.",
-        "signIn": "Se connecter",
-        "text_alt": "Si vous avez des difficultés à cliquer sur le bouton \"{signIn}\", copiez et collez l'URL ci-dessous dans votre navigateur : {signInLink}",
-        "text": "Connexion à :"
-      },
-      "subject": "Connexion à TesteBac",
-      "title": "Connexion à TesteBac <strong>({host})</strong>",
-      "message": "Ce lien sera valide uniquement pour les 24 prochaines heures.",
-      "disclaimer": "Si vous n'avez pas demandé cet e-mail, vous pouvez l'ignorer en toute sécurité. Contactez le support si vous avez des questions à {email}.",
-      "signIn": "Se connecter",
-      "text": "Connexion à :"
-    }
-  },
-  "General": {
-    "loading": "Chargement...",
-    "error": "Erreur",
-    "refresh": "Réessayer",
-    "LocaleSwitcher": {
-      "label": "Changer de langue",
-      "locale": "{locale, select, ro {🇷🇴 Roumain} en {🇬🇧 Anglais} fr {🇫🇷 Français} other {Inconnu}}",
-      "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} other {?}}",
-      "locales": {
-        "ro": "Roumain",
-        "en": "Anglais",
-        "fr": "Français"
-      }
-    },
-    "ColorSchemeToggle": {
-      "label": "Changer le thème",
-      "colorScheme": "{colorScheme, select, light {Clair} dark {Sombre} auto {Auto} other {Inconnu}}"
-    }
-  },
   "Authentication": {
-    "signIn": "Se connecter",
-    "signInMail": "Se connecter avec un e-mail",
-    "signUp": "S'inscrire",
-    "signOut": "Se déconnecter",
-    "refresh": "Réessayer",
-    "userNotAuthorized": {
-      "title": "Inscription non encore acceptée",
-      "message": "Veuillez attendre la validation de votre inscription par un modérateur. Cela peut prendre jusqu'à 24 heures.\n\nSi vous avez des questions, veuillez nous contacter à {email}."
-    },
     "customPages": {
-      "signIn": {
-        "welcome": "Bienvenue sur",
-        "signIn": "se connecter avec",
-        "or": "Ou continuer avec un e-mail",
-        "disclaimer": "En vous connectant, vous acceptez notre",
-        "privacyPolicy": "politique de confidentialité",
-        "invalidEmail": "L'e-mail est invalide."
-      },
-      "verifyRequest": {
-        "title": "Vérifiez votre adresse e-mail",
-        "message": "Nous vous avons envoyé un e-mail contenant un lien pour vérifier votre adresse e-mail. Veuillez consulter votre boîte de réception et cliquer sur le lien dans l'e-mail pour accéder à l'application.",
-        "backToHome": "Retourner à l'accueil"
-      },
       "error": {
         "Callback": {
           "description": "Quelque chose s'est mal passé lors du traitement de votre demande de connexion. \nVeuillez réessayer.",
@@ -92,6 +22,10 @@
           "description": "Nous n'avons pas pu envoyer l'e-mail de vérification. \nVeuillez vérifier votre adresse e-mail et réessayer.",
           "title": "La connexion par e-mail a échoué"
         },
+        "MissingCSRF": {
+          "description": "Le jeton CSRF est manquant. Veuillez rafraîchir la page et réessayer.",
+          "title": "Token CSRF manquant"
+        },
         "OAuthAccountNotLinked": {
           "description": "Cet e-mail est lié à une autre méthode de connexion. \nVeuillez utiliser la méthode d'origine pour vous connecter.",
           "title": "Compte non lié"
@@ -112,96 +46,86 @@
           "description": "Vous devez être connecté pour accéder à cette page. \nVeuillez vous connecter pour continuer.",
           "title": "Connexion requise"
         }
+      },
+      "signIn": {
+        "disclaimer": "En vous connectant, vous acceptez notre",
+        "invalidEmail": "L'e-mail est invalide.",
+        "or": "Ou continuer avec un e-mail",
+        "privacyPolicy": "politique de confidentialité",
+        "signIn": "se connecter avec",
+        "welcome": "Bienvenue sur"
+      },
+      "signOut": {
+        "confirm": "Êtes-vous sûr de vouloir vous déconnecter ?",
+        "signOut": "S'inscrire",
+        "title": "S'inscrire"
+      },
+      "verifyRequest": {
+        "backToHome": "Retourner à l'accueil",
+        "message": "Nous vous avons envoyé un e-mail contenant un lien pour vérifier votre adresse e-mail. Veuillez consulter votre boîte de réception et cliquer sur le lien dans l'e-mail pour accéder à l'application.",
+        "title": "Vérifiez votre adresse e-mail"
       }
+    },
+    "refresh": "Réessayer",
+    "signIn": "Se connecter",
+    "signInMail": "Se connecter avec un e-mail",
+    "signOut": "Se déconnecter",
+    "signUp": "S'inscrire",
+    "userNotAuthorized": {
+      "message": "Veuillez attendre la validation de votre inscription par un modérateur. Cela peut prendre jusqu'à 24 heures.\n\nSi vous avez des questions, veuillez nous contacter à {email}.",
+      "title": "Inscription non encore acceptée"
     },
     "userSignedOut": {
       "message": "Vous vous êtes connecté avec succès à Testebac! \nNous espérons vous voir bientôt!",
       "title": "Signé"
     }
   },
-  "Tests": {
-    "Categories": {},
-    "Subjects": {
-      "mathematics": "Mathématiques",
-      "romanian": "Roumain",
-      "history": "Histoire",
-      "geography": "Géographie",
-      "biology": "Biologie",
-      "physics": "Physique",
-      "chemistry": "Chimie",
-      "informatics": "Informatique",
-      "english": "Anglais",
-      "french": "Français",
-      "german": "Allemand",
-      "spanish": "Espagnol"
-    },
-    "resumeTest": "Reprendre le test",
-    "lastQuestion": "Dernière question",
-    "category": "{catégorie, sélection, entrée {entrée du collège} BAC {Baccalauréat} Autre {inconnu}}"
-  },
   "Dashboard": {
-    "Navbar": {
-      "home": "Accueil",
-      "subjects": "Matières",
-      "tests": "Tests",
-      "results": "Résultats",
-      "stats": "Statistiques",
-      "profile": "Profil",
-      "settings": "Paramètres",
-      "admin": {
-        "title": "Panneau d'administration",
-        "users": "Utilisateurs",
-        "roles": "Rôles"
-      }
-    },
     "Home": {
-      "welcome": "Salut !",
-      "recentTests": "Tests récents",
       "lastTest": "Reprendre le test",
+      "nameFormatting": ", {name}",
       "quickStats": "Statistiques rapides",
-      "nameFormatting": ", {nom}"
+      "recentTests": "Tests récents",
+      "welcome": "Salut<renderName></renderName>!"
     },
-    "Settings": {
-      "title": "Paramètres",
-      "account": "Compte",
-      "language": "Langue",
-      "display": "Affichage",
-      "debug": "Débogage",
-      "notifications": "Notifications",
-      "saveChanges": "Enregistrer les modifications",
-      "Account": {
-        "deleteAccount": "Supprimer le compte",
-        "deleteCancel": "Annuler",
-        "deleteConfirmation": "Êtes-vous sûr de vouloir supprimer votre compte? \nCette action ne peut pas être annulée.",
-        "deleteError": "Une erreur s'est produite lors de la suppression de votre compte. \nVeuillez réessayer plus tard.",
-        "deleteSuccess": "Votre compte a été supprimé avec succès.",
-        "email": "E-mail",
-        "name": {
-          "label": "Nom",
-          "placeholder": "Entrez votre nom"
+    "Navbar": {
+      "admin": {
+        "roles": "Rôles",
+        "title": "Administrer",
+        "users": "Utilisateurs"
+      },
+      "demo": {
+        "questionCard": "Carte de question",
+        "testGenerator": "Générateur de test",
+        "title": "Démo"
+      },
+      "home": "Accueil",
+      "profile": "Profil",
+      "results": "Résultats",
+      "settings": "Paramètres",
+      "signout": "S'inscrire",
+      "stats": "Statistiques",
+      "subjects": "Matières",
+      "test": {
+        "generator": "Générateur de test"
+      },
+      "tests": "Tests"
+    },
+    "RoleManager": {
+      "close": "Fermer",
+      "confirm": {
+        "create": {
+          "message": "Êtes-vous sûr de vouloir créer le rôle {name}?",
+          "title": "Créer un rôle"
         },
-        "personalInfo": "Information personnelle",
-        "title": "Compte",
-        "username": {
-          "label": "Nom d'utilisateur",
-          "placeholder": "Entrez votre nom d'utilisateur"
+        "delete": {
+          "defaultName": "inconnue",
+          "message": "Êtes-vous sûr de vouloir supprimer le rôle {name}? \nCette action ne peut pas être annulée.",
+          "title": "Supprimer le rôle"
         }
       },
-      "fontSize": {
-        "label": "Taille de la police"
-      }
-    },
-    "backToTop": "Revenir en haut",
-    "privacyPolicy": "Politique de confidentialité",
-    "title": "Tableau de bord",
-    "RoleManager": {
+      "create": "Créer",
       "drawer": {
-        "name": {
-          "description": "Le nom de rôle doit être unique.",
-          "error": "Le nom de rôle est requis et doit comporter au moins 3 caractères.",
-          "label": "Nom",
-          "placeholder": "Entrez le nom de rôle"
-        },
         "category": {
           "error": "La catégorie de rôle est requise.",
           "label": "Catégorie",
@@ -211,6 +135,12 @@
         "description": {
           "label": "Description",
           "placeholder": "Entrez la description du rôle"
+        },
+        "name": {
+          "description": "Le nom de rôle doit être unique.",
+          "error": "Le nom de rôle est requis et doit comporter au moins 3 caractères.",
+          "label": "Nom",
+          "placeholder": "Entrez le nom de rôle"
         },
         "permissions": {
           "error": "Des autorisations sont nécessaires.",
@@ -224,26 +154,13 @@
         },
         "save": "Sauvegarder"
       },
-      "viewRole": "Voir le rôle",
-      "close": "Fermer",
-      "confirm": {
-        "create": {
-          "message": "Êtes-vous sûr de vouloir créer le rôle {nom}?",
-          "title": "Créer un rôle"
-        },
-        "delete": {
-          "message": "Êtes-vous sûr de vouloir supprimer le rôle {nom}? \nCette action ne peut pas être annulée.",
-          "title": "Supprimer le rôle"
-        }
-      },
-      "create": "Créer",
       "errors": {
         "fetch": {
-          "message": "{Error, Select, non autorisé {Vous n'êtes pas autorisé à accéder à cette page d'administration. \nSi vous croyez qu'il s'agit d'une erreur, actualisez la page et réessayez plus tard.} Autre {erreur générale inconnue. \nVeuillez réessayer plus tard.}}",
-          "title": "{Erreur, sélectionnez, non autorisé {non autorisé} Autre {erreur générale}}"
+          "message": "{error, select, Unauthorized {Vous n'êtes pas autorisé à accéder à cette page d'administration. Si vous pensez qu'il s'agit d'une erreur, actualisez la page et réessayez plus tard.} other {Erreur générale inconnue. Veuillez réessayer plus tard.}}",
+          "title": "{error, select, Unauthorized {Erreur d'autorisation} other {Erreur générale}}"
         },
         "role": {
-          "message": "Une erreur est arrivée lors du traitement du rôle {nom}. \nVeuillez réessayer plus tard."
+          "message": "Une erreur est arrivée lors du traitement du rôle {name}. \nVeuillez réessayer plus tard."
         }
       },
       "newRole": "Nouveau rôle",
@@ -252,7 +169,7 @@
         "createdAt": "Créé à",
         "updatedAt": "Mis à jour à"
       },
-      "roles": "{comte, pluriel, = 1 {",
+      "roles": "{count, plural, =1 {# rôle} other {# rôles}}",
       "success": {
         "create": {
           "message": "Le rôle {name} a été créé avec succès.",
@@ -267,11 +184,183 @@
           "title": "Rôle mis à jour"
         }
       },
-      "title": "Responsable des rôles"
+      "title": "Responsable des rôles",
+      "viewRole": "Voir le rôle"
+    },
+    "Settings": {
+      "Account": {
+        "codingLanguage": {
+          "label": "Langue de codage"
+        },
+        "deleteAccount": "Supprimer le compte",
+        "deleteCancel": "Annuler",
+        "deleteConfirmation": "Êtes-vous sûr de vouloir supprimer votre compte? \nCette action ne peut pas être annulée.",
+        "deleteError": "Une erreur s'est produite lors de la suppression de votre compte. \nVeuillez réessayer plus tard.",
+        "deleteSuccess": "Votre compte a été supprimé avec succès.",
+        "email": "E-mail",
+        "name": {
+          "error": "Le nom n'est pas valide. Réessayez.",
+          "label": "Nom",
+          "placeholder": "Entrez votre nom"
+        },
+        "personalInfo": "Informations et préférences personnelles",
+        "title": "Compte",
+        "username": {
+          "error": "Le nom d'utilisateur n'est pas valide. Réessayez.",
+          "label": "Nom d'utilisateur",
+          "placeholder": "Entrez votre nom d'utilisateur"
+        }
+      },
+      "account": "Compte",
+      "createSampleData": "Créer des exemples de données",
+      "debug": "Débogage",
+      "demoComponents": "Composants de démonstration",
+      "display": "Affichage",
+      "fontSize": {
+        "label": "Échelle du site"
+      },
+      "language": "Langue",
+      "notifications": "Notifications",
+      "saveChanges": "Enregistrer les modifications",
+      "title": "Paramètres"
+    },
+    "TestGenerator": {
+      "QuestionDistribution": {
+        "availablePool": "Pool de questions disponibles",
+        "availableQuestions": "{count, plural, =0 {pas de questions} =1 {une question} other {# questions}}",
+        "chapters": "Chapitres",
+        "description": "Choisissez le nombre de questions à inclure dans chaque matière et chapitre",
+        "loading": "Chargement...",
+        "maxQuestion": "Max",
+        "minQuestion": "Min",
+        "questionRange": "Gamme de questions",
+        "subjects": "Thèmes",
+        "title": "Distribution des questions",
+        "totalQuestions": "Total des questions"
+      },
+      "Selector": {
+        "TestTypeSelector": {
+          "Configurations": {
+            "labels": {
+              "numberOfQuestions": "Nombre de questions",
+              "showAnswers": "Afficher la bonne réponse après chaque question",
+              "timeLimit": "Délai (minutes)"
+            }
+          },
+          "distributionInfoMessage": "Vous pouvez sélectionner le nombre individuel de questions ci-dessous",
+          "testConfigTitle": "Configuration du Test",
+          "type": "{id, select, simple {Simple} mockExam {Examen Blanc} complex {Complexe} other {Inconnu}}"
+        },
+        "updatedAt": "Mise à jour à:"
+      },
+      "errors": {
+        "fetch": {
+          "message": "{error, select, Unauthorized {Vous n'êtes pas autorisé à accéder à cette page d'administration. \nSi vous croyez qu'il s'agit d'une erreur, actualisez la page et réessayez plus tard.} other {Erreur générale inconnue. Veuillez réessayer plus tard.}}",
+          "title": "{error, select, Unauthorized {Erreur d'autorisation} other {Erreur générale}}"
+        },
+        "generate": {
+          "message": "{error, select, Unauthenticated {Veuillez vous connecter pour générer un test.} Unauthorized {Votre compte n'est pas autorisé pour cette configuration de test.} other {Une erreur inattendue s'est produite lors de la génération du test. Veuillez réessayer plus tard.}}",
+          "title": "{error, select, Unauthenticated {Sign-in requis} Unauthorized {Access Denied} other {Erreur de génération de test}}"
+        },
+        "noQuestions": {
+          "message": "Vous devez sélectionner au moins une question parmi les sources disponibles.",
+          "title": "Pas de questions sélectionnées"
+        }
+      },
+      "exitConfiguration": {
+        "cancel": "Annuler",
+        "confirm": "Partir",
+        "message": "Êtes-vous sûr de vouloir quitter la configuration du test? \nTous les progrès seront perdus.",
+        "title": "Laisser la configuration du test"
+      },
+      "questionsNumber": "{count, plural, =0 {pas de questions} =1 {une question} autre {# questions}}",
+      "steps": {
+        "1": {
+          "description": "Sélectionner le type de test",
+          "label": "Catégorie"
+        },
+        "2": {
+          "description": "Sélectionner un dossier",
+          "label": "Dossier"
+        },
+        "3": {
+          "description": "Sélectionnez les sujets et les chapitres",
+          "label": "Sujets et chapitres"
+        },
+        "4": {
+          "description": "Traitez-le à votre goût",
+          "label": "Configuration finale"
+        },
+        "back": "Retourner",
+        "generate": "Générer un test",
+        "next": "Suivant"
+      },
+      "warnings": {
+        "configuration": {
+          "adjusted": "Nombre maximum de questions disponibles : {allowedMax}",
+          "message": "Le nombre de questions a été automatiquement ajusté à {maximum autorisé} en fonction des questions disponibles.",
+          "title": "Nombre de questions ajusté"
+        }
+      }
     },
     "Tests": {
+      "Categories": {
+        "admission": "Admission à l'université",
+        "bac": "Baccalauréat"
+      },
+      "Subjects": {
+        "biology": "Biologie",
+        "chemistry": "Chimie",
+        "english": "Anglais",
+        "french": "Français",
+        "geography": "Géographie",
+        "german": "Allemagne",
+        "history": "L'histoire",
+        "informatics": "Informatique",
+        "mathematics": "Mathématiques",
+        "physics": "Physique",
+        "romanian": "Roumain",
+        "spanish": "Espagnol"
+      },
+      "answered": "Répondu",
+      "availableQuestions": "{count, plural, =0 {pas de questions} =1 {une question} other {# questions}}",
+      "cancel": "Annuler",
+      "category": "{catégorie, choisir, admission {Admission à l'université} bac {Baccalauréat} autre {Inconnu}}}",
+      "confirm": "Confirmer",
+      "confirmDeleteTest": {
+        "message": "Êtes-vous sûr de vouloir supprimer ce test : <b>{testName}</b> ? Cette action ne peut pas être annulée.",
+        "title": "Supprimer le test"
+      },
+      "continueTest": "Continuer",
+      "delete": "Supprimer",
+      "deleteError": {
+        "message": "Échec de la suppression du test. Veuillez réessayer plus tard.",
+        "title": "Échec de la suppression"
+      },
       "description": "Ici, vous pouvez voir vos progrès et les tests que vous avez passés. \nVous pouvez également voir vos résultats et les sujets que vous avez étudiés. \nContinuez votre bon travail et bonne chance avec vos études!",
-      "tests": "{count, pluriel, = 0 {pas de tests} = 1 {",
+      "details": "Détails du test",
+      "finishTest": "Terminer le test",
+      "finishedTest": "Fini",
+      "firstUnanswered": "Première question sans réponse",
+      "generateTestTitle": "Générer un test",
+      "lastQuestion": "Dernière question",
+      "next": "Suivant",
+      "noQuestions": "Aucune question trouvée dans ce test",
+      "noQuestionsMessage": "Le test a été créé avec succès mais ne contient pas de questions. Retournez à la page du test et vérifiez la configuration.",
+      "previous": "Précédent",
+      "question": "Question",
+      "resumeTest": "Test de CV",
+      "startTest": "Démarrage",
+      "submitAnswer": "Soumettre la réponse",
+      "submitConfirmation": {
+        "goToUnanswered": "Aller aux questions sans réponse",
+        "message": "Vous n'avez pas répondu à toutes les questions. Êtes-vous sûr de vouloir soumettre le test?",
+        "submit": "Soumettre le test quand même",
+        "title": "Soumettre le test"
+      },
+      "testDeleted": "Test supprimé",
+      "testDeletedMessage": "Le test <b>{testName}</b> a été supprimé avec succès.",
+      "tests": "{count, plural, =0 {Pas de tests} =1 {# tests} other {# tests}}",
       "title": "Tests"
     },
     "UserManager": {
@@ -307,15 +396,18 @@
       },
       "errors": {
         "fetch": {
-          "message": "{Error, Select, non autorisé {Vous n'êtes pas autorisé à accéder à cette page d'administration. \nSi vous croyez qu'il s'agit d'une erreur, actualisez la page et réessayez plus tard.} Autre {erreur générale inconnue. \nVeuillez réessayer plus tard.}}",
-          "title": "{Erreur, sélectionnez, non autorisé {non autorisé} Autre {erreur générale}}"
+          "message": "{error, select, Unauthorized {Vous n'êtes pas autorisé à accéder à cette page d'administration. \nSi vous croyez qu'il s'agit d'une erreur, actualisez la page et réessayez plus tard.} other {Erreur générale inconnue. Veuillez réessayer plus tard.}}",
+          "title": "{error, select, Unauthorized {Erreur d'autorisation} other {Erreur générale}}"
         }
       },
       "title": "Responsable des utilisateurs",
       "unauthorized": "Non autorisé",
-      "users": "{comte, pluriel, = 1 {",
+      "users": "{count, plural, =1 {# utilisateur} other {# utilisateurs}}",
       "viewProfile": "Afficher le profil"
-    }
+    },
+    "backToTop": "Revenir en haut",
+    "privacyPolicy": "Politique de confidentialité",
+    "title": "Tableau de bord"
   },
   "Demo": {
     "TestGenerator": {
@@ -336,5 +428,181 @@
         "next": "Suivant"
       }
     }
-  }
+  },
+  "Email": {
+    "MagicLink": {
+      "Old": {
+        "disclaimer": "Si vous n'avez pas demandé cet e-mail, vous pouvez l'ignorer en toute sécurité. Vous pouvez essayer de vous connecter, mais vous recevrez une erreur pour l'instant. Vous pourrez vous connecter une fois votre inscription approuvée par un modérateur.",
+        "message": "Merci de vous être inscrit sur TesteBac. Votre inscription est en attente de validation par un modérateur. Ce processus peut prendre jusqu'à 24 heures.\n\nSi vous avez des questions, veuillez nous contacter à {email}.",
+        "signIn": "Se connecter",
+        "subject": "Connexion à TesteBac",
+        "text": "Connexion à :",
+        "text_alt": "Si vous avez des difficultés à cliquer sur le bouton \"{signIn}\", copiez et collez l'URL ci-dessous dans votre navigateur : {signInLink}",
+        "title": "Connexion à TesteBac <strong>({host})</strong>"
+      },
+      "disclaimer": "Si vous n'avez pas demandé cet e-mail, vous pouvez l'ignorer en toute sécurité. Contactez le support si vous avez des questions à {email}.",
+      "message": "Ce lien sera valide uniquement pour les 24 prochaines heures.",
+      "signIn": "Se connecter",
+      "subject": "Connexion à TesteBac",
+      "text": "Connexion à :",
+      "title": "Connexion à TesteBac <strong>({host})</strong>"
+    }
+  },
+  "General": {
+    "ColorSchemeToggle": {
+      "colorScheme": "{colorScheme, select, light {Clair} dark {Sombre} auto {Auto} other {Inconnu}}",
+      "label": "Changer le thème"
+    },
+    "Errors": {
+      "ALREADY_ANSWERED": {
+        "message": "Vous avez déjà répondu à cette question. Vous ne pouvez pas modifier votre réponse une fois qu'elle a été soumise.",
+        "title": "Déjà répondu"
+      },
+      "ALREADY_ENDED": {
+        "message": "Ce test est déjà terminé. Vous ne pouvez pas apporter de modifications à un test terminé.",
+        "title": "Test déjà effectué"
+      },
+      "ALREADY_STARTED": {
+        "message": "Ce test a déjà été lancé. Vous pouvez poursuivre le test en cours.",
+        "title": "Test déjà commencé"
+      },
+      "INVALID_ANSWER_IDS": {
+        "message": "Une ou plusieurs des réponses sélectionnées ne sont pas valides pour cette question. Veuillez ne sélectionner que des réponses valides.",
+        "title": "Réponses non valides"
+      },
+      "INVALID_INPUT": {
+        "message": "Les données fournies ne sont pas valides. Veuillez vérifier vos données et réessayer.",
+        "title": "Entrée invalide"
+      },
+      "NOT_FOUND": {
+        "message": "Cette ressource n'a pas été trouvée. Veuillez réessayer plus tard ou vérifier votre demande.",
+        "title": "Non trouvé"
+      },
+      "NOT_STARTED": {
+        "message": "Le test n'a pas encore été lancé. Vous devez démarrer le test avant de pouvoir effectuer cette action.",
+        "title": "Le test n'a pas commencé"
+      },
+      "NO_QUESTIONS": {
+        "message": "Aucune question n'a été trouvée pour les critères sélectionnés. Veuillez réessayer après avoir modifié vos filtres et options de génération de tests.",
+        "title": "Pas de questions"
+      },
+      "QUESTION_NOT_FOUND": {
+        "message": "La question demandée n'a pas été trouvée dans ce test. Veuillez réessayer ou contacter le support.",
+        "title": "Question non trouvée"
+      },
+      "TIME_LIMIT_EXCEEDED": {
+        "message": "Le temps imparti pour ce test a été dépassé. Votre test a été automatiquement soumis.",
+        "title": "Dépassement du délai"
+      },
+      "UNAUTHENTICATED": {
+        "message": "Vous n'êtes pas authentifié. Vous devez être connecté à votre compte pour continuer.",
+        "title": "Non authentifié"
+      },
+      "UNAUTHORIZED": {
+        "message": "Votre compte n'est pas autorisé à accéder à cette ressource ou à exécuter cette action. Veuillez réessayer plus tard.",
+        "title": "Accès refusé"
+      },
+      "UNKNOWN": {
+        "message": "Une erreur inconnue s'est produite. Veuillez réessayer plus tard ou assurez-vous que votre demande est valide.",
+        "messageCode": "Une erreur inconnue s'est produite. Veuillez réessayer plus tard ou assurez-vous que votre demande est valide. Code d'erreur : {code}.",
+        "title": "Erreur inconnue"
+      },
+      "goBack": "Retourner"
+    },
+    "LocaleSwitcher": {
+      "label": "Changer de langue",
+      "locale": "{locale, select, ro {🇷🇴 Roumain} en {🇬🇧 Anglais} fr {🇫🇷 Français} de {🇩🇪 Allemand} other {Inconnu}}",
+      "locales": {
+        "de": "Allemand",
+        "en": "Anglais",
+        "fr": "Français",
+        "ro": "Roumain"
+      },
+      "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} de {DE} other {?}}"
+    },
+    "copiedLabel": "Copié !",
+    "copyLabel": "Copier le code",
+    "error": "Erreur",
+    "explanation": "Explication",
+    "launch": "Aller à !",
+    "loading": "Chargement...",
+    "noResults": "Aucun résultat",
+    "nothingFound": "Rien trouvé",
+    "refresh": "Réessayer",
+    "return": "Retour",
+    "search": "Recherche...",
+    "searchLanguageOrAlias": "Recherche par langue ou alias"
+  },
+  "HomePage": {
+    "about": "TesteBac prépare les élèves au baccalauréat ou aux examens d'entrée à l'université. Cette plateforme est dédiée aux étudiants qui souhaitent tester leurs connaissances et se préparer aux examens importants de leur vie. La plateforme utilise un système de tests à choix multiples, offrant un retour instantané et aidant les élèves à améliorer leurs connaissances. Les tests sont structurés par matières et chapitres, afin de proposer une préparation efficace et personnalisée. Pour commencer, choisissez la matière et le chapitre souhaités, puis appuyez sur le bouton de démarrage. Bonne chance dans vos études !",
+    "redirectApp": "Aller à l'application",
+    "title": "Bienvenue sur",
+    "userNotAuthorized": {
+      "message": "Veuillez attendre la validation de votre inscription par un modérateur. Cela peut prendre jusqu'à 24 heures.\n\nSi vous avez des questions, veuillez nous contacter à {email}.",
+      "short": "Vous devez être autorisé pour accéder à l'application.",
+      "title": "Inscription non encore acceptée"
+    }
+  },
+  "TestType": {
+    "Types": {
+      "simple": "Standard"
+    }
+  },
+  "Tests": {
+    "Categories": {
+      "admission": "Admission à l'université",
+      "bac": "Baccalauréat"
+    },
+    "Subjects": {
+      "biology": "Biologie",
+      "chemistry": "Chimie",
+      "english": "Anglais",
+      "french": "Français",
+      "geography": "Géographie",
+      "german": "Allemand",
+      "history": "Histoire",
+      "informatics": "Informatique",
+      "mathematics": "Mathématiques",
+      "physics": "Physique",
+      "romanian": "Roumain",
+      "spanish": "Espagnol"
+    },
+    "answered": "Répondu",
+    "availableQuestions": "{count, plural, =0 {pas de questions} =1 {une question} other {# questions}}",
+    "cancel": "Annuler",
+    "category": "{category, select, admission {Admission à l'université} bac {Baccalauréat} other {Inconnu}}",
+    "confirm": "Confirmer",
+    "confirmDeleteTest": {
+      "message": "Êtes-vous sûr de vouloir supprimer ce test : <b>{testName}</b> ? Cette action ne peut pas être annulée.",
+      "title": "Supprimer le test"
+    },
+    "continueTest": "Continuer",
+    "delete": "Supprimer",
+    "details": "détails du test",
+    "finishTest": "Test de finition",
+    "finishedTest": "Fini",
+    "firstUnanswered": "Première sans réponse",
+    "lastQuestion": "Dernière question",
+    "mark": "marque",
+    "next": "Suivant",
+    "noQuestions": "Aucune question n'a été trouvée dans ce test",
+    "noQuestionsMessage": "Le test a été créé avec succès mais ne contient pas de questions. Retournez à la page du test et vérifiez la configuration.",
+    "previous": "Précédent",
+    "question": "Question",
+    "resumeTest": "Reprendre le test",
+    "startTest": "Démarrage",
+    "submitAnswer": "Soumettre la réponse",
+    "submitConfirmation": {
+      "goToUnanswered": "Aller à sans réponse",
+      "message": "Vous n'avez pas encore répondu à toutes les questions. Êtes-vous sûr de vouloir soumettre le test ?",
+      "submit": "Soumettre le test quand même",
+      "title": "Soumettre un test"
+    },
+    "testDeleted": "Test supprimé",
+    "testDeletedMessage": "Le test <b>{testName}</b> a été supprimé avec succès.",
+    "timeTaken": "le temps passé"
+  },
+  "createSampleData": "Créer des exemples de données",
+  "demo-components": "Composants de démonstration",
+  "exitConfiguration": "Êtes-vous sûr de vouloir quitter la configuration de test ? Tous les progrès réalisés seront perdus."
 }

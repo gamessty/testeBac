@@ -1,0 +1,29 @@
+.save-button {
+    max-width: 40vw;
+}
+
+.font-size-segmented-control {
+    width: 100%;
+    display: flex;
+    height: calc(1.3 * var(--mantine-spacing-xl));
+
+    & > * {
+        vertical-align: middle;
+        min-width: 0;
+        text-align: center;
+    }
+}
+
+.fieldset {
+    margin-top: 10px;
+    @mixin smaller-than $mantine-breakpoint-md {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+.hide-on-mobile {
+    @mixin smaller-than $mantine-breakpoint-md {
+        display: none !important;
+    }
+}

@@ -20,7 +20,8 @@ export default async function SignInPage(props: Readonly<{ searchParams: Promise
     const { searchParams: searchParamsPromise } = props
     const t = await getTranslations("Authentication.customPages");
     const searchParams = await searchParamsPromise
-    const csrfToken = (await cookies()).get("signIn.authjs.csrf-token")?.value ?? "";
+    const cookiesRequest = await cookies();
+    const csrfToken = cookiesRequest.get("signIn.authjs.csrf-token")?.value ?? "";
     return (
         <Center ml="auto" mr="auto" maw={450} h="100vh" p="lg">
             <Paper shadow="xl" radius="md" p="xl" withBorder>
@@ -56,8 +57,8 @@ export default async function SignInPage(props: Readonly<{ searchParams: Promise
                 }
                 {
                     searchParams?.error && (
-                        <ErrorAlert title={t("error."+ searchParams.error + ".title")}>
-                            {t("error."+ searchParams.error + ".description")}
+                        <ErrorAlert title={t("error." + searchParams.error + ".title")}>
+                            {t("error." + searchParams.error + ".description")}
                         </ErrorAlert>)
                 }
             </Paper>

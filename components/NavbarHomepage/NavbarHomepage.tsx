@@ -1,13 +1,12 @@
-import { Flex, Grid, Text, GridCol, GridProps } from "@mantine/core";
-import ProfileEmail from "../ProfileEmail/ProfileEmail";
-import SignOutButton from "../SignOutButton/SignOutButton";
-import SignInButton from "../SignInButton/SignInButton";
-import ColorSchemeToggleIcon from "../ColorSchemeToggleIcon/ColorSchemeToggleIcon";
-import LocalSelect from "../LocaleSelect/LocaleSelect";
+import { Flex, Grid, GridCol, GridProps, Text } from "@mantine/core";
 import { auth } from "../../auth";
 import { Link } from "../../i18n/routing";
+import ColorSchemeToggleIcon from "../ColorSchemeToggleIcon/ColorSchemeToggleIcon";
+import LocalSelect from "../LocaleSelect/LocaleSelect";
+import ProfileEmail from "../ProfileEmail/ProfileEmail";
+import SignInButton from "../SignInButton/SignInButton";
 import SignOutButtonClient from "../SignOutButton/SignOutButton.client";
-import styles from './NavbarHomepage.module.scss';
+import styles from './NavbarHomepage.module.css';
 
 export default async function NavbarHomepage(props: Readonly<GridProps>) {
     const session = await auth();

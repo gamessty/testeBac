@@ -1,18 +1,5 @@
 "use client";
 import {
-    IconBuildingBank,
-    IconCashBanknote,
-    IconCoin,
-    IconCreditCard,
-    IconFile,
-    IconFilePlus,
-    IconReceipt,
-    IconReceiptRefund,
-    IconReceiptTax,
-    IconRepeat,
-    IconReport,
-} from '@tabler/icons-react';
-import {
     Anchor,
     Card,
     CardProps,
@@ -22,8 +9,13 @@ import {
     UnstyledButton,
     useMantineTheme,
 } from '@mantine/core';
-import classes from './DemoMenu.module.css';
+import {
+    IconFile,
+    IconFilePlus
+} from '@tabler/icons-react';
+import { Link } from '../../../i18n/routing';
 import { getInitialsColor } from '../../../utils';
+import classes from './DemoMenu.module.css';
 
 interface MockDataItem {
     title: string;
@@ -34,14 +26,16 @@ interface MockDataItem {
 
 const mockdata: MockDataItem[] = [
     { title: 'QuestionCard', icon: IconFile, href: './demo/question' },
-    { title: 'TestGenerator', icon: IconFilePlus, href: './demo/generator' }
+    { title: 'TestGenerator', icon: IconFilePlus, href: './demo/generator' },
+    { title: 'Tests', icon: IconFile, href: './demo/tests' },
+    { title: 'TestTypeSelector', icon: IconFile, href: './demo/selector' },
 ];
 
 export default function DemoMenu({ ...props }: Readonly<CardProps>) {
     const theme = useMantineTheme();
 
     const items = mockdata.map((item) => (
-        <UnstyledButton component='a' href={item.href} key={item.title} className={classes.item}>
+        <UnstyledButton component={Link} href={item.href} key={item.title} className={classes.item}>
             <item.icon color={theme.colors[item.color ?? getInitialsColor(item.title)][6]} size={32} />
             <Text size="xs" mt={7}>
                 {item.title}

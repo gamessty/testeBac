@@ -1,0 +1,86 @@
+.list {
+    position: relative;
+    margin-bottom: var(--mantine-spacing-md);
+    column-gap: 10px;
+}
+
+.indicator {
+    z-index: 0;
+    background-color: var(--mantine-color-white);
+    border-radius: var(--mantine-radius-md);
+    border: 1px solid var(--mantine-color-gray-2);
+    box-shadow: var(--mantine-shadow-sm);
+
+    @mixin dark {
+        background-color: var(--mantine-color-dark-6);
+        border-color: var(--mantine-color-dark-4);
+    }
+}
+
+.tab {
+    flex-grow: 1;
+    z-index: 1;
+    font-weight: 500;
+    transition: color 100ms ease, background-color 400ms ease, top 300ms ease;
+    color: var(--mantine-color-gray-7);
+    border: 1px solid transparent;
+    border-radius: var(--mantine-radius-md);
+    background-color: var(--mantine-color-gray-1);
+
+    &[data-active] {
+        color: var(--mantine-color-black);
+        background-color: initial;
+    }
+
+    &:hover:not([data-active]) {
+        top: -2px;
+        color: var(--mantine-color-black);
+    }
+
+    @mixin dark {
+        color: var(--mantine-color-dark-1);
+        background-color: var(--mantine-color-dark-8);
+        &:hover:not([data-active]) {
+            color: var(--mantine-color-white);
+        }
+
+        &[data-active] {
+            color: var(--mantine-color-white);
+            background-color: initial;
+        }
+    }
+}
+
+.switch {
+    display: flex;
+    align-items: center;
+    gap: var(--mantine-spacing-sm);
+    justify-content: space-between;
+    margin-bottom: var(--mantine-spacing-md);
+    padding: var(--mantine-spacing-sm);
+    border-radius: var(--mantine-radius-sm);
+    background-color: var(--mantine-color-gray-0);
+    box-shadow: var(--mantine-shadow-xs);
+
+    @mixin dark {
+        background-color: var(--mantine-color-dark-7);
+    }
+}
+
+.numberInput {
+    margin-bottom: var(--mantine-spacing-md);
+    padding: var(--mantine-spacing-sm);
+    border-radius: var(--mantine-radius-sm);
+    background-color: var(--mantine-color-gray-0);
+    box-shadow: var(--mantine-shadow-xs);
+
+    @mixin dark {
+        background-color: var(--mantine-color-dark-7);
+    }
+}
+
+.container {
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 600px
+}

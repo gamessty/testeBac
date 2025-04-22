@@ -1,0 +1,7 @@
+.chip {
+    text-transform: capitalize;
+}
+
+.group {
+    margin-inline: 0.5rem;
+}

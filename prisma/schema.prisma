@@ -4,28 +4,36 @@ datasource db {
 }
 
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["prismaSchemaFolder"]
 }
 
 model User {
-  id             String          @id @default(auto()) @map("_id") @db.ObjectId
-  name           String?
-  email          String?         @unique
-  emailVerified  DateTime?
-  image          String?
-  rolesIDs       String[]        @db.ObjectId
-  roles          Role[]          @relation(references: [id], fields: [rolesIDs])
-  userAuthorized Boolean         @default(false)
-  username       String?         @unique
-  accounts       Account[]
-  sessions       Session[]
+  id              String          @id @default(auto()) @map("_id") @db.ObjectId
+  name            String?
+  email           String?         @unique
+  emailVerified   DateTime?
+  image           String?
+  rolesIDs        String[]        @db.ObjectId
+  roles           Role[]          @relation(references: [id], fields: [rolesIDs])
+  userAuthorized  Boolean         @default(false)
+  preferences     UserPreferences 
+  username        String?         @unique
+  activeTests     UserTest[]
+  chaptersCreated Chapter[]
+  accounts        Account[]
+  sessions        Session[]
   // Optional for WebAuthn support
-  Authenticator  Authenticator[]
+  Authenticator   Authenticator[]
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
   @@map("users")
+}
+
+type UserPreferences {
+  codingLanguage String @default("cpp")
 }
 
 model Account {

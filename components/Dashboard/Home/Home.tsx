@@ -1,19 +1,25 @@
 
 "use client";
-import { Title, Text, Grid, MantineStyleProp, Center, Flex, useMatches, SimpleGrid, rem } from "@mantine/core";
-import classes from "./Home.module.css";
+import LinkCard from "@/components/Cards/LinkCard/LinkCard";
+import { ITabModuleProps } from "@/data";
+import { usePathname } from "@/i18n/routing";
+import { Center, Flex, SimpleGrid, Text, Title, rem } from "@mantine/core";
+import { IconFile, IconGraph, IconLogout, IconSettings, IconUser, IconUserPlus } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
-import TestCard from "../TestCard/TestCard";
-import { Session } from "next-auth";
-import { getInitialsColor } from "../../../utils";
+import { chkP, getInitialsColor } from "../../../utils";
+import classes from "./Home.module.css";
 
-interface HomeProps {
-    style?: MantineStyleProp;
-    session: Session
+interface HomeProps extends ITabModuleProps {}
+
+const createQueryString = (name: string, value: string) => {
+    const params = new URLSearchParams()
+    params.set(name, value)
+    return params.toString()
 }
 
-export default function Home({ style, session }: Readonly<HomeProps>) {
+export default function Home({ style, session, settab }: Readonly<HomeProps>) {
     const t = useTranslations('Dashboard');
+    const pathname = usePathname();
 
     return (
         <Flex direction="column" pt={{ base: 5, sm: 10 }} h="100%" pb="md" style={{ ...style }}>
@@ -28,13 +34,18 @@ export default function Home({ style, session }: Readonly<HomeProps>) {
                 {t.rich('Home.welcome', { renderName: () => (<WelcomeMessage name={session.user.name ?? ''} />) })}
             </Title>
             <Center style={{ flexGrow: 1 }}>
-                <SimpleGrid maw="100vw" cols={2} w={{ base: "95%", xs: '90%', md: "60%", lg: '50%', xxl: '35%' }}>
-                    <TestCard mih="100%" category="bac" subject="biology" href="./#" />
-                    <TestCard mih="100%" category="entrance" subject="chemistry" href="#" />
-                    <TestCard mih="100%" category="entrance" subject="informatics" href="#" />
-                    <TestCard mih="100%" category="bac" subject="chemistry" href="#" />
-                    <TestCard mih="100%" category="bac" subject="informatics" href="#" />
-                    <TestCard mih="100%" category="entrance" subject="chemistry" href="#" />
+                <SimpleGrid maw="100vw" verticalSpacing="xs" cols={2} w={{ base: "90%", xs: '80%', md: "60%", lg: '50%', xxl: '35%' }}>
+                    <LinkCard design="compact" pb="50px" actionIcon={<IconFile />} name={t("Navbar.tests")} onClick={() => { settab({ tab: 'tests' }) }} />
+                    <LinkCard design="compact" pb="50px" actionIcon={<IconSettings />} name={t('Navbar.settings')} onClick={() => { settab({ tab: 'settings' }) }} />
+                    <LinkCard design="compact" pb="50px" actionIcon={<IconLogout color="var(--mantine-color-red-5)" />} name={t('Navbar.signout')} href="/api/auth/signout" />
+                    {
+                        chkP("user:manage", session.user) &&
+                        <LinkCard withBorder design="compact" pb="50px" actionIcon={<IconUser />} badge="admin" name={t("Navbar.admin.users")} onClick={() => { settab({ tab: 'admin.users' }) }} />
+                    }
+                    {
+                        chkP("role:manage", session.user) &&
+                        <LinkCard withBorder design="compact" pb="50px" actionIcon={<IconUserPlus />} badge="admin" name={t('Navbar.admin.roles')} onClick={() => { settab({ tab: 'admin.roles' }) }} />
+                    }
                 </SimpleGrid>
             </Center>
         </Flex>

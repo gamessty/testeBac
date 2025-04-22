@@ -1,3 +1,4 @@
+import './global.css'
 import "@mantine/core/styles.css";
 import '@mantine/notifications/styles.css';
 import '@mantine/code-highlight/styles.css';
@@ -23,32 +24,36 @@ export const metadata = {
   description: "Home page of the testeBac project",
 };
 
+
 export default async function Locale({ children, params }: Readonly<{ children: React.ReactNode; params: Promise<{ locale: string }> }>) {
   // Ensure that the incoming `locale` is valid
   const { locale } = await params;
+
   if (!routing.locales.includes(locale as any)) {
     notFound();
   }
 
-  // Providing all messages to the client
-  // side is the easiest way to get started
+  // Providing all messages to the client side
   const messages = await getMessages();
 
   return (
     <html lang={locale} {...mantineHtmlProps} suppressHydrationWarning>
       <head>
-        <ColorSchemeScript />
+
         <link rel="shortcut icon" href="/favicon.svg" />
         <meta
           name="viewport"
           content="minimum-scale=1, initial-scale=1, width=device-width, user-scalable=no"
         />
+        <ColorSchemeScript defaultColorScheme="auto" />
       </head>
       <body>
         <NextIntlClientProvider messages={messages}>
           <MantineProvider defaultColorScheme="auto" theme={theme} cssVariablesResolver={resolver}>
             <Notifications />
-            <ModalsProvider>{children}</ModalsProvider>
+            <ModalsProvider>
+              {children}
+            </ModalsProvider>
           </MantineProvider>
         </NextIntlClientProvider>
       </body>

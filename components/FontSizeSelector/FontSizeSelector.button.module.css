@@ -1,0 +1,16 @@
+.middle-section {
+    flex-grow: 1;
+}
+
+.button, .middle-section {
+
+    &[data-disabled],
+    &[disabled] {
+        color: var(--mantine-color-gray-7);
+        border: none;
+
+        svg {
+            stroke: var(--mantine-color-gray-7);
+        }
+    }
+}

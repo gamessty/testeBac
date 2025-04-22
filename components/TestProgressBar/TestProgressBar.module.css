@@ -1,0 +1,8 @@
+.progressSection {
+    justify-content: left;
+}
+
+.progressLabel {
+    margin-left: 25px;
+    color: var(--mantine-color-dimmed);
+}

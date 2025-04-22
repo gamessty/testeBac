@@ -1,316 +1,409 @@
 {
-  "HomePage": {
-    "title": "Bun venit pe",
-    "about": "TesteBac se ocupă cu pregătirea elevilor pentru examenul de bacalaureat sau admitere la facultate. Această platformă este dedicată elevilor care doresc să își testeze cunoștințele și să se pregătească pentru examenele importante din viața lor. Platforma utilizează un sistem de teste grilă, care oferă feedback instantaneu și îi ajută pe elevi să își îmbunătățească cunoștințele. Testele sunt structurate pe materii și capitole, pentru a oferi o pregătire cât mai eficientă și personalizată. Pentru a începe, alegeți materia și capitolul dorit și apăsați butonul de start. Succes la învățat!",
-    "redirectApp": "Mergi la aplicație",
-    "userNotAuthorized": {
-      "title": "Înregistrarea nu a fost încă acceptată",
-      "message": "Vă rugăm să așteptați ca înregistrarea dumneavoastră să fie validată de un moderator. Acest proces poate dura până la 24 de ore. \n\nDacă aveți întrebări, vă rugăm să ne contactați la {email}.",
-      "short": "Trebuie să fiți autorizat pentru a accesa aplicația."
-    }
-  },
-  "Email": {
-    "MagicLink": {
-      "Old": {
-        "subject": "Conectează-te la TesteBac",
-        "title": "Conectează-te la TesteBac <strong>({host})</strong>",
-        "message": "Vă mulțumim pentru înregistrarea pe TesteBac. Înregistrarea dumneavoastră este în așteptarea aprobării de către un moderator. Acest proces poate dura până la 24 de ore. \n\nDacă aveți întrebări, vă rugăm să ne contactați la {email}.",
-        "disclaimer": "Dacă nu ați solicitat acest email, puteți să îl ignorați în siguranță. Puteți încerca să vă conectați, dar veți primi o eroare acum. Veți putea să vă conectați după ce înregistrarea dumneavoastră este aprobată de un moderator.",
-        "signIn": "Conectează-te",
-        "text_alt": "Dacă întâmpinați dificultăți la apăsarea butonului „{signIn}”, copiați și lipiți URL-ul de mai jos în browser-ul dumneavoastră web: {signInLink}",
-        "text": "Conectează-te la:"
-      },
-      "subject": "Conectează-te la TesteBac",
-      "title": "Conectează-te la TesteBac <strong>({host})</strong>",
-      "message": "Acest link va fi valabil doar pentru următoarele 24 de ore.",
-      "disclaimer": "Dacă nu ați solicitat acest email, puteți să îl ignorați în siguranță. Contactați suportul dacă aveți întrebări la {email}.",
-      "signIn": "Conectează-te",
-      "text": "Conectează-te la:"
-    }
-  },
-  "General": {
-    "loading": "Se încarcă...",
-    "error": "Eroare",
-    "refresh": "Încearcă din nou",
-    "LocaleSwitcher": {
-      "label": "Schimbă limba",
-      "locale": "{locale, select, ro {🇷🇴 Română} en {🇬🇧 Engleză} fr {🇫🇷 Franceză} other {Necunoscută}}",
-      "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} other {?}}",
-      "locales": {
-        "ro": "Română",
-        "en": "Engleză",
-        "fr": "Franceză"
-      }
-    },
-    "ColorSchemeToggle": {
-      "label": "Schimbă schema de culori",
-      "colorScheme": "{colorScheme, select, light {Luminos} dark {Întunecat} auto {Automat} other {Necunoscut}}"
-    }
-  },
   "Authentication": {
-    "signIn": "Conectare",
-    "signInMail": "Conectare cu Email",
-    "signUp": "Înregistrare",
-    "signOut": "Deconectare",
-    "refresh": "Reîncearcă",
-    "userSignedOut": {
-      "title": "Deconectare reușită",
-      "message": "V-ați deconectat cu succes de la TesteBac! Vă așteptăm înapoi cât mai curând!"
-    },
-    "userNotAuthorized": {
-      "title": "Înregistrarea nu a fost încă acceptată",
-      "message": "Vă rugăm să așteptați ca înregistrarea dumneavoastră să fie validată de un moderator. Acest proces poate dura până la 24 de ore. \n\nDacă aveți întrebări, vă rugăm să ne contactați la {email}."
-    },
     "customPages": {
-      "signIn": {
-        "welcome": "Bine ați venit la",
-        "signIn": "conectați-vă cu",
-        "or": "Sau continuați cu email",
-        "disclaimer": "Prin conectare, sunteți de acord cu",
-        "privacyPolicy": "politica noastră de confidențialitate",
-        "invalidEmail": "Email-ul este invalid."
-      },
-      "verifyRequest": {
-        "title": "Verificați-vă adresa de email",
-        "message": "Ți-am trimis un email cu un link pentru verificarea adresei tale de email. Te rugăm să verifici inboxul și să dai clic pe linkul din email pentru a vă conecta la aplicație.",
-        "backToHome": "Înapoi"
-      },
       "error": {
-        "OAuthSignin": {
-          "title": "Autorizare Eșuată",
-          "description": "Nu am putut crea URL-ul de autorizare. Vă rugăm să încercați din nou mai târziu."
-        },
-        "OAuthCallback": {
-          "title": "Eroare la Autentificare",
-          "description": "A apărut o problemă la procesarea răspunsului de la furnizorul de autentificare. Încercați din nou."
-        },
-        "OAuthCreateAccount": {
-          "title": "Crearea Contului a Eșuat",
-          "description": "Nu am putut crea contul folosind acest furnizor de autentificare. Încercați din nou sau utilizați o altă metodă."
-        },
-        "EmailCreateAccount": {
-          "title": "Eșec la Înregistrare prin Email",
-          "description": "Nu am putut crea contul folosind acest email. Încercați din nou mai târziu."
-        },
         "Callback": {
-          "title": "Eroare la Callback-ul Autentificării",
-          "description": "Ceva nu a funcționat corect în timpul procesării cererii de autentificare. Încercați din nou."
-        },
-        "OAuthAccountNotLinked": {
-          "title": "Cont Neconectat",
-          "description": "Acest email este deja asociat cu o altă metodă de autentificare. Vă rugăm să folosiți metoda originală pentru a vă autentifica."
-        },
-        "EmailSignin": {
-          "title": "Eșec la Autentificarea prin Email",
-          "description": "Nu am putut trimite emailul de verificare. Verificați adresa de email și încercați din nou."
+          "description": "Ceva nu a funcționat corect în timpul procesării cererii de autentificare. Încercați din nou.",
+          "title": "Eroare la Callback-ul Autentificării"
         },
         "CredentialsSignin": {
-          "title": "Autentificare Eșuată",
-          "description": "Datele de autentificare sunt incorecte. Vă rugăm să le verificați și să încercați din nou."
-        },
-        "SessionRequired": {
-          "title": "Autentificare Necesară",
-          "description": "Trebuie să fiți autentificat pentru a accesa această pagină. Vă rugăm să vă conectați."
+          "description": "Datele de autentificare sunt incorecte. Vă rugăm să le verificați și să încercați din nou.",
+          "title": "Autentificare Eșuată"
         },
         "Default": {
-          "title": "Eroare Necunoscută",
-          "description": "A apărut o eroare neașteptată. Reîncărcați pagina sau încercați din nou mai târziu."
+          "description": "A apărut o eroare neașteptată. Reîncărcați pagina sau încercați din nou mai târziu.",
+          "title": "Eroare Necunoscută"
+        },
+        "EmailCreateAccount": {
+          "description": "Nu am putut crea contul folosind acest email. Încercați din nou mai târziu.",
+          "title": "Eșec la Înregistrare prin Email"
+        },
+        "EmailSignin": {
+          "description": "Nu am putut trimite emailul de verificare. Verificați adresa de email și încercați din nou.",
+          "title": "Eșec la Autentificarea prin Email"
+        },
+        "MissingCSRF": {
+          "description": "Tokenul CSRF lipsește. Vă rugăm să reîmprospătați pagina și să încercați din nou.",
+          "title": "Lipsește tokenul CSRF"
+        },
+        "OAuthAccountNotLinked": {
+          "description": "Acest email este deja asociat cu o altă metodă de autentificare. Vă rugăm să folosiți metoda originală pentru a vă autentifica.",
+          "title": "Cont Neconectat"
+        },
+        "OAuthCallback": {
+          "description": "A apărut o problemă la procesarea răspunsului de la furnizorul de autentificare. Încercați din nou.",
+          "title": "Eroare la Autentificare"
+        },
+        "OAuthCreateAccount": {
+          "description": "Nu am putut crea contul folosind acest furnizor de autentificare. Încercați din nou sau utilizați o altă metodă.",
+          "title": "Crearea Contului a Eșuat"
+        },
+        "OAuthSignin": {
+          "description": "Nu am putut crea URL-ul de autorizare. Vă rugăm să încercați din nou mai târziu.",
+          "title": "Autorizare Eșuată"
+        },
+        "SessionRequired": {
+          "description": "Trebuie să fiți autentificat pentru a accesa această pagină. Vă rugăm să vă conectați.",
+          "title": "Autentificare Necesară"
         }
+      },
+      "signIn": {
+        "disclaimer": "Prin conectare, sunteți de acord cu",
+        "invalidEmail": "Email-ul este invalid.",
+        "or": "Sau continuați cu email",
+        "privacyPolicy": "politica noastră de confidențialitate",
+        "signIn": "conectați-vă cu",
+        "welcome": "Bine ați venit la"
+      },
+      "signOut": {
+        "confirm": "Sunteți sigur că doriți să vă deconectați?",
+        "signOut": "Deconectare",
+        "title": "Deconectare"
+      },
+      "verifyRequest": {
+        "backToHome": "Înapoi",
+        "message": "Ți-am trimis un email cu un link pentru verificarea adresei tale de email. Te rugăm să verifici inboxul și să dai clic pe linkul din email pentru a vă conecta la aplicație.",
+        "title": "Verificați-vă adresa de email"
       }
+    },
+    "refresh": "Reîncearcă",
+    "signIn": "Conectare",
+    "signInMail": "Conectare cu Email",
+    "signOut": "Deconectare",
+    "signUp": "Înregistrare",
+    "userNotAuthorized": {
+      "message": "Vă rugăm să așteptați ca înregistrarea dumneavoastră să fie validată de un moderator. Acest proces poate dura până la 24 de ore. \n\nDacă aveți întrebări, vă rugăm să ne contactați la {email}.",
+      "title": "Înregistrarea nu a fost încă acceptată"
+    },
+    "userSignedOut": {
+      "message": "V-ați deconectat cu succes de la TesteBac! Vă așteptăm înapoi cât mai curând!",
+      "title": "Deconectare reușită"
     }
   },
-  "Tests": {
-    "category": "{category, select, entrance {Admitere} bac {Bac} other {Categorie necunoscută}}",
-    "Subjects": {
-      "mathematics": "Matematică",
-      "romanian": "Română",
-      "history": "Istorie",
-      "geography": "Geografie",
-      "biology": "Biologie",
-      "physics": "Fizică",
-      "chemistry": "Chimie",
-      "informatics": "Informatică",
-      "english": "Engleză",
-      "french": "Franceză",
-      "german": "Germană",
-      "spanish": "Spaniolă"
-    },
-    "resumeTest": "Continuă testul",
-    "lastQuestion": "Ultima întrebare"
-  },
   "Dashboard": {
-    "Navbar": {
-      "home": "Acasă",
-      "subjects": "Materii",
-      "tests": "Teste",
-      "results": "Rezultate",
-      "stats": "Statistici",
-      "profile": "Profil",
-      "settings": "Setări",
-      "admin": {
-        "title": "Administrare",
-        "users": "Utilizatori",
-        "roles": "Roluri"
-      }
-    },
     "Home": {
-      "welcome": "Salut<renderName></renderName>!",
-      "nameFormatting": ", {name}",
-      "recentTests": "Teste recente",
       "lastTest": "Ultimul test",
-      "quickStats": "Statistici"
+      "nameFormatting": ", {name}",
+      "quickStats": "Statistici",
+      "recentTests": "Teste recente",
+      "welcome": "Salut<renderName></renderName>!"
     },
-    "Settings": {
-      "title": "Setări",
-      "account": "Cont",
-      "language": "Limbă",
-      "display": "Afișare",
-      "debug": "Debug",
-      "notifications": "Notificări",
-      "saveChanges": "Salvează modificările",
-      "fontSize": {
-        "label": "Dimensiune text"
+    "Navbar": {
+      "admin": {
+        "roles": "Roluri",
+        "title": "Administrare",
+        "users": "Utilizatori"
       },
-      "Account": {
-        "title": "Cont",
-        "email": "Email",
-        "deleteAccount": "Șterge contul",
-        "personalInfo": "Informații personale",
-        "username": {
-          "label": "Nume de utilizator",
-          "placeholder": "Numele de utilizator"
-        },
-        "name": {
-          "label": "Nume",
-          "placeholder": "Nume Prenume"
-        },
-        "deleteConfirmation": "Ești sigur că vrei să ștergi contul? Această acțiune este ireversibilă.",
-        "deleteSuccess": "Contul a fost șters cu succes.",
-        "deleteError": "A apărut o eroare la ștergerea contului. Vă rugăm să încercați din nou.",
-        "deleteCancel": "Anulează"
-      }
-    },
-    "UserManager": {
-      "title": "Utilizatori",
-      "viewProfile": "Vezi profilul",
-      "authorized": "Autorizat",
-      "unauthorized": "Neautorizat",
-      "users": "{count, plural, =1 {# utilizator} other {# utilizatori}}",
-      "drawer": {
-        "save": "Salvează",
-        "delete": "Șterge contul",
-        "username": {
-          "label": "Nume de utilizator",
-          "placeholder": "Introduceți numele de utilizator",
-          "error": "Numele de utilizator să aibă cel puțin 3 caractere.",
-          "description": "Numele de utilizator este unic."
-        },
-        "email": {
-          "label": "Email",
-          "placeholder": "Introduceți email-ul",
-          "error": "Email-ul este necesar.",
-          "description": "Email-ul trebuie să fie valid."
-        },
-        "avatar": {
-          "label": "Avatar",
-          "placeholder": "Introduce-ți URL-ul avatarului"
-        },
-        "roles": {
-          "label": "Roluri",
-          "placeholder": "Selectați rolurile",
-          "error": "Cel puțin un rol este necesar."
-        },
-        "authorized": {
-          "label": "Utilizator autorizat",
-          "description": "Utilizatorul este autorizat să folosească aplicația."
-        }
+      "demo": {
+        "questionCard": "Card de întrebare",
+        "testGenerator": "Generator de testare",
+        "title": "Demo"
       },
-      "errors": {
-        "fetch": {
-          "title": "{error, select, Unauthorized {Eroare de autorizare} other {Eroare generală}}",
-          "message": "{error, select, Unauthorized {Nu sunteți autorizat să accesați această pagină de administrare. Dacă considerați că este o eroare efectuați un refresh la pagină și încercați din nou mai târziu.} other {Eroare generală necunoscută. Vă rugăm să încercați din nou mai târziu.}}"
-        }
-      }
+      "home": "Acasă",
+      "profile": "Profil",
+      "results": "Rezultate",
+      "settings": "Setări",
+      "signout": "Deconectare",
+      "stats": "Statistici",
+      "subjects": "Materii",
+      "test": {
+        "generator": "Generator de teste"
+      },
+      "tests": "Teste"
     },
     "RoleManager": {
-      "title": "Roluri",
-      "roles": "{count, plural, =1 {# rol} other {# roluri}}",
-      "newRole": "Rol nou",
-      "create": "Crează",
       "close": "Închide",
-      "nothingFound": "Nu s-a găsit niciun rol.",
-      "roleCard": {
-        "createdAt": "Creat la",
-        "updatedAt": "Actualizat la"
-      },
-      "success": {
-        "create": {
-          "title": "Actualizat",
-          "message": "Rolul {name} a fost creat cu succes."
-        },
-        "update": {
-          "title": "Actualizat",
-          "message": "Rolul {name} a fost actualizat cu succes."
-        },
-        "delete": {
-          "title": "Actualizat",
-          "message": "Rolul {name} a fost șters cu succes."
-        }
-      },
       "confirm": {
-        "delete": {
-          "title": "Șterge rolul",
-          "message": "Ești sigur că vrei să ștergi rolul {name}? Această acțiune este ireversibilă."
-        },
         "create": {
-          "title": "Crează rol",
-          "message": "Ești sigur că vrei să creezi un rolul: {name}?"
+          "message": "Ești sigur că vrei să creezi un rolul: {name}?",
+          "title": "Crează rol"
+        },
+        "delete": {
+          "defaultName": "necunoscut",
+          "message": "Ești sigur că vrei să ștergi rolul {name}? Această acțiune este ireversibilă.",
+          "title": "Șterge rolul"
         }
       },
+      "create": "Crează",
       "drawer": {
-        "save": "Salvează",
-        "delete": "Șterge rolul",
-        "name": {
-          "label": "Nume",
-          "placeholder": "Introduceți numele rolului",
-          "error": "Numele rolului este necesar.",
-          "description": "Numele rolului trebuie să fie unic."
-        },
         "category": {
+          "error": "Categoria rolului este necesară.",
           "label": "Categorie",
-          "placeholder": "Selectați categoria rolului",
-          "error": "Categoria rolului este necesară."
+          "placeholder": "Selectați categoria rolului"
         },
+        "delete": "Șterge rolul",
         "description": {
           "label": "Descriere",
           "placeholder": "Introduceți descrierea rolului"
         },
-        "priority": {
-          "label": "Prioritate",
-          "placeholder": "Introduceți prioritatea rolului",
-          "error": "Prioritatea rolului este necesară."
+        "name": {
+          "description": "Numele rolului trebuie să fie unic.",
+          "error": "Numele rolului este necesar.",
+          "label": "Nume",
+          "placeholder": "Introduceți numele rolului"
         },
         "permissions": {
+          "error": "Cel puțin o permisiune este necesară.",
           "label": "Permisiuni",
-          "placeholder": "Selectați permisiunile",
-          "error": "Cel puțin o permisiune este necesară."
-        }
+          "placeholder": "Selectați permisiunile"
+        },
+        "priority": {
+          "error": "Prioritatea rolului este necesară.",
+          "label": "Prioritate",
+          "placeholder": "Introduceți prioritatea rolului"
+        },
+        "save": "Salvează"
       },
       "errors": {
         "fetch": {
-          "title": "{error, select, Unauthorized {Eroare de autorizare} other {Eroare generală}}",
-          "message": "{error, select, Unauthorized {Nu sunteți autorizat să accesați această pagină de administrare. Dacă considerați că este o eroare efectuați un refresh la pagină și încercați din nou mai târziu.} other {Eroare generală necunoscută. Vă rugăm să încercați din nou mai târziu.}}"
+          "message": "{error, select, Unauthorized {Nu sunteți autorizat să accesați această pagină de administrare. Dacă considerați că este o eroare efectuați un refresh la pagină și încercați din nou mai târziu.} other {Eroare generală necunoscută. Vă rugăm să încercați din nou mai târziu.}}",
+          "title": "{error, select, Unauthorized {Eroare de autorizare} other {Eroare generală}}"
         },
         "role": {
           "message": "A apărut o eroare la procesarea rolului {name}. Vă rugăm să încercați din nou."
         }
       },
+      "newRole": "Rol nou",
+      "nothingFound": "Nu s-a găsit niciun rol.",
+      "roleCard": {
+        "createdAt": "Creat la",
+        "updatedAt": "Actualizat la"
+      },
+      "roles": "{count, plural, =1 {# rol} other {# roluri}}",
+      "success": {
+        "create": {
+          "message": "Rolul {name} a fost creat cu succes.",
+          "title": "Actualizat"
+        },
+        "delete": {
+          "message": "Rolul {name} a fost șters cu succes.",
+          "title": "Actualizat"
+        },
+        "update": {
+          "message": "Rolul {name} a fost actualizat cu succes.",
+          "title": "Actualizat"
+        }
+      },
+      "title": "Roluri",
       "viewRole": "Vezi rolul"
     },
+    "Settings": {
+      "Account": {
+        "codingLanguage": {
+          "label": "Limbaj de programare"
+        },
+        "deleteAccount": "Șterge contul",
+        "deleteCancel": "Anulează",
+        "deleteConfirmation": "Ești sigur că vrei să ștergi contul? Această acțiune este ireversibilă.",
+        "deleteError": "A apărut o eroare la ștergerea contului. Vă rugăm să încercați din nou.",
+        "deleteSuccess": "Contul a fost șters cu succes.",
+        "email": "Email",
+        "name": {
+          "error": "Numele nu este valid. Încercați din nou.",
+          "label": "Nume",
+          "placeholder": "Nume Prenume"
+        },
+        "personalInfo": "Informații și preferințe personale",
+        "title": "Cont",
+        "username": {
+          "error": "Numele de utilizator nu este valid. Încercați din nou.",
+          "label": "Nume de utilizator",
+          "placeholder": "Numele de utilizator"
+        }
+      },
+      "account": "Cont",
+      "createSampleData": "Creați date de probă",
+      "debug": "Debug",
+      "demoComponents": "Componente demo",
+      "display": "Afișare",
+      "fontSize": {
+        "label": "Dimensiune text"
+      },
+      "language": "Limbă",
+      "notifications": "Notificări",
+      "saveChanges": "Salvează modificările",
+      "title": "Setări"
+    },
+    "TestGenerator": {
+      "QuestionDistribution": {
+        "availablePool": "Grupul de întrebări disponibile",
+        "availableQuestions": "{count, plural, =0 {nici o întrebare} =1 {o întrebare} other {# întrebări}}",
+        "chapters": "Capitole",
+        "description": "Selectați câte întrebări să includeți din fiecare subiect și capitol",
+        "loading": "Încărcare...",
+        "maxQuestion": "Max",
+        "minQuestion": "Min",
+        "questionRange": "Gama de întrebări",
+        "subjects": "Subiecte",
+        "title": "Distribuția întrebărilor",
+        "totalQuestions": "Total întrebări"
+      },
+      "Selector": {
+        "TestTypeSelector": {
+          "Configurations": {
+            "labels": {
+              "numberOfQuestions": "Număr de întrebări",
+              "showAnswers": "Afișează răspunsul corect după fiecare întrebare",
+              "timeLimit": "Timp limită (minute)"
+            }
+          },
+          "distributionInfoMessage": "Puteți selecta numărul individual de întrebări de mai jos",
+          "testConfigTitle": "Configurație test",
+          "type": "{id, select, simple {Simplu} mockExam {Simulare} complex {Avansat} other {Necunoscut}}"
+        },
+        "updatedAt": "Actualizat la:"
+      },
+      "errors": {
+        "fetch": {
+          "message": "{error, select, neautorizat {Nu sunteți autorizat să accesați această pagină de administrare. \nDacă credeți că aceasta este o eroare, reîmprospătați pagina și încercați din nou mai târziu.} other {eroare generală necunoscută. \nVă rugăm să încercați din nou mai târziu.}}",
+          "title": "{error, select, Unauthorized {neautorizat} other {eroare generală}}"
+        },
+        "generate": {
+          "message": "{error, select, Unauthenticated {Vă rugăm să vă conectați pentru a genera un test.} Unauthorized {Contul dvs. nu este permis pentru această configurație de test.} other {A apărut o eroare neașteptată în timpul generării testului. Vă rugăm să încercați din nou mai târziu.}}",
+          "title": "{error, select, Unauthenticated {Sign-in Required} Unauthorized {Acces refuzat} other {Error de generare a testului}}"
+        },
+        "noQuestions": {
+          "message": "Trebuie să selectați cel puțin o întrebare din sursele disponibile.",
+          "title": "Nicio întrebare selectată"
+        }
+      },
+      "exitConfiguration": {
+        "cancel": "Anulează",
+        "confirm": "Ieși",
+        "message": "Ești sigur că vrei să părăsești configurarea testului? \nTot progresul se va pierde.",
+        "title": "Ieșiți"
+      },
+      "questionsNumber": "{count, plural, =0 {nicio grilă} =1 {o grilă} other {# grile}}",
+      "steps": {
+        "1": {
+          "description": "Selectați tipul de test",
+          "label": "Categorie"
+        },
+        "2": {
+          "description": "Selectați folderul",
+          "label": "Folder"
+        },
+        "3": {
+          "description": "Selectați subiectele și capitolele",
+          "label": "Subiecte și capitole"
+        },
+        "4": {
+          "description": "Reglează-l pe placul tău",
+          "label": "Configurație finală"
+        },
+        "back": "Înapoi",
+        "generate": "Generați test",
+        "next": "Următorul"
+      },
+      "warnings": {
+        "configuration": {
+          "adjusted": "Întrebări maxime disponibile: {allowedMax}",
+          "message": "Numărul de întrebări a fost ajustat automat la {allowedMax} pe baza întrebărilor disponibile.",
+          "title": "Număr de întrebări ajustat"
+        }
+      }
+    },
     "Tests": {
-      "title": "Teste",
+      "Categories": {
+        "admission": "Admitere universitară",
+        "bac": "Bacalaureat"
+      },
+      "Subjects": {
+        "biology": "Biologie",
+        "chemistry": "Chimie",
+        "english": "Engleză",
+        "french": "franceză",
+        "geography": "Geografie",
+        "german": "Germania",
+        "history": "Istoric",
+        "informatics": "Informatică",
+        "mathematics": "Matematică",
+        "physics": "Fizică",
+        "romanian": "română",
+        "spanish": "spaniolă"
+      },
+      "answered": "Răspuns",
+      "availableQuestions": "{count, plural, =0 {nici o întrebare} =1 {o întrebare} other {# întrebări}}",
+      "cancel": "Anulează",
+      "category": "{category, select, admitere {Admitere universitară} bac {Bacalaureat} other {Nu cunoscute}}",
+      "confirm": "Confirmați",
+      "confirmDeleteTest": {
+        "message": "Sunteți sigur că doriți să ștergeți acest test: <b>{testName}</b>? Această acțiune nu poate fi anulată.",
+        "title": "Ștergeți testul"
+      },
+      "continueTest": "Continuați",
+      "delete": "Ștergeți",
+      "deleteError": {
+        "message": "Eșec la ștergerea testului. Vă rugăm să încercați din nou mai târziu.",
+        "title": "Ștergere eșuată"
+      },
       "description": "Aici puteți vedea progresul dumneavoastră și testele pe care le-ați susținut. Puteți vedea, de asemenea, rezultatele dumneavoastră și materiile pe care le-ați studiat. Continuați munca bună și succes la învățat!",
-      "tests": "{count, plural, =0 {Niciun test} =1 {# test} other {# teste}}"
+      "details": "Detalii de testare",
+      "finishTest": "Finalizează testul",
+      "finishedTest": "Terminat",
+      "firstUnanswered": "Prima întrebare fără răspuns",
+      "generateTestTitle": "Generează test",
+      "lastQuestion": "Ultima întrebare",
+      "next": "Înainte",
+      "noQuestions": "Nu s-au găsit întrebări în acest test",
+      "noQuestionsMessage": "Testul a fost creat cu succes, dar nu conține întrebări. Reveniți la pagina de test și verificați configurația.",
+      "previous": "Înapoi",
+      "question": "Întrebare",
+      "resumeTest": "Test de CV",
+      "startTest": "Start",
+      "submitAnswer": "Trimite răspunsul",
+      "submitConfirmation": {
+        "goToUnanswered": "Mergi la întrebările fără răspuns",
+        "message": "Nu ai răspuns la toate întrebările. Ești sigur că vrei să trimiți testul?",
+        "submit": "Trimite testul oricum",
+        "title": "Trimite testul"
+      },
+      "testDeleted": "Test eliminat",
+      "testDeletedMessage": "Testul <b>{testName}</b> a fost șters cu succes.",
+      "tests": "{count, plural, =0 {Niciun test} =1 {# test} other {# teste}}",
+      "title": "Teste"
+    },
+    "UserManager": {
+      "authorized": "Autorizat",
+      "drawer": {
+        "authorized": {
+          "description": "Utilizatorul este autorizat să folosească aplicația.",
+          "label": "Utilizator autorizat"
+        },
+        "avatar": {
+          "label": "Avatar",
+          "placeholder": "Introduce-ți URL-ul avatarului"
+        },
+        "delete": "Șterge contul",
+        "email": {
+          "description": "Email-ul trebuie să fie valid.",
+          "error": "Email-ul este necesar.",
+          "label": "Email",
+          "placeholder": "Introduceți email-ul"
+        },
+        "roles": {
+          "error": "Cel puțin un rol este necesar.",
+          "label": "Roluri",
+          "placeholder": "Selectați rolurile"
+        },
+        "save": "Salvează",
+        "username": {
+          "description": "Numele de utilizator este unic.",
+          "error": "Numele de utilizator să aibă cel puțin 3 caractere.",
+          "label": "Nume de utilizator",
+          "placeholder": "Introduceți numele de utilizator"
+        }
+      },
+      "errors": {
+        "fetch": {
+          "message": "{error, select, Unauthorized {Nu sunteți autorizat să accesați această pagină de administrare. Dacă considerați că este o eroare efectuați un refresh la pagină și încercați din nou mai târziu.} other {Eroare generală necunoscută. Vă rugăm să încercați din nou mai târziu.}}",
+          "title": "{error, select, Unauthorized {Eroare de autorizare} other {Eroare generală}}"
+        }
+      },
+      "title": "Utilizatori",
+      "unauthorized": "Neautorizat",
+      "users": "{count, plural, =1 {# utilizator} other {# utilizatori}}",
+      "viewProfile": "Vezi profilul"
     },
     "backToTop": "Înapoi sus",
     "privacyPolicy": "Politica de confidențialitate",
@@ -320,20 +413,196 @@
     "TestGenerator": {
       "steps": {
         "1": {
-          "label": "Tipul",
-          "description": "Ce tip de test?"
+          "description": "Ce tip de test?",
+          "label": "Tipul"
         },
         "2": {
-          "label": "Folder",
-          "description": "Ce centru/folder și sau materia?"
+          "description": "Ce centru/folder și sau materia?",
+          "label": "Folder"
         },
         "3": {
-          "label": "Capitol",
-          "description": "Ce capitole?"
+          "description": "Ce capitole?",
+          "label": "Capitol"
         },
-        "next": "Următorul",
-        "back": "Înapoi"
+        "back": "Înapoi",
+        "next": "Următorul"
       }
     }
-  }
+  },
+  "Email": {
+    "MagicLink": {
+      "Old": {
+        "disclaimer": "Dacă nu ați solicitat acest email, puteți să îl ignorați în siguranță. Puteți încerca să vă conectați, dar veți primi o eroare acum. Veți putea să vă conectați după ce înregistrarea dumneavoastră este aprobată de un moderator.",
+        "message": "Vă mulțumim pentru înregistrarea pe TesteBac. Înregistrarea dumneavoastră este în așteptarea aprobării de către un moderator. Acest proces poate dura până la 24 de ore. \n\nDacă aveți întrebări, vă rugăm să ne contactați la {email}.",
+        "signIn": "Conectează-te",
+        "subject": "Conectează-te la TesteBac",
+        "text": "Conectează-te la:",
+        "text_alt": "Dacă întâmpinați dificultăți la apăsarea butonului „{signIn}”, copiați și lipiți URL-ul de mai jos în browser-ul dumneavoastră web: {signInLink}",
+        "title": "Conectează-te la TesteBac <strong>({host})</strong>"
+      },
+      "disclaimer": "Dacă nu ați solicitat acest email, puteți să îl ignorați în siguranță. Contactați suportul dacă aveți întrebări la {email}.",
+      "message": "Acest link va fi valabil doar pentru următoarele 24 de ore.",
+      "signIn": "Conectează-te",
+      "subject": "Conectează-te la TesteBac",
+      "text": "Conectează-te la:",
+      "title": "Conectează-te la TesteBac <strong>({host})</strong>"
+    }
+  },
+  "General": {
+    "ColorSchemeToggle": {
+      "colorScheme": "{colorScheme, select, light {Luminos} dark {Întunecat} auto {Automat} other {Necunoscut}}",
+      "label": "Schimbă schema de culori"
+    },
+    "Errors": {
+      "ALREADY_ANSWERED": {
+        "message": "Ați trimis deja un răspuns pentru această întrebare. Nu vă puteți schimba răspunsul odată ce l-ați trimis.",
+        "title": "Deja răspuns"
+      },
+      "ALREADY_ENDED": {
+        "message": "Acest test a fost deja finalizat. Nu puteți face modificări la un test finalizat.",
+        "title": "Test deja finalizat"
+      },
+      "ALREADY_STARTED": {
+        "message": "Acest test a fost deja început. Puteți continua cu testul în curs.",
+        "title": "Testul a început deja"
+      },
+      "INVALID_ANSWER_IDS": {
+        "message": "Unul sau mai multe dintre răspunsurile selectate nu sunt valide pentru această întrebare. Vă rugăm să selectați numai răspunsuri valide.",
+        "title": "Răspunsuri nevalide"
+      },
+      "INVALID_INPUT": {
+        "message": "Datele furnizate nu sunt valide. Vă rugăm să verificați datele și să încercați din nou.",
+        "title": "Introducere invalidă"
+      },
+      "NOT_FOUND": {
+        "message": "Această resursă nu a fost găsită. Vă rugăm să încercați din nou mai târziu sau să vă verificați solicitarea.",
+        "title": "Nu a fost găsit"
+      },
+      "NOT_STARTED": {
+        "message": "Testul nu a fost încă inițiat. Trebuie să începeți testul înainte de a putea finaliza această acțiune.",
+        "title": "Testul nu a început"
+      },
+      "NO_QUESTIONS": {
+        "message": "Nu s-au găsit întrebări pentru criteriile selectate. Vă rugăm să încercați din nou după ce ați modificat filtrele și opțiunile de generare a testelor.",
+        "title": "Nicio întrebare"
+      },
+      "QUESTION_NOT_FOUND": {
+        "message": "Întrebarea solicitată nu a putut fi găsită în acest test. Vă rugăm să încercați din nou sau să contactați asistența.",
+        "title": "Întrebarea nu a fost găsită"
+      },
+      "TIME_LIMIT_EXCEEDED": {
+        "message": "Limita de timp pentru acest test a fost depășită. Testul dvs. a fost trimis automat.",
+        "title": "Timp limită depășit"
+      },
+      "UNAUTHENTICATED": {
+        "message": "Momentan nu sunteți autentificat. Trebuie să fiți autentificat în contul dvs. pentru a continua.",
+        "title": "neautentificat"
+      },
+      "UNAUTHORIZED": {
+        "message": "Contul dvs. nu este autorizat să acceseze această resursă sau să execute această acțiune. Vă rugăm să încercați din nou mai târziu.",
+        "title": "Acces refuzat"
+      },
+      "UNKNOWN": {
+        "message": "A apărut o eroare necunoscută. Vă rugăm să încercați din nou mai târziu sau asigurați-vă că solicitarea dvs. este validă.",
+        "messageCode": "A apărut o eroare necunoscută. Vă rugăm să încercați din nou mai târziu sau asigurați-vă că solicitarea dvs. este validă. Codul de eroare: {code}.",
+        "title": "Eroare necunoscută"
+      },
+      "goBack": "Înapoi"
+    },
+    "LocaleSwitcher": {
+      "label": "Schimbă limba",
+      "locale": "{locale, select, ro {🇷🇴 Română} en {🇬🇧 Engleză} fr {🇫🇷 Franceză} de {🇩🇪 Germană} other {Necunoscută}}",
+      "locales": {
+        "de": "Germană",
+        "en": "Engleză",
+        "fr": "Franceză",
+        "ro": "Română"
+      },
+      "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} de {🇩🇪} other {?}}"
+    },
+    "copiedLabel": "Copiat!",
+    "copyLabel": "Copiați codul",
+    "error": "Eroare",
+    "explanation": "Explicație",
+    "launch": "Du-te la!",
+    "loading": "Se încarcă...",
+    "noResults": "Fără rezultate",
+    "nothingFound": "Nimic nu a fost găsit",
+    "refresh": "Încearcă din nou",
+    "return": "Înapoi",
+    "search": "Căutare...",
+    "searchLanguageOrAlias": "Căutați după limbă sau alias"
+  },
+  "HomePage": {
+    "about": "TesteBac se ocupă cu pregătirea elevilor pentru examenul de bacalaureat sau admitere la facultate. Această platformă este dedicată elevilor care doresc să își testeze cunoștințele și să se pregătească pentru examenele importante din viața lor. Platforma utilizează un sistem de teste grilă, care oferă feedback instantaneu și îi ajută pe elevi să își îmbunătățească cunoștințele. Testele sunt structurate pe materii și capitole, pentru a oferi o pregătire cât mai eficientă și personalizată. Pentru a începe, alegeți materia și capitolul dorit și apăsați butonul de start. Succes la învățat!",
+    "redirectApp": "Mergi la aplicație",
+    "title": "Bun venit pe",
+    "userNotAuthorized": {
+      "message": "Vă rugăm să așteptați ca înregistrarea dumneavoastră să fie validată de un moderator. Acest proces poate dura până la 24 de ore. \n\nDacă aveți întrebări, vă rugăm să ne contactați la {email}.",
+      "short": "Trebuie să fiți autorizat pentru a accesa aplicația.",
+      "title": "Înregistrarea nu a fost încă acceptată"
+    }
+  },
+  "TestType": {
+    "Types": {
+      "simple": "Standard"
+    }
+  },
+  "Tests": {
+    "Categories": {
+      "admission": "Admitere universitară",
+      "bac": "Bacalaureat"
+    },
+    "Subjects": {
+      "biology": "Biologie",
+      "chemistry": "Chimie",
+      "english": "Engleză",
+      "french": "Franceză",
+      "geography": "Geografie",
+      "german": "Germană",
+      "history": "Istorie",
+      "informatics": "Informatică",
+      "mathematics": "Matematică",
+      "physics": "Fizică",
+      "romanian": "Română",
+      "spanish": "Spaniolă"
+    },
+    "answered": "Răspuns",
+    "availableQuestions": "{count, plural, =0 {nici o întrebare} =1 {o întrebare} other {# întrebări}}",
+    "cancel": "Anulează",
+    "category": "{category, select, admission {Admitere} bac {Bac} other {Categorie necunoscută}}",
+    "confirm": "Confirmați",
+    "confirmDeleteTest": {
+      "message": "Sunteți sigur că doriți să ștergeți acest test: <b>{testName}</b>? Această acțiune nu poate fi anulată.",
+      "title": "Ștergeți testul"
+    },
+    "continueTest": "Continuați",
+    "delete": "Ștergeți",
+    "details": "detaliile testului",
+    "finishTest": "Test de finisare",
+    "finishedTest": "Terminat",
+    "firstUnanswered": "Primul fără răspuns",
+    "lastQuestion": "Ultima întrebare",
+    "mark": "marcă",
+    "next": "Următorul",
+    "noQuestions": "Nu s-au găsit întrebări în acest test",
+    "noQuestionsMessage": "Testul a fost creat cu succes, dar nu conține întrebări. Reveniți la pagina de test și verificați configurația.",
+    "previous": "Articolul precedent",
+    "question": "Întrebare",
+    "resumeTest": "Continuă testul",
+    "startTest": "Start",
+    "submitAnswer": "Trimite răspuns",
+    "submitConfirmation": {
+      "goToUnanswered": "Du-te la fără răspuns",
+      "message": "Nu ați răspuns încă la toate întrebările. Sunteți sigur că doriți să trimiteți testul?",
+      "submit": "Trimiteți testul oricum",
+      "title": "Trimite test"
+    },
+    "testDeleted": "Test eliminat",
+    "testDeletedMessage": "Testul <b>{testName}</b> a fost șters cu succes.",
+    "timeTaken": "timp petrecut"
+  },
+  "createSampleData": "Creați date de probă",
+  "demo-components": "Componente demo",
+  "exitConfiguration": "Sunteți sigur că doriți să părăsiți configurația de test? Toate progresele vor fi pierdute."
 }

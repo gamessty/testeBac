@@ -1,0 +1,1131 @@
+[
+    {
+        "language": "1C",
+        "aliases": [
+            "1c"
+        ]
+    },
+    {
+        "language": "ABNF",
+        "aliases": [
+            "abnf"
+        ]
+    },
+    {
+        "language": "Access logs",
+        "aliases": [
+            "accesslog"
+        ]
+    },
+    {
+        "language": "Ada",
+        "aliases": [
+            "ada"
+        ]
+    },
+    {
+        "language": "Arduino (C++ w/Arduino libs)",
+        "aliases": [
+            "arduino",
+            "ino"
+        ]
+    },
+    {
+        "language": "ARM assembler",
+        "aliases": [
+            "armasm",
+            "arm"
+        ]
+    },
+    {
+        "language": "AVR assembler",
+        "aliases": [
+            "avrasm"
+        ]
+    },
+    {
+        "language": "ActionScript",
+        "aliases": [
+            "actionscript",
+            "as"
+        ]
+    },
+    {
+        "language": "AngelScript",
+        "aliases": [
+            "angelscript",
+            "asc"
+        ]
+    },
+    {
+        "language": "Apache",
+        "aliases": [
+            "apache",
+            "apacheconf"
+        ]
+    },
+    {
+        "language": "AppleScript",
+        "aliases": [
+            "applescript",
+            "osascript"
+        ]
+    },
+    {
+        "language": "Arcade",
+        "aliases": [
+            "arcade"
+        ]
+    },
+    {
+        "language": "AsciiDoc",
+        "aliases": [
+            "asciidoc",
+            "adoc"
+        ]
+    },
+    {
+        "language": "AspectJ",
+        "aliases": [
+            "aspectj"
+        ]
+    },
+    {
+        "language": "AutoHotkey",
+        "aliases": [
+            "autohotkey"
+        ]
+    },
+    {
+        "language": "AutoIt",
+        "aliases": [
+            "autoit"
+        ]
+    },
+    {
+        "language": "Awk",
+        "aliases": [
+            "awk",
+            "mawk",
+            "nawk",
+            "gawk"
+        ]
+    },
+    {
+        "language": "Bash",
+        "aliases": [
+            "bash",
+            "sh",
+            "zsh"
+        ]
+    },
+    {
+        "language": "Basic",
+        "aliases": [
+            "basic"
+        ]
+    },
+    {
+        "language": "BNF",
+        "aliases": [
+            "bnf"
+        ]
+    },
+    {
+        "language": "Brainfuck",
+        "aliases": [
+            "brainfuck",
+            "bf"
+        ]
+    },
+    {
+        "language": "C#",
+        "aliases": [
+            "csharp",
+            "cs"
+        ]
+    },
+    {
+        "language": "C",
+        "aliases": [
+            "c",
+            "h"
+        ]
+    },
+    {
+        "language": "C++",
+        "aliases": [
+            "cpp",
+            "hpp",
+            "cc",
+            "hh",
+            "c++",
+            "h++",
+            "cxx",
+            "hxx"
+        ]
+    },
+    {
+        "language": "C/AL",
+        "aliases": [
+            "cal"
+        ]
+    },
+    {
+        "language": "Cache Object Script",
+        "aliases": [
+            "cos",
+            "cls"
+        ]
+    },
+    {
+        "language": "CMake",
+        "aliases": [
+            "cmake",
+            "cmake.in"
+        ]
+    },
+    {
+        "language": "Coq",
+        "aliases": [
+            "coq"
+        ]
+    },
+    {
+        "language": "CSP",
+        "aliases": [
+            "csp"
+        ]
+    },
+    {
+        "language": "CSS",
+        "aliases": [
+            "css"
+        ]
+    },
+    {
+        "language": "Cap’n Proto",
+        "aliases": [
+            "capnproto",
+            "capnp"
+        ]
+    },
+    {
+        "language": "Clojure",
+        "aliases": [
+            "clojure",
+            "clj"
+        ]
+    },
+    {
+        "language": "Crmsh",
+        "aliases": [
+            "crmsh",
+            "crm",
+            "pcmk"
+        ]
+    },
+    {
+        "language": "Crystal",
+        "aliases": [
+            "crystal",
+            "cr"
+        ]
+    },
+    {
+        "language": "D",
+        "aliases": [
+            "d"
+        ]
+    },
+    {
+        "language": "Dart",
+        "aliases": [
+            "dart"
+        ]
+    },
+    {
+        "language": "Delphi",
+        "aliases": [
+            "dpr",
+            "dfm",
+            "pas",
+            "pascal"
+        ]
+    },
+    {
+        "language": "Diff",
+        "aliases": [
+            "diff",
+            "patch"
+        ]
+    },
+    {
+        "language": "Django",
+        "aliases": [
+            "django",
+            "jinja"
+        ]
+    },
+    {
+        "language": "DNS Zone file",
+        "aliases": [
+            "dns",
+            "zone",
+            "bind"
+        ]
+    },
+    {
+        "language": "Dockerfile",
+        "aliases": [
+            "dockerfile",
+            "docker"
+        ]
+    },
+    {
+        "language": "DOS",
+        "aliases": [
+            "dos",
+            "bat",
+            "cmd"
+        ]
+    },
+    {
+        "language": "dsconfig",
+        "aliases": [
+            "dsconfig"
+        ]
+    },
+    {
+        "language": "DTS (Device Tree)",
+        "aliases": [
+            "dts"
+        ]
+    },
+    {
+        "language": "Dust",
+        "aliases": [
+            "dust",
+            "dst"
+        ]
+    },
+    {
+        "language": "EBNF",
+        "aliases": [
+            "ebnf"
+        ]
+    },
+    {
+        "language": "Elixir",
+        "aliases": [
+            "elixir"
+        ]
+    },
+    {
+        "language": "Elm",
+        "aliases": [
+            "elm"
+        ]
+    },
+    {
+        "language": "Erlang",
+        "aliases": [
+            "erlang",
+            "erl"
+        ]
+    },
+    {
+        "language": "Excel",
+        "aliases": [
+            "excel",
+            "xls",
+            "xlsx"
+        ]
+    },
+    {
+        "language": "F#",
+        "aliases": [
+            "fsharp",
+            "fs",
+            "fsx",
+            "fsi",
+            "fsscript"
+        ]
+    },
+    {
+        "language": "FIX",
+        "aliases": [
+            "fix"
+        ]
+    },
+    {
+        "language": "Fortran",
+        "aliases": [
+            "fortran",
+            "f90",
+            "f95"
+        ]
+    },
+    {
+        "language": "G-Code",
+        "aliases": [
+            "gcode",
+            "nc"
+        ]
+    },
+    {
+        "language": "Gams",
+        "aliases": [
+            "gams",
+            "gms"
+        ]
+    },
+    {
+        "language": "GAUSS",
+        "aliases": [
+            "gauss",
+            "gss"
+        ]
+    },
+    {
+        "language": "Gherkin",
+        "aliases": [
+            "gherkin"
+        ]
+    },
+    {
+        "language": "Go",
+        "aliases": [
+            "go",
+            "golang"
+        ]
+    },
+    {
+        "language": "Golo",
+        "aliases": [
+            "golo",
+            "gololang"
+        ]
+    },
+    {
+        "language": "Gradle",
+        "aliases": [
+            "gradle"
+        ]
+    },
+    {
+        "language": "GraphQL",
+        "aliases": [
+            "graphql",
+            "gql"
+        ]
+    },
+    {
+        "language": "Groovy",
+        "aliases": [
+            "groovy"
+        ]
+    },
+    {
+        "language": "HTTP",
+        "aliases": [
+            "http",
+            "https"
+        ]
+    },
+    {
+        "language": "Haml",
+        "aliases": [
+            "haml"
+        ]
+    },
+    {
+        "language": "Haskell",
+        "aliases": [
+            "haskell",
+            "hs"
+        ]
+    },
+    {
+        "language": "Haxe",
+        "aliases": [
+            "haxe",
+            "hx"
+        ]
+    },
+    {
+        "language": "Hy",
+        "aliases": [
+            "hy",
+            "hylang"
+        ]
+    },
+    {
+        "language": "Ini, TOML",
+        "aliases": [
+            "ini",
+            "toml"
+        ]
+    },
+    {
+        "language": "Inform7",
+        "aliases": [
+            "inform7",
+            "i7"
+        ]
+    },
+    {
+        "language": "IRPF90",
+        "aliases": [
+            "irpf90"
+        ]
+    },
+    {
+        "language": "JSON",
+        "aliases": [
+            "json",
+            "jsonc"
+        ]
+    },
+    {
+        "language": "Java",
+        "aliases": [
+            "java",
+            "jsp"
+        ]
+    },
+    {
+        "language": "JavaScript",
+        "aliases": [
+            "javascript",
+            "js",
+            "jsx"
+        ]
+    },
+    {
+        "language": "Julia",
+        "aliases": [
+            "julia",
+            "jl"
+        ]
+    },
+    {
+        "language": "Julia REPL",
+        "aliases": [
+            "julia-repl"
+        ]
+    },
+    {
+        "language": "Kotlin",
+        "aliases": [
+            "kotlin",
+            "kt"
+        ]
+    },
+    {
+        "language": "LaTeX",
+        "aliases": [
+            "tex"
+        ]
+    },
+    {
+        "language": "Leaf",
+        "aliases": [
+            "leaf"
+        ]
+    },
+    {
+        "language": "Lasso",
+        "aliases": [
+            "lasso",
+            "ls",
+            "lassoscript"
+        ]
+    },
+    {
+        "language": "Less",
+        "aliases": [
+            "less"
+        ]
+    },
+    {
+        "language": "LDIF",
+        "aliases": [
+            "ldif"
+        ]
+    },
+    {
+        "language": "Lisp",
+        "aliases": [
+            "lisp"
+        ]
+    },
+    {
+        "language": "LiveCode Server",
+        "aliases": [
+            "livecodeserver"
+        ]
+    },
+    {
+        "language": "LiveScript",
+        "aliases": [
+            "livescript",
+            "ls"
+        ]
+    },
+    {
+        "language": "Lua",
+        "aliases": [
+            "lua",
+            "pluto"
+        ]
+    },
+    {
+        "language": "Makefile",
+        "aliases": [
+            "makefile",
+            "mk",
+            "mak",
+            "make"
+        ]
+    },
+    {
+        "language": "Markdown",
+        "aliases": [
+            "markdown",
+            "md",
+            "mkdown",
+            "mkd"
+        ]
+    },
+    {
+        "language": "Mathematica",
+        "aliases": [
+            "mathematica",
+            "mma",
+            "wl"
+        ]
+    },
+    {
+        "language": "Matlab",
+        "aliases": [
+            "matlab"
+        ]
+    },
+    {
+        "language": "Maxima",
+        "aliases": [
+            "maxima"
+        ]
+    },
+    {
+        "language": "Maya Embedded Language",
+        "aliases": [
+            "mel"
+        ]
+    },
+    {
+        "language": "Mercury",
+        "aliases": [
+            "mercury"
+        ]
+    },
+    {
+        "language": "MIPS Assembler",
+        "aliases": [
+            "mips",
+            "mipsasm"
+        ]
+    },
+    {
+        "language": "Mizar",
+        "aliases": [
+            "mizar"
+        ]
+    },
+    {
+        "language": "Mojolicious",
+        "aliases": [
+            "mojolicious"
+        ]
+    },
+    {
+        "language": "Monkey",
+        "aliases": [
+            "monkey"
+        ]
+    },
+    {
+        "language": "Moonscript",
+        "aliases": [
+            "moonscript",
+            "moon"
+        ]
+    },
+    {
+        "language": "N1QL",
+        "aliases": [
+            "n1ql"
+        ]
+    },
+    {
+        "language": "NSIS",
+        "aliases": [
+            "nsis"
+        ]
+    },
+    {
+        "language": "Nginx",
+        "aliases": [
+            "nginx",
+            "nginxconf"
+        ]
+    },
+    {
+        "language": "Nim",
+        "aliases": [
+            "nim",
+            "nimrod"
+        ]
+    },
+    {
+        "language": "Nix",
+        "aliases": [
+            "nix"
+        ]
+    },
+    {
+        "language": "OCaml",
+        "aliases": [
+            "ocaml",
+            "ml"
+        ]
+    },
+    {
+        "language": "Objective C",
+        "aliases": [
+            "objectivec",
+            "mm",
+            "objc",
+            "obj-c",
+            "obj-c++",
+            "objective-c++"
+        ]
+    },
+    {
+        "language": "OpenGL Shading Language",
+        "aliases": [
+            "glsl"
+        ]
+    },
+    {
+        "language": "OpenSCAD",
+        "aliases": [
+            "openscad",
+            "scad"
+        ]
+    },
+    {
+        "language": "Oracle Rules Language",
+        "aliases": [
+            "ruleslanguage"
+        ]
+    },
+    {
+        "language": "Oxygene",
+        "aliases": [
+            "oxygene"
+        ]
+    },
+    {
+        "language": "PF",
+        "aliases": [
+            "pf",
+            "pf.conf"
+        ]
+    },
+    {
+        "language": "PHP",
+        "aliases": [
+            "php"
+        ]
+    },
+    {
+        "language": "Parser3",
+        "aliases": [
+            "parser3"
+        ]
+    },
+    {
+        "language": "Perl",
+        "aliases": [
+            "perl",
+            "pl",
+            "pm"
+        ]
+    },
+    {
+        "language": "Plaintext",
+        "aliases": [
+            "plaintext",
+            "txt",
+            "text"
+        ]
+    },
+    {
+        "language": "Pony",
+        "aliases": [
+            "pony"
+        ]
+    },
+    {
+        "language": "PostgreSQL & PL/pgSQL",
+        "aliases": [
+            "pgsql",
+            "postgres",
+            "postgresql"
+        ]
+    },
+    {
+        "language": "PowerShell",
+        "aliases": [
+            "powershell",
+            "ps",
+            "ps1"
+        ]
+    },
+    {
+        "language": "Processing",
+        "aliases": [
+            "processing"
+        ]
+    },
+    {
+        "language": "Prolog",
+        "aliases": [
+            "prolog"
+        ]
+    },
+    {
+        "language": "Properties",
+        "aliases": [
+            "properties"
+        ]
+    },
+    {
+        "language": "Protocol Buffers",
+        "aliases": [
+            "proto",
+            "protobuf"
+        ]
+    },
+    {
+        "language": "Puppet",
+        "aliases": [
+            "puppet",
+            "pp"
+        ]
+    },
+    {
+        "language": "Python",
+        "aliases": [
+            "python",
+            "py",
+            "gyp"
+        ]
+    },
+    {
+        "language": "Python profiler results",
+        "aliases": [
+            "profile"
+        ]
+    },
+    {
+        "language": "Python REPL",
+        "aliases": [
+            "python-repl",
+            "pycon"
+        ]
+    },
+    {
+        "language": "Q",
+        "aliases": [
+            "k",
+            "kdb"
+        ]
+    },
+    {
+        "language": "QML",
+        "aliases": [
+            "qml"
+        ]
+    },
+    {
+        "language": "R",
+        "aliases": [
+            "r"
+        ]
+    },
+    {
+        "language": "ReasonML",
+        "aliases": [
+            "reasonml",
+            "re"
+        ]
+    },
+    {
+        "language": "RenderMan RIB",
+        "aliases": [
+            "rib"
+        ]
+    },
+    {
+        "language": "RenderMan RSL",
+        "aliases": [
+            "rsl"
+        ]
+    },
+    {
+        "language": "Roboconf",
+        "aliases": [
+            "graph",
+            "instances"
+        ]
+    },
+    {
+        "language": "Rust",
+        "aliases": [
+            "rust",
+            "rs"
+        ]
+    },
+    {
+        "language": "SAS",
+        "aliases": [
+            "SAS",
+            "sas"
+        ]
+    },
+    {
+        "language": "SCSS",
+        "aliases": [
+            "scss"
+        ]
+    },
+    {
+        "language": "SQL",
+        "aliases": [
+            "sql"
+        ]
+    },
+    {
+        "language": "STEP Part 21",
+        "aliases": [
+            "p21",
+            "step",
+            "stp"
+        ]
+    },
+    {
+        "language": "Scala",
+        "aliases": [
+            "scala"
+        ]
+    },
+    {
+        "language": "Scheme",
+        "aliases": [
+            "scheme"
+        ]
+    },
+    {
+        "language": "Scilab",
+        "aliases": [
+            "scilab",
+            "sci"
+        ]
+    },
+    {
+        "language": "Shell",
+        "aliases": [
+            "shell",
+            "console"
+        ]
+    },
+    {
+        "language": "Smali",
+        "aliases": [
+            "smali"
+        ]
+    },
+    {
+        "language": "Smalltalk",
+        "aliases": [
+            "smalltalk",
+            "st"
+        ]
+    },
+    {
+        "language": "SML",
+        "aliases": [
+            "sml",
+            "ml"
+        ]
+    },
+    {
+        "language": "Stan",
+        "aliases": [
+            "stan",
+            "stanfuncs"
+        ]
+    },
+    {
+        "language": "Stata",
+        "aliases": [
+            "stata"
+        ]
+    },
+    {
+        "language": "Stylus",
+        "aliases": [
+            "stylus",
+            "styl"
+        ]
+    },
+    {
+        "language": "SubUnit",
+        "aliases": [
+            "subunit"
+        ]
+    },
+    {
+        "language": "Swift",
+        "aliases": [
+            "swift"
+        ]
+    },
+    {
+        "language": "Tcl",
+        "aliases": [
+            "tcl",
+            "tk"
+        ]
+    },
+    {
+        "language": "Test Anything Protocol",
+        "aliases": [
+            "tap"
+        ]
+    },
+    {
+        "language": "Thrift",
+        "aliases": [
+            "thrift"
+        ]
+    },
+    {
+        "language": "TP",
+        "aliases": [
+            "tp"
+        ]
+    },
+    {
+        "language": "Twig",
+        "aliases": [
+            "twig",
+            "craftcms"
+        ]
+    },
+    {
+        "language": "TypeScript",
+        "aliases": [
+            "typescript",
+            "ts",
+            "tsx",
+            "mts",
+            "cts"
+        ]
+    },
+    {
+        "language": "VB.Net",
+        "aliases": [
+            "vbnet",
+            "vb"
+        ]
+    },
+    {
+        "language": "VBScript",
+        "aliases": [
+            "vbscript",
+            "vbs"
+        ]
+    },
+    {
+        "language": "VHDL",
+        "aliases": [
+            "vhdl"
+        ]
+    },
+    {
+        "language": "Vala",
+        "aliases": [
+            "vala"
+        ]
+    },
+    {
+        "language": "Verilog",
+        "aliases": [
+            "verilog",
+            "v"
+        ]
+    },
+    {
+        "language": "Vim Script",
+        "aliases": [
+            "vim"
+        ]
+    },
+    {
+        "language": "X++",
+        "aliases": [
+            "axapta",
+            "x++"
+        ]
+    },
+    {
+        "language": "x86 Assembly",
+        "aliases": [
+            "x86asm"
+        ]
+    },
+    {
+        "language": "XL",
+        "aliases": [
+            "xl",
+            "tao"
+        ]
+    },
+    {
+        "language": "XQuery",
+        "aliases": [
+            "xquery",
+            "xpath",
+            "xq",
+            "xqm"
+        ]
+    },
+    {
+        "language": "YAML",
+        "aliases": [
+            "yml",
+            "yaml"
+        ]
+    },
+    {
+        "language": "Zephir",
+        "aliases": [
+            "zephir",
+            "zep"
+        ]
+    }
+]

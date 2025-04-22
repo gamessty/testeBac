@@ -9,10 +9,10 @@ import { chkP } from "../../utils";
 export default async function getManyRole(): Promise<Role[] | { message: string }> {
     const session = await auth();
     if (!session?.user) {
-        return { message: "Not authenticated" };
+        return { message: "UNAUTHENTICATED" };
     }
     if (!chkP("user:readAll", session.user)) {
-        return { message: "Unauthorized" };
+        return { message: "UNAUTHORIZED" };
     }
     let roles = await prisma.role.findMany();
     return roles;

@@ -1,0 +1,78 @@
+[
+    {
+        "chapter": 1,
+        "name": "Introducere în anatomie și fiziologie"
+    },
+    {
+        "chapter": 2,
+        "name": "Bazele chimice ale anatomiei și fiziologiei"
+    },
+    {
+        "chapter": 3,
+        "name": "Celulele și fiziologia celulară"
+    },
+    {
+        "chapter": 4,
+        "name": "Țesuturile"
+    },
+    {
+        "chapter": 5,
+        "name": "Sistemul tegumentar"
+    },
+    {
+        "chapter": 6,
+        "name": "Oasele și articulațiile"
+    },
+    {
+        "chapter": 7,
+        "name": "Țesutul muscular"
+    },
+    {
+        "chapter": 8,
+        "name": "Țesutul nervos"
+    },
+    {
+        "chapter": 9,
+        "name": "Organizarea sistemului nervos"
+    },
+    {
+        "chapter": 10,
+        "name": "Organele de simț"
+    },
+    {
+        "chapter": 11,
+        "name": "Sistemul endocrin"
+    },
+    {
+        "chapter": 12,
+        "name": "Sângele"
+    },
+    {
+        "chapter": 13,
+        "name": "Sistemul cardiovascular"
+    },
+    {
+        "chapter": 14,
+        "name": "Sistemul limfatic și imun"
+    },
+    {
+        "chapter": 15,
+        "name": "Sistemul respirator"
+    },
+    {
+        "chapter": 16,
+        "name": "Sistemul digestiv"
+    },
+    {
+        "chapter": 17,
+        "name": "Sistemul urinar"
+    },
+    {
+        "chapter": 18,
+        "name": "Sistemul reproducător masculin"
+    },
+    {
+        "chapter": 19,
+        "name": "Sistemul reproducător feminin"
+    }
+]

@@ -43,7 +43,7 @@
   bottom: 145px;
   right: 20px;
 
-  @include m.larger-than(m.$mantine-breakpoint-sm) {
+  @mixin larger-than 768px {
     bottom: 65px;
     right: 20px;
   }

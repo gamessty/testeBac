@@ -8,7 +8,7 @@ import getManyRole from "../../../../actions/PrismaFunctions/getManyRole";
 import { chkP, getInitialsColor } from "../../../../utils";
 import RoleCard from "../../../Cards/RoleCard/RoleCard";
 import NewRoleModal from "../../../NewRoleModal/NewRoleModal";
-import styles from './RoleManager.module.scss';
+import styles from './RoleManager.module.css';
 import { ITabModuleProps } from "@/data";
 
 export default function RoleManager({ session, style }: Readonly<ITabModuleProps>) {

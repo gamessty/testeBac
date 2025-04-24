@@ -349,7 +349,7 @@
       "noQuestionsMessage": "Testul a fost creat cu succes, dar nu conține întrebări. Reveniți la pagina de test și verificați configurația.",
       "previous": "Înapoi",
       "question": "Întrebare",
-      "resumeTest": "Test de CV",
+      "resumeTest": "Continuă",
       "startTest": "Start",
       "submitAnswer": "Trimite răspunsul",
       "submitConfirmation": {
@@ -579,7 +579,7 @@
     "continueTest": "Continuați",
     "delete": "Ștergeți",
     "details": "detaliile testului",
-    "finishTest": "Test de finisare",
+    "finishTest": "Finalizează testul",
     "finishedTest": "Terminat",
     "firstUnanswered": "Primul fără răspuns",
     "lastQuestion": "Ultima întrebare",

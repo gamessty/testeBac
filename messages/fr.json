@@ -349,7 +349,7 @@
       "noQuestionsMessage": "Le test a été créé avec succès mais ne contient pas de questions. Retournez à la page du test et vérifiez la configuration.",
       "previous": "Précédent",
       "question": "Question",
-      "resumeTest": "Test de CV",
+      "resumeTest": "Continuer",
       "startTest": "Démarrage",
       "submitAnswer": "Soumettre la réponse",
       "submitConfirmation": {
@@ -579,7 +579,7 @@
     "continueTest": "Continuer",
     "delete": "Supprimer",
     "details": "détails du test",
-    "finishTest": "Test de finition",
+    "finishTest": "Terminer le test",
     "finishedTest": "Fini",
     "firstUnanswered": "Première sans réponse",
     "lastQuestion": "Dernière question",

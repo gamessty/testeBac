@@ -95,7 +95,7 @@ export default function QuestionListDrawer({
                         >
                             <Group gap="sm" align="center" wrap="nowrap">
                                 <Text 
-                                    c={isCurrent ? "white" : (isAnswered ? "dimmed" : undefined)} 
+                                    c={isAnswered ? "dimmed" : "white"} 
                                     fw={500}
                                     className={classes.questionIndex}
                                 >
@@ -106,7 +106,7 @@ export default function QuestionListDrawer({
                                     fw={isCurrent ? 600 : 400}
                                     size="sm"
                                     className={classes.questionText}
-                                    c={isCurrent ? "white" : (isAnswered ? "dimmed" : undefined)}
+                                    c={isAnswered ? "dimmed" : "white" }
                                 >
                                     {question.question}
                                 </Text>

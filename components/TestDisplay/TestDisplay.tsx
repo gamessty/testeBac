@@ -148,7 +148,7 @@ export default function TestDisplay({ testDetails }: Readonly<TestDisplayProps>)
                     </Title>
                     <TestProgressBar
                         size={30}
-                        labels={{ filled: { tooltip: 'Solved' }, rest: { root: testDetails ? testDetails.questions.length - testDetails.selectedAnswers.length + " left" : undefined } }}
+                        labels={{ filled: { tooltip: 'Solved' }, rest: { root: testDetails ? testDetails.questions.length - testDetails.selectedAnswers.length + t('left') : undefined } }}
                         value={testDetails ? testDetails.selectedAnswers.length / testDetails.questions.length * 100 : undefined}
                     />
                     

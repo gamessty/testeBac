@@ -1,5 +1,5 @@
 
-import { auth } from '../../../../auth'
+import { auth } from "@/auth"
 import { NextResponse } from 'next/server'
 
 export const GET = async function GET() {

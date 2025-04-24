@@ -1,9 +1,8 @@
 "use server";
 
-import { auth } from "../../../../auth";
-import { prisma } from "../../../../lib/prisma";
-import { UserActiveTest } from "@/auth";
-import { chkP } from "../../../../utils";
+import { prisma } from "@/lib/prisma";
+import { UserActiveTest, auth } from "@/auth";
+import { chkP } from "@/utils";
 
 interface UserTestWithQuestions extends Omit<UserActiveTest, "folder" | "chapters" | "subjects"> {}
 
@@ -36,9 +35,6 @@ export default async function resumeUserTest({ userTestId }: { userTestId: strin
     if (userTest.finishedAt) {
         return { message: "ALREADY_ENDED" };
     }
-    
-    // Log the questions count to debug
-    console.log(`Returning test with ${userTest.questions ? userTest.questions.length : 0} questions`);
     
     // Return the updated user test
     const questions = userTest?.questions.map(q => q.question);

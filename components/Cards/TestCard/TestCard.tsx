@@ -2,8 +2,8 @@
 import { ActionIcon, Badge, Box, Button, Card, CardProps, Flex, Group, Image, LoadingOverlay, Overlay, Progress, Skeleton, Stack, Text } from "@mantine/core";
 import { IconCodeAsterisk, IconFlask2, IconMicroscope, IconPencil, IconSchool } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
-import { Link, useRouter } from "../../../i18n/routing";
-import { getInitialsColor } from "../../../utils";
+import { Link, useRouter } from "@/i18n/routing";
+import { getInitialsColor } from "@/utils";
 import AvatarFallback from "../../AvatarFallback/AvatarFallback";
 import classes from './TestCard.module.css';
 import { useDidUpdate, useDisclosure, useHover } from "@mantine/hooks";

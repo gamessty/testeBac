@@ -1,7 +1,7 @@
 "use client";
 import { Center, Paper, rem, Text, Button } from "@mantine/core"
 import { useTranslations } from "next-intl";
-import { Link } from "../../../i18n/routing";
+import { Link } from "@/i18n/routing";
 
 export default function VerifyRequestPage() {
     const t = useTranslations("Authentication.customPages.verifyRequest");

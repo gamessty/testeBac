@@ -9,7 +9,7 @@ import { ModalsProvider } from '@mantine/modals';
 import { Notifications } from '@mantine/notifications';
 import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { routing } from '../../i18n/routing';
+import { routing } from "@/i18n/routing";
 
 import {
   MantineProvider,

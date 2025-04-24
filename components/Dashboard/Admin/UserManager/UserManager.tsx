@@ -11,7 +11,7 @@ import deleteUser from "../../../../actions/PrismaFunctions/deleteUser";
 import getManyRole from "../../../../actions/PrismaFunctions/getManyRole";
 import getManyUser from "../../../../actions/PrismaFunctions/getManyUser";
 import putUser from "../../../../actions/PrismaFunctions/putUser";
-import { chkP, getManyRoleData, getManyRoleFromValues, getPrismaRolesUpdateData } from "../../../../utils";
+import { chkP, getManyRoleData, getManyRoleFromValues, getPrismaRolesUpdateData } from "@/utils";
 import AvatarFallback from "../../../AvatarFallback/AvatarFallback";
 import UserCardList from "@/components/UserCardList/UserCardList";
 

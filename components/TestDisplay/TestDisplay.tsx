@@ -5,13 +5,11 @@ import { Badge, Box, Button, Card, Container, Progress, Skeleton, Title, Text, S
 import { UserActiveTest } from "@/auth";
 import { notifications } from "@mantine/notifications";
 import { useEffect, useState } from "react";
-import { useIsFirstRender, useShallowEffect } from "@mantine/hooks";
 import TestProgressBar from "../TestProgressBar/TestProgressBar";
 import { useTranslations } from "next-intl";
 import { getInitialsColor } from "@/utils";
 import ReturnButton from "../ReturnButton/ReturnButton";
 import { useLineClamp } from "@/hooks/useLineClamp";
-import { redirect } from "next/navigation";
 import { usePathname, useRouter } from "@/i18n/routing";
 import { IconTrash } from "@tabler/icons-react";
 import { modals } from "@mantine/modals";

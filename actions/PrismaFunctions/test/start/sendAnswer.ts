@@ -1,9 +1,9 @@
 "use server";
 
-import { auth, UserActiveTest } from "../../../../auth";
-import { prisma } from "../../../../lib/prisma";
+import { auth, UserActiveTest } from "@/auth";
+import { prisma } from "@/lib/prisma";
 import { Prisma, Question, UserTest } from "@prisma/client";
-import { chkP } from "../../../../utils";
+import { chkP } from "@/utils";
 import { JsonObject } from "next-auth/adapters";
 
 interface UserTestWithQuestions extends Omit<UserActiveTest, "folder" | "chapters" | "subjects"> {}

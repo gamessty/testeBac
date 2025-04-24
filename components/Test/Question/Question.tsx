@@ -4,13 +4,41 @@ import { Card, CardProps, Checkbox, Flex, Group, Image, Radio, Stack, Text, Titl
 import { HotkeyItem, useHotkeys } from "@mantine/hooks";
 import { Montserrat } from "next/font/google";
 import { useEffect, useState, useCallback } from "react";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import classes from './Question.module.css';
 import { IconCheck, IconX } from "@tabler/icons-react";
 
 const montserrat = Montserrat({ subsets: ['latin'] });
 
 type ChoiceType = string | string[] | undefined;
+
+interface Localization {
+    locale: string;
+    text: string;
+}
+
+// Helper function to get localized text
+function getLocalizedText(localizations: Localization[] | undefined, defaultText: string, userLocale: string): string {
+    if (!localizations || localizations.length === 0) {
+        return defaultText;
+    }
+
+    // First try exact locale match
+    const exactMatch = localizations.find(item => item.locale === userLocale);
+    if (exactMatch) {
+        return exactMatch.text;
+    }
+
+    // Then try language match (e.g., 'en' part of 'en-US')
+    const languageCode = userLocale.split('-')[0];
+    const languageMatch = localizations.find(item => item.locale.startsWith(languageCode));
+    if (languageMatch) {
+        return languageMatch.text;
+    }
+
+    // Fall back to default text
+    return defaultText;
+}
 
 interface QuestionCardProps {
     question: string,
@@ -28,7 +56,8 @@ interface QuestionCardProps {
         code?: { language: string, code: string },
         explanation?: {
             code?: { language: string, code: string },
-            markdown?: string | null
+            markdown?: string | null,
+            localization?: { locale: string, text: string }[]
         },
         localization?: { locale: string, text: string }[]
     },
@@ -56,6 +85,7 @@ export default function QuestionCard({
     ...props
 }: Readonly<QuestionCardProps & CardProps>) {
     const t = useTranslations('General');
+    const locale = useLocale();
 
     const [internalValue, setInternalValue] = useState<string | string[] | undefined>(value);
 
@@ -145,7 +175,22 @@ export default function QuestionCard({
 
     const codeToDisplay = additionalData.code;
 
-    const optionCards = options.map((option) => {
+    // Get localized question text
+    const localizedQuestion = getLocalizedText(
+        additionalData?.localization,
+        question,
+        locale
+    );
+
+    // Process options with localization
+    const localizedOptions = options.map(option => {
+        return {
+            ...option,
+            option: getLocalizedText(option.localization, option.option, locale)
+        };
+    });
+
+    const optionCards = localizedOptions.map((option) => {
         const optionStatus = feedback ? getOptionStatus(option.id) : undefined;
         const OptionComponent = isSingleChoice ? Radio.Card : Checkbox.Card;
 
@@ -199,6 +244,15 @@ export default function QuestionCard({
         );
     });
 
+    // Get localized explanation if available
+    const localizedExplanation = additionalData?.explanation?.markdown 
+        ? getLocalizedText(
+            additionalData?.explanation?.localization,
+            additionalData.explanation.markdown,
+            locale
+          )
+        : null;
+
     return (
         <Card
             shadow="xs"
@@ -211,11 +265,12 @@ export default function QuestionCard({
             className={classes.questionCard}
             key={`question-${questionNumber}`}
         >
-            <Title order={4} style={{ marginBottom: 10 }} className={classes['title']}>
-                {questionNumber ? questionNumber + ". " : ''}{question}
+            <Title order={4} style={{ marginBottom: 10 }} className={classes['title']} key={`question-${questionNumber}-title`}>
+                {questionNumber ? questionNumber + ". " : ''}{localizedQuestion}
             </Title>
             {additionalData?.image && (
                 <Image
+                key={`question-${questionNumber}-image`}
                     className={classes['question-image']}
                     src={additionalData.image}
                     alt="question image"
@@ -223,6 +278,7 @@ export default function QuestionCard({
                 />
             )}
             <Flex h="100%"
+                key={`question-${questionNumber}-flex`}
                 direction={{ base: 'column', 'md': 'row' }}
                 gap="md"
                 align="stretch"
@@ -263,9 +319,9 @@ export default function QuestionCard({
             </Flex>
 
             {feedback && (additionalData?.explanation?.markdown || additionalData.explanation?.code) && (
-                <Card mt="md" withBorder p="sm" radius="sm" bg="rgba(0,0,0,0.03)" className={classes['explanation']}>
+                <Card mt="md" withBorder p="sm" radius="sm" bg="rgba(0,0,0,0.03)" className={classes['explanation']} key={`question-${questionNumber}-explanation`}>
                     <Title order={5} mb="xs">{t('explanation')}</Title>
-                    <Text size="sm">{additionalData.explanation.markdown}</Text>
+                    <Text size="sm">{localizedExplanation ?? additionalData.explanation.markdown}</Text>
                     {additionalData.explanation.code && (
                         <CodeHighlight
                             language={additionalData.explanation.code.language}

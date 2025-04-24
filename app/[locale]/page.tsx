@@ -1,14 +1,14 @@
 import { Alert, Center, Container, Group, Stack } from "@mantine/core";
-import { Welcome } from "../../components/Welcome/Welcome";
-import NavbarHomepage from "../../components/NavbarHomepage/NavbarHomepage";
-import AppRedirect from "../../components/AppRedirect/AppRedirect";
-import NotificationUnathorized from "../../components/NotificationUnauthorized/Notification";
-import { auth } from "../../auth";
+import { Welcome } from "@/components/Welcome/Welcome";
+import NavbarHomepage from "@/components/NavbarHomepage/NavbarHomepage";
+import AppRedirect from "@/components/AppRedirect/AppRedirect";
+import NotificationUnathorized from "@/components/NotificationUnauthorized/Notification";
+import { auth } from "@/auth";
 import { getTranslations } from "next-intl/server";
-import Modal from "../../components/Modal/Modal";
+import Modal from "@/components/Modal/Modal";
 import { IconAlertTriangleFilled, IconLogout } from "@tabler/icons-react";
-import SignOutButtonClient from "../../components/SignOutButton/SignOutButton.client";
-import RefreshButton from "../../components/RefreshButton/RefreshButton";
+import SignOutButtonClient from "@/components/SignOutButton/SignOutButton.client";
+import RefreshButton from "@/components/RefreshButton/RefreshButton";
 
 export default async function HomePage({ searchParams }: Readonly<{ searchParams: Promise<{ [key: string]: string | string[] | undefined }> }>) {
     const session = await auth();

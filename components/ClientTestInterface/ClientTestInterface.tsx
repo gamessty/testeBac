@@ -3,71 +3,69 @@
 import { Fragment, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import useUserTest, { Option, AdditionalData, AnswerIndicator } from "@/hooks/useUserTest";
-import { Button, Card, Container, Group, LoadingOverlay, Modal, Paper, Progress, ScrollArea, Stack, Text, Title } from "@mantine/core";
+import { ActionIcon, Button, Card, Container, Group, LoadingOverlay, Modal, Paper, Progress, ScrollArea, Stack, Text, Title } from "@mantine/core";
 import { notifications } from "@mantine/notifications";
 import QuestionCard from "@/components/Test/Question/Question";
 import { useTranslations } from "next-intl";
-import { IconArrowLeft, IconArrowRight, IconCheck, IconClock } from "@tabler/icons-react";
+import { IconArrowLeft, IconArrowRight, IconCheck, IconClock, IconList } from "@tabler/icons-react";
 import TestProgressBar from "@/components/TestProgressBar/TestProgressBar";
 import classes from "./ClientTestInterface.module.css";
 import { JsonObject } from "next-auth/adapters";
-import { useDidUpdate, useHotkeys } from "@mantine/hooks";
+import { useDidUpdate, useHotkeys, useDisclosure } from "@mantine/hooks";
+import QuestionListDrawer from "@/components/QuestionListDrawer/QuestionListDrawer";
+import ErrorCard from "@/components/ErrorCard/ErrorCard";
 
 export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Readonly<{ testId: string, codeLanguage?: string }>) {
+    // Inițializăm hook-urile de traducere pentru diferitele secțiuni ale aplicației
     const tErrors = useTranslations('General.Errors');
     const tGeneral = useTranslations('General');
     const t = useTranslations('Tests');
 
     const router = useRouter();
-    const [choice, setChoice] = useState<string | string[]>();
-    const [submitConfirmOpen, setSubmitConfirmOpen] = useState(false);
-    const [loading, setLoading] = useState(false);
-    const [remainingTime, setRemainingTime] = useState<string | null>(null);
-    const [questionAnswered, setQuestionAnswered] = useState(false);
+    
+    // Definim starea componentei
+    const [choice, setChoice] = useState<string | string[]>(); // Stocăm răspunsul utilizatorului (un singur ID sau mai multe pentru întrebări cu răspunsuri multiple)
+    const [submitConfirmOpen, setSubmitConfirmOpen] = useState(false); // Controlăm vizibilitatea dialogului de confirmare la trimiterea testului
+    const [loading, setLoading] = useState(false); // Indicator de încărcare pentru acțiuni asincrone
+    const [remainingTime, setRemainingTime] = useState<string | null>(null); // Timpul rămas formatat ca string (MM:SS)
+    const [questionAnswered, setQuestionAnswered] = useState(false); // Indicator dacă s-a răspuns la întrebarea curentă
     const [feedback, setFeedback] = useState<{
         correct: string[],
         incorrect: string[],
         missed: string[]
-    } | undefined>(undefined);
+    } | undefined>(undefined); // Feedback pentru răspunsurile utilizatorului
+    
+    // Starea drawer-ului pentru lista de întrebări
+    const [drawerOpened, { open: openDrawer, close: closeDrawer }] = useDisclosure(false);
 
-    // Initialize the test hook
+    // Inițializăm hook-ul personalizat care gestionează datele și logica testului
     const test = useUserTest(testId);
 
-    // Properly determine if there's a valid choice selected
+    // Funcție care verifică dacă utilizatorul a selectat o opțiune validă
     const isValidChoice = (): boolean => {
         if (!choice) return false;
 
-        // Handle array choices (multiple choice questions)
+        // Pentru întrebări cu răspunsuri multiple verificăm dacă array-ul nu este gol
         if (Array.isArray(choice)) {
             return choice.length > 0;
         }
 
-        // Handle single choice
+        // Pentru întrebări cu un singur răspuns verificăm dacă există o valoare definită și non-vidă
         return choice !== undefined && choice !== '';
     };
 
-    useEffect(() => {
-        // Add debug logging to help diagnose the issue
-        console.log("Current test state:", {
-            loading: test.loading,
-            error: test.error,
-            currentQuestion: test.getCurrentQuestion(),
-            questionsLength: test.userTest?.questions?.length ?? 0,
-            userTest: test.userTest
-        });
-    }, [test.loading, test.error, test.currentQuestionIndex, test.userTest]);
-
+    // Obținem întrebarea curentă din hook-ul useUserTest
     const currentQuestion = test.getCurrentQuestion();
 
-    // Ensure we handle the case when questions array might be empty or undefined
-    const questionsLength = test.userTest?.questions?.length ?? 0;
-    const isLastQuestion = questionsLength > 0 && test.currentQuestionIndex === questionsLength - 1;
-    const showAnswers = (test.userTest?.configurations as JsonObject | undefined)?.showAnswers as boolean | undefined;
-    const timeLimit = test.getTimeLimit();
+    // Calculăm diverse date derivate din starea testului
+    const questionsLength = test.userTest?.questions?.length ?? 0; // Numărul total de întrebări, cu fallback la 0
+    const isLastQuestion = questionsLength > 0 && test.currentQuestionIndex === questionsLength - 1; // Verificăm dacă suntem la ultima întrebare
+    const showAnswers = (test.userTest?.configurations as JsonObject | undefined)?.showAnswers as boolean | undefined; // Setarea care controlează afișarea feedback-ului după fiecare răspuns
+    const timeLimit = test.getTimeLimit(); // Limita de timp a testului (în minute)
 
-    // Timer effect to update remaining time
+    // Configurăm timer-ul pentru a actualiza timpul rămas
     useEffect(() => {
-        if (!timeLimit) return;
+        if (!timeLimit) return; // Nu facem nimic dacă nu există limită de timp
 
         const interval = setInterval(() => {
             const remainingSeconds = test.getRemainingTime();
@@ -76,51 +74,72 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
                 return;
             }
 
+            // Formatăm timpul rămas ca MM:SS cu zero-padding
             const minutes = Math.floor(remainingSeconds / 60);
             const seconds = remainingSeconds % 60;
             setRemainingTime(`${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`);
 
-            // Auto-submit if time is up
+            // Trimitem automat testul dacă timpul a expirat
             if (remainingSeconds <= 0) {
                 clearInterval(interval);
                 handleEndTest();
             }
-        }, 1000);
+        }, 1000); // Actualizăm în fiecare secundă
 
+        // Curățăm interval-ul la demontarea componentei
         return () => clearInterval(interval);
     }, [timeLimit, test.userTest]);
 
-    // Reset state when question changes
+    // Resetăm starea când se schimbă întrebarea
     useEffect(() => {
-        setChoice(undefined);
         setFeedback(undefined);
         setQuestionAnswered(false);
+        
+        // Verificăm dacă s-a răspuns deja la întrebarea curentă
         if (test.isQuestionAnswered(currentQuestion?.id ?? '')) {
             setQuestionAnswered(true);
-            setFeedback(test.getAnswerFeedback(currentQuestion?.id ?? '') ?? undefined);
+            
+            // Găsim răspunsul anterior al utilizatorului pentru această întrebare
+            const previousAnswer = test.userTest?.selectedAnswers?.find(
+                a => a.questionId === currentQuestion?.id
+            );
+            
+            if (showAnswers) {
+                // Dacă afișarea răspunsurilor este activată, arătăm feedback-ul
+                setFeedback(test.getAnswerFeedback(currentQuestion?.id ?? '') ?? undefined);
+                setChoice(undefined); // Golim selecția pentru a nu confunda utilizatorul
+            } else if (previousAnswer?.answerIds) {
+                // Dacă nu arătăm feedback, afișăm răspunsurile anterioare ale utilizatorului
+                if (currentQuestion?.type === 'singleChoice' && previousAnswer.answerIds.length > 0) {
+                    // Pentru întrebări cu un singur răspuns, luăm primul ID din array
+                    setChoice(previousAnswer.answerIds[0]);
+                } else {
+                    // Pentru întrebări cu răspunsuri multiple, setăm întregul array
+                    setChoice(previousAnswer.answerIds);
+                }
+            }
+        } else {
+            // Resetăm alegerea pentru întrebările noi
+            setChoice(undefined);
         }
-    }, [test.currentQuestionIndex, currentQuestion?.id]);
+    }, [test.currentQuestionIndex, currentQuestion?.id, currentQuestion?.type, showAnswers, test.userTest?.selectedAnswers]);
 
-    // Calculate progress percentage safely
+    // Calculăm procentajul de progres pentru bara de progres
     const progressPercentage =
         test.userTest?.selectedAnswers?.length && questionsLength > 0
             ? (test.userTest.selectedAnswers.length / questionsLength) * 100
             : 0;
 
-    // Handle navigation
+    // Funcții pentru navigare între întrebări
     const handleNext = () => {
         test.nextQuestion();
-        // Clear choice when navigating
-        setChoice(undefined);
     };
 
     const handlePrevious = () => {
         test.previousQuestion();
-        // Clear choice when navigating
-        setChoice(undefined);
     };
 
-    // Find the index of the first unanswered question
+    // Găsim indexul primei întrebări fără răspuns pentru navigare rapidă
     const findFirstUnansweredIndex = (): number => {
         if (!test.userTest?.questions?.length || !test.userTest?.selectedAnswers) return 0;
 
@@ -135,59 +154,54 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
         return firstUnansweredIndex === -1 ? 0 : firstUnansweredIndex;
     };
 
-    // Handle going to the first unanswered question
+    // Navigăm la prima întrebare fără răspuns
     const handleGoToFirstUnanswered = () => {
         const firstUnansweredIndex = findFirstUnansweredIndex();
         if (firstUnansweredIndex >= 0) {
-            // Use the new direct setter method
             test.setCurrentQuestionIndex(firstUnansweredIndex);
             setSubmitConfirmOpen(false);
         }
     };
 
-    useDidUpdate(() => {
-        console.log("Current choice changed:", choice);
-
-    }, [choice]);
-
-    // Handle submitting an answer
+    // Procesăm trimiterea unui răspuns
     const handleAnswerSubmit = async () => {
-        // Only allow submission if there's a valid choice selected
         if (!currentQuestion || !isValidChoice()) return;
 
         setLoading(true);
         try {
-            // Create properly formatted answerIds array based on question type
+            // Formatăm răspunsul corect în funcție de tipul întrebării
             let answerIds: string[];
 
             if (currentQuestion.type === 'singleChoice') {
-                // For single choice, wrap the choice in an array if it's a string
+                // Pentru răspuns unic, asigurăm că avem un array cu un singur element
                 answerIds = typeof choice === 'string' ? [choice] : (Array.isArray(choice) && choice.length > 0 ? [choice[0]] : []);
             } else {
-                // For multiple choice, ensure we have an array of strings (not characters)
+                // Pentru răspunsuri multiple, asigurăm că avem un array
                 answerIds = Array.isArray(choice) ? choice : (typeof choice === 'string' ? [choice] : []);
             }
 
-            // Additional validation to prevent undefined or invalid values
+            // Filtrăm valorile invalide (undefined, șiruri goale)
             answerIds = answerIds.filter(id => typeof id === 'string' && id.trim() !== '');
 
-            console.log("Submitting answer IDs for question type", currentQuestion.type, ":", answerIds);
-
-            // Don't proceed if we don't have valid answer IDs
+            // Nu continuăm dacă nu avem răspunsuri valide
             if (answerIds.length === 0) {
                 setLoading(false);
                 return;
             }
 
+            // Trimitem răspunsul la server
             const result = await test.submitAnswer(currentQuestion.id, answerIds);
 
             if (result) {
                 setQuestionAnswered(true);
 
                 if (showAnswers && 'answerFeedback' in result) {
+                    // Afișăm feedback-ul dacă este activat
                     setFeedback(result.answerFeedback);
                 } else {
-                    // If we're on the last question, show submit confirmation
+                    // Altfel, trecem la următoarea întrebare sau finalizăm testul
+                    setFeedback(undefined);
+                    
                     if (isLastQuestion) {
                         if (hasAllQuestionsAnswered()) {
                             handleEndTest();
@@ -195,20 +209,23 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
                             setSubmitConfirmOpen(true);
                         }
                     } else {
-                        // Automatically go to next question after a short delay
+                        // Trecem automat la următoarea întrebare după o scurtă întârziere
                         setTimeout(() => {
                             handleNext();
                         }, 500);
                     }
                 }
             } else if (test.error) {
+                // Verificăm dacă avem o traducere pentru codul de eroare și afișăm notificarea corespunzătoare
+                const errorExists = tErrors.has(`${test.error}.title`);
                 notifications.show({
-                    title: tErrors(`${test.error}.title`),
-                    message: tErrors(`${test.error}.message`),
+                    title: errorExists ? tErrors(`${test.error}.title`) : tErrors('UNKNOWN.title'),
+                    message: errorExists ? tErrors(`${test.error}.message`) : tErrors('UNKNOWN.message'),
                     color: 'red',
                 });
             }
         } catch (error) {
+            // Gestionăm erorile neașteptate
             console.error("Error submitting answer:", error);
             notifications.show({
                 title: tErrors('UNKNOWN.title'),
@@ -220,21 +237,36 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
         }
     };
 
-    // Check if all questions have been answered
+    // Verificăm dacă toate întrebările au primit răspuns
     const hasAllQuestionsAnswered = (): boolean => {
         if (!test.userTest?.questions?.length || !test.userTest?.selectedAnswers) return false;
-        return test.userTest.selectedAnswers.length >= test.userTest.questions.length;
+        
+        // Creăm un set cu ID-urile întrebărilor la care s-a răspuns
+        const answeredIds = new Set(
+            test.userTest.selectedAnswers.map(answer => answer.questionId)
+        );
+        
+        // Verificăm dacă toate întrebările au răspuns
+        return test.userTest.questions.every(question => answeredIds.has(question.id));
     };
 
-    // Handle ending the test
+    // Încheiem testul și redirecționăm utilizatorul la rezultate
     const handleEndTest = async () => {
         setLoading(true);
         try {
+            const allAnswered = hasAllQuestionsAnswered();
+            
+            // Înregistrăm metrice pentru depanare dacă nu toate întrebările au primit răspuns
+            if (!allAnswered) {
+                console.warn('Terminare test cu întrebări fără răspuns:', {
+                    totalQuestions: test.userTest?.questions?.length,
+                    answeredQuestions: test.userTest?.selectedAnswers?.length,
+                });
+            }
+            
             await test.endTest();
-            // Redirect to results page
             router.push(`/app/test/${testId}`);
         } catch (error) {
-            console.error("Error ending test:", error);
             notifications.show({
                 title: tErrors('UNKNOWN.title'),
                 message: tErrors('UNKNOWN.message'),
@@ -245,7 +277,7 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
         }
     };
 
-    // Handle next after feedback is shown
+    // Gestionăm pasul următor după afișarea feedback-ului
     const handleNextAfterFeedback = () => {
         setFeedback(undefined);
         if (isLastQuestion) {
@@ -259,55 +291,76 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
         }
     };
 
-    // Add hotkey for submitting answers with spacebar key instead of Enter
+    // Gestionăm trimiterea testului cu verificarea completării tuturor întrebărilor
+    const handleSubmitTest = () => {
+        if (!hasAllQuestionsAnswered()) {
+            setSubmitConfirmOpen(true);
+        } else {
+            handleEndTest();
+        }
+    };
+
+    // Configurăm hotkey-uri pentru navigare rapidă și trimitere răspunsuri
     useHotkeys([
         ['Space', (event) => {
-            // Prevent default space behavior (scrolling)
-            event.preventDefault();
+            event.preventDefault(); // Prevenim scroll-ul implicit
 
-            // Submit answer when submit button is active
+            // Implementăm comportamente diferite în funcție de starea curentă
             if (!questionAnswered && isValidChoice() && !loading) {
+                // Trimitem răspunsul când nu s-a răspuns încă și avem o alegere validă
                 handleAnswerSubmit();
             }
-            // Navigate to next question when "Next" button is active
             else if (questionAnswered && !isLastQuestion && !loading) {
+                // Mergem la următoarea întrebare dacă s-a răspuns deja și nu suntem la ultima întrebare
                 handleNext();
             }
-            // Show submit confirmation when on last question
             else if (questionAnswered && isLastQuestion && !loading) {
+                // Arătăm dialogul de confirmare dacă suntem la ultima întrebare
                 setSubmitConfirmOpen(true);
             }
-            // Handle feedback flow
             else if (feedback) {
+                // Gestionăm navigarea după afișarea feedback-ului
                 handleNextAfterFeedback();
             }
         }],
         ['ctrl+Space', (event) => {
-            // Prevent default space behavior
             event.preventDefault();
 
-            // Alternative hotkey combination for submitting answers
+            // Combinație alternativă pentru trimiterea răspunsurilor
             if (!questionAnswered && isValidChoice() && !loading) {
                 handleAnswerSubmit();
             }
         }],
     ]);
 
+    // Gestionăm navigarea prin lista de întrebări din drawer
+    const handleQuestionSelect = (index: number) => {
+        // Închidem drawer-ul imediat pentru o experiență mai fluidă
+        closeDrawer();
+        // Adăugăm o mică întârziere pentru a preveni flicker-ul în timpul animației
+        setTimeout(() => {
+            test.setCurrentQuestionIndex(index);
+        }, 50);
+    };
+
+    // Afișăm un card de eroare dacă apare o eroare în timpul inițializării testului
     if (test.error) {
+        // Verificăm dacă avem o traducere pentru codul de eroare
+        const errorExists = tErrors.has(`${test.error}.title`);
         return (
             <Container className={classes.container}>
-                <Card withBorder shadow="sm" p="xl">
-                    <Title order={3} c="red" mb="md">{tErrors(`${test.error}.title`)}</Title>
-                    <Text>{tErrors(`${test.error}.message`)}</Text>
-                    <Button mt="lg" onClick={() => router.push(`/app/test/${testId}`)}>
-                        {tGeneral('return')}
-                    </Button>
-                </Card>
+                <ErrorCard
+                    title={errorExists ? tErrors(`${test.error}.title`) : tErrors('UNKNOWN.title')}
+                    description={errorExists ? tErrors(`${test.error}.message`) : tErrors('UNKNOWN.message')}
+                    errorCode={test.error}
+                    primaryButtonText={tGeneral('return')}
+                    onPrimaryButtonClick={() => router.push(`/app/test/${testId}`)}
+                />
             </Container>
         );
     }
 
-    // Check if we have a valid question to display
+    // Afișăm un indicator de încărcare dacă nu avem întrebări disponibile încă
     if ((!currentQuestion || questionsLength === 0)) {
         return (
             <Container className={classes.container}>
@@ -316,24 +369,53 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
         )
     }
 
+    // Renderizăm interfața principală a testului
     return (
         <Container className={classes.container}>
+            {/* Indicator de încărcare pentru acțiuni asincrone */}
             <LoadingOverlay visible={loading} loaderProps={{ color: 'teal', type: 'dots' }} zIndex={1100} />
 
+            {/* Header cu informații despre test și controale */}
             <Card withBorder shadow="sm" className={classes.header}>
-                <Group justify="space-between" wrap="nowrap">
-                    <Text fw={500} size="lg">
-                        {t('question')} {test.currentQuestionIndex + 1} / {questionsLength}
-                    </Text>
+                <Group justify="space-between" wrap="nowrap" mb="xs">
+                    <Group gap="xs">
+                        <Text fw={500} size="lg">
+                            {t('question')} {test.currentQuestionIndex + 1} / {questionsLength}
+                        </Text>
+                    </Group>
 
-                    {timeLimit && (
-                        <Group gap="xs">
-                            <IconClock size={20} />
-                            <Text>{remainingTime ?? "--:--"}</Text>
-                        </Group>
-                    )}
+                    <Group gap="md">
+                        {/* Afișăm timer-ul doar dacă există limită de timp */}
+                        {timeLimit && (
+                            <Group gap="xs">
+                                <IconClock size={20} />
+                                <Text>{remainingTime ?? "--:--"}</Text>
+                            </Group>
+                        )}
+                        {/* Buton pentru finalizarea testului */}
+                        <Button 
+                            variant="subtle"
+                            color="red" 
+                            onClick={() => setSubmitConfirmOpen(true)}
+                            size="sm"
+                            leftSection={<IconCheck size={16} />}
+                            className={classes.finishButton}
+                        >
+                            {t('finishTest')}
+                        </Button>
+                        {/* Buton pentru deschiderea listei de întrebări */}
+                        <ActionIcon
+                            size="lg"
+                            variant="subtle" 
+                            onClick={openDrawer} 
+                            title={t('questionList') || "Question List"}
+                        >
+                            <IconList size={20} />
+                        </ActionIcon>
+                    </Group>
                 </Group>
 
+                {/* Bară de progres pentru vizualizarea întrebărilor răspunse */}
                 <TestProgressBar
                     value={progressPercentage}
                     size={25}
@@ -343,7 +425,24 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
                     }}
                 />
             </Card>
+            
+            {/* Drawer cu lista întrebărilor pentru navigare rapidă */}
+            <QuestionListDrawer
+                opened={drawerOpened}
+                onClose={closeDrawer}
+                questions={test.userTest?.questions || []}
+                currentQuestionIndex={test.currentQuestionIndex}
+                answeredQuestionIds={test.getAnsweredQuestionsSet()}
+                onQuestionSelect={handleQuestionSelect}
+                onFinishTest={() => {
+                    closeDrawer();
+                    setTimeout(() => {
+                        setSubmitConfirmOpen(true);
+                    }, 50);
+                }}
+            />
 
+            {/* Zona principală cu întrebarea curentă */}
             <ScrollArea className={classes.questionCard} mt="md">
                 <QuestionCard
                     question={currentQuestion.question}
@@ -355,22 +454,22 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
                     answered={questionAnswered}
                     value={choice}
                     onChange={(newChoice) => {
-                        console.log("Choice changed:", newChoice);
-                        // For multiple choice questions, ensure we're working with arrays properly
+                        // Procesăm alegerea în funcție de tipul întrebării
                         if (currentQuestion.type === 'multipleChoice') {
-                            // Ensure newChoice is always an array for multiple choice questions
+                            // Pentru întrebări cu răspunsuri multiple, asigurăm că avem un array
                             const adjustedChoice = Array.isArray(newChoice)
                                 ? newChoice
                                 : (newChoice ? [newChoice] : []);
                             setChoice(adjustedChoice);
                         } else {
-                            // For single choice, keep as is
+                            // Pentru răspuns unic, stocăm valoarea direct
                             setChoice(newChoice);
                         }
                     }}
                 />
             </ScrollArea>
 
+            {/* Controale pentru navigare și trimitere răspunsuri */}
             <Group justify="space-between" mt="lg" className={classes.controls}>
                 <Group gap="xs" className={classes.navigationButtons}>
                     <Button
@@ -392,6 +491,7 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
                     </Button>
                 </Group>
 
+                {/* Afișăm butoane diferite în funcție de stare */}
                 {feedback ? (
                     <Button
                         color="blue"
@@ -406,7 +506,7 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
                             <Button
                                 color="blue"
                                 rightSection={<IconArrowRight />}
-                                onClick={isLastQuestion ? () => setSubmitConfirmOpen(true) : handleNext}
+                                onClick={isLastQuestion ? () => handleSubmitTest() : handleNext}
                                 disabled={loading}
                             >
                                 {isLastQuestion ? t('finishTest') : t('next')}
@@ -424,7 +524,7 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
                     </Fragment>)}
             </Group>
 
-            {/* Confirmation modal for submitting test with unanswered questions */}
+            {/* Modal de confirmare pentru trimiterea testului cu întrebări nefinalizate */}
             <Modal
                 opened={submitConfirmOpen}
                 onClose={() => setSubmitConfirmOpen(false)}
@@ -447,6 +547,7 @@ export default function ClientTestInterface({ testId, codeLanguage = 'cpp' }: Re
     );
 }
 
+// Interfață pentru opțiuni cu cod manipulat (un singur obiect de cod în loc de array)
 interface SingleCodeOption extends Omit<Option, 'code'> {
     code?: {
         language: string;
@@ -454,11 +555,13 @@ interface SingleCodeOption extends Omit<Option, 'code'> {
     };
 }
 
+// Transformăm array-ul de coduri în opțiuni într-un singur obiect de cod în funcție de limba preferată
 function manipulateOptions(options: Option[], codeLanguage: string): SingleCodeOption[] {
     return options.map((option) => {
-        // instead of a code array return a code object with language and code properties of the codeLanguage given, if the codeLanguage is not present then return the first codeLanguage
+        // Căutăm codul în limba preferată
         let code = option.code.find((code) => code.language.includes(codeLanguage));
         if (code) {
+            // Dacă am găsit codul în limba preferată, îl folosim
             let { code: cody } = code;
             return {
                 ...option,
@@ -469,6 +572,7 @@ function manipulateOptions(options: Option[], codeLanguage: string): SingleCodeO
             };
         }
         else if (option.code.length > 0) {
+            // Dacă nu găsim codul în limba preferată, folosim primul cod disponibil
             let { code, language } = option.code[0];
             return {
                 ...option,
@@ -478,11 +582,13 @@ function manipulateOptions(options: Option[], codeLanguage: string): SingleCodeO
                 }
             };
         }
+        // Dacă nu există cod, returnăm opțiunea fără proprietatea code
         const { code: cody, ...optionWithoutCode } = option;
         return optionWithoutCode;
     });
 }
 
+// Interfețe pentru date adiționale cu cod simplificat
 interface SingleCodeAdditionalData extends Omit<AdditionalData, 'code' | 'explanation'> {
     code?: {
         language: string;
@@ -498,11 +604,15 @@ interface SingleCodeAnswerIndicator extends Omit<AnswerIndicator, 'code'> {
     };
 }
 
-
+// Transformăm array-ul de coduri în date adiționale într-un singur obiect de cod
 function manipulateAdditionalData(additionalData: AdditionalData, codeLanguage: string): SingleCodeAdditionalData {
-    let code = additionalData.code.find((code) => code.language.includes(codeLanguage));
+    // Manipulăm mai întâi explicația pentru a evita duplicarea codului
     let additionalDataSingleCodeExplanation = manipulateAdditionalDataExplanation(additionalData, codeLanguage);
+    
+    // Căutăm codul în limba preferată
+    let code = additionalData.code.find((code) => code.language.includes(codeLanguage));
     if (code) {
+        // Dacă am găsit codul în limba preferată, îl folosim
         let { code: cody } = code;
         return {
             ...additionalDataSingleCodeExplanation,
@@ -513,6 +623,7 @@ function manipulateAdditionalData(additionalData: AdditionalData, codeLanguage: 
         };
     }
     else if (additionalData.code.length > 0) {
+        // Dacă nu găsim codul în limba preferată, folosim primul cod disponibil
         let { code, language } = additionalData.code[0];
         return {
             ...additionalDataSingleCodeExplanation,
@@ -522,13 +633,17 @@ function manipulateAdditionalData(additionalData: AdditionalData, codeLanguage: 
             }
         };
     }
+    // Dacă nu există cod, returnăm doar datele adiționale procesate anterior
     return additionalDataSingleCodeExplanation;
 }
 
+// Manipulăm explicația din datele adiționale pentru a simplifica codul
 function manipulateAdditionalDataExplanation(additionalData: AdditionalData, codeLanguage: string): SingleCodeAdditionalData {
+    // Căutăm codul din explicație în limba preferată
     let code = additionalData.explanation?.code.find((code) => code.language.includes(codeLanguage));
 
     if (code) {
+        // Dacă am găsit codul în limba preferată, îl folosim
         let { code: cody } = code;
         return {
             ...additionalData,
@@ -543,6 +658,7 @@ function manipulateAdditionalDataExplanation(additionalData: AdditionalData, cod
         };
     }
     else if (additionalData.explanation?.code && additionalData.explanation?.code.length > 0) {
+        // Dacă nu găsim codul în limba preferată, folosim primul cod disponibil
         let { code, language } = (additionalData.explanation?.code ?? [])[0] || {};
         return {
             ...additionalData,
@@ -556,6 +672,7 @@ function manipulateAdditionalDataExplanation(additionalData: AdditionalData, cod
             }
         };
     }
+    // Dacă nu există cod în explicație, returnăm datele adiționale fără proprietățile code
     const { code: cody, explanation, ...additionalDataWithoutCode } = additionalData;
     const { code: cody2, ...explanationWithoutCode } = explanation || {};
     return {

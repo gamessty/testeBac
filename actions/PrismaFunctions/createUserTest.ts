@@ -1,8 +1,8 @@
 'use server';
 
-import { prisma } from "../../lib/prisma";
-import { auth } from "../../auth";
-import { chkP } from "../../utils";
+import { prisma } from "@/lib/prisma";
+import { auth } from "@/auth";
+import { chkP } from "@/utils";
 import { Question, UserTest, TestType } from "@prisma/client";
 
 interface TestConfiguration {

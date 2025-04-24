@@ -1,9 +1,9 @@
 "use server";
 
-import { auth } from "../../auth";
-import { prisma } from "../../lib/prisma";
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
 import { Question } from "@prisma/client";
-import { chkP } from "../../utils";
+import { chkP } from "@/utils";
 
 interface SubjectQuestion {
     subjectId: string;

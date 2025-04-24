@@ -116,7 +116,6 @@ export function getManyRoleFromValues(roles: string[], allRoles: Role[]): Role[]
   return allRoles.filter((role) => roles.includes(role.name));
 }
 
-
 /**
  * 
  * This function gets the data for the roles from the role names. Used for the select component with prisma.

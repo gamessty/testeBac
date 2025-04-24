@@ -1,5 +1,5 @@
 import { Center, Paper, rem, Text, Container, Button } from "@mantine/core"
-import { Link } from "../../../i18n/routing";
+import { Link } from "@/i18n/routing";
 import classes from './signout.module.css';
 import SubmitButton from "@/components/SubmitButton/SubmitButton";
 import { signOut } from "@/auth";

@@ -589,6 +589,7 @@
     "noQuestionsMessage": "Testul a fost creat cu succes, dar nu conține întrebări. Reveniți la pagina de test și verificați configurația.",
     "previous": "Articolul precedent",
     "question": "Întrebare",
+    "questionList": "Lista de întrebări",
     "resumeTest": "Continuă testul",
     "startTest": "Start",
     "submitAnswer": "Trimite răspuns",

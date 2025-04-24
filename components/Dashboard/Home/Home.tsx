@@ -2,24 +2,16 @@
 "use client";
 import LinkCard from "@/components/Cards/LinkCard/LinkCard";
 import { ITabModuleProps } from "@/data";
-import { usePathname } from "@/i18n/routing";
 import { Center, Flex, SimpleGrid, Text, Title, rem } from "@mantine/core";
-import { IconFile, IconGraph, IconLogout, IconSettings, IconUser, IconUserPlus } from "@tabler/icons-react";
+import { IconFile, IconLogout, IconSettings, IconUser, IconUserPlus } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
-import { chkP, getInitialsColor } from "../../../utils";
+import { chkP, getInitialsColor } from "@/utils";
 import classes from "./Home.module.css";
 
 interface HomeProps extends ITabModuleProps {}
 
-const createQueryString = (name: string, value: string) => {
-    const params = new URLSearchParams()
-    params.set(name, value)
-    return params.toString()
-}
-
 export default function Home({ style, session, settab }: Readonly<HomeProps>) {
     const t = useTranslations('Dashboard');
-    const pathname = usePathname();
 
     return (
         <Flex direction="column" pt={{ base: 5, sm: 10 }} h="100%" pb="md" style={{ ...style }}>

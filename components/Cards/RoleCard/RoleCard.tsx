@@ -5,7 +5,7 @@ import { Role } from "@prisma/client";
 import { IconTrash } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import deleteRole from "../../../actions/PrismaFunctions/deleteRole";
-import { getInitialsColor } from "../../../utils";
+import { getInitialsColor } from "@/utils";
 
 export default function RoleCard({ role, skeleton = false, ...props }: Readonly<{ role?: Role, skeleton?: boolean } & CardProps>) {
     const t = useTranslations('Dashboard.RoleManager');

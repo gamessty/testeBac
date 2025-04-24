@@ -3,7 +3,7 @@ import { IconUser } from '@tabler/icons-react';
 import { User } from 'next-auth';
 import { useTranslations } from 'next-intl';
 import { type MouseEventHandler } from 'react';
-import { getInitialsColor } from '../../../utils';
+import { getInitialsColor } from "@/utils";
 import AvatarFallback from '../../AvatarFallback/AvatarFallback';
 import classes from './UserCard.module.css';
 

@@ -22,10 +22,8 @@ import {
 import { useForm } from '@mantine/form';
 import { IconDeviceFloppy } from '@tabler/icons-react';
 import { useTranslations } from 'next-intl';
-import { useRouter } from 'next/navigation';
-import dynamic from 'next/dynamic';
 
-import { chkP, getInitialsColor } from '../../../utils';
+import { chkP, getInitialsColor } from "@/utils";
 import AvatarFallback from '../../AvatarFallback/AvatarFallback';
 import { CodingLanguageSelect } from '../../CodingLanguageSelect/CodingLanguageSelect';
 import ColorSchemeToggleIconSegmented from '../../ColorSchemeToggleIconSegmented/ColorSchemeToggleIconSegmented';
@@ -34,7 +32,7 @@ import classes from './Settings.module.css';
 
 // Use a server action for user updates
 import { putUser } from '../../../actions/PrismaFunctions/putUser';
-import { Link } from '@/i18n/routing';
+import { Link, useRouter } from '@/i18n/routing';
 
 interface SettingsProps extends ITabModuleProps {}
 

@@ -1,8 +1,8 @@
 
-import { auth } from '../../../../auth'
+import { auth } from "@/auth"
 import { type NextRequest, NextResponse } from 'next/server'
-import { prisma } from '../../../../lib/prisma'
-import { chkP } from '../../../../utils'
+import { prisma } from "@/lib/prisma"
+import { chkP } from "@/utils"
 
 export const GET = async function GET(req: NextRequest) {
     let session = await auth()

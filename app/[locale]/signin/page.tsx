@@ -1,5 +1,5 @@
 "use server";
-import { providerMap } from "../../../auth"
+import { providerMap } from "@/auth"
 import {
     Text,
     Center,
@@ -8,12 +8,12 @@ import {
     Paper,
 } from '@mantine/core';
 import { IconBrandGoogleFilled } from "@tabler/icons-react";
-import { Link } from "../../../i18n/routing";
-import SubmitButton from "../../../components/SubmitButton/SubmitButton";
+import { Link } from "@/i18n/routing";
+import SubmitButton from "@/components/SubmitButton/SubmitButton";
 import { cookies } from "next/headers";
-import EmailForm from "../../../components/EmailForm/EmailForm";
+import EmailForm from "@/components/EmailForm/EmailForm";
 import { getTranslations } from "next-intl/server";
-import ErrorAlert from "../../../components/ErrorAlert/ErrorAlert";
+import ErrorAlert from "@/components/ErrorAlert/ErrorAlert";
 import { handleOAuthSignIn } from "../../../actions/Forms";
 
 export default async function SignInPage(props: Readonly<{ searchParams: Promise<{ callbackUrl: string | undefined, error?: string }> }>) {

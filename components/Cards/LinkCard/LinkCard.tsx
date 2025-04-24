@@ -4,7 +4,7 @@ import { IconLink } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import Link from "next/link";
 import { MouseEventHandler } from "react";
-import { getInitialsColor } from "../../../utils";
+import { getInitialsColor } from "@/utils";
 import AvatarFallback from "../../AvatarFallback/AvatarFallback";
 import classes from './LinkCard.module.css';
 

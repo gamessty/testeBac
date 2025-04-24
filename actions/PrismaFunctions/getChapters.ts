@@ -1,9 +1,9 @@
 "use server";
 
-import { auth } from "../../auth";
-import { prisma } from "../../lib/prisma";
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
 import { Chapter } from "@prisma/client";
-import { chkP } from "../../utils";
+import { chkP } from "@/utils";
 
 
 export default async function getChapters({ subjectId }: { subjectId: string }): Promise<Chapter[] | { message: string }> {

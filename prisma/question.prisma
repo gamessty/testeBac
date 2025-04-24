@@ -4,15 +4,14 @@ model Question {
     chapterId      String?        @db.ObjectId
     userTestId     String?        @db.ObjectId
     type           QuestionType
-    answer         String? // the answer to the question, used in case of fill in the blank or true/false
     question       String
     options        Option[]
     additionalData AdditionalData
     createdAt      DateTime       @default(now())
     updatedAt      DateTime       @updatedAt
 
-    subject  Subject?  @relation(fields: [subjectId], references: [id], onDelete: Cascade)
-    chapter  Chapter?  @relation(fields: [chapterId], references: [id], onDelete: Cascade)
+    subject   Subject?             @relation(fields: [subjectId], references: [id], onDelete: Cascade)
+    chapter   Chapter?             @relation(fields: [chapterId], references: [id], onDelete: Cascade)
     userTests UserTestOnQuestion[]
 
     @@map("questions")
@@ -24,7 +23,7 @@ enum QuestionType {
 }
 
 type Option {
-    id           String @default(uuid())
+    id           String         @default(uuid())
     option       String
     image        String?
     code         Code[]
@@ -52,10 +51,4 @@ type AnswerIndicator {
 type Code {
     language String[]
     code     String
-}
-
-type SchemaConfigurator {
-    showCorrectAnswer Boolean @default(false)
-    questionNumber    Int
-    timeLimit         Int?
 }

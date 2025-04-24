@@ -1,8 +1,8 @@
 "use server";
-import { prisma } from "../../lib/prisma";
-import { auth } from "../../auth";
+import { prisma } from "@/lib/prisma";
+import { auth } from "@/auth";
 import { Prisma } from "@prisma/client";
-import { chkP } from "../../utils";
+import { chkP } from "@/utils";
 import { type User, type Role } from "@prisma/client";
 
 interface UserRoles extends User {

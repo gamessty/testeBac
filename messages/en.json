@@ -589,6 +589,7 @@
     "noQuestionsMessage": "Test was created successfully but contains no questions. Return to the test page and check the configuration.",
     "previous": "Previous",
     "question": "Question",
+    "questionList": "Questions list",
     "resumeTest": "Resume test",
     "startTest": "Start",
     "submitAnswer": "Submit Answer",

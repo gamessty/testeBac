@@ -3,7 +3,7 @@ import { Card, CardProps, LoadingOverlay, Text } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { IconPlus } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
-import { Link } from "../../../i18n/routing";
+import { Link } from "@/i18n/routing";
 
 interface CreateTestCardProps extends CardProps {
     href?: string;

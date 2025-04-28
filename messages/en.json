@@ -45,6 +45,18 @@
         "SessionRequired": {
           "description": "You need to be signed in to access this page. Please log in to continue.",
           "title": "Sign-In Required"
+        },
+        "AccessDenied": {
+          "description": "Usually occurs, when you restricted access through the signIn callback, or redirect callback.",
+          "title": "Access Denied"
+        },
+        "Configuration": {
+          "description": "There is a problem with the server configuration. Check if your options are correct.",
+          "title": "Configuration Error"
+        },
+        "Verification": {
+          "description": "Related to the Email provider. The token has expired or has already been used.",
+          "title": "Verification Error"
         }
       },
       "signIn": {

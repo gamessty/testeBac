@@ -45,6 +45,18 @@
         "SessionRequired": {
           "description": "Vous devez être connecté pour accéder à cette page. \nVeuillez vous connecter pour continuer.",
           "title": "Connexion requise"
+        },
+        "AccessDenied": {
+          "description": "Cela se produit généralement lorsque vous avez restreint l'accès via le rappel de connexion ou le rappel de redirection.",
+          "title": "Accès refusé"
+        },
+        "Configuration": {
+          "description": "Il y a un problème avec la configuration du serveur. Vérifiez si vos options sont correctes.",
+          "title": "Erreur de configuration"
+        },
+        "Verification": {
+          "description": "Lié au fournisseur de messagerie. Le jeton a expiré ou a déjà été utilisé.",
+          "title": "Erreur de vérification"
         }
       },
       "signIn": {
@@ -57,8 +69,8 @@
       },
       "signOut": {
         "confirm": "Êtes-vous sûr de vouloir vous déconnecter ?",
-        "signOut": "S'inscrire",
-        "title": "S'inscrire"
+        "signOut": "Se déconnecter",
+        "title": "Se déconnecter"
       },
       "verifyRequest": {
         "backToHome": "Retourner à l'accueil",
@@ -76,8 +88,8 @@
       "title": "Inscription non encore acceptée"
     },
     "userSignedOut": {
-      "message": "Vous vous êtes connecté avec succès à Testebac! \nNous espérons vous voir bientôt!",
-      "title": "Signé"
+      "message": "Vous vous êtes déconnecté avec succès de Testebac! \nNous espérons vous voir bientôt!",
+      "title": "Déconnecté"
     }
   },
   "Dashboard": {
@@ -103,7 +115,7 @@
       "profile": "Profil",
       "results": "Résultats",
       "settings": "Paramètres",
-      "signout": "S'inscrire",
+      "signout": "Se déconnecter",
       "stats": "Statistiques",
       "subjects": "Matières",
       "test": {
@@ -260,7 +272,7 @@
         },
         "generate": {
           "message": "{error, select, Unauthenticated {Veuillez vous connecter pour générer un test.} Unauthorized {Votre compte n'est pas autorisé pour cette configuration de test.} other {Une erreur inattendue s'est produite lors de la génération du test. Veuillez réessayer plus tard.}}",
-          "title": "{error, select, Unauthenticated {Sign-in requis} Unauthorized {Access Denied} other {Erreur de génération de test}}"
+          "title": "{error, select, Unauthenticated {Connexion requise} Unauthorized {Accès refusé} other {Erreur de génération de test}}"
         },
         "noQuestions": {
           "message": "Vous devez sélectionner au moins une question parmi les sources disponibles.",
@@ -273,7 +285,7 @@
         "message": "Êtes-vous sûr de vouloir quitter la configuration du test? \nTous les progrès seront perdus.",
         "title": "Laisser la configuration du test"
       },
-      "questionsNumber": "{count, plural, =0 {pas de questions} =1 {une question} autre {# questions}}",
+      "questionsNumber": "{count, plural, =0 {pas de questions} =1 {une question} other {# questions}}",
       "steps": {
         "1": {
           "description": "Sélectionner le type de test",
@@ -298,7 +310,7 @@
       "warnings": {
         "configuration": {
           "adjusted": "Nombre maximum de questions disponibles : {allowedMax}",
-          "message": "Le nombre de questions a été automatiquement ajusté à {maximum autorisé} en fonction des questions disponibles.",
+          "message": "Le nombre de questions a été automatiquement ajusté à {allowedMax} en fonction des questions disponibles.",
           "title": "Nombre de questions ajusté"
         }
       }
@@ -314,8 +326,8 @@
         "english": "Anglais",
         "french": "Français",
         "geography": "Géographie",
-        "german": "Allemagne",
-        "history": "L'histoire",
+        "german": "Allemand",
+        "history": "Histoire",
         "informatics": "Informatique",
         "mathematics": "Mathématiques",
         "physics": "Physique",
@@ -325,7 +337,7 @@
       "answered": "Répondu",
       "availableQuestions": "{count, plural, =0 {pas de questions} =1 {une question} other {# questions}}",
       "cancel": "Annuler",
-      "category": "{catégorie, choisir, admission {Admission à l'université} bac {Baccalauréat} autre {Inconnu}}}",
+      "category": "{category, select, admission {Admission à l'université} bac {Baccalauréat} other {Inconnu}}",
       "confirm": "Confirmer",
       "confirmDeleteTest": {
         "message": "Êtes-vous sûr de vouloir supprimer ce test : <b>{testName}</b> ? Cette action ne peut pas être annulée.",
@@ -354,13 +366,13 @@
       "submitAnswer": "Soumettre la réponse",
       "submitConfirmation": {
         "goToUnanswered": "Aller aux questions sans réponse",
-        "message": "Vous n'avez pas répondu à toutes les questions. Êtes-vous sûr de vouloir soumettre le test?",
+        "message": "Vous n'avez pas encore répondu à toutes les questions. Êtes-vous sûr de vouloir soumettre le test ?",
         "submit": "Soumettre le test quand même",
         "title": "Soumettre le test"
       },
       "testDeleted": "Test supprimé",
       "testDeletedMessage": "Le test <b>{testName}</b> a été supprimé avec succès.",
-      "tests": "{count, plural, =0 {Pas de tests} =1 {# tests} other {# tests}}",
+      "tests": "{count, plural, =0 {Pas de tests} =1 {# test} other {# tests}}",
       "title": "Tests"
     },
     "UserManager": {
@@ -424,7 +436,7 @@
           "description": "Quels chapitres?",
           "label": "Chapitres"
         },
-        "back": "Dos",
+        "back": "Retour",
         "next": "Suivant"
       }
     }

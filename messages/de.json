@@ -45,6 +45,18 @@
         "SessionRequired": {
           "description": "Sie müssen angemeldet werden, um auf diese Seite zuzugreifen. \nBitte melden Sie sich an, um fortzufahren.",
           "title": "Anmelden erforderlich"
+        },
+        "AccessDenied": {
+          "description": "Dies tritt normalerweise auf, wenn Sie den Zugriff über den signIn-Callback oder den Redirect-Callback eingeschränkt haben.",
+          "title": "Zugriff verweigert"
+        },
+        "Configuration": {
+          "description": "Es gibt ein Problem mit der Serverkonfiguration. Überprüfen Sie, ob Ihre Optionen korrekt sind.",
+          "title": "Konfigurationsfehler"
+        },
+        "Verification": {
+          "description": "Bezieht sich auf den E-Mail-Anbieter. Das Token ist abgelaufen oder wurde bereits verwendet.",
+          "title": "Verifizierungsfehler"
         }
       },
       "signIn": {
@@ -76,13 +88,13 @@
       "title": "Registrierung noch nicht akzeptiert"
     },
     "userSignedOut": {
-      "message": "Sie haben erfolgreich von Testebac unterschrieben! \nWir hoffen, Sie bald zu sehen!",
-      "title": "Unterschrieben"
+      "message": "Sie haben sich erfolgreich von Testebac abgemeldet! \nWir hoffen, Sie bald wiederzusehen!",
+      "title": "Abgemeldet"
     }
   },
   "Dashboard": {
     "Home": {
-      "lastTest": "Test fortsetzen",
+      "lastTest": "Letzter Test",
       "nameFormatting": ", {name}",
       "quickStats": "Schnelle Statistiken",
       "recentTests": "Neuere Tests",
@@ -99,7 +111,7 @@
         "testGenerator": "Testgenerator",
         "title": "Demo"
       },
-      "home": "Heim",
+      "home": "Startseite",
       "profile": "Profil",
       "results": "Ergebnisse",
       "settings": "Einstellungen",
@@ -314,7 +326,7 @@
         "english": "Englisch",
         "french": "Französisch",
         "geography": "Geographie",
-        "german": "Deutschland",
+        "german": "Deutsch",
         "history": "Geschichte",
         "informatics": "Informatik",
         "mathematics": "Mathematik",
@@ -323,9 +335,9 @@
         "spanish": "Spanisch"
       },
       "answered": "Beantwortet",
-      "availableQuestions": "{Zahl, Plural, =0 {keine Fragen} =1 {eine Frage} other {# Fragen}}",
+      "availableQuestions": "{count, plural, =0 {keine Fragen} =1 {eine Frage} other {# Fragen}}",
       "cancel": "Abbrechen",
-      "category": "{Kategorie, Auswahl, Zulassung {Hochschulzulassung} bac {Baccalaureat} other {Unbekannt}}",
+      "category": "{category, select, admission {Hochschulzulassung} bac {Abitur} other {Unbekannt}}",
       "confirm": "Bestätigen Sie",
       "confirmDeleteTest": {
         "message": "Sind Sie sicher, dass Sie diesen Test löschen wollen: <b>{testName}</b>? Diese Aktion kann nicht rückgängig gemacht werden.",
@@ -340,7 +352,7 @@
       "description": "Hier können Sie Ihre Fortschritte und die von Ihnen durchgeführten Tests sehen. \nSie können auch Ihre Ergebnisse und die von Ihnen studierten Themen sehen. \nMachen Sie weiter so und viel Glück mit Ihrem Studium!",
       "details": "Details zum Test",
       "finishTest": "Test beenden",
-      "finishedTest": "Fertige",
+      "finishedTest": "Beendet",
       "firstUnanswered": "Erste unbeantwortete Frage",
       "generateTestTitle": "Test generieren",
       "lastQuestion": "Letzte Frage",
@@ -349,7 +361,7 @@
       "noQuestionsMessage": "Der Test wurde erfolgreich erstellt, enthält aber keine Fragen. Kehren Sie zur Testseite zurück und überprüfen Sie die Konfiguration.",
       "previous": "Zurück",
       "question": "Frage",
-      "resumeTest": "Lebenslauf-Test",
+      "resumeTest": "Test fortsetzen",
       "startTest": "Start",
       "submitAnswer": "Antwort einreichen",
       "submitConfirmation": {
@@ -580,7 +592,7 @@
     "delete": "Löschen",
     "details": "Testdetails",
     "finishTest": "Test beenden",
-    "finishedTest": "Fertige",
+    "finishedTest": "Beendet",
     "firstUnanswered": "Erste unbeantwortete",
     "lastQuestion": "Letzte Frage",
     "left": " verbleibend",

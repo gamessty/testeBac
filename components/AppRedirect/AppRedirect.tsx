@@ -3,7 +3,7 @@ import { Button, Group, Tooltip } from "@mantine/core";
 import { IconArrowRight, IconLayoutDashboardFilled } from '@tabler/icons-react';
 import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
-import { Link } from "../../i18n/routing";
+import { Link } from "@/i18n/routing";
 
 export default function AppRedirect({ session }: Readonly<{ session: Session | null }>) {
     const t = useTranslations('HomePage');

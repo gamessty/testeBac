@@ -131,6 +131,67 @@ export default function TestTypeSelector({
         rootRef.current = node;
     }, []);
 
+    // Handle test type changes to reset incompatible configurations
+    useEffect(() => {
+        if (!onConfigurationsChange || !_value) return;
+
+        // Find the current test type definition
+        const testType = testTypes.find(type => type.id === _value);
+        if (!testType?.configurations) return;
+
+        // If there are previous configs
+        if (configs && Object.keys(configs).length > 0) {
+            // Get the valid configuration keys for the current test type
+            const validConfigKeys = new Set(testType.configurations.map(cfg => cfg.id));
+            
+            // Create new configs object with only the valid keys for this test type
+            const filteredConfigs: Record<string, any> = {};
+            
+            // Initialize with default values for the current test type
+            testType.configurations.forEach(cfg => {
+                // Only set defaults for configs that aren't numberOfQuestions
+                // (which should be handled by the distribution)
+                if (cfg.id !== 'numberOfQuestions' && cfg.default !== undefined) {
+                    filteredConfigs[cfg.id] = cfg.default;
+                }
+            });
+            
+            // Apply any existing valid configs that should be retained
+            Object.entries(configs).forEach(([key, value]) => {
+                if (validConfigKeys.has(key)) {
+                    filteredConfigs[key] = value;
+                }
+            });
+            
+            // Apply test type specific options (if any)
+            if (testType.options) {
+                Object.entries(testType.options).forEach(([key, value]) => {
+                    filteredConfigs[key] = value;
+                });
+            }
+            
+            // Update configurations
+            onConfigurationsChange(filteredConfigs);
+        } else {
+            // If no previous configs, initialize with defaults
+            const defaultConfigs: Record<string, any> = {};
+            testType.configurations.forEach(cfg => {
+                if (cfg.id !== 'numberOfQuestions' && cfg.default !== undefined) {
+                    defaultConfigs[cfg.id] = cfg.default;
+                }
+            });
+            
+            // Apply test type specific options (if any)
+            if (testType.options) {
+                Object.entries(testType.options).forEach(([key, value]) => {
+                    defaultConfigs[key] = value;
+                });
+            }
+            
+            onConfigurationsChange(defaultConfigs);
+        }
+    }, [_value]); // Only trigger when test type changes
+
     return (
         <>
             <Tabs variant="none" value={_value} onChange={handleChange} {...props}>

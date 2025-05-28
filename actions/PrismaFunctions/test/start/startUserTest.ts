@@ -1,8 +1,8 @@
 "use server";
 
 import { auth, UserActiveTest } from "@/auth";
-import { prisma } from "../../../../lib/prisma";
-import { chkP } from "../../../../utils";
+import { prisma } from "@/lib/prisma";
+import { chkP } from "@/utils";
 
 interface UserTestWithQuestions extends Omit<UserActiveTest, "folder" | "chapters" | "subjects"> {}
 

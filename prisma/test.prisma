@@ -98,8 +98,7 @@ enum SubjectType {
 }
 
 type SelectedAnswer {
-    // NOT YET IMPLEMENTED TBD
-    answerIds  String[] // the uuid or uuids of the option(s) selected by the user
+    answerIds  String[]
     questionId String   @db.ObjectId
     selectedAt DateTime @default(now())
 }

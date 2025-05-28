@@ -2,7 +2,7 @@
 import { Button, Group } from "@mantine/core";
 import { useLocale, useTranslations } from "next-intl";
 import { useState } from "react";
-import { Link } from "../../i18n/routing";
+import { Link } from "@/i18n/routing";
 export default function SignInButton() {
     const t = useTranslations('Authentication');
     const locale = useLocale();

@@ -21,34 +21,6 @@ export enum Permissions {
     "role:manage",
 }
 
-export interface IPermissionData {
-    name: Permissions;
-    description: string;
-}
-
-export const PermissionsData: IPermissionData[] = [
-    {
-        "name": Permissions["user:manage"],
-        "description": "Manage users"
-    },
-    {
-        "name": Permissions["user:readAll"],
-        "description": "Read all users"
-    },
-    {
-        "name": Permissions["developer:debug"],
-        "description": "Debug"
-    },
-    {
-        "name": Permissions["admin:panel"],
-        "description": "Admin panel"
-    },
-    {
-        "name": Permissions["all:all"],
-        "description": "All permissions"
-    }
-]
-
 export interface ITabData {
     tab: string;
     icon: ForwardRefExoticComponent<IconProps & React.RefAttributes<Icon>>;

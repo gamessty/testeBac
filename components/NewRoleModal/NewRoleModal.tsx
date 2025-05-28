@@ -8,7 +8,7 @@ import { Session } from "next-auth";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import postRole from "../../actions/PrismaFunctions/postRole";
-import { chkP } from "../../utils";
+import { chkP } from "@/utils";
 
 export default function NewRoleModal({ session, roles, ...props }: Readonly<ModalProps & { session: Session, roles: Role[] }>) {
     const t = useTranslations('Dashboard.RoleManager');

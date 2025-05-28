@@ -1,6 +1,6 @@
 "use server";
 
-import { prisma } from "../../lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { Folder, Subject, Chapter } from "@prisma/client";
 
 interface GetQuestionNumberParams {

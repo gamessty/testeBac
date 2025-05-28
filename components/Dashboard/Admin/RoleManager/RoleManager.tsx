@@ -5,7 +5,7 @@ import { IconAlertTriangleFilled, IconUserPlus } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
 import getManyRole from "../../../../actions/PrismaFunctions/getManyRole";
-import { chkP, getInitialsColor } from "../../../../utils";
+import { chkP, getInitialsColor } from "@/utils";
 import RoleCard from "../../../Cards/RoleCard/RoleCard";
 import NewRoleModal from "../../../NewRoleModal/NewRoleModal";
 import styles from './RoleManager.module.css';

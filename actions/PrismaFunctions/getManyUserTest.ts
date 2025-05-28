@@ -1,9 +1,9 @@
 "use server";
 
-import { auth } from "../../auth";
-import { prisma } from "../../lib/prisma";
+import { auth } from "@/auth";
+import { prisma } from "@/lib/prisma";
 import { UserTest } from "@prisma/client";
-import { chkP } from "../../utils";
+import { chkP } from "@/utils";
 
 
 export default async function getManyUserTest({ userId }: { userId: string }): Promise<UserTest[] | { message: string }> {

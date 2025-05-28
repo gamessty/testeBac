@@ -2,9 +2,17 @@
   "Authentication": {
     "customPages": {
       "error": {
+        "AccessDenied": {
+          "description": "Dies tritt normalerweise auf, wenn Sie den Zugriff über den signIn-Callback oder den Redirect-Callback eingeschränkt haben.",
+          "title": "Zugriff verweigert"
+        },
         "Callback": {
           "description": "Bei der Verarbeitung Ihrer Anmeldeanfrage wurde etwas schief gelaufen. \nBitte versuchen Sie es erneut.",
           "title": "Login-Rückruffehler"
+        },
+        "Configuration": {
+          "description": "Es gibt ein Problem mit der Serverkonfiguration. Überprüfen Sie, ob Ihre Optionen korrekt sind.",
+          "title": "Konfigurationsfehler"
         },
         "CredentialsSignin": {
           "description": "Ihre Anmeldedaten sind falsch. \nBitte überprüfen Sie sie und versuchen Sie es erneut.",
@@ -45,6 +53,10 @@
         "SessionRequired": {
           "description": "Sie müssen angemeldet werden, um auf diese Seite zuzugreifen. \nBitte melden Sie sich an, um fortzufahren.",
           "title": "Anmelden erforderlich"
+        },
+        "Verification": {
+          "description": "Bezieht sich auf den E-Mail-Anbieter. Das Token ist abgelaufen oder wurde bereits verwendet.",
+          "title": "Verifizierungsfehler"
         }
       },
       "signIn": {
@@ -76,13 +88,13 @@
       "title": "Registrierung noch nicht akzeptiert"
     },
     "userSignedOut": {
-      "message": "Sie haben erfolgreich von Testebac unterschrieben! \nWir hoffen, Sie bald zu sehen!",
-      "title": "Unterschrieben"
+      "message": "Sie haben sich erfolgreich von Testebac abgemeldet! \nWir hoffen, Sie bald wiederzusehen!",
+      "title": "Abgemeldet"
     }
   },
   "Dashboard": {
     "Home": {
-      "lastTest": "Test fortsetzen",
+      "lastTest": "Letzter Test",
       "nameFormatting": ", {name}",
       "quickStats": "Schnelle Statistiken",
       "recentTests": "Neuere Tests",
@@ -99,7 +111,7 @@
         "testGenerator": "Testgenerator",
         "title": "Demo"
       },
-      "home": "Heim",
+      "home": "Startseite",
       "profile": "Profil",
       "results": "Ergebnisse",
       "settings": "Einstellungen",
@@ -314,7 +326,7 @@
         "english": "Englisch",
         "french": "Französisch",
         "geography": "Geographie",
-        "german": "Deutschland",
+        "german": "Deutsch",
         "history": "Geschichte",
         "informatics": "Informatik",
         "mathematics": "Mathematik",
@@ -323,9 +335,9 @@
         "spanish": "Spanisch"
       },
       "answered": "Beantwortet",
-      "availableQuestions": "{Zahl, Plural, =0 {keine Fragen} =1 {eine Frage} other {# Fragen}}",
+      "availableQuestions": "{count, plural, =0 {keine Fragen} =1 {eine Frage} other {# Fragen}}",
       "cancel": "Abbrechen",
-      "category": "{Kategorie, Auswahl, Zulassung {Hochschulzulassung} bac {Baccalaureat} other {Unbekannt}}",
+      "category": "{category, select, admission {Hochschulzulassung} bac {Abitur} other {Unbekannt}}",
       "confirm": "Bestätigen Sie",
       "confirmDeleteTest": {
         "message": "Sind Sie sicher, dass Sie diesen Test löschen wollen: <b>{testName}</b>? Diese Aktion kann nicht rückgängig gemacht werden.",
@@ -340,7 +352,7 @@
       "description": "Hier können Sie Ihre Fortschritte und die von Ihnen durchgeführten Tests sehen. \nSie können auch Ihre Ergebnisse und die von Ihnen studierten Themen sehen. \nMachen Sie weiter so und viel Glück mit Ihrem Studium!",
       "details": "Details zum Test",
       "finishTest": "Test beenden",
-      "finishedTest": "Fertige",
+      "finishedTest": "Beendet",
       "firstUnanswered": "Erste unbeantwortete Frage",
       "generateTestTitle": "Test generieren",
       "lastQuestion": "Letzte Frage",
@@ -349,7 +361,7 @@
       "noQuestionsMessage": "Der Test wurde erfolgreich erstellt, enthält aber keine Fragen. Kehren Sie zur Testseite zurück und überprüfen Sie die Konfiguration.",
       "previous": "Zurück",
       "question": "Frage",
-      "resumeTest": "Lebenslauf-Test",
+      "resumeTest": "Test fortsetzen",
       "startTest": "Start",
       "submitAnswer": "Antwort einreichen",
       "submitConfirmation": {
@@ -387,6 +399,9 @@
           "placeholder": "Rollen auswählen"
         },
         "save": "Speichern",
+        "userAuthorizedEmail": {
+          "description": "E-Mail-Bestätigung der Autorisierung senden"
+        },
         "username": {
           "description": "Der Benutzername muss einzigartig sein.",
           "error": "Der Benutzername ist erforderlich und muss mindestens 3 Zeichen lang sein.",
@@ -430,6 +445,14 @@
     }
   },
   "Email": {
+    "Authorised": {
+      "disclaimer": "Wenn Sie diese E-Mail nicht angefordert haben, können Sie sie sicher ignorieren. Kontaktieren Sie den Support bei Fragen unter {email}.",
+      "message": "Ihr Konto wurde erfolgreich autorisiert. Sie können sich jetzt bei TesteBac anmelden.",
+      "signIn": "Anmelden",
+      "subject": "Konto bei TesteBac autorisiert",
+      "text": "Melden Sie sich an bei:",
+      "title": "Konto bei TesteBac autorisiert"
+    },
     "MagicLink": {
       "Old": {
         "disclaimer": "Wenn Sie diese E-Mail nicht angefordert haben, können Sie sie sicher ignorieren. \nSie können versuchen, sich anzumelden, erhalten jedoch jetzt einen Fehler. \nSie können sich nach der Genehmigung Ihrer Registrierung von einem Moderator anmelden.",
@@ -541,7 +564,8 @@
       "message": "Bitte warten Sie, bis Ihre Registrierung von einem Moderator validiert wird. \nDies kann bis zu 24 Stunden dauern. \n\n\nWenn Sie Fragen haben, kontaktieren Sie uns bitte unter {E-Mail}.",
       "short": "Sie müssen berechtigt sein, auf die App zuzugreifen.",
       "title": "Registrierung noch nicht akzeptiert"
-    }
+    },
+    "viewOnGithub": "Ansicht auf GitHub"
   },
   "TestType": {
     "Types": {
@@ -580,15 +604,17 @@
     "delete": "Löschen",
     "details": "Testdetails",
     "finishTest": "Test beenden",
-    "finishedTest": "Fertige",
+    "finishedTest": "Beendet",
     "firstUnanswered": "Erste unbeantwortete",
     "lastQuestion": "Letzte Frage",
-    "mark": "mark",
+    "left": " verbleibend",
+    "mark": "Note",
     "next": "Weiter",
     "noQuestions": "Keine Fragen in diesem Test gefunden",
     "noQuestionsMessage": "Der Test wurde erfolgreich erstellt, enthält aber keine Fragen. Kehren Sie zur Testseite zurück und überprüfen Sie die Konfiguration.",
     "previous": "Vorherige",
     "question": "Frage",
+    "questionList": "Liste der Fragen",
     "resumeTest": "Test fortsetzen",
     "startTest": "Start",
     "submitAnswer": "Antwort abschicken",

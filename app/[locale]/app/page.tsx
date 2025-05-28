@@ -1,6 +1,6 @@
 "use server";
-import { auth } from '../../../auth';
-import AppShellDashboard from '../../../components/AppShellDashboard/AppShellDashboard';
+import { auth } from "@/auth";
+import AppShellDashboard from '@/components/AppShellDashboard/AppShellDashboard';
 
 
 export default async function AppDashboard() {

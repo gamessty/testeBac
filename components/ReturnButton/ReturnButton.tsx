@@ -1,10 +1,10 @@
 "use client";
+import { usePathname, useRouter } from "@/i18n/routing";
 import { ActionIcon, ActionIconProps, Button, ButtonProps } from "@mantine/core";
 import { useMounted } from "@mantine/hooks";
 import { modals, openConfirmModal } from "@mantine/modals";
 import { IconArrowBackUp } from "@tabler/icons-react";
 import { useTranslations } from "next-intl";
-import { usePathname, useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 

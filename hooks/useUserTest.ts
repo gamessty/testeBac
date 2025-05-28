@@ -1,5 +1,4 @@
 "use client";
-//WIP - WORK IN PROGRESS
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
@@ -9,7 +8,7 @@ import resumeUserTest from "@/actions/PrismaFunctions/test/start/resumeUserTest"
 import sendAnswer from "@/actions/PrismaFunctions/test/start/sendAnswer";
 import { JsonObject, JsonValue } from "next-auth/adapters";
 
-// Full implementation of Question model with all properties
+// Interfețe pentru modelul de date
 interface Code {
   language: string[];
   code: string;
@@ -70,12 +69,12 @@ interface UserTest {
 }
 
 interface AnswerFeedback {
-  correct: string[];    // Options correctly chosen by user
-  incorrect: string[];  // Options incorrectly chosen by user
-  missed: string[];     // Correct options that user failed to select (missed opportunities)
+  correct: string[];    // Opțiuni alese corect de utilizator
+  incorrect: string[];  // Opțiuni alese incorect de utilizator
+  missed: string[];     // Opțiuni corecte pe care utilizatorul nu le-a selectat
 }
 
-// export all interfaces
+// Exportăm interfețele pentru a fi folosite în alte componente
 export type { UserTest, Question, Option, SelectedAnswer, AnswerFeedback, AdditionalData, AnswerIndicator };
 
 export default function useUserTest(testId: string) {
@@ -85,51 +84,53 @@ export default function useUserTest(testId: string) {
   const [error, setError] = useState<string | null>(null);
   const [currentQuestionIndex, setCurrentQuestionIndexState] = useState<number>(0);
 
-  // Initialize the test on component mount
+  // Inițializăm testul la montarea componentei
   useEffect(() => {
     if (testId) {
       initializeTest();
     }
   }, [testId]);
 
-  // Check if test time is expired
+  // Verificăm dacă timpul de test a expirat
   useEffect(() => {
     if (userTest?.startedAt && userTest.configurations) {
       const timeLimit = (userTest.configurations as JsonObject | undefined)?.timeLimit as number | undefined;
-      console.log(timeLimit)
+
       if (timeLimit) {
         const checkInterval = setInterval(() => {
           if (isTestTimeExpired(userTest.startedAt!, timeLimit)) {
             clearInterval(checkInterval);
             handleEndTest();
           }
-        }, 30000); // Check every 30 seconds
+        }, 30000); // Verificăm la fiecare 30 de secunde
         
         return () => clearInterval(checkInterval);
       }
     }
   }, [userTest]);
 
+  // ----- Funcții de inițializare și gestionare test -----
+
   const initializeTest = async () => {
     setLoading(true);
     setError(null);
     
     try {
-      // Try to resume test first
+      // Încercăm să reluăm testul mai întâi
       const resumeResponse = await resumeUserTest({ userTestId: testId });
       
       if ('message' in resumeResponse) {
         if (resumeResponse.message === "NOT_STARTED") {
-          // Start a new test if not started
+          // Începem un test nou dacă nu a fost început
           await startTest();
         } else if (resumeResponse.message === "ALREADY_ENDED") {
-          // Redirect to results page if test already ended
+          // Redirecționăm către pagina de rezultate dacă testul s-a încheiat deja
           router.push(`/app/test/${testId}/start`);
           return;
         } else if (resumeResponse.message === "ALREADY_STARTED") {
-          // If we get ALREADY_STARTED, try to resume again
-          // This handles the race condition where the client tries to start a test
-          // that was just started
+          // Dacă obținem ALREADY_STARTED, încercăm să reluăm din nou
+          // Aceasta gestionează condiția de cursă în care clientul încearcă să înceapă un test
+          // care tocmai a fost început
           const retryResponse = await resumeUserTest({ userTestId: testId });
           if ('message' in retryResponse) {
             setError(retryResponse.message);
@@ -147,28 +148,10 @@ export default function useUserTest(testId: string) {
         setCurrentQuestionIndexState(firstUnansweredQuestion);
       }
     } catch (err) {
-      console.error("Test initialization error:", err);
       setError("Failed to initialize test");
     } finally {
       setLoading(false);
     }
-  };
-
-  // Add a helper function to fetch questions if they're not included
-  const fetchQuestionsForTest = async (test: UserTest): Promise<UserTest> => {
-    if (!test.questions || test.questions.length === 0) {
-      // If there are no questions, we need to fetch them
-      try {
-        const response = await resumeUserTest({ userTestId: testId });
-        // Make sure we're not getting a message response
-        if (!('message' in response)) {
-          return response as unknown as UserTest;
-        }
-      } catch (error) {
-        console.error("Error fetching questions:", error);
-      }
-    }
-    return test;
   };
 
   const startTest = async () => {
@@ -186,7 +169,6 @@ export default function useUserTest(testId: string) {
       }
     } catch (err) {
       setError("Failed to start test");
-      console.error("Start test error:", err);
       return null;
     } finally {
       setLoading(false);
@@ -211,12 +193,13 @@ export default function useUserTest(testId: string) {
       return response;
     } catch (err) {
       setError("Failed to end test");
-      console.error("End test error:", err);
       return null;
     } finally {
       setLoading(false);
     }
   };
+
+  // ----- Funcții pentru gestionarea răspunsurilor și navigarea între întrebări -----
 
   const submitAnswer = async (questionId: string, answerIds: string[]) => {
     setLoading(true);
@@ -237,7 +220,7 @@ export default function useUserTest(testId: string) {
       } else {
         setUserTest(response as unknown as UserTest);
         
-        // If showAnswers is true in the configuration, generate answer feedback
+        // Dacă showAnswers este true în configurație, generăm feedback pentru răspuns
         const showAnswers = ((userTest?.configurations as JsonObject | undefined)?.showAnswers) as boolean | undefined;
         if (showAnswers) {
           const question = getQuestionById(questionId);
@@ -253,8 +236,7 @@ export default function useUserTest(testId: string) {
         return response;
       }
     } catch (err) {
-      setError("Failed to submit answer");
-      console.error("Submit answer error:", err);
+      setError(error);
       return null;
     } finally {
       setLoading(false);
@@ -276,6 +258,8 @@ export default function useUserTest(testId: string) {
     }
     return false;
   };
+
+  // ----- Funcții pentru obținerea întrebărilor -----
 
   const getQuestion = (index?: number) => {
     if (!userTest?.questions?.length) return null;
@@ -309,21 +293,23 @@ export default function useUserTest(testId: string) {
     return questionObj ?? null;
   };
 
+  // ----- Funcții pentru feedback și stare -----
+
   const getAnswerFeedback = (questionId: string): AnswerFeedback | null => {
     if (!userTest?.selectedAnswers) return null;
     
-    // Find the user's answer for this question
+    // Găsim răspunsul utilizatorului pentru această întrebare
     const userAnswer = userTest.selectedAnswers.find(
       answer => answer.questionId === questionId
     );
     
     if (!userAnswer) return null;
     
-    // Get the question
+    // Obținem întrebarea
     const question = getQuestionById(questionId);
     if (!question) return null;
     
-    // Calculate and return the feedback
+    // Calculăm și returnăm feedback-ul
     return calculateAnswerFeedback(question, userAnswer.answerIds);
   };
 
@@ -340,14 +326,14 @@ export default function useUserTest(testId: string) {
     const endTime = startTime + (timeLimit * 60 * 1000);
     
     const remainingMilliseconds = Math.max(0, endTime - currentTime);
-    return Math.floor(remainingMilliseconds / 1000); // Return remaining seconds
+    return Math.floor(remainingMilliseconds / 1000); // Returnăm secundele rămase
   };
 
   /**
-   * Calculate feedback for a question based on user's answers
-   * @param question The question object
-   * @param userAnswerIds The IDs of the options selected by the user
-   * @returns Object with arrays of correct, incorrect, and missed option IDs
+   * Calculăm feedback pentru o întrebare pe baza răspunsurilor utilizatorului
+   * @param question Obiectul întrebării
+   * @param userAnswerIds ID-urile opțiunilor selectate de utilizator
+   * @returns Obiect cu array-uri de ID-uri de opțiuni corecte, incorecte și ratate
    */
   function calculateAnswerFeedback(question: Question, userAnswerIds: string[]): AnswerFeedback {
     const feedback: AnswerFeedback = {
@@ -356,21 +342,21 @@ export default function useUserTest(testId: string) {
       missed: []
     };
     
-    // Process each option
+    // Procesăm fiecare opțiune
     question.options.forEach(option => {
       const optionId = option.id;
       const isSelected = userAnswerIds.includes(optionId);
       const isCorrect = option.isCorrect || false;
       
       if (isSelected) {
-        // User selected this option
+        // Utilizatorul a selectat această opțiune
         if (isCorrect) {
           feedback.correct.push(optionId);
         } else {
           feedback.incorrect.push(optionId);
         }
       } else if (isCorrect) {
-        // If option is correct but not selected, it's "missed" (a missed opportunity)
+        // Dacă opțiunea este corectă dar nu a fost selectată, este "ratată"
         feedback.missed.push(optionId);
       }
     });
@@ -378,7 +364,8 @@ export default function useUserTest(testId: string) {
     return feedback;
   }
 
-  // Add utility functions directly in the hook
+  // ----- Funcții utilitare -----
+
   const isQuestionAnswered = (questionId: string): boolean => {
     if (!userTest?.selectedAnswers) return false;
     return userTest.selectedAnswers.some(answer => answer.questionId === questionId);
@@ -409,11 +396,11 @@ export default function useUserTest(testId: string) {
     };
   };
 
-  // Add a direct setter for the current question index
+  // Adăugăm un setter direct pentru indexul întrebării curente
   const setCurrentQuestionIndex = (index: number) => {
     if (!userTest?.questions) return false;
     
-    // Ensure the index is within valid range
+    // Ne asigurăm că indexul este în intervalul valid
     if (index >= 0 && index < userTest.questions.length) {
       setCurrentQuestionIndexState(index);
       return true;
@@ -422,7 +409,8 @@ export default function useUserTest(testId: string) {
     return false;
   };
 
-  // Helper functions
+  // ----- Funcții helper interne -----
+
   function findLastAnsweredQuestionIndex(test: UserTest): number {
     if (!test.selectedAnswers || test.selectedAnswers.length === 0) return -1;
     
@@ -433,27 +421,28 @@ export default function useUserTest(testId: string) {
   function findFirstUnansweredQuestionIndex(test: UserTest): number {
     if (!test.selectedAnswers || test.selectedAnswers.length === 0) return 0;
     
-    // Get all answered question IDs
+    // Obținem toate ID-urile de întrebări la care s-a răspuns
     const answeredQuestionIds = new Set(
       test.selectedAnswers.map(answer => answer.questionId)
     );
     
-    // Find the first question that isn't in the answered set
+    // Găsim prima întrebare care nu este în setul de răspunsuri
     const firstUnansweredIndex = test.questions.findIndex(
       question => !answeredQuestionIds.has(question.id)
     );
     
-    // If all questions are answered, return -1, otherwise return the index
+    // Dacă toate întrebările au primit răspuns, returnăm 0, altfel returnăm indexul
     return firstUnansweredIndex !== -1 ? firstUnansweredIndex : 0;
   }
 
   function isTestTimeExpired(startedAt: Date, timeLimit: number): boolean {
     const startTime = new Date(startedAt).getTime();
     const currentTime = new Date().getTime();
-    const timeLimitMs = timeLimit * 60 * 1000; // Convert minutes to milliseconds
+    const timeLimitMs = timeLimit * 60 * 1000; // Convertim minutele în milisecunde
     return (currentTime - startTime) > timeLimitMs;
   }
 
+  // Returnăm API-ul hook-ului
   return {
     userTest,
     loading,
@@ -475,7 +464,6 @@ export default function useUserTest(testId: string) {
     isQuestionAnswered,
     getAnsweredQuestionsSet,
     getQuestionStatus,
-    // Add the direct setter to the returned object
     setCurrentQuestionIndex,
   };
 }

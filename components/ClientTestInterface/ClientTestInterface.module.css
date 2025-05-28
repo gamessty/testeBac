@@ -50,3 +50,13 @@
   color: var(--mantine-color-red-6);
   font-weight: 600;
 }
+
+.finishButton {
+    font-weight: 500;
+}
+
+@media (max-width: 768px) {
+    .finishButton span {
+        display: none;
+    }
+}

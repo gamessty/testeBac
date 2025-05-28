@@ -4,7 +4,7 @@ import { useMediaQuery } from "@mantine/hooks";
 import { useLocale, useTranslations } from "next-intl";
 import { useSearchParams } from "next/navigation";
 import { useState } from "react";
-import { routing, usePathname, useRouter } from "../../i18n/routing";
+import { routing, usePathname, useRouter } from "@/i18n/routing";
 
 export default function LocalSelect({ dynamic = true, ...props}: Readonly<{ dynamic?: boolean} & Omit<NativeSelectProps, 'data' | 'fw' | 'w' | 'rightSectionWidth' | 'defaultValue' | 'onChange'>>) {
     const locale = useLocale();

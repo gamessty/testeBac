@@ -1,6 +1,6 @@
 import { Flex, Grid, GridCol, GridProps, Text } from "@mantine/core";
-import { auth } from "../../auth";
-import { Link } from "../../i18n/routing";
+import { auth } from "@/auth";
+import { Link } from "@/i18n/routing";
 import ColorSchemeToggleIcon from "../ColorSchemeToggleIcon/ColorSchemeToggleIcon";
 import LocalSelect from "../LocaleSelect/LocaleSelect";
 import ProfileEmail from "../ProfileEmail/ProfileEmail";

@@ -1,6 +1,6 @@
 "use client";
 import { Stack, TextInput, Group, Text } from "@mantine/core";
-import { type providerMap } from "../../auth";
+import { type providerMap } from "@/auth";
 import validator from "validator";
 import Link from "next/link";
 import SubmitButton from "../SubmitButton/SubmitButton";

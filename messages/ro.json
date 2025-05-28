@@ -2,9 +2,17 @@
   "Authentication": {
     "customPages": {
       "error": {
+        "AccessDenied": {
+          "description": "Apare de obicei când ați restricționat accesul prin callback-ul de autentificare sau callback-ul de redirecționare.",
+          "title": "Acces Refuzat"
+        },
         "Callback": {
           "description": "Ceva nu a funcționat corect în timpul procesării cererii de autentificare. Încercați din nou.",
           "title": "Eroare la Callback-ul Autentificării"
+        },
+        "Configuration": {
+          "description": "Există o problemă cu configurarea serverului. Verificați dacă opțiunile dvs. sunt corecte.",
+          "title": "Eroare de Configurare"
         },
         "CredentialsSignin": {
           "description": "Datele de autentificare sunt incorecte. Vă rugăm să le verificați și să încercați din nou.",
@@ -45,6 +53,10 @@
         "SessionRequired": {
           "description": "Trebuie să fiți autentificat pentru a accesa această pagină. Vă rugăm să vă conectați.",
           "title": "Autentificare Necesară"
+        },
+        "Verification": {
+          "description": "Legat de furnizorul de Email. Tokenul a expirat sau a fost deja utilizat.",
+          "title": "Eroare de Verificare"
         }
       },
       "signIn": {
@@ -173,11 +185,11 @@
       "success": {
         "create": {
           "message": "Rolul {name} a fost creat cu succes.",
-          "title": "Actualizat"
+          "title": "Rol creat"
         },
         "delete": {
           "message": "Rolul {name} a fost șters cu succes.",
-          "title": "Actualizat"
+          "title": "Rol șters"
         },
         "update": {
           "message": "Rolul {name} a fost actualizat cu succes.",
@@ -256,11 +268,11 @@
       "errors": {
         "fetch": {
           "message": "{error, select, neautorizat {Nu sunteți autorizat să accesați această pagină de administrare. \nDacă credeți că aceasta este o eroare, reîmprospătați pagina și încercați din nou mai târziu.} other {eroare generală necunoscută. \nVă rugăm să încercați din nou mai târziu.}}",
-          "title": "{error, select, Unauthorized {neautorizat} other {eroare generală}}"
+          "title": "{error, select, Unauthorized {Neautorizat} other {Eroare generală}}"
         },
         "generate": {
           "message": "{error, select, Unauthenticated {Vă rugăm să vă conectați pentru a genera un test.} Unauthorized {Contul dvs. nu este permis pentru această configurație de test.} other {A apărut o eroare neașteptată în timpul generării testului. Vă rugăm să încercați din nou mai târziu.}}",
-          "title": "{error, select, Unauthenticated {Sign-in Required} Unauthorized {Acces refuzat} other {Error de generare a testului}}"
+          "title": "{error, select, Unauthenticated {Autentificare necesară} Unauthorized {Acces refuzat} other {Error de generare a testului}}"
         },
         "noQuestions": {
           "message": "Trebuie să selectați cel puțin o întrebare din sursele disponibile.",
@@ -325,7 +337,7 @@
       "answered": "Răspuns",
       "availableQuestions": "{count, plural, =0 {nici o întrebare} =1 {o întrebare} other {# întrebări}}",
       "cancel": "Anulează",
-      "category": "{category, select, admitere {Admitere universitară} bac {Bacalaureat} other {Nu cunoscute}}",
+      "category": "{category, select, admission {Admitere universitară} bac {Bacalaureat} other {Nu cunoscute}}",
       "confirm": "Confirmați",
       "confirmDeleteTest": {
         "message": "Sunteți sigur că doriți să ștergeți acest test: <b>{testName}</b>? Această acțiune nu poate fi anulată.",
@@ -349,7 +361,7 @@
       "noQuestionsMessage": "Testul a fost creat cu succes, dar nu conține întrebări. Reveniți la pagina de test și verificați configurația.",
       "previous": "Înapoi",
       "question": "Întrebare",
-      "resumeTest": "Test de CV",
+      "resumeTest": "Continuă",
       "startTest": "Start",
       "submitAnswer": "Trimite răspunsul",
       "submitConfirmation": {
@@ -387,6 +399,9 @@
           "placeholder": "Selectați rolurile"
         },
         "save": "Salvează",
+        "userAuthorizedEmail": {
+          "description": "Trimiteți confirmarea prin e-mail a autorizării"
+        },
         "username": {
           "description": "Numele de utilizator este unic.",
           "error": "Numele de utilizator să aibă cel puțin 3 caractere.",
@@ -430,6 +445,14 @@
     }
   },
   "Email": {
+    "Authorised": {
+      "disclaimer": "Dacă nu ați solicitat acest email, puteți să îl ignorați în siguranță. Contactați suportul dacă aveți întrebări la {email}.",
+      "message": "Contul dvs. a fost autorizat cu succes. Acum puteți să vă conectați la TesteBac.",
+      "signIn": "Conectează-te",
+      "subject": "Cont autorizat pe TesteBac",
+      "text": "Conectează-te la:",
+      "title": "Cont autorizat pe TesteBac"
+    },
     "MagicLink": {
       "Old": {
         "disclaimer": "Dacă nu ați solicitat acest email, puteți să îl ignorați în siguranță. Puteți încerca să vă conectați, dar veți primi o eroare acum. Veți putea să vă conectați după ce înregistrarea dumneavoastră este aprobată de un moderator.",
@@ -496,7 +519,7 @@
       },
       "UNAUTHENTICATED": {
         "message": "Momentan nu sunteți autentificat. Trebuie să fiți autentificat în contul dvs. pentru a continua.",
-        "title": "neautentificat"
+        "title": "Neautentificat"
       },
       "UNAUTHORIZED": {
         "message": "Contul dvs. nu este autorizat să acceseze această resursă sau să execute această acțiune. Vă rugăm să încercați din nou mai târziu.",
@@ -518,7 +541,7 @@
         "fr": "Franceză",
         "ro": "Română"
       },
-      "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} de {🇩🇪} other {?}}"
+      "shortLocale": "{locale, select, ro {RO} en {EN} fr {FR} de {DE} other {?}}"
     },
     "copiedLabel": "Copiat!",
     "copyLabel": "Copiați codul",
@@ -541,7 +564,8 @@
       "message": "Vă rugăm să așteptați ca înregistrarea dumneavoastră să fie validată de un moderator. Acest proces poate dura până la 24 de ore. \n\nDacă aveți întrebări, vă rugăm să ne contactați la {email}.",
       "short": "Trebuie să fiți autorizat pentru a accesa aplicația.",
       "title": "Înregistrarea nu a fost încă acceptată"
-    }
+    },
+    "viewOnGithub": "Vizualizați pe GitHub"
   },
   "TestType": {
     "Types": {
@@ -570,7 +594,7 @@
     "answered": "Răspuns",
     "availableQuestions": "{count, plural, =0 {nici o întrebare} =1 {o întrebare} other {# întrebări}}",
     "cancel": "Anulează",
-    "category": "{category, select, admission {Admitere} bac {Bac} other {Categorie necunoscută}}",
+    "category": "{category, select, admission {Admitere universitară} bac {Bacalaureat} other {Categorie necunoscută}}",
     "confirm": "Confirmați",
     "confirmDeleteTest": {
       "message": "Sunteți sigur că doriți să ștergeți acest test: <b>{testName}</b>? Această acțiune nu poate fi anulată.",
@@ -579,21 +603,23 @@
     "continueTest": "Continuați",
     "delete": "Ștergeți",
     "details": "detaliile testului",
-    "finishTest": "Test de finisare",
+    "finishTest": "Finalizează testul",
     "finishedTest": "Terminat",
     "firstUnanswered": "Primul fără răspuns",
     "lastQuestion": "Ultima întrebare",
-    "mark": "marcă",
+    "left": " rămase",
+    "mark": "notă",
     "next": "Următorul",
     "noQuestions": "Nu s-au găsit întrebări în acest test",
     "noQuestionsMessage": "Testul a fost creat cu succes, dar nu conține întrebări. Reveniți la pagina de test și verificați configurația.",
-    "previous": "Articolul precedent",
+    "previous": "Întrebarea precedentă",
     "question": "Întrebare",
+    "questionList": "Lista de întrebări",
     "resumeTest": "Continuă testul",
     "startTest": "Start",
     "submitAnswer": "Trimite răspuns",
     "submitConfirmation": {
-      "goToUnanswered": "Du-te la fără răspuns",
+      "goToUnanswered": "Prima întrebare fără răspuns",
       "message": "Nu ați răspuns încă la toate întrebările. Sunteți sigur că doriți să trimiteți testul?",
       "submit": "Trimiteți testul oricum",
       "title": "Trimite test"

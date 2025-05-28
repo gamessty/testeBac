@@ -2,9 +2,17 @@
   "Authentication": {
     "customPages": {
       "error": {
+        "AccessDenied": {
+          "description": "Cela se produit généralement lorsque vous avez restreint l'accès via le rappel de connexion ou le rappel de redirection.",
+          "title": "Accès refusé"
+        },
         "Callback": {
           "description": "Quelque chose s'est mal passé lors du traitement de votre demande de connexion. \nVeuillez réessayer.",
           "title": "Erreur de rappel de connexion"
+        },
+        "Configuration": {
+          "description": "Il y a un problème avec la configuration du serveur. Vérifiez si vos options sont correctes.",
+          "title": "Erreur de configuration"
         },
         "CredentialsSignin": {
           "description": "Vos détails de connexion sont incorrects. \nVeuillez les vérifier et réessayer.",
@@ -45,14 +53,6 @@
         "SessionRequired": {
           "description": "Vous devez être connecté pour accéder à cette page. \nVeuillez vous connecter pour continuer.",
           "title": "Connexion requise"
-        },
-        "AccessDenied": {
-          "description": "Cela se produit généralement lorsque vous avez restreint l'accès via le rappel de connexion ou le rappel de redirection.",
-          "title": "Accès refusé"
-        },
-        "Configuration": {
-          "description": "Il y a un problème avec la configuration du serveur. Vérifiez si vos options sont correctes.",
-          "title": "Erreur de configuration"
         },
         "Verification": {
           "description": "Lié au fournisseur de messagerie. Le jeton a expiré ou a déjà été utilisé.",
@@ -399,6 +399,9 @@
           "placeholder": "Sélectionner les rôles"
         },
         "save": "Sauvegarder",
+        "userAuthorizedEmail": {
+          "description": "Envoi d'un courriel de confirmation d'autorisation"
+        },
         "username": {
           "description": "Le nom d'utilisateur doit être unique.",
           "error": "Le nom d'utilisateur est requis et doit comporter au moins 3 caractères.",
@@ -442,6 +445,14 @@
     }
   },
   "Email": {
+    "Authorised": {
+      "disclaimer": "Si vous n'avez pas demandé cet e-mail, vous pouvez l'ignorer en toute sécurité. Contactez le support si vous avez des questions à {email}.",
+      "message": "Votre compte a été autorisé avec succès. Vous pouvez maintenant vous connecter à TesteBac.",
+      "signIn": "Se connecter",
+      "subject": "Compte autorisé sur TesteBac",
+      "text": "Connectez-vous sur :",
+      "title": "Compte autorisé sur TesteBac"
+    },
     "MagicLink": {
       "Old": {
         "disclaimer": "Si vous n'avez pas demandé cet e-mail, vous pouvez l'ignorer en toute sécurité. Vous pouvez essayer de vous connecter, mais vous recevrez une erreur pour l'instant. Vous pourrez vous connecter une fois votre inscription approuvée par un modérateur.",

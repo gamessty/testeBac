@@ -14,6 +14,7 @@ import putUser from "../../../../actions/PrismaFunctions/putUser";
 import { chkP, getManyRoleData, getManyRoleFromValues, getPrismaRolesUpdateData } from "@/utils";
 import AvatarFallback from "../../../AvatarFallback/AvatarFallback";
 import UserCardList from "@/components/UserCardList/UserCardList";
+import { sendAuthorisedEmail } from "@/actions/authorisedEmail";
 
 export default function UserManager({ session, style }: Readonly<{ session: Session | null | undefined } & ContainerProps>) {
     const t = useTranslations('Dashboard.UserManager');
@@ -140,6 +141,15 @@ export default function UserManager({ session, style }: Readonly<{ session: Sess
                     description={t('drawer.authorized.description')}
                     onChange={(event) => { putUser({ id: user?.id, data: { userAuthorized: event.currentTarget.checked } }); setUser({ ...user, userAuthorized: event.currentTarget.checked }); updateUsersAfterChange({ ...user, userAuthorized: event.currentTarget.checked }); }}
                 />
+            </Group>
+            <Group w="100%" justify="space-between" mt={20}>
+                <Button
+                disabled={!user?.userAuthorized || !user.email || user.email == null || user.email == ""}
+                    defaultChecked={user?.userAuthorized}
+                    onClick={(event) => { user.email && sendAuthorisedEmail(user?.email , 'fr'); }}
+                >
+                    <Text>{t('drawer.userAuthorizedEmail.description')}</Text>
+                </Button>
             </Group>
             <MultiSelect
                 label={t('drawer.roles.label')}

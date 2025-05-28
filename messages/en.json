@@ -2,9 +2,17 @@
   "Authentication": {
     "customPages": {
       "error": {
+        "AccessDenied": {
+          "description": "Usually occurs, when you restricted access through the signIn callback, or redirect callback.",
+          "title": "Access Denied"
+        },
         "Callback": {
           "description": "Something went wrong while processing your login request. Please try again.",
           "title": "Login Callback Error"
+        },
+        "Configuration": {
+          "description": "There is a problem with the server configuration. Check if your options are correct.",
+          "title": "Configuration Error"
         },
         "CredentialsSignin": {
           "description": "Your login details are incorrect. Please check them and try again.",
@@ -45,14 +53,6 @@
         "SessionRequired": {
           "description": "You need to be signed in to access this page. Please log in to continue.",
           "title": "Sign-In Required"
-        },
-        "AccessDenied": {
-          "description": "Usually occurs, when you restricted access through the signIn callback, or redirect callback.",
-          "title": "Access Denied"
-        },
-        "Configuration": {
-          "description": "There is a problem with the server configuration. Check if your options are correct.",
-          "title": "Configuration Error"
         },
         "Verification": {
           "description": "Related to the Email provider. The token has expired or has already been used.",
@@ -399,6 +399,9 @@
           "placeholder": "Select roles"
         },
         "save": "Save",
+        "userAuthorizedEmail": {
+          "description": "Send Authorisation Email Confirmation"
+        },
         "username": {
           "description": "The username must be unique.",
           "error": "The username is required and must be at least 3 characters long.",
@@ -442,6 +445,14 @@
     }
   },
   "Email": {
+    "Authorised": {
+      "disclaimer": "If you did not request this email, you can safely ignore it. Contact support if you have any questions at {email}.",
+      "message": "Your account has been successfully authorized. You can now sign in to TesteBac.",
+      "signIn": "Sign In",
+      "subject": "Account Authorized on TesteBac",
+      "text": "Sign in at:",
+      "title": "Account Authorized on TesteBac"
+    },
     "MagicLink": {
       "Old": {
         "disclaimer": "If you did not request this email you can safely ignore it. You can try to login but you will receive an error now. You will be able to login after your registration is approved by a moderator.",

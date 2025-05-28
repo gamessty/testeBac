@@ -2,9 +2,17 @@
   "Authentication": {
     "customPages": {
       "error": {
+        "AccessDenied": {
+          "description": "Dies tritt normalerweise auf, wenn Sie den Zugriff über den signIn-Callback oder den Redirect-Callback eingeschränkt haben.",
+          "title": "Zugriff verweigert"
+        },
         "Callback": {
           "description": "Bei der Verarbeitung Ihrer Anmeldeanfrage wurde etwas schief gelaufen. \nBitte versuchen Sie es erneut.",
           "title": "Login-Rückruffehler"
+        },
+        "Configuration": {
+          "description": "Es gibt ein Problem mit der Serverkonfiguration. Überprüfen Sie, ob Ihre Optionen korrekt sind.",
+          "title": "Konfigurationsfehler"
         },
         "CredentialsSignin": {
           "description": "Ihre Anmeldedaten sind falsch. \nBitte überprüfen Sie sie und versuchen Sie es erneut.",
@@ -45,14 +53,6 @@
         "SessionRequired": {
           "description": "Sie müssen angemeldet werden, um auf diese Seite zuzugreifen. \nBitte melden Sie sich an, um fortzufahren.",
           "title": "Anmelden erforderlich"
-        },
-        "AccessDenied": {
-          "description": "Dies tritt normalerweise auf, wenn Sie den Zugriff über den signIn-Callback oder den Redirect-Callback eingeschränkt haben.",
-          "title": "Zugriff verweigert"
-        },
-        "Configuration": {
-          "description": "Es gibt ein Problem mit der Serverkonfiguration. Überprüfen Sie, ob Ihre Optionen korrekt sind.",
-          "title": "Konfigurationsfehler"
         },
         "Verification": {
           "description": "Bezieht sich auf den E-Mail-Anbieter. Das Token ist abgelaufen oder wurde bereits verwendet.",
@@ -399,6 +399,9 @@
           "placeholder": "Rollen auswählen"
         },
         "save": "Speichern",
+        "userAuthorizedEmail": {
+          "description": "E-Mail-Bestätigung der Autorisierung senden"
+        },
         "username": {
           "description": "Der Benutzername muss einzigartig sein.",
           "error": "Der Benutzername ist erforderlich und muss mindestens 3 Zeichen lang sein.",
@@ -442,6 +445,14 @@
     }
   },
   "Email": {
+    "Authorised": {
+      "disclaimer": "Wenn Sie diese E-Mail nicht angefordert haben, können Sie sie sicher ignorieren. Kontaktieren Sie den Support bei Fragen unter {email}.",
+      "message": "Ihr Konto wurde erfolgreich autorisiert. Sie können sich jetzt bei TesteBac anmelden.",
+      "signIn": "Anmelden",
+      "subject": "Konto bei TesteBac autorisiert",
+      "text": "Melden Sie sich an bei:",
+      "title": "Konto bei TesteBac autorisiert"
+    },
     "MagicLink": {
       "Old": {
         "disclaimer": "Wenn Sie diese E-Mail nicht angefordert haben, können Sie sie sicher ignorieren. \nSie können versuchen, sich anzumelden, erhalten jedoch jetzt einen Fehler. \nSie können sich nach der Genehmigung Ihrer Registrierung von einem Moderator anmelden.",

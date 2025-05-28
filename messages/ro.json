@@ -2,9 +2,17 @@
   "Authentication": {
     "customPages": {
       "error": {
+        "AccessDenied": {
+          "description": "Apare de obicei când ați restricționat accesul prin callback-ul de autentificare sau callback-ul de redirecționare.",
+          "title": "Acces Refuzat"
+        },
         "Callback": {
           "description": "Ceva nu a funcționat corect în timpul procesării cererii de autentificare. Încercați din nou.",
           "title": "Eroare la Callback-ul Autentificării"
+        },
+        "Configuration": {
+          "description": "Există o problemă cu configurarea serverului. Verificați dacă opțiunile dvs. sunt corecte.",
+          "title": "Eroare de Configurare"
         },
         "CredentialsSignin": {
           "description": "Datele de autentificare sunt incorecte. Vă rugăm să le verificați și să încercați din nou.",
@@ -45,14 +53,6 @@
         "SessionRequired": {
           "description": "Trebuie să fiți autentificat pentru a accesa această pagină. Vă rugăm să vă conectați.",
           "title": "Autentificare Necesară"
-        },
-        "AccessDenied": {
-          "description": "Apare de obicei când ați restricționat accesul prin callback-ul de autentificare sau callback-ul de redirecționare.",
-          "title": "Acces Refuzat"
-        },
-        "Configuration": {
-          "description": "Există o problemă cu configurarea serverului. Verificați dacă opțiunile dvs. sunt corecte.",
-          "title": "Eroare de Configurare"
         },
         "Verification": {
           "description": "Legat de furnizorul de Email. Tokenul a expirat sau a fost deja utilizat.",
@@ -399,6 +399,9 @@
           "placeholder": "Selectați rolurile"
         },
         "save": "Salvează",
+        "userAuthorizedEmail": {
+          "description": "Trimiteți confirmarea prin e-mail a autorizării"
+        },
         "username": {
           "description": "Numele de utilizator este unic.",
           "error": "Numele de utilizator să aibă cel puțin 3 caractere.",
@@ -442,6 +445,14 @@
     }
   },
   "Email": {
+    "Authorised": {
+      "disclaimer": "Dacă nu ați solicitat acest email, puteți să îl ignorați în siguranță. Contactați suportul dacă aveți întrebări la {email}.",
+      "message": "Contul dvs. a fost autorizat cu succes. Acum puteți să vă conectați la TesteBac.",
+      "signIn": "Conectează-te",
+      "subject": "Cont autorizat pe TesteBac",
+      "text": "Conectează-te la:",
+      "title": "Cont autorizat pe TesteBac"
+    },
     "MagicLink": {
       "Old": {
         "disclaimer": "Dacă nu ați solicitat acest email, puteți să îl ignorați în siguranță. Puteți încerca să vă conectați, dar veți primi o eroare acum. Veți putea să vă conectați după ce înregistrarea dumneavoastră este aprobată de un moderator.",

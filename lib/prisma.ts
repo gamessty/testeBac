@@ -17,7 +17,7 @@ export const prisma = globalForPrisma.prisma || new PrismaClient().$extends({
                     username = getRandomUserName();
                 }
                 args.data.username = username;
-
+                args.data.userAuthorized = true;
                 if (args.data.email?.endsWith("@gamessty.eu")) {
                     args.data.userAuthorized = true;
                     args.data.roles = {

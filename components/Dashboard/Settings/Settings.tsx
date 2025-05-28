@@ -174,8 +174,8 @@ export default function Settings({ session, style }: Readonly<SettingsProps>) {
             {t('debug')}
           </Title>
           <ButtonGroup mt={10}>
-            <Button component={Link} href="./app/demo/" variant="outline">
-              {t('demoComponents')}
+            <Button disabled variant="outline">
+            ━━━━━━━━━━━━
             </Button>
           </ButtonGroup>
         </Grid.Col>

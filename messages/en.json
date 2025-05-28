@@ -564,7 +564,8 @@
       "message": "Please wait for your registration to be validated by a moderator. This may take up to 24 hours. \n\nIf you have any questions, please contact us at {email}.",
       "short": "You need to be authorized to access the app.",
       "title": "Registration not accepted yet"
-    }
+    },
+    "viewOnGithub": "View on GitHub"
   },
   "TestType": {
     "Types": {

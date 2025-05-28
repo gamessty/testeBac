@@ -564,7 +564,8 @@
       "message": "Vă rugăm să așteptați ca înregistrarea dumneavoastră să fie validată de un moderator. Acest proces poate dura până la 24 de ore. \n\nDacă aveți întrebări, vă rugăm să ne contactați la {email}.",
       "short": "Trebuie să fiți autorizat pentru a accesa aplicația.",
       "title": "Înregistrarea nu a fost încă acceptată"
-    }
+    },
+    "viewOnGithub": "Vizualizați pe GitHub"
   },
   "TestType": {
     "Types": {

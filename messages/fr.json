@@ -564,7 +564,8 @@
       "message": "Veuillez attendre la validation de votre inscription par un modérateur. Cela peut prendre jusqu'à 24 heures.\n\nSi vous avez des questions, veuillez nous contacter à {email}.",
       "short": "Vous devez être autorisé pour accéder à l'application.",
       "title": "Inscription non encore acceptée"
-    }
+    },
+    "viewOnGithub": "Voir sur GitHub"
   },
   "TestType": {
     "Types": {
